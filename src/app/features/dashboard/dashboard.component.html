@@ -789,87 +789,163 @@
       <div
         class="max-h-full max-w-full overflow-y-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
       >
-        <a href="#">
-          <img
-            class="rounded-t-lg"
-            src="https://images.axios.com/2RC7iw8JDzTSY6V3UjUp7_dMGus=/0x0:3840x2160/1920x1080/2022/09/10/1662835722250.jpg"
-            alt=""
-          />
-        </a>
-        <div class="p-5">
-          <a href="#">
-            <h5
-              class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
-            >
-              Noteworthy technology acquisitions 2021
+        <div class="flex flex-col items-center flex-1 flex-grow-1">
+          <div class="flex h-1/2 items-center justify-between w-full p-1">
+            <div class="flex gap-4">
+              <div class="relative">
+                <img
+                  class="w-20 h-20 rounded-full shadow-lg"
+                  src="../../../assets/8ee6c5268d3404f8441329ce18972f60.jpeg"
+                  alt="Bonnie image"
+                />
+                <button
+                  class="absolute flex items-center bottom-0 right-0 bg-white hover:bg-indigo-300 dark:text-slate-100 dark:bg-gray-600 dark:hover:bg-gray-700 rounded-full p-2 shadow-lg"
+                >
+                  <span class="material-symbols-outlined"> edit </span>
+                </button>
+              </div>
+              <div class="flex flex-col justify-center leading-relaxed">
+                <div class="flex items-center leading-tight">
+                  <h5
+                    class="mb-1 text-md font-medium text-gray-900 dark:text-white"
+                  >
+                    Juan Lopez Perez
+                  </h5>
+                  <span
+                    class="material-symbols-outlined text-red-500 dark:text-red-500 ml-2"
+                  >
+                    favorite
+                  </span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <p
+                    class="mb-1 text-sm text-gray-600 dark:font-medium dark:text-gray-400"
+                  >
+                    Full Stack Developer
+                  </p>
+                  <div class="flex items-center gap-1 ml-2">
+                    <span
+                      class="material-symbols-outlined text-black dark:text-gray-500"
+                    >
+                      location_on
+                    </span>
+                    <p
+                      class="mb-1 text-sm text-gray-600 dark:font-medium dark:text-gray-400"
+                    >
+                      Lima, Peru
+                    </p>
+                    <div class="flex gap-1">
+                      <p
+                        class="mb-1 text-sm text-gray-600 dark:font-medium dark:text-gray-400"
+                      >
+                        $ 2,500 - 3,000
+                      </p>
+                      <button class="flex items-center">
+                        <span
+                          class="material-symbols-outlined text-gray-600 dark:text-slate-100"
+                        >
+                          edit
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex items-center">
+                  <div class="flex items-center">
+                    <div
+                      class="flex items-center"
+                      *ngFor="let icon of maxRattingArr; let index = index"
+                      [ngClass]="{ checked: SelectedStar > index }"
+                      (mouseenter)="HandleMouseEnter(index)"
+                      (mouseleave)="HandleMouseLeave()"
+                      (click)="HandleClickRating(index)"
+                    >
+                      <span class="fa fa-star puntero mr-2"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-col justify-center gap-4">
+              <div class="flex items-center gap-2">
+                <div>
+                  <button
+                    id="dropdownDefaultButton"
+                    data-dropdown-toggle="dropdown"
+                    class="text-blue-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
+                    type="button"
+                  >
+                    Ver CV
+                    <svg
+                      class="w-2.5 h-2.5 ms-3"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 10 6"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="m1 1 4 4 4-4"
+                      />
+                    </svg>
+                  </button>
+                  <!-- Dropdown menu -->
+                  <div
+                    id="dropdown"
+                    class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+                  >
+                    <ul
+                      class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                      aria-labelledby="dropdownDefaultButton"
+                    >
+                      <li>
+                        <a
+                          href="#"
+                          class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                          >CV</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                          >CV Fractal</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  class="flex items-center justify-between text-white bg-[#009688] hover:bg-[#203634] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                >
+                  <span class="material-symbols-outlined mr-2"> call </span>
+                  Contactar
+                </button>
+              </div>
+              <div class="flex justify-end gap-4">
+                <a href="" class="flex items-center">
+                  <img src="../../../assets/github.png" alt="" />
+                </a>
+                <a href="" class="flex items-center">
+                  <img src="../../../assets/linkedin.png" alt="" />
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="flex h-1/2">
+            <img
+              class="w-12 h-12 mb-3 rounded-full shadow-lg"
+              src="../../../assets/fractal (1).png"
+              alt="Bonnie image"
+            />
+            <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">
+              Bonnie Green
             </h5>
-          </a>
-          <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-            Here are the biggest enterprise technology acquisitions of 2021 so
-            far, in reverse chronological order.
-          </p>
-          <a
-            href="#"
-            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Read more
-            <svg
-              class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 14 10"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M1 5h12m0 0L9 1m4 4L9 9"
-              />
-            </svg>
-          </a>
-        </div>
-        <a href="#">
-          <img
-            class="rounded-t-lg"
-            src="https://images.axios.com/2RC7iw8JDzTSY6V3UjUp7_dMGus=/0x0:3840x2160/1920x1080/2022/09/10/1662835722250.jpg"
-            alt=""
-          />
-        </a>
-        <div class="p-5">
-          <a href="#">
-            <h5
-              class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
-            >
-              Noteworthy technology acquisitions 2021
-            </h5>
-          </a>
-          <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-            Here are the biggest enterprise technology acquisitions of 2021 so
-            far, in reverse chronological order.
-          </p>
-          <a
-            href="#"
-            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Read more
-            <svg
-              class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 14 10"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M1 5h12m0 0L9 1m4 4L9 9"
-              />
-            </svg>
-          </a>
+          </div>
         </div>
       </div>
     </div>
