@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-talent-create',
@@ -10,7 +11,7 @@ export class TalentCreateComponent implements OnInit {
   @Input() SelectedStar: number = 0;
   maxRattingArr: any = [];
   previousSelection: number = 0;
-  constructor() {}
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     this.maxRattingArr = Array(this.maxRatting).fill(0);
@@ -30,6 +31,10 @@ export class TalentCreateComponent implements OnInit {
   HandleClickRating(index: number) {
     this.SelectedStar = index + 1;
     this.previousSelection = this.SelectedStar;
+  }
+
+  onButtonClick() {
+    this.router.navigate(['/main']);
   }
 }
 
@@ -133,4 +138,4 @@ export class FileInputComponent {
     <span class="hover:underline">Agregar más</span>
   </button>`,
 })
-export class AddAbilityButtonComponent {}
+export class AddAbilityButtonComponent { }

@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { initDropdowns } from 'flowbite';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,10 +14,11 @@ export class DashboardComponent implements OnInit {
   maxRattingArr: any = [];
   previousSelection: number = 0
   constructor(
-
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+    initDropdowns();
     this.maxRattingArr = Array(this.maxRatting).fill(0);
   }
 
@@ -33,5 +36,9 @@ export class DashboardComponent implements OnInit {
   HandleClickRating(index: number) {
     this.SelectedStar = index + 1;
     this.previousSelection = this.SelectedStar;
+  }
+
+  onButtonClick() {
+    this.router.navigate(['/main/new-talent']);
   }
 }

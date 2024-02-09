@@ -9,6 +9,7 @@ import {
   TalentCreateComponent,
   TextInputComponent,
 } from './talent/talent-create/talent-create.component';
+import { AppRoutingModule } from '../app-routing.module';
 
 
 @NgModule({
@@ -21,7 +22,7 @@ import {
     AddAbilityButtonComponent,
     CheckboxComponent,
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, AppRoutingModule],
   exports: [DashboardComponent, TalentCreateComponent],
 })
-export class FeaturesModule {}
+export class FeaturesModule { }
