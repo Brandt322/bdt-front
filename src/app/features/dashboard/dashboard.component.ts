@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { initDropdowns } from 'flowbite';
+import { FakeProfiles } from 'src/app/shared/models/types';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,6 +9,8 @@ import { initDropdowns } from 'flowbite';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
+
+  profiles = FakeProfiles;
 
   constructor(private router: Router) { }
 

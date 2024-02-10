@@ -14,6 +14,7 @@ interface Image {
 })
 
 export class ProfileComponent implements OnInit {
+  @Input() variant!: string;
   @Input() maxRatting: number = 5;
   @Input() SelectedStar: number = 0;
   @Input() name!: string;
@@ -25,6 +26,7 @@ export class ProfileComponent implements OnInit {
   @Input() finalMont!: number;
   @Input() iconEditMont?: boolean;
   @Input() feedbackNumber?: number;
+  @Input() options?: boolean;
 
   maxRattingArr: any = [];
   previousSelection: number = 0;
