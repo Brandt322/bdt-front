@@ -1,100 +1,63 @@
-<div
-  class="flex items-center w-full"
-  [ngClass]="{
+<div class="flex items-center w-full" [ngClass]="{
     'max-w-xl rounded-md bg-gray-50 hover:bg-sky-50 p-2 shadow-sm-light':
       variant === 'main-profile',
     'flex p-1 justify-center': variant !== 'main-profile'
-  }"
->
-  <div
-    class="flex"
-    [ngClass]="{
+  }">
+  <div class="flex" [ngClass]="{
       'w-full max-w-full gap-4 px-4': variant === 'main-profile',
       'w-full max-w-full gap-2 justify-between': variant !== 'main-profile'
-    }"
-  >
-    <div
-      class="flex"
-      [ngClass]="{
+    }">
+    <div class="flex" [ngClass]="{
         'w-full max-w-full justify-between gap-2': variant === 'main-profile',
         'gap-4': variant !== 'main-profile'
-      }"
-    >
+      }">
       <div class="relative flex items-center">
-        <img
-          class="rounded-full shadow-lg"
-          [src]="image.url"
-          [alt]="image.alt"
-          [width]="image.width"
-          [height]="image.height"
-        />
+        <img class="rounded-full shadow-lg" [src]="image.url" [alt]="image.alt" [width]="image.width"
+          [height]="image.height" />
         <button
           class="absolute flex items-center bottom-0 right-0 bg-white hover:bg-indigo-300 dark:text-slate-100 dark:bg-gray-600 dark:hover:bg-gray-700 rounded-full p-2 shadow-lg"
-          *ngIf="iconEditImg"
-        >
+          *ngIf="iconEditImg" data-modal-target="new-profile-pic-modal" data-modal-toggle="new-profile-pic-modal"
+          type="button">
           <span class="material-symbols-outlined"> edit </span>
         </button>
       </div>
-      <div
-        class="flex flex-col justify-center leading-relaxed"
-        [ngClass]="{
+      <div class="flex flex-col justify-center leading-relaxed" [ngClass]="{
           'w-full gap-2': variant === 'main-profile'
-        }"
-      >
-        <div
-          class="flex items-center leading-tight"
-          [ngClass]="{
+        }">
+        <div class="flex items-center leading-tight" [ngClass]="{
             'justify-between': variant === 'main-profile'
-          }"
-        >
+          }">
           <h5 class="mb-1 text-md font-medium text-gray-900 dark:text-white">
             {{ name }}
           </h5>
-          <span
-            class="material-symbols-outlined text-red-500 dark:text-red-500 ml-2"
-          >
+          <span class="material-symbols-outlined text-red-500 dark:text-red-500 ml-2">
             favorite
           </span>
         </div>
-        <div
-          class="flex"
-          [ngClass]="{
+        <div class="flex" [ngClass]="{
             'gap-2 flex-col justify-center': variant === 'main-profile',
             'items-center': variant !== 'main-profile'
-          }"
-        >
-          <p
-            class="mb-1 text-sm text-gray-600 dark:font-medium dark:text-gray-400"
-          >
+          }">
+          <p class="mb-1 text-sm text-gray-600 dark:font-medium dark:text-gray-400">
             {{ stack }}
           </p>
-          <div
-            class="flex items-center gap-1"
-            [ngClass]="{
+          <div class="flex items-center gap-1" [ngClass]="{
               'ml-0': variant === 'main-profile',
               'ml-2': variant !== 'main-profile'
-            }"
-          >
-            <span
-              class="material-symbols-outlined text-black dark:text-gray-500"
-            >
+            }">
+            <span class="material-symbols-outlined text-black dark:text-gray-500">
               location_on
             </span>
-            <p
-              class="mb-1 text-sm text-gray-600 dark:font-medium dark:text-gray-400"
-            >
+            <p class="mb-1 text-sm text-gray-600 dark:font-medium dark:text-gray-400">
               {{ location }}
             </p>
             <div class="flex gap-1">
-              <p
-                class="mb-1 text-sm text-gray-600 dark:font-medium dark:text-gray-400"
-              >
+              <p class="mb-1 text-sm text-gray-600 dark:font-medium dark:text-gray-400">
                 $ {{ initialMont }} - {{ finalMont }}
               </p>
-              <button class="flex items-center" *ngIf="iconEditMont">
-                <span
-                  class="material-symbols-outlined text-gray-600 dark:text-slate-100"
-                >
+              <button data-modal-target="salary-band-modal" data-modal-toggle="salary-band-modal"
+                class="flex items-center" *ngIf="iconEditMont">
+                <span class="material-symbols-outlined text-gray-600 dark:text-slate-100">
                   edit
                 </span>
               </button>
@@ -103,20 +66,12 @@
         </div>
         <div class="flex items-center">
           <div class="flex items-center">
-            <div
-              class="flex items-center"
-              *ngFor="let icon of maxRattingArr; let index = index"
-              [ngClass]="{ checked: SelectedStar > index }"
-              (mouseenter)="HandleMouseEnter(index)"
-              (mouseleave)="HandleMouseLeave()"
-              (click)="HandleClickRating(index)"
-            >
+            <div class="flex items-center" *ngFor="let icon of maxRattingArr; let index = index"
+              [ngClass]="{ checked: SelectedStar > index }" (mouseenter)="HandleMouseEnter(index)"
+              (mouseleave)="HandleMouseLeave()" (click)="HandleClickRating(index)">
               <span class="fa fa-star puntero mr-2"></span>
             </div>
-            <p
-              *ngIf="feedbackNumber"
-              class="text-gray-600 dark:font-medium dark:text-gray-400"
-            >
+            <p *ngIf="feedbackNumber" class="text-gray-600 dark:font-medium dark:text-gray-400">
               {{ feedbackNumber }} feebbacks
             </p>
           </div>
@@ -126,70 +81,52 @@
     <div class="flex flex-col justify-center gap-4 p-2" *ngIf="options">
       <div class="flex items-center gap-1">
         <div>
-          <button
-            id="dropdownDefaultButton"
-            data-dropdown-toggle="dropdown"
+          <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
             class="text-blue-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
-            type="button"
-          >
+            type="button">
             Ver CV
-            <svg
-              class="w-2.5 h-2.5 ms-3"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 10 6"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="m1 1 4 4 4-4"
-              />
+            <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 10 6">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 1 4 4 4-4" />
             </svg>
           </button>
           <!-- Dropdown menu -->
-          <div
-            id="dropdown"
-            class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
-          >
-            <ul
-              class="py-2 text-sm text-gray-700 dark:text-gray-200"
-              aria-labelledby="dropdownDefaultButton"
-            >
+          <div id="dropdown"
+            class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
               <li>
-                <a
-                  href="#"
-                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >CV</a
-                >
+                <a href="#"
+                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">CV</a>
               </li>
               <li>
-                <a
-                  href="#"
-                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >CV Fractal</a
-                >
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">CV
+                  Fractal</a>
               </li>
             </ul>
           </div>
         </div>
-        <button
-          type="button"
-          class="flex items-center justify-between text-white bg-[#009688] hover:bg-[#203634] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-        >
+        <button type="button"
+          class="flex items-center justify-between text-white bg-[#009688] hover:bg-[#203634] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
           <span class="material-symbols-outlined mr-2"> call </span>
           Contactar
         </button>
       </div>
-      <div class="flex justify-end gap-4">
-        <a href="" class="flex items-center">
-          <img src="../../../assets/github.png" alt="" />
-        </a>
-        <a href="" class="flex items-center">
-          <img src="../../../assets/linkedin.png" alt="" />
-        </a>
+      <div class="flex justify-end gap-2">
+        <div class="border rounded-lg grid grid-cols-2 gap-2 p-2">
+          <a href="">
+            <img src="../../../assets/github.png" alt="" />
+          </a>
+          <a href="">
+            <img src="../../../assets/linkedin.png" alt="" />
+          </a>
+        </div>
+        <button data-modal-target="socials-modal" data-modal-toggle="socials-modal"
+          class="flex items-center hover:bg-gray-200 rounded-lg p-2 focus:ring-2 focus:ring-gray-300">
+          <span class="material-symbols-outlined text-gray-600 dark:text-slate-100 hover:text-gray-800">
+            edit
+          </span>
+        </button>
       </div>
     </div>
   </div>

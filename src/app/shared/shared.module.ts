@@ -7,10 +7,26 @@ import { ButtonDropdownComponent } from './components/utils/buttons/button-dropd
 import { ProfileComponent } from './components/utils/cards/profile/profile.component';
 import { AddSkillButtonComponent } from './components/utils/form-inputs/add-skill-component';
 import { CheckboxInputComponent } from './components/utils/form-inputs/checkbox-input-component';
+import { DateInputComponent } from './components/utils/form-inputs/date-input-component';
 import { FileInputComponent } from './components/utils/form-inputs/file-input-component';
+import {
+  LanguageLevelSelectComponent,
+  LanguageSelectComponent,
+} from './components/utils/form-inputs/language-select-component';
 import { SubtitleFormComponent } from './components/utils/form-inputs/subtitle-form-component';
 import { TextInputComponent } from './components/utils/form-inputs/text-input-component';
 import { CheckboxModalComponent } from './components/utils/modals/checkbox-modal.component';
+import { BaseModalFormComponent } from './components/utils/modals/forms/base-modal-form-component';
+import { CancelSaveButtonsComponent } from './components/utils/modals/forms/cancel-save-buttons';
+import { EducationModalFormComponent } from './components/utils/modals/forms/education-form-component';
+import { ExperienceModalFormComponent } from './components/utils/modals/forms/experience-form-component';
+import { LanguageModalFormComponent } from './components/utils/modals/forms/language-form-component';
+import { ModalFormsCollection } from './components/utils/modals/forms/modal-forms-collection';
+import { NewFileModalFormComponent } from './components/utils/modals/forms/new-file-form-component';
+import { NewProfilePicModalFormComponent } from './components/utils/modals/forms/new-profile-pic-form-component';
+import { SalaryBandModalForm } from './components/utils/modals/forms/salary-band-form-component';
+import { SocialsModalFormComponent } from './components/utils/modals/forms/socials-form-component';
+import { TechnicalSkillsModalFormComponent } from './components/utils/modals/forms/technical-skills-form-component';
 import { RadioModalComponent } from './components/utils/modals/radio-modal.component';
 
 @NgModule({
@@ -27,6 +43,21 @@ import { RadioModalComponent } from './components/utils/modals/radio-modal.compo
     SubtitleFormComponent,
     FileInputComponent,
     AddSkillButtonComponent,
+    DateInputComponent,
+    LanguageSelectComponent,
+    LanguageLevelSelectComponent,
+    /* Modal forms */
+    BaseModalFormComponent,
+    ModalFormsCollection,
+    CancelSaveButtonsComponent,
+    NewProfilePicModalFormComponent,
+    SalaryBandModalForm,
+    SocialsModalFormComponent,
+    TechnicalSkillsModalFormComponent,
+    NewFileModalFormComponent,
+    ExperienceModalFormComponent,
+    EducationModalFormComponent,
+    LanguageModalFormComponent,
   ],
   imports: [CommonModule, AppRoutingModule],
   exports: [
@@ -42,6 +73,11 @@ import { RadioModalComponent } from './components/utils/modals/radio-modal.compo
     SubtitleFormComponent,
     FileInputComponent,
     AddSkillButtonComponent,
+    /* Modal forms */
+    ModalFormsCollection,
+    ExperienceModalFormComponent,
+    EducationModalFormComponent,
+    LanguageModalFormComponent,
   ],
 })
 export class SharedModule {}
