@@ -1,28 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import {
-  AddAbilityButtonComponent,
-  CheckboxComponent,
-  FileInputComponent,
-  SubtitleFormComponent,
-  TalentCreateComponent,
-  TextInputComponent,
-} from './talent/talent-create/talent-create.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { TalentCreateComponent } from './talent/talent-create/talent-create.component';
 
 @NgModule({
-  declarations: [
-    DashboardComponent,
-    TalentCreateComponent,
-    TextInputComponent,
-    SubtitleFormComponent,
-    FileInputComponent,
-    AddAbilityButtonComponent,
-    CheckboxComponent,
-  ],
+  declarations: [DashboardComponent, TalentCreateComponent],
   imports: [CommonModule, AppRoutingModule, SharedModule],
   exports: [DashboardComponent, TalentCreateComponent],
 })
-export class FeaturesModule { }
+export class FeaturesModule {}
