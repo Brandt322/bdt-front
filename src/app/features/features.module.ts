@@ -10,7 +10,7 @@ import {
   TextInputComponent,
 } from './talent/talent-create/talent-create.component';
 import { AppRoutingModule } from '../app-routing.module';
-
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,7 @@ import { AppRoutingModule } from '../app-routing.module';
     AddAbilityButtonComponent,
     CheckboxComponent,
   ],
-  imports: [CommonModule, AppRoutingModule],
+  imports: [CommonModule, AppRoutingModule, SharedModule],
   exports: [DashboardComponent, TalentCreateComponent],
 })
 export class FeaturesModule { }

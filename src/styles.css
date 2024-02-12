@@ -8,4 +8,5 @@ body {
   height: 100vh;
   max-height: min-content;
   overflow-y: hidden;
+  position: relative;
 }
