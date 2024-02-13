@@ -28,6 +28,7 @@ import { SalaryBandModalForm } from './components/utils/modals/forms/salary-band
 import { SocialsModalFormComponent } from './components/utils/modals/forms/socials-form-component';
 import { TechnicalSkillsModalFormComponent } from './components/utils/modals/forms/technical-skills-form-component';
 import { RadioModalComponent } from './components/utils/modals/radio-modal.component';
+import { CheckboxDropdownModalComponent } from './components/utils/modals/checkbox-dropdown/checkbox-dropdown-modal.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { RadioModalComponent } from './components/utils/modals/radio-modal.compo
     ExperienceModalFormComponent,
     EducationModalFormComponent,
     LanguageModalFormComponent,
+    CheckboxDropdownModalComponent
   ],
   imports: [CommonModule, AppRoutingModule],
   exports: [
@@ -78,6 +80,7 @@ import { RadioModalComponent } from './components/utils/modals/radio-modal.compo
     ExperienceModalFormComponent,
     EducationModalFormComponent,
     LanguageModalFormComponent,
+    CheckboxDropdownModalComponent
   ],
 })
-export class SharedModule {}
+export class SharedModule { }

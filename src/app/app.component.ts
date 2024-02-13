@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { initFlowbite } from 'flowbite';
+import { initDropdowns, initFlowbite, initModals } from 'flowbite';
 import { LoaderService } from './core/global/loader/loader.service';
 
 @Component({
@@ -13,6 +13,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     initFlowbite();
+    initModals();
+    initDropdowns();
 
     this.loader.showLoader();
     setTimeout(() => {

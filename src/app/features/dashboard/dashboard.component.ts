@@ -11,14 +11,17 @@ import { FakeProfiles } from 'src/app/shared/models/types';
 export class DashboardComponent implements OnInit, AfterViewInit {
   profiles = FakeProfiles;
 
-  constructor(private router: Router) {}
+
+  constructor(private router: Router) { }
 
   ngAfterViewInit(): void {
     initDropdowns();
     initModals();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
+
+
 
   onButtonClick() {
     this.router.navigate(['/main/new-talent']);

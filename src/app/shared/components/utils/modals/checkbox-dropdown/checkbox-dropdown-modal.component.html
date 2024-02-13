@@ -1,0 +1,27 @@
+<div
+  [id]="modalId"
+  class="z-10 hidden w-48 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+>
+  <ul
+    class="text-sm text-gray-700 dark:text-gray-200"
+    [attr.aria-labelledby]="labelledby"
+  >
+    <li
+      class="hover:bg-gray-50"
+      (click)="handleChecked(i)"
+      *ngFor="let skill of skills; let i = index"
+    >
+      <div
+        class="flex items-center justify-between p-3"
+        [ngClass]="{ 'bg-gray-200': isChecked[i] }"
+        [id]="skill.id"
+      >
+        <label
+          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >{{ skill.name }}</label
+        >
+        <i class="fa-solid fa-check text-blue-500" *ngIf="isChecked[i]"></i>
+      </div>
+    </li>
+  </ul>
+</div>
