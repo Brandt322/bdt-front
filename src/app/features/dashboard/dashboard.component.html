@@ -87,34 +87,14 @@
           >
             <li>
               <app-button-dropdown
-                buttonId="dropdownCheckboxButton1"
-                dropdownToggle="dropdownDefaultCheckbox1"
-                buttonName="Habilidades"
-              ></app-button-dropdown>
-              <!-- Dropdown menu -->
-              <app-checkbox-modal
-                modalId="dropdownDefaultCheckbox1"
-                labelledby="dropdownCheckboxButton1"
-                [skills]="[
-                  { id: 'checkbox-item-1-habilidades', name: 'Data Structure' },
-                  { id: 'checkbox-item-2-habilidades', name: 'Docker' },
-                  { id: 'checkbox-item-3-habilidades', name: 'Express' },
-                  { id: 'checkbox-item-4-habilidades', name: 'Github' },
-                  { id: 'checkbox-item-5-habilidades', name: 'Nginx' },
-                  { id: 'checkbox-item-6-habilidades', name: 'Node.js' }
-                ]"
-              ></app-checkbox-modal>
-            </li>
-            <li>
-              <app-button-dropdown
-                buttonId="testingdrop"
-                dropdownToggle="testingCheckbox"
+                buttonId="skillsDropdown"
+                dropdownToggle="skillsCheckbox"
                 buttonName="Habilidades"
               ></app-button-dropdown>
               <!-- Dropdown menu -->
               <app-checkbox-dropdown-modal
-                modalId="testingCheckbox"
-                labelledby="testingdrop"
+                modalId="skillsCheckbox"
+                labelledby="skillsDropdown"
                 [skills]="[
                   { id: 'checkbox-item-1-habilidades', name: 'Data Structure' },
                   { id: 'checkbox-item-2-habilidades', name: 'Docker' },
@@ -128,53 +108,37 @@
             </li>
             <li>
               <app-button-dropdown
-                buttonId="dropdownRadioButton"
-                dropdownToggle="dropdownDefaultRadio"
+                buttonId="languageCheckbox"
+                dropdownToggle="languageDropdown"
                 buttonName="Nivel de inglés"
               ></app-button-dropdown>
               <!-- Dropdown menu -->
-              <app-radio-button
-                modalId="dropdownDefaultRadio"
-                labelledby="dropdownRadioButton"
+              <app-checkbox-dropdown-select-modal
+                modalId="languageDropdown"
+                labelledby="languageCheckbox"
                 [data]="[
-                  { id: 'default-radio-1', label: 'Básico' },
-                  { id: 'default-radio-2', label: 'Intermedio' },
-                  { id: 'default-radio-3', label: 'Avanzado' },
-                  { id: 'default-radio-4', label: 'Nativo' }
+                  { id: 'default-radio-1', name: 'Básico' },
+                  { id: 'default-radio-2', name: 'Intermedio' },
+                  { id: 'default-radio-3', name: 'Avanzado' },
+                  { id: 'default-radio-4', name: 'Nativo' }
                 ]"
-              ></app-radio-button>
+              ></app-checkbox-dropdown-select-modal>
             </li>
             <li>
               <app-button-dropdown
-                buttonId="dropdownNavbarLink3"
-                dropdownToggle="dropdownNavbar3"
+                buttonId="favoriteCheckbox"
+                dropdownToggle="favoriteDropdown"
                 buttonName="Favoritos"
               ></app-button-dropdown>
               <!-- Dropdown menu -->
-              <div
-                id="dropdownNavbar3"
-                class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
-              >
-                <ul
-                  class="py-2 text-sm text-gray-700 dark:text-gray-400"
-                  aria-labelledby="dropdownLargeButton"
-                >
-                  <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Dashboard</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Settings</a
-                    >
-                  </li>
-                </ul>
-              </div>
+              <app-checkbox-dropdown-select-modal
+                modalId="favoriteDropdown"
+                labelledby="favoriteCheckbox"
+                [data]="[
+                  { id: 'default-radio-1', name: 'Mis favoritos' },
+                  { id: 'default-radio-2', name: 'Backups' }
+                ]"
+              ></app-checkbox-dropdown-select-modal>
             </li>
           </ul>
         </div>

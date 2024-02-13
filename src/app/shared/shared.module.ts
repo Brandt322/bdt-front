@@ -28,7 +28,8 @@ import { SalaryBandModalForm } from './components/utils/modals/forms/salary-band
 import { SocialsModalFormComponent } from './components/utils/modals/forms/socials-form-component';
 import { TechnicalSkillsModalFormComponent } from './components/utils/modals/forms/technical-skills-form-component';
 import { RadioModalComponent } from './components/utils/modals/radio-modal.component';
-import { CheckboxDropdownModalComponent } from './components/utils/modals/checkbox-dropdown/checkbox-dropdown-modal.component';
+import { CheckboxDropdownMultipleSelectModalComponent } from './components/utils/modals/checkbox-dropdown-multiple-select/checkbox-dropdown-multiple-select-modal.component';
+import { CheckboxDropdownSelectModalComponent } from './components/utils/modals/checkbox-dropdown-select-modal.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { CheckboxDropdownModalComponent } from './components/utils/modals/checkb
     ExperienceModalFormComponent,
     EducationModalFormComponent,
     LanguageModalFormComponent,
-    CheckboxDropdownModalComponent
+    CheckboxDropdownMultipleSelectModalComponent,
+    CheckboxDropdownSelectModalComponent
   ],
   imports: [CommonModule, AppRoutingModule],
   exports: [
@@ -80,7 +82,9 @@ import { CheckboxDropdownModalComponent } from './components/utils/modals/checkb
     ExperienceModalFormComponent,
     EducationModalFormComponent,
     LanguageModalFormComponent,
-    CheckboxDropdownModalComponent
+    /* Dropdown modals */
+    CheckboxDropdownMultipleSelectModalComponent,
+    CheckboxDropdownSelectModalComponent
   ],
 })
 export class SharedModule { }
