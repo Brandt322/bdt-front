@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { initDropdowns, initFlowbite, initModals } from 'flowbite';
 import { LoaderService } from './core/global/loader/loader.service';
 
@@ -20,5 +20,10 @@ export class AppComponent implements OnInit {
     setTimeout(() => {
       this.loader.hideLoader();
     }, 500)
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    window.scrollTo(0, 0);
   }
 }

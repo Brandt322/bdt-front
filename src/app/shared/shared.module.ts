@@ -30,6 +30,7 @@ import { TechnicalSkillsModalFormComponent } from './components/utils/modals/for
 import { RadioModalComponent } from './components/utils/modals/radio-modal.component';
 import { CheckboxDropdownMultipleSelectModalComponent } from './components/utils/modals/checkbox-dropdown-multiple-select/checkbox-dropdown-multiple-select-modal.component';
 import { CheckboxDropdownSelectModalComponent } from './components/utils/modals/checkbox-dropdown-select-modal.component';
+import { PillTagComponent } from './components/utils/tags/pill-tag/pill-tag-component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { CheckboxDropdownSelectModalComponent } from './components/utils/modals/
     EducationModalFormComponent,
     LanguageModalFormComponent,
     CheckboxDropdownMultipleSelectModalComponent,
-    CheckboxDropdownSelectModalComponent
+    CheckboxDropdownSelectModalComponent,
+    PillTagComponent
   ],
   imports: [CommonModule, AppRoutingModule],
   exports: [
@@ -84,7 +86,9 @@ import { CheckboxDropdownSelectModalComponent } from './components/utils/modals/
     LanguageModalFormComponent,
     /* Dropdown modals */
     CheckboxDropdownMultipleSelectModalComponent,
-    CheckboxDropdownSelectModalComponent
+    CheckboxDropdownSelectModalComponent,
+    /* Tags */
+    PillTagComponent
   ],
 })
 export class SharedModule { }
