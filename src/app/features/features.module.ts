@@ -10,4 +10,4 @@ import { TalentCreateComponent } from './talent/talent-create/talent-create.comp
   imports: [CommonModule, AppRoutingModule, SharedModule],
   exports: [DashboardComponent, TalentCreateComponent],
 })
-export class FeaturesModule {}
+export class FeaturesModule { }

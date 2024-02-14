@@ -27,6 +27,22 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.masterService.getLevel('niveles').subscribe(niveles => {
       this.data = niveles
     });
+
+    this.masterService.getCountry('paises').subscribe(paises => {
+      console.log(paises);
+    });
+
+    this.masterService.getCoin('monedas').subscribe(coins => {
+      console.log(coins);
+    });
+
+    this.masterService.getLanguage('idiomas').subscribe(idiomas => {
+      console.log(idiomas);
+    });
+
+    this.masterService.getCity('ciudades').subscribe(ciudades => {
+      console.log(ciudades);
+    });
   }
 
   onButtonClick() {
