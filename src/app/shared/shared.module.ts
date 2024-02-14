@@ -17,7 +17,6 @@ import {
 import { SubtitleFormComponent } from './components/utils/form-inputs/subtitle-form-component';
 import { TextInputComponent } from './components/utils/form-inputs/text-input-component';
 import { CheckboxDropdownMultipleSelectModalComponent } from './components/utils/modals/checkbox-dropdown-multiple-select/checkbox-dropdown-multiple-select-modal.component';
-import { CheckboxDropdownSelectModalComponent } from './components/utils/modals/checkbox-dropdown-select-modal.component';
 import { CheckboxModalComponent } from './components/utils/modals/checkbox-modal.component';
 import { BaseModalFormComponent } from './components/utils/modals/forms/base-modal-form-component';
 import { CancelSaveButtonsComponent } from './components/utils/modals/forms/cancel-save-buttons';
@@ -31,11 +30,7 @@ import { SalaryBandModalForm } from './components/utils/modals/forms/salary-band
 import { SocialsModalFormComponent } from './components/utils/modals/forms/socials-form-component';
 import { TechnicalSkillsModalFormComponent } from './components/utils/modals/forms/technical-skills-form-component';
 import { RadioModalComponent } from './components/utils/modals/radio-modal.component';
-<<<<<<< HEAD
-import { CheckboxDropdownMultipleSelectModalComponent } from './components/utils/modals/checkbox-dropdown-multiple-select/checkbox-dropdown-multiple-select-modal.component';
 import { CheckboxDropdownSelectDataModalComponent } from './components/utils/modals/checkbox-dropdown-select-modal.component';
-=======
->>>>>>> 9476294442fe8ea1792de051678f5b917c816d70
 import { PillTagComponent } from './components/utils/tags/pill-tag/pill-tag-component';
 import { CheckboxDropdownSelectPrevModalComponent } from './components/utils/modals/checkbox-droddown-prev-modal.component';
 
@@ -70,14 +65,10 @@ import { CheckboxDropdownSelectPrevModalComponent } from './components/utils/mod
     EducationModalFormComponent,
     LanguageModalFormComponent,
     CheckboxDropdownMultipleSelectModalComponent,
-<<<<<<< HEAD
     CheckboxDropdownSelectDataModalComponent,
     PillTagComponent,
     CheckboxDropdownSelectPrevModalComponent
-=======
-    CheckboxDropdownSelectModalComponent,
-    PillTagComponent,
->>>>>>> 9476294442fe8ea1792de051678f5b917c816d70
+
   ],
   imports: [CommonModule, AppRoutingModule],
   exports: [
@@ -107,4 +98,4 @@ import { CheckboxDropdownSelectPrevModalComponent } from './components/utils/mod
     PillTagComponent,
   ],
 })
-export class SharedModule {}
+export class SharedModule { }
