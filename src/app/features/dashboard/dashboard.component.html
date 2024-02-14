@@ -317,9 +317,10 @@
               </app-pill-tag-component>
             </div>
           </div>
-          <div
+          <!-- <div
             class="flex flex-col items-start justify-between w-5/6 gap-2 p-4"
-          >
+          > -->
+          <div class="grid grid-cols-1 gap-6 ms-4 me-4 md:me-32">
             <div class="w-full">
               <p class="text-md text-gray-600 dark:text-gray-400">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -328,220 +329,45 @@
                 eligendi voluptatem accusantium nam. Eveniet, omnis?
               </p>
             </div>
-            <div class="flex flex-col justify-center w-full gap-2">
-              <div class="flex justify-between items-center">
-                <h4
-                  class="font-semibold text-md text-gray-500 dark:text-gray-400"
-                >
-                  Experiencia
-                </h4>
-                <button
-                  data-modal-target="experience-modal-form"
-                  data-modal-toggle="experience-modal-form"
-                  (click)="
-                    setModalData(
-                      'Agrega una nueva experiencia',
-                      'Describe y agrega una nueva experiencia laboral'
-                    )
-                  "
-                >
-                  <i class="fa-solid fa-plus text-gray-500"></i>
-                </button>
-              </div>
-              <div
-                class="flex justify-start items-center p-2 gap-2 rounded-md bg-gray-50 hover:bg-gray-200 shadow-sm-light"
-              >
-                <img
-                  class="h-12 rounded-full"
-                  src="../../../assets/fractal (1).png "
-                  alt=""
-                />
-                <div class="flex justify-between items-center w-full">
-                  <div class="flex flex-col justify-center item">
-                    <h1
-                      class="font-medium text-xl text-black dark:text-gray-400"
-                    >
-                      Fractal
-                    </h1>
-                    <div class="flex justify-between gap-2 w-full">
-                      <p
-                        class="text-md font-normal text-gray-500 dark:text-gray-400"
-                      >
-                        Desarrollador Full-Stack
-                      </p>
-                      <span
-                        class="text-md font-normal text-gray-500 dark:text-gray-400"
-                      >
-                        2015 - 2021
-                      </span>
-                      <span
-                        class="text-md font-normal text-gray-500 dark:text-gray-400"
-                      >
-                        6 años
-                      </span>
-                    </div>
-                  </div>
-                  <button
-                    data-modal-target="experience-modal-form"
-                    data-modal-toggle="experience-modal-form"
-                    (click)="
-                      setModalData(
-                        'Edita la experiencia',
-                        'La vida esta llena de cambios. Edita la experiencia laboral'
-                      )
-                    "
-                  >
-                    <span
-                      class="material-symbols-outlined text-gray-600 dark:text-slate-100"
-                    >
-                      edit
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="flex flex-col justify-center w-full gap-2">
-              <div class="flex justify-between items-center">
-                <h4
-                  class="font-semibold text-md text-gray-500 dark:text-gray-400"
-                >
-                  Educación
-                </h4>
-                <button
-                  data-modal-target="education-modal-form"
-                  data-modal-toggle="education-modal-form"
-                  (click)="
-                    setModalData(
-                      'Agrega una nueva experiencia educativa',
-                      'Describe y agrega una nueva experiencia educativa.'
-                    )
-                  "
-                >
-                  <i class="fa-solid fa-plus text-gray-500"></i>
-                </button>
-              </div>
-              <div
-                class="flex justify-start items-center p-2 gap-2 rounded-md bg-gray-50 hover:bg-gray-200 shadow-sm-light"
-              >
-                <img
-                  class="h-12 rounded-full"
-                  src="../../../assets/pontificia.jpeg"
-                  alt=""
-                />
-                <div class="flex justify-between items-center w-full">
-                  <div class="flex flex-col justify-center item">
-                    <h1
-                      class="font-medium text-xl text-black dark:text-gray-400"
-                    >
-                      Pontificia Universidad Católica del Perú
-                    </h1>
-                    <div class="flex justify-between gap-2 w-full">
-                      <p
-                        class="text-md font-normal text-gray-500 dark:text-gray-400"
-                      >
-                        Bachiller en Ingeniería de Sistemas
-                      </p>
-                      <span
-                        class="text-md font-normal text-gray-500 dark:text-gray-400"
-                      >
-                        2015 - 2021
-                      </span>
-                      <span
-                        class="text-md font-normal text-gray-500 dark:text-gray-400"
-                      >
-                      </span>
-                    </div>
-                  </div>
-                  <button
-                    data-modal-target="education-modal-form"
-                    data-modal-toggle="education-modal-form"
-                    (click)="
-                      setModalData(
-                        'Edita la experiencia educativa',
-                        'La vida esta llena de cambios. Edita la experiencia educativa'
-                      )
-                    "
-                  >
-                    <span
-                      class="material-symbols-outlined text-gray-600 dark:text-slate-100"
-                    >
-                      edit
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="flex flex-col justify-center w-full gap-2">
-              <div class="flex justify-between items-center">
-                <h4
-                  class="font-semibold text-md text-gray-500 dark:text-gray-400"
-                >
-                  Idiomas
-                </h4>
-                <button
-                  data-modal-target="language-modal-form"
-                  data-modal-toggle="language-modal-form"
-                  (click)="
-                    setModalData(
-                      'Agrega un nuevo idioma',
-                      'Agrega un nuevo idioma aprendido.'
-                    )
-                  "
-                >
-                  <i class="fa-solid fa-plus text-gray-500"></i>
-                </button>
-              </div>
-              <div
-                class="flex justify-start items-center p-2 gap-2 rounded-md bg-gray-50 hover:bg-gray-200 shadow-sm-light"
-              >
-                <img
-                  class="h-12 rounded-full"
-                  src="../../../assets/pontificia.jpeg"
-                  alt=""
-                />
-                <div class="flex justify-between items-center w-full">
-                  <div class="flex flex-col justify-center item">
-                    <h1
-                      class="font-medium text-xl text-black dark:text-gray-400"
-                    >
-                      Pontificia Universidad Católica del Perú
-                    </h1>
-                    <div class="flex justify-between gap-2 w-full">
-                      <p
-                        class="text-md font-normal text-gray-500 dark:text-gray-400"
-                      >
-                        Bachiller en Ingeniería de Sistemas
-                      </p>
-                      <span
-                        class="text-md font-normal text-gray-500 dark:text-gray-400"
-                      >
-                        2015 - 2021
-                      </span>
-                      <span
-                        class="text-md font-normal text-gray-500 dark:text-gray-400"
-                      >
-                      </span>
-                    </div>
-                  </div>
-                  <button
-                    data-modal-target="language-modal-form"
-                    data-modal-toggle="language-modal-form"
-                    (click)="
-                      setModalData(
-                        'Edita la habilidad en el idioma',
-                        'Edita la habilidad en el idioma.'
-                      )
-                    "
-                  >
-                    <span
-                      class="material-symbols-outlined text-gray-600 dark:text-slate-100"
-                    >
-                      edit
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div>
+            <app-add-edit-attr
+              main_title="Experiencia"
+              title="Fractal"
+              description="Full-Stack Developer 2015-2021 6 años"
+              [modal_id]="'experience-modal-form'"
+              [modal_add_title]="'Agrega una nueva experiencia'"
+              modal_add_description="Describe y agrega la nueva experiencia laboral."
+              modal_edit_title="Editar la experiencia laboral"
+              modal_edit_description="La vida esta llena de cambios. Edita la experiencia laboral."
+              [has_image]="true"
+              [number_items]="1"
+              type="exp"
+            ></app-add-edit-attr>
+            <app-add-edit-attr
+              main_title="Educación"
+              title="Pontificia Universidad Católica del Perú"
+              description="Bachiller en Ingeniería de Sistemas 2015-2021"
+              [modal_id]="'education-modal-form'"
+              [modal_add_title]="'Agrega una nueva experiencia educativa'"
+              modal_add_description="Describe y agrega la nueva experiencia educativa."
+              modal_edit_title="Editar la experiencia educativa"
+              modal_edit_description="La vida esta llena de cambios. Edita la experiencia educativa."
+              [has_image]="true"
+              [number_items]="1"
+              type="edu"
+            ></app-add-edit-attr>
+            <app-add-edit-attr
+              main_title="Idiomas"
+              title="Inglés"
+              description="Avanzado"
+              [modal_id]="'language-modal-form'"
+              modal_add_title="Agrega un nuevo idioma"
+              modal_add_description="Agrega un nuevo idioma aprendido."
+              modal_edit_title="Edita la habilidad en el idioma"
+              modal_edit_description="Edita la habilidad en el idioma"
+              [has_image]="false"
+              [number_items]="1"
+              type="lang"
+            ></app-add-edit-attr>
           </div>
         </div>
       </div>
@@ -549,16 +375,4 @@
   </div>
   <!-- Modal forms -->
   <app-modal-forms-collection></app-modal-forms-collection>
-  <app-experience-modal-form
-    title="{{ modalTitle }}"
-    description="{{ modalDescription }}"
-  ></app-experience-modal-form>
-  <app-education-modal-form
-    title="{{ modalTitle }}"
-    description="{{ modalDescription }}"
-  ></app-education-modal-form>
-  <app-language-modal-form
-    title="{{ modalTitle }}"
-    description="{{ modalDescription }}"
-  ></app-language-modal-form>
 </div>

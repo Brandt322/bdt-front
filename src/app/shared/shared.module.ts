@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from '../app-routing.module';
 import { HeaderComponent } from './components/layout/header/header.component';
 import { MainComponent } from './components/layout/main/main.component';
+import { AddEditAttrComponent } from './components/utils/add-edit-attr/add-edit-attr.component';
 import { ButtonDropdownComponent } from './components/utils/buttons/button-dropdown.component';
 import { ProfileComponent } from './components/utils/cards/profile/profile.component';
 import { AddSkillButtonComponent } from './components/utils/form-inputs/add-skill-component';
@@ -15,6 +16,8 @@ import {
 } from './components/utils/form-inputs/language-select-component';
 import { SubtitleFormComponent } from './components/utils/form-inputs/subtitle-form-component';
 import { TextInputComponent } from './components/utils/form-inputs/text-input-component';
+import { CheckboxDropdownMultipleSelectModalComponent } from './components/utils/modals/checkbox-dropdown-multiple-select/checkbox-dropdown-multiple-select-modal.component';
+import { CheckboxDropdownSelectModalComponent } from './components/utils/modals/checkbox-dropdown-select-modal.component';
 import { CheckboxModalComponent } from './components/utils/modals/checkbox-modal.component';
 import { BaseModalFormComponent } from './components/utils/modals/forms/base-modal-form-component';
 import { CancelSaveButtonsComponent } from './components/utils/modals/forms/cancel-save-buttons';
@@ -28,8 +31,11 @@ import { SalaryBandModalForm } from './components/utils/modals/forms/salary-band
 import { SocialsModalFormComponent } from './components/utils/modals/forms/socials-form-component';
 import { TechnicalSkillsModalFormComponent } from './components/utils/modals/forms/technical-skills-form-component';
 import { RadioModalComponent } from './components/utils/modals/radio-modal.component';
+<<<<<<< HEAD
 import { CheckboxDropdownMultipleSelectModalComponent } from './components/utils/modals/checkbox-dropdown-multiple-select/checkbox-dropdown-multiple-select-modal.component';
 import { CheckboxDropdownSelectDataModalComponent } from './components/utils/modals/checkbox-dropdown-select-modal.component';
+=======
+>>>>>>> 9476294442fe8ea1792de051678f5b917c816d70
 import { PillTagComponent } from './components/utils/tags/pill-tag/pill-tag-component';
 import { CheckboxDropdownSelectPrevModalComponent } from './components/utils/modals/checkbox-droddown-prev-modal.component';
 
@@ -41,6 +47,7 @@ import { CheckboxDropdownSelectPrevModalComponent } from './components/utils/mod
     CheckboxModalComponent,
     ButtonDropdownComponent,
     ProfileComponent,
+    AddEditAttrComponent,
     /* Input */
     CheckboxInputComponent,
     TextInputComponent,
@@ -63,9 +70,14 @@ import { CheckboxDropdownSelectPrevModalComponent } from './components/utils/mod
     EducationModalFormComponent,
     LanguageModalFormComponent,
     CheckboxDropdownMultipleSelectModalComponent,
+<<<<<<< HEAD
     CheckboxDropdownSelectDataModalComponent,
     PillTagComponent,
     CheckboxDropdownSelectPrevModalComponent
+=======
+    CheckboxDropdownSelectModalComponent,
+    PillTagComponent,
+>>>>>>> 9476294442fe8ea1792de051678f5b917c816d70
   ],
   imports: [CommonModule, AppRoutingModule],
   exports: [
@@ -75,6 +87,7 @@ import { CheckboxDropdownSelectPrevModalComponent } from './components/utils/mod
     CheckboxModalComponent,
     ButtonDropdownComponent,
     ProfileComponent,
+    AddEditAttrComponent,
     /* Form Inputs */
     CheckboxInputComponent,
     TextInputComponent,
@@ -91,7 +104,7 @@ import { CheckboxDropdownSelectPrevModalComponent } from './components/utils/mod
     CheckboxDropdownMultipleSelectModalComponent,
     CheckboxDropdownSelectDataModalComponent,
     /* Tags */
-    PillTagComponent
+    PillTagComponent,
   ],
 })
-export class SharedModule { }
+export class SharedModule {}
