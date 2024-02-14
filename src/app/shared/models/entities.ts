@@ -1,4 +1,4 @@
-import { Byte } from "@angular/compiler/src/util";
+import { Byte } from '@angular/compiler/src/util';
 
 export interface Archivos {
   id_archivo: number;
@@ -115,4 +115,45 @@ export interface MasterUsuario {
   id_master_usuario: number;
   id_rol: number;
   id_usuario: number;
+}
+
+export interface Pais {
+  id: number;
+  pais: string;
+  abreviatura: string;
+}
+
+export interface Ciudad {
+  id: number;
+  ciudad: string;
+  paisId: number;
+}
+
+export interface Rol {
+  id: number;
+  rol: string;
+  abreviatura: string;
+}
+
+export interface Moneda {
+  id: number;
+  moneda: string;
+  abreviatura: string;
+}
+
+export interface Perfil {
+  id: number;
+  perfil: string;
+  abreviatura: string;
+}
+
+export interface Idioma {
+  id: number;
+  idioma: string;
+  abreviatura: string;
+}
+
+export interface Nivel {
+  id: number;
+  nivel: string;
 }
