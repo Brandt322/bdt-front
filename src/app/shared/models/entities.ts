@@ -56,15 +56,16 @@ export interface ListaUsuario {
 
 export interface Master {
   id: number;
-  de_descripcion: string;
   id_master: number;
-  id_dos: number;
-  id_tres: number;
-  id_uno: number;
+  de_descripcion: string;
+  string_uno: string;
   string_dos: string;
   string_tres: string;
-  string_uno: string;
+  id_uno: number;
+  id_dos: number;
+  id_tres: number;
 }
+
 
 export interface Talento {
   id_talento: number;

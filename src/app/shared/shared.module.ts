@@ -29,8 +29,9 @@ import { SocialsModalFormComponent } from './components/utils/modals/forms/socia
 import { TechnicalSkillsModalFormComponent } from './components/utils/modals/forms/technical-skills-form-component';
 import { RadioModalComponent } from './components/utils/modals/radio-modal.component';
 import { CheckboxDropdownMultipleSelectModalComponent } from './components/utils/modals/checkbox-dropdown-multiple-select/checkbox-dropdown-multiple-select-modal.component';
-import { CheckboxDropdownSelectModalComponent } from './components/utils/modals/checkbox-dropdown-select-modal.component';
+import { CheckboxDropdownSelectDataModalComponent } from './components/utils/modals/checkbox-dropdown-select-modal.component';
 import { PillTagComponent } from './components/utils/tags/pill-tag/pill-tag-component';
+import { CheckboxDropdownSelectPrevModalComponent } from './components/utils/modals/checkbox-droddown-prev-modal.component';
 
 @NgModule({
   declarations: [
@@ -62,8 +63,9 @@ import { PillTagComponent } from './components/utils/tags/pill-tag/pill-tag-comp
     EducationModalFormComponent,
     LanguageModalFormComponent,
     CheckboxDropdownMultipleSelectModalComponent,
-    CheckboxDropdownSelectModalComponent,
-    PillTagComponent
+    CheckboxDropdownSelectDataModalComponent,
+    PillTagComponent,
+    CheckboxDropdownSelectPrevModalComponent
   ],
   imports: [CommonModule, AppRoutingModule],
   exports: [
@@ -85,8 +87,9 @@ import { PillTagComponent } from './components/utils/tags/pill-tag/pill-tag-comp
     EducationModalFormComponent,
     LanguageModalFormComponent,
     /* Dropdown modals */
+    CheckboxDropdownSelectPrevModalComponent,
     CheckboxDropdownMultipleSelectModalComponent,
-    CheckboxDropdownSelectModalComponent,
+    CheckboxDropdownSelectDataModalComponent,
     /* Tags */
     PillTagComponent
   ],

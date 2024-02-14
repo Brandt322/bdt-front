@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 @Component({
-  selector: 'app-checkbox-dropdown-select-data-modal',
+  selector: 'app-checkbox-dropdown-select-prev-modal',
   template: `
     <div
       [id]="modalId"
@@ -22,7 +22,7 @@ import { Component, Input } from '@angular/core';
           >
             <label
               class="text-sm font-medium text-gray-900 dark:text-gray-300"
-              >{{ item[labelKey].charAt(0).toUpperCase() + item[labelKey].slice(1).toLowerCase() }}</label
+              >{{ item.name }}</label
             >
             <i class="fa-solid fa-check text-blue-500" *ngIf="selectedIndex === i"></i>
           </div>
@@ -32,11 +32,10 @@ import { Component, Input } from '@angular/core';
   `,
 })
 
-export class CheckboxDropdownSelectDataModalComponent {
+export class CheckboxDropdownSelectPrevModalComponent {
   @Input() modalId!: string;
   @Input() labelledby!: string;
-  @Input() data?: { id: number;[key: string]: any }[];
-  @Input() labelKey!: string;
+  @Input() data?: { id: number; name: string }[];
 
   selectedIndex: number | null = null;
 

@@ -113,16 +113,12 @@
                 buttonName="Nivel de inglés"
               ></app-button-dropdown>
               <!-- Dropdown menu -->
-              <app-checkbox-dropdown-select-modal
+              <app-checkbox-dropdown-select-data-modal
                 modalId="languageDropdown"
                 labelledby="languageCheckbox"
-                [data]="[
-                  { id: 'default-radio-1', name: 'Básico' },
-                  { id: 'default-radio-2', name: 'Intermedio' },
-                  { id: 'default-radio-3', name: 'Avanzado' },
-                  { id: 'default-radio-4', name: 'Nativo' }
-                ]"
-              ></app-checkbox-dropdown-select-modal>
+                [data]="data"
+                [labelKey]="'nivel'"
+              ></app-checkbox-dropdown-select-data-modal>
             </li>
             <li>
               <app-button-dropdown
@@ -130,15 +126,14 @@
                 dropdownToggle="favoriteDropdown"
                 buttonName="Favoritos"
               ></app-button-dropdown>
-              <!-- Dropdown menu -->
-              <app-checkbox-dropdown-select-modal
+              <app-checkbox-dropdown-select-prev-modal
                 modalId="favoriteDropdown"
                 labelledby="favoriteCheckbox"
                 [data]="[
-                  { id: 'default-radio-1', name: 'Mis favoritos' },
-                  { id: 'default-radio-2', name: 'Backups' }
+                  { id: 1, name: 'Mis favoritos' },
+                  { id: 2, name: 'Backups' }
                 ]"
-              ></app-checkbox-dropdown-select-modal>
+              ></app-checkbox-dropdown-select-prev-modal>
             </li>
           </ul>
         </div>
