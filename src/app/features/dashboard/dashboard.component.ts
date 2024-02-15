@@ -5,6 +5,7 @@ import { MasterService } from 'src/app/services/master/master.service';
 import { Master } from 'src/app/shared/models/entities';
 import { Level } from 'src/app/shared/models/interfaces/level-interface';
 import { FakeProfiles } from 'src/app/shared/models/types';
+import { API_ENDPOINTS } from '../../core/global/constants/api-endpoints';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,9 +15,9 @@ import { FakeProfiles } from 'src/app/shared/models/types';
 export class DashboardComponent implements OnInit, AfterViewInit {
 
   profiles = FakeProfiles;
-  data: Level[] = [];
 
-  constructor(private router: Router, private masterService: MasterService) { }
+
+  constructor(private masterService: MasterService) { }
 
   ngAfterViewInit(): void {
     initDropdowns();
@@ -24,29 +25,21 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.masterService.getLevel('niveles').subscribe(niveles => {
-      this.data = niveles
-    });
-
-    this.masterService.getCountry('paises').subscribe(paises => {
+    this.masterService.getCountry(API_ENDPOINTS.PAISES).subscribe(paises => {
       console.log(paises);
     });
 
-    this.masterService.getCoin('monedas').subscribe(coins => {
+    this.masterService.getCoin(API_ENDPOINTS.MONEDAS).subscribe(coins => {
       console.log(coins);
     });
 
-    this.masterService.getLanguage('idiomas').subscribe(idiomas => {
+    this.masterService.getLanguage(API_ENDPOINTS.IDIOMAS).subscribe(idiomas => {
       console.log(idiomas);
     });
 
-    this.masterService.getCity('ciudades').subscribe(ciudades => {
+    this.masterService.getCity(API_ENDPOINTS.CIUDADES).subscribe(ciudades => {
       console.log(ciudades);
     });
-  }
-
-  onButtonClick() {
-    this.router.navigate(['/main/new-talent']);
   }
 
   modalTitle: string = '';

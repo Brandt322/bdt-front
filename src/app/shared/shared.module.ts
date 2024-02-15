@@ -33,6 +33,8 @@ import { RadioModalComponent } from './components/utils/modals/radio-modal.compo
 import { CheckboxDropdownSelectDataModalComponent } from './components/utils/modals/checkbox-dropdown-select-modal.component';
 import { PillTagComponent } from './components/utils/tags/pill-tag/pill-tag-component';
 import { CheckboxDropdownSelectPrevModalComponent } from './components/utils/modals/checkbox-droddown-prev-modal.component';
+import { NavFiltersComponent } from './components/layout/nav-filters/nav-filters.component';
+import { TalentContentComponent } from './components/layout/talent-content/talent-content.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +69,9 @@ import { CheckboxDropdownSelectPrevModalComponent } from './components/utils/mod
     CheckboxDropdownMultipleSelectModalComponent,
     CheckboxDropdownSelectDataModalComponent,
     PillTagComponent,
-    CheckboxDropdownSelectPrevModalComponent
+    CheckboxDropdownSelectPrevModalComponent,
+    NavFiltersComponent,
+    TalentContentComponent
 
   ],
   imports: [CommonModule, AppRoutingModule],
@@ -79,6 +83,8 @@ import { CheckboxDropdownSelectPrevModalComponent } from './components/utils/mod
     ButtonDropdownComponent,
     ProfileComponent,
     AddEditAttrComponent,
+    NavFiltersComponent,
+    TalentContentComponent,
     /* Form Inputs */
     CheckboxInputComponent,
     TextInputComponent,

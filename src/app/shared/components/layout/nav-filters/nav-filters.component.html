@@ -1,0 +1,141 @@
+<nav class="bg-white border-gray-200 dark:bg-gray-900">
+  <div
+    class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto gap-2 p-4"
+  >
+    <a
+      (click)="onButtonClick()"
+      class="inline-block text-md font-medium text-center text-[#0B85C3] bg-white border border-[#84c2e0] focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-[#c7e2f0] rounded-lg py-2.5 px-5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 cursor-pointer"
+    >
+      + Nuevo Talento
+    </a>
+    <div
+      class="flex gap-8 max-w-screen-xl w-auto md:w-auto flex-col md:flex-row lg:flex-row"
+    >
+      <!-- Barra de busqueda, boton buscar y icono hamburguesa -->
+      <div
+        class="flex md:order-2 justify-between space-x-3 md:space-x-0 rtl:space-x-reverse"
+      >
+        <form class="flex gap-6 items-center">
+          <div class="relative md:block flex items-center">
+            <div
+              class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+            >
+              <svg
+                class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                />
+              </svg>
+              <span class="sr-only">Search icon</span>
+            </div>
+            <input
+              type="text"
+              id="search-navbar"
+              class="block w-full lg:w-96 p-2 ps-10 text-lg text-gray-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Buscar nuevo talento o puesto"
+            />
+          </div>
+          <button
+            type="button"
+            class="text-md font-medium text-white bg-[#009688] hover:bg-[#203634] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg px-4 py-2 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+          >
+            Buscar
+          </button>
+        </form>
+        <button
+          data-collapse-toggle="navbar-dropdown"
+          type="button"
+          class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          aria-controls="navbar-dropdown"
+          aria-expanded="false"
+        >
+          <svg
+            class="w-5 h-5"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 17 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M1 1h15M1 7h15M1 13h15"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Barra de busqueda, boton buscar y icono hamburguesa -->
+      <div
+        class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+        id="navbar-dropdown"
+      >
+        <ul
+          class="flex flex-col gap-4 font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
+        >
+          <li>
+            <app-button-dropdown
+              buttonId="skillsDropdown"
+              dropdownToggle="skillsCheckbox"
+              buttonName="Habilidades"
+            ></app-button-dropdown>
+            <!-- Dropdown menu -->
+            <app-checkbox-dropdown-modal
+              modalId="skillsCheckbox"
+              labelledby="skillsDropdown"
+              [skills]="[
+                { id: 'checkbox-item-1-habilidades', name: 'Data Structure' },
+                { id: 'checkbox-item-2-habilidades', name: 'Docker' },
+                { id: 'checkbox-item-3-habilidades', name: 'Express' },
+                { id: 'checkbox-item-4-habilidades', name: 'Github' },
+                { id: 'checkbox-item-5-habilidades', name: 'Nginx' },
+                { id: 'checkbox-item-6-habilidades', name: 'Node.js' }
+              ]"
+            >
+            </app-checkbox-dropdown-modal>
+          </li>
+          <li>
+            <app-button-dropdown
+              buttonId="languageCheckbox"
+              dropdownToggle="languageDropdown"
+              buttonName="Nivel de inglés"
+            ></app-button-dropdown>
+            <!-- Dropdown menu -->
+            <app-checkbox-dropdown-select-data-modal
+              modalId="languageDropdown"
+              labelledby="languageCheckbox"
+              [data]="data"
+              [labelKey]="'nivel'"
+            ></app-checkbox-dropdown-select-data-modal>
+          </li>
+          <li>
+            <app-button-dropdown
+              buttonId="favoriteCheckbox"
+              dropdownToggle="favoriteDropdown"
+              buttonName="Favoritos"
+            ></app-button-dropdown>
+            <app-checkbox-dropdown-select-prev-modal
+              modalId="favoriteDropdown"
+              labelledby="favoriteCheckbox"
+              [data]="[
+                { id: 1, name: 'Mis favoritos' },
+                { id: 2, name: 'Backups' }
+              ]"
+            ></app-checkbox-dropdown-select-prev-modal>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
