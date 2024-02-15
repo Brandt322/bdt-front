@@ -35,6 +35,8 @@ import { PillTagComponent } from './components/utils/tags/pill-tag/pill-tag-comp
 import { CheckboxDropdownSelectPrevModalComponent } from './components/utils/modals/checkbox-droddown-prev-modal.component';
 import { NavFiltersComponent } from './components/layout/nav-filters/nav-filters.component';
 import { TalentContentComponent } from './components/layout/talent-content/talent-content.component';
+import { SelectInputComponent } from './components/utils/form-inputs/select-input-component';
+import { RadioInputComponent } from './components/utils/form-inputs/radio-input-component';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,8 @@ import { TalentContentComponent } from './components/layout/talent-content/talen
     DateInputComponent,
     LanguageSelectComponent,
     LanguageLevelSelectComponent,
+    SelectInputComponent,
+    RadioInputComponent,
     /* Modal forms */
     BaseModalFormComponent,
     ModalFormsCollection,
@@ -91,6 +95,8 @@ import { TalentContentComponent } from './components/layout/talent-content/talen
     SubtitleFormComponent,
     FileInputComponent,
     AddSkillButtonComponent,
+    SelectInputComponent,
+    RadioInputComponent,
     /* Modal forms */
     ModalFormsCollection,
     ExperienceModalFormComponent,

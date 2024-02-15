@@ -7,12 +7,16 @@
       </p>
     </div>
     <div class="grid gap-2 md:grid-cols-2 my-auto">
-      <a (click)="onButtonClick()"
-        class="inline-block text-center text-[#0B85C3] bg-white border border-[#84c2e0] focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-[#c7e2f0] font-medium rounded-lg text-sm py-2.5 px-5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+      <a
+        (click)="onButtonClick()"
+        class="inline-block text-center text-[#0B85C3] bg-white border border-[#84c2e0] focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-[#c7e2f0] font-medium rounded-lg text-sm py-2.5 px-5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+      >
         Volver
       </a>
-      <button type="button"
-        class="focus:outline-none text-white bg-[#009689] hover:bg-[#0a655f] focus:ring-4 focus:ring-[#51f7dd] font-medium rounded-lg text-sm py-2.5 px-5 dark:bg-green-600 dark:hover:bg-[#009689] dark:focus:ring-[#0a655f]">
+      <button
+        type="button"
+        class="focus:outline-none text-white bg-[#009689] hover:bg-[#0a655f] focus:ring-4 focus:ring-[#51f7dd] font-medium rounded-lg text-sm py-2.5 px-5 dark:bg-green-600 dark:hover:bg-[#009689] dark:focus:ring-[#0a655f]"
+      >
         Guardar
       </button>
     </div>
@@ -21,23 +25,41 @@
     <div class="mx-10 md:mx-16">
       <form action="">
         <app-subtitle-form text="Curriculum Vitae"></app-subtitle-form>
-        <app-file-input [id]="'cv'" title="Curriculum Vitae" description="PDF (Max. 800x400 px)"
-          [accept]="'application/pdf'"></app-file-input>
+        <app-file-input
+          [id]="'cv'"
+          title="Curriculum Vitae"
+          description="PDF (Max. 800x400 px)"
+          [accept]="'application/pdf'"
+        ></app-file-input>
 
         <app-subtitle-form text="Foto de perfil"></app-subtitle-form>
-        <app-file-input [id]="'foto_perfil'" title="Foto de perfil" description="JPEG o PNG (Max. 800x400 px)"
-          [accept]="'image/png, image/jpeg'"></app-file-input>
+        <app-file-input
+          [id]="'foto_perfil'"
+          title="Foto de perfil"
+          description="JPEG o PNG (Max. 800x400 px)"
+          [accept]="'image/png, image/jpeg'"
+        ></app-file-input>
 
         <div class="mb-8">
           <app-subtitle-form text="Datos"></app-subtitle-form>
           <div class="grid gap-4">
-            <app-text-input [id]="'nombre'" label="Nombre" placeholder="Ingrese el nombre">
+            <app-text-input
+              [id]="'nombre'"
+              label="Nombre"
+              placeholder="Ingrese el nombre"
+            >
             </app-text-input>
-            <app-text-input [id]="'apellido-paterno'" label="Apellido paterno"
-              placeholder="Ingrese el apellido paterno">
+            <app-text-input
+              [id]="'apellido-paterno'"
+              label="Apellido paterno"
+              placeholder="Ingrese el apellido paterno"
+            >
             </app-text-input>
-            <app-text-input [id]="'apellido-materno'" label="Apellido materno"
-              placeholder="Ingrese el apellido materno">
+            <app-text-input
+              [id]="'apellido-materno'"
+              label="Apellido materno"
+              placeholder="Ingrese el apellido materno"
+            >
             </app-text-input>
           </div>
         </div>
@@ -45,9 +67,17 @@
         <div class="mb-8">
           <app-subtitle-form text="Medios sociales"></app-subtitle-form>
           <div class="grid gap-4">
-            <app-text-input [id]="'link-linkedin'" label="Link de Linkedin" placeholder="Link del perfil de LinkedIn">
+            <app-text-input
+              [id]="'link-linkedin'"
+              label="Link de Linkedin"
+              placeholder="Link del perfil de LinkedIn"
+            >
             </app-text-input>
-            <app-text-input [id]="'link-github'" label="Link de GitHub" placeholder="Link del perfil de GitHub">
+            <app-text-input
+              [id]="'link-github'"
+              label="Link de GitHub"
+              placeholder="Link del perfil de GitHub"
+            >
             </app-text-input>
           </div>
         </div>
@@ -55,22 +85,20 @@
         <div class="mb-8">
           <app-subtitle-form text="Banda salarial"></app-subtitle-form>
           <div class="grid gap-4">
-            <div class="flex items-center ps-4 border rounded-lg border-gray-200 dark:border-gray-700 space-y-reverse">
-              <input id="bordered-radio-1" type="radio" value="" name="bordered-radio"
-                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-              <label for="bordered-radio-1"
-                class="w-full py-4 ms-2 text-sm text-gray-900 dark:text-gray-300">Soles</label>
-            </div>
-            <div class="flex items-center ps-4 border rounded-lg border-gray-200 dark:border-gray-700">
-              <input id="bordered-radio-2" type="radio" value="" name="bordered-radio"
-                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-              <label for="bordered-radio-2"
-                class="w-full py-4 ms-2 text-sm text-gray-900 dark:text-gray-300">Dólares</label>
-            </div>
+            <app-radio-input [data]="coinOptions" [labelKey]="'moneda'">
+            </app-radio-input>
             <div class="grid gap-4 md:grid-cols-2">
-              <app-text-input [id]="'monto-inicial'" label="Monto inicial" placeholder="Ingrese el monto inicial">
+              <app-text-input
+                [id]="'monto-inicial'"
+                label="Monto inicial"
+                placeholder="Ingrese el monto inicial"
+              >
               </app-text-input>
-              <app-text-input [id]="'monto-final'" label="Monto final" placeholder="Ingrese el monto final">
+              <app-text-input
+                [id]="'monto-final'"
+                label="Monto final"
+                placeholder="Ingrese el monto final"
+              >
               </app-text-input>
             </div>
           </div>
@@ -79,9 +107,17 @@
         <div class="mb-8">
           <app-subtitle-form text="Habilidades técnicas"></app-subtitle-form>
           <div class="grid gap-4">
-            <app-text-input [id]="'habilidad-tecnica-1'" label="Habilidad técnica" placeholder="Nombre de la habilidad">
+            <app-text-input
+              [id]="'habilidad-tecnica-1'"
+              label="Habilidad técnica"
+              placeholder="Nombre de la habilidad"
+            >
             </app-text-input>
-            <app-text-input [id]="'anios-exp-habilidad'" label="Años de experiencia" placeholder="Nro. de años">
+            <app-text-input
+              [id]="'anios-exp-habilidad'"
+              label="Años de experiencia"
+              placeholder="Nro. de años"
+            >
             </app-text-input>
             <app-add-skill-button></app-add-skill-button>
           </div>
@@ -90,7 +126,11 @@
         <div class="mb-8">
           <app-subtitle-form text="Habilidades blandas"></app-subtitle-form>
           <div class="grid gap-4">
-            <app-text-input [id]="'habilidad-blanda-1'" label="Habilidad blanda" placeholder="Nombre de la habilidad">
+            <app-text-input
+              [id]="'habilidad-blanda-1'"
+              label="Habilidad blanda"
+              placeholder="Nombre de la habilidad"
+            >
             </app-text-input>
             <app-add-skill-button></app-add-skill-button>
           </div>
@@ -99,56 +139,119 @@
         <div class="mb-8">
           <app-subtitle-form text="Experiencias laborales"></app-subtitle-form>
           <div class="grid gap-4">
-            <app-text-input [id]="'empresa-1'" label="Empresa" placeholder="Nombre de la empresa">
+            <app-text-input
+              [id]="'empresa-1'"
+              label="Empresa"
+              placeholder="Nombre de la empresa"
+            >
             </app-text-input>
-            <app-checkbox-input [id]="'exp-fractal'" label="Aquí en Fractal"></app-checkbox-input>
-            <app-text-input [id]="'puesto'" label="Puesto" placeholder="Puesto en la empresa">
+            <app-checkbox-input
+              [id]="'exp-fractal'"
+              label="Aquí en Fractal"
+            ></app-checkbox-input>
+            <app-text-input
+              [id]="'puesto'"
+              label="Puesto"
+              placeholder="Puesto en la empresa"
+            >
             </app-text-input>
             <div class="grid gap-4 md:grid-cols-2">
-              <app-text-input [id]="'anio-mes-inicio'" label="Año y mes de inicio" placeholder="Fecha de inicio">
+              <app-text-input
+                [id]="'anio-mes-inicio'"
+                label="Año y mes de inicio"
+                placeholder="Fecha de inicio"
+              >
               </app-text-input>
-              <app-text-input [id]="'anio-mes-fin'" label="Año y mes final" placeholder="Fecha de fin">
+              <app-text-input
+                [id]="'anio-mes-fin'"
+                label="Año y mes final"
+                placeholder="Fecha de fin"
+              >
               </app-text-input>
             </div>
-            <app-checkbox-input [id]="'exp-actual'" label="Hasta la actualidad"></app-checkbox-input>
+            <app-checkbox-input
+              [id]="'exp-actual'"
+              label="Hasta la actualidad"
+            ></app-checkbox-input>
           </div>
         </div>
 
         <div class="mb-8">
           <app-subtitle-form text="Experiencias educativas"></app-subtitle-form>
           <div class="grid gap-4">
-            <app-text-input [id]="'institucion'" label="Institución" placeholder="Nombre de la institución">
+            <app-text-input
+              [id]="'institucion'"
+              label="Institución"
+              placeholder="Nombre de la institución"
+            >
             </app-text-input>
-            <app-checkbox-input [id]="'edu-fractal'" label="Aquí en Fractal"></app-checkbox-input>
-            <app-text-input [id]="'carrera'" label="Carrera" placeholder="Nombre de la carrera">
+            <app-checkbox-input
+              [id]="'edu-fractal'"
+              label="Aquí en Fractal"
+            ></app-checkbox-input>
+            <app-text-input
+              [id]="'carrera'"
+              label="Carrera"
+              placeholder="Nombre de la carrera"
+            >
             </app-text-input>
-            <app-text-input [id]="'grado'" label="Grado" placeholder="Grado de la carrera">
+            <app-text-input
+              [id]="'grado'"
+              label="Grado"
+              placeholder="Grado de la carrera"
+            >
             </app-text-input>
             <div class="grid gap-4 md:grid-cols-2">
-              <app-text-input [id]="'edu-anio-mes-inicio'" label="Año y mes de inicio" placeholder="Fecha de inicio">
+              <app-text-input
+                [id]="'edu-anio-mes-inicio'"
+                label="Año y mes de inicio"
+                placeholder="Fecha de inicio"
+              >
               </app-text-input>
-              <app-text-input [id]="'edu-anio-mes-fin'" label="Año y mes final" placeholder="Fecha de fin">
+              <app-text-input
+                [id]="'edu-anio-mes-fin'"
+                label="Año y mes final"
+                placeholder="Fecha de fin"
+              >
               </app-text-input>
             </div>
-            <app-checkbox-input [id]="'exp-actual1'" label="Hasta la actualidad"></app-checkbox-input>
+            <app-checkbox-input
+              [id]="'exp-actual1'"
+              label="Hasta la actualidad"
+            ></app-checkbox-input>
           </div>
         </div>
 
         <div class="mb-8">
           <app-subtitle-form text="Idiomas"></app-subtitle-form>
           <div class="grid gap-4">
-            <app-text-input [id]="'idioma'" label="Idioma" placeholder="Nombre del idioma">
-            </app-text-input>
-            <app-text-input [id]="'nivel-idioma'" label="Nivel" placeholder="Nivel del idioma">
-            </app-text-input>
+            <app-select-input
+              [id]="'idioma'"
+              label="Idioma"
+              optionName="Nombre del idioma"
+              [data]="languageOptions"
+              [optionKey]="'idioma'"
+            ></app-select-input>
+            <app-select-input
+              [id]="'idioma'"
+              label="Nivel"
+              optionName="Nivel del idioma"
+              [data]="levelOptions"
+              [optionKey]="'nivel'"
+            ></app-select-input>
           </div>
         </div>
 
         <div class="mb-8">
           <div class="flex">
-            <div class="flex items-center" *ngFor="let icon of maxRattingArr; let index = index"
-              [ngClass]="{ checked: SelectedStar > index }" (mouseenter)="HandleMouseEnter(index)"
-              (mouseleave)="HandleMouseLeave()" (click)="HandleClickRating(index)">
+            <div
+              class="flex items-center"
+              *ngFor="let icon of maxRattingArr; let index = index"
+              [ngClass]="{ checked: SelectedStar > index }"
+              (mouseenter)="HandleMouseEnter(index)"
+              (mouseleave)="HandleMouseLeave()"
+              (click)="HandleClickRating(index)"
+            >
               <span class="fa fa-star puntero mr-2"></span>
             </div>
           </div>

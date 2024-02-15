@@ -1,5 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import Language from '../../../shared/models/interfaces/language.interface';
+import { Level } from 'src/app/shared/models/interfaces/level-interface';
+import { LoaderService } from 'src/app/core/global/loader/loader.service';
+import { catchError, forkJoin, throwError } from 'rxjs';
+import { MasterService } from '../../../services/master/master.service';
+import { API_ENDPOINTS } from 'src/app/core/global/constants/api-endpoints';
+import { finalize } from 'rxjs/operators';
+import { Coin } from 'src/app/shared/models/interfaces/coin.interface';
 
 @Component({
   selector: 'app-talent-create',
@@ -9,12 +17,37 @@ import { Router } from '@angular/router';
 export class TalentCreateComponent implements OnInit {
   @Input() maxRatting: number = 5;
   @Input() SelectedStar: number = 0;
+
+  languageOptions: Language[] = [];
+  levelOptions: Level[] = [];
+  coinOptions: Coin[] = [];
   maxRattingArr: any = [];
   previousSelection: number = 0;
-  constructor(private router: Router) {}
+
+  constructor(private router: Router, public loader: LoaderService, private masterService: MasterService) { }
 
   ngOnInit(): void {
     this.maxRattingArr = Array(this.maxRatting).fill(0);
+    this.requestOptions();
+  }
+
+  requestOptions() {
+    this.loader.showLoader();
+
+    const languageRequest = this.masterService.getLanguage(API_ENDPOINTS.IDIOMAS);
+    const levelRequest = this.masterService.getLevel(API_ENDPOINTS.NIVELES);
+    const coinRequest = this.masterService.getCoin(API_ENDPOINTS.MONEDAS);
+
+    forkJoin([languageRequest, levelRequest, coinRequest]).pipe(
+      catchError((error) => {
+        return throwError(() => error);
+      }),
+      finalize(() => this.loader.hideLoader())
+    ).subscribe(([languages, levels, coins]) => {
+      this.languageOptions = languages;
+      this.levelOptions = levels;
+      this.coinOptions = coins;
+    });
   }
 
   HandleMouseEnter(index: number) {

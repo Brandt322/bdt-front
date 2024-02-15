@@ -2,8 +2,6 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { initDropdowns, initModals } from 'flowbite';
 import { MasterService } from 'src/app/services/master/master.service';
-import { Master } from 'src/app/shared/models/entities';
-import { Level } from 'src/app/shared/models/interfaces/level-interface';
 import { FakeProfiles } from 'src/app/shared/models/types';
 import { API_ENDPOINTS } from '../../core/global/constants/api-endpoints';
 
@@ -31,10 +29,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     this.masterService.getCoin(API_ENDPOINTS.MONEDAS).subscribe(coins => {
       console.log(coins);
-    });
-
-    this.masterService.getLanguage(API_ENDPOINTS.IDIOMAS).subscribe(idiomas => {
-      console.log(idiomas);
     });
 
     this.masterService.getCity(API_ENDPOINTS.CIUDADES).subscribe(ciudades => {
