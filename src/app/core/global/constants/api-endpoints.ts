@@ -1,7 +1,12 @@
-export const API_ENDPOINTS = {
-  CIUDADES: 'ciudades',
-  IDIOMAS: 'idiomas',
-  MONEDAS: 'monedas',
-  NIVELES: 'niveles',
-  PAISES: 'paises',
+export const MASTER_API_ENDPOINTS = {
+  CITIES: 'cities',
+  LANGUAGES: 'languages',
+  COINS: 'currencies',
+  LEVELS: 'levels',
+  COUNTRIES: 'countries',
 };
+
+export const TALENT_API_ENDPOINTS = {
+  GETTALENT: 'talent',
+  NEWTALENT: 'to-talent',
+}
