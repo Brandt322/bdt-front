@@ -18,7 +18,7 @@ export class ProfileComponent implements OnInit {
   @Input() maxRatting: number = 5;
   @Input() SelectedStar: number = 0;
   @Input() name!: string;
-  @Input() image!: Image;
+  @Input() image!: string;
   @Input() stack!: string;
   @Input() iconEditImg?: boolean;
   @Input() location!: string;

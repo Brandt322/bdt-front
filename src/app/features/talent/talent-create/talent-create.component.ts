@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, forkJoin, throwError } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { API_ENDPOINTS } from 'src/app/core/global/constants/api-endpoints';
+import { MASTER_API_ENDPOINTS } from 'src/app/core/global/constants/api-endpoints';
 import { LoaderService } from 'src/app/core/global/loader/loader.service';
 import { City } from 'src/app/shared/models/interfaces/city.interface';
 import { Country } from 'src/app/shared/models/interfaces/country.interface';
@@ -45,20 +45,22 @@ export class TalentCreateComponent implements OnInit {
     this.loader.showLoader();
 
     const languageRequest = this.masterService.getLanguage(
-      API_ENDPOINTS.LANGUAGES
+      MASTER_API_ENDPOINTS.LANGUAGES
     );
-    const levelRequest = this.masterService.getLevel(API_ENDPOINTS.LEVELS);
+    const levelRequest = this.masterService.getLevel(
+      MASTER_API_ENDPOINTS.LEVELS
+    );
     const currencyRequest = this.masterService.getCurrency(
-      API_ENDPOINTS.CURRENCIES
+      MASTER_API_ENDPOINTS.CURRENCIES
     );
     const countryRequest = this.masterService.getCountry(
-      API_ENDPOINTS.COUNTRIES
+      MASTER_API_ENDPOINTS.COUNTRIES
     );
-    const cityRequest = this.masterService.getCity(API_ENDPOINTS.CITIES);
+    const cityRequest = this.masterService.getCity(MASTER_API_ENDPOINTS.CITIES);
     const citiesByCountryRequest = this.masterService.getCitiesByCountry(
-      API_ENDPOINTS.COUNTRIES,
+      MASTER_API_ENDPOINTS.COUNTRIES,
       'A',
-      API_ENDPOINTS.CITIES
+      MASTER_API_ENDPOINTS.CITIES
     );
 
     forkJoin([

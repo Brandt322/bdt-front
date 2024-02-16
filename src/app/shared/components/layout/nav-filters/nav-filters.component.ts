@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { API_ENDPOINTS } from 'src/app/core/global/constants/api-endpoints';
+import { MASTER_API_ENDPOINTS } from 'src/app/core/global/constants/api-endpoints';
 import { MasterService } from 'src/app/services/master/master.service';
 import { Level } from 'src/app/shared/models/interfaces/level-interface';
 
@@ -15,9 +15,11 @@ export class NavFiltersComponent implements OnInit {
   constructor(private router: Router, private masterService: MasterService) {}
 
   ngOnInit(): void {
-    this.masterService.getLevel(API_ENDPOINTS.LEVELS).subscribe((niveles) => {
-      this.data = niveles;
-    });
+    this.masterService
+      .getLevel(MASTER_API_ENDPOINTS.LEVELS)
+      .subscribe((niveles) => {
+        this.data = niveles;
+      });
   }
 
   onButtonClick() {

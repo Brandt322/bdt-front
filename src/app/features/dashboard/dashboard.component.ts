@@ -1,8 +1,9 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { initDropdowns, initModals } from 'flowbite';
-import { MasterService } from 'src/app/services/master/master.service';
+import { catchError, throwError } from 'rxjs';
+import { TalentService } from 'src/app/services/talent/talent.service';
 import { FakeProfiles } from 'src/app/shared/models/types';
-import { API_ENDPOINTS } from '../../core/global/constants/api-endpoints';
+import { Talent } from '../../shared/models/interfaces/talent.interface';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,8 +12,9 @@ import { API_ENDPOINTS } from '../../core/global/constants/api-endpoints';
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
   profiles = FakeProfiles;
+  talents: Talent[] = [];
 
-  constructor(private masterService: MasterService) {}
+  constructor(private talentService: TalentService) {}
 
   ngAfterViewInit(): void {
     initDropdowns();
@@ -20,21 +22,16 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.masterService
-      .getCountry(API_ENDPOINTS.COUNTRIES)
-      .subscribe((paises) => {
-        console.log(paises);
+    this.talentService
+      .getTalent()
+      .pipe(
+        catchError((error) => {
+          return throwError(() => error);
+        })
+      )
+      .subscribe((talents) => {
+        this.talents = talents;
       });
-
-    this.masterService
-      .getCurrency(API_ENDPOINTS.CURRENCIES)
-      .subscribe((coins) => {
-        console.log(coins);
-      });
-
-    this.masterService.getCity(API_ENDPOINTS.CITIES).subscribe((ciudades) => {
-      console.log(ciudades);
-    });
   }
 
   modalTitle: string = '';

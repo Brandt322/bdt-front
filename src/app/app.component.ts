@@ -15,11 +15,6 @@ export class AppComponent implements OnInit {
     initFlowbite();
     initModals();
     initDropdowns();
-
-    this.loader.showLoader();
-    setTimeout(() => {
-      this.loader.hideLoader();
-    }, 500)
   }
 
   @HostListener('window:resize', ['$event'])
