@@ -1,7 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-language-modal-form',
+  selector: 'app-feedback-modal-form',
   template: ` <app-base-modal-form
     [id]="modal_id"
     title="{{ title }}"
@@ -9,9 +9,7 @@ import { Component, Input } from '@angular/core';
   >
     <form action="">
       <div class="grid gap-4 mb-8">
-        <app-language-select></app-language-select>
-        <app-language-level-select></app-language-level-select>
-        <div class="flex items-center justify-start mt-1">
+        <div class="flex items-center justify-start">
           <div
             class="flex items-center"
             *ngFor="let icon of maxRattingArr; let index = index"
@@ -23,10 +21,11 @@ import { Component, Input } from '@angular/core';
             <span class="fa fa-star puntero mr-2"></span>
           </div>
         </div>
+        <app-textarea-select></app-textarea-select>
       </div>
       <app-cancel-save-buttons
         [modal_id]="modal_id"
-        [save_button_id]="'save-experience'"
+        [save_button_id]="'save-feedback'"
       ></app-cancel-save-buttons>
     </form>
   </app-base-modal-form>`,
@@ -42,8 +41,8 @@ import { Component, Input } from '@angular/core';
     `,
   ],
 })
-export class LanguageModalFormComponent {
-  modal_id: string = 'language-modal-form';
+export class FeedbackModalFormComponent implements OnInit {
+  modal_id: string = 'feedback-modal-form';
   @Input() title!: string;
   @Input() description!: string;
   @Input() maxRatting: number = 5;

@@ -1,0 +1,62 @@
+<div class="flex flex-col justify-center w-full gap-2">
+  <div class="flex justify-between items-center">
+    <h4 class="font-semibold text-md text-gray-500 dark:text-gray-400">
+      {{ main_title }}
+    </h4>
+  </div>
+
+  <div
+    *ngFor="let _ of [].constructor(number_items)"
+    class="flex justify-start items-center p-2 gap-4 rounded-md bg-gray-50 hover:bg-gray-200 shadow-sm-light"
+  >
+    <div class="flex w-full gap-4">
+      <img
+        *ngIf="has_image"
+        class="h-12 rounded-full"
+        src="../../../assets/fractal (1).png "
+        alt=""
+      />
+      <div class="flex flex-col justify-center">
+        <div class="flex items-center gap-4">
+          <h1 class="font-medium text-xl text-black dark:text-gray-400">
+            {{ title }}
+          </h1>
+          <div class="flex items-center justify-start">
+            <div
+              class="flex items-center"
+              *ngFor="let icon of maxRattingArr; let index = index"
+              [ngClass]="{ checked: SelectedStar > index }"
+              (mouseenter)="HandleMouseEnter(index)"
+              (mouseleave)="HandleMouseLeave()"
+              (click)="HandleClickRating(index)"
+            >
+              <span class="fa fa-star puntero mr-2"></span>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-between gap-2 w-full">
+          <p class="text-md font-normal text-gray-500 dark:text-gray-400">
+            {{ description }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex items-center gap-2">
+    <button
+      [attr.data-modal-target]="modal_id"
+      [attr.data-modal-toggle]="modal_id"
+      (click)="setAddModalTitle()"
+    >
+      <i class="fa-solid fa-plus text-gray-500"></i>
+    </button>
+    <h4 class="font-semibold text-md text-gray-500 dark:text-gray-400">
+      Dar nuevo feedback
+    </h4>
+  </div>
+</div>
+<app-feedback-modal-form
+  *ngIf="type == 'feedback'"
+  title="{{ modalTitle }}"
+  description="{{ modalDescription }}"
+></app-feedback-modal-form>
