@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { initDropdowns, initModals } from 'flowbite';
 import { MasterService } from 'src/app/services/master/master.service';
 import { FakeProfiles } from 'src/app/shared/models/types';
@@ -11,11 +10,9 @@ import { API_ENDPOINTS } from '../../core/global/constants/api-endpoints';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
-
   profiles = FakeProfiles;
 
-
-  constructor(private masterService: MasterService) { }
+  constructor(private masterService: MasterService) {}
 
   ngAfterViewInit(): void {
     initDropdowns();
@@ -23,15 +20,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.masterService.getCountry(API_ENDPOINTS.PAISES).subscribe(paises => {
-      console.log(paises);
-    });
+    this.masterService
+      .getCountry(API_ENDPOINTS.COUNTRIES)
+      .subscribe((paises) => {
+        console.log(paises);
+      });
 
-    this.masterService.getCoin(API_ENDPOINTS.MONEDAS).subscribe(coins => {
-      console.log(coins);
-    });
+    this.masterService
+      .getCurrency(API_ENDPOINTS.CURRENCIES)
+      .subscribe((coins) => {
+        console.log(coins);
+      });
 
-    this.masterService.getCity(API_ENDPOINTS.CIUDADES).subscribe(ciudades => {
+    this.masterService.getCity(API_ENDPOINTS.CITIES).subscribe((ciudades) => {
       console.log(ciudades);
     });
   }

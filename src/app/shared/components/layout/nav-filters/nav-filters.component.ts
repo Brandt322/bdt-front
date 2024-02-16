@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { API_ENDPOINTS } from 'src/app/core/global/constants/api-endpoints';
 import { MasterService } from 'src/app/services/master/master.service';
 import { Level } from 'src/app/shared/models/interfaces/level-interface';
-import { API_ENDPOINTS } from 'src/app/core/global/constants/api-endpoints';
 
 @Component({
   selector: 'app-nav-filters',
   templateUrl: './nav-filters.component.html',
-  styleUrls: ['./nav-filters.component.css']
+  styleUrls: ['./nav-filters.component.css'],
 })
 export class NavFiltersComponent implements OnInit {
   data: Level[] = [];
 
-  constructor(private router: Router, private masterService: MasterService) { }
+  constructor(private router: Router, private masterService: MasterService) {}
 
   ngOnInit(): void {
-    this.masterService.getLevel(API_ENDPOINTS.NIVELES).subscribe(niveles => {
-      this.data = niveles
+    this.masterService.getLevel(API_ENDPOINTS.LEVELS).subscribe((niveles) => {
+      this.data = niveles;
     });
   }
 

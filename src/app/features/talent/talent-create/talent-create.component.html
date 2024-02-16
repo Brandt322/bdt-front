@@ -65,6 +65,26 @@
         </div>
 
         <div class="mb-8">
+          <app-subtitle-form text="Idiomas"></app-subtitle-form>
+          <div class="grid gap-4">
+            <app-select-input
+              [id]="'country'"
+              label="País"
+              optionName="Nombre del país"
+              [data]="countryOptions"
+              [optionKey]="'country'"
+            ></app-select-input>
+            <app-select-input
+              [id]="'city'"
+              label="Ciudad"
+              optionName="Nombre de la ciudades"
+              [data]="cityOptions"
+              [optionKey]="'city'"
+            ></app-select-input>
+          </div>
+        </div>
+
+        <div class="mb-8">
           <app-subtitle-form text="Medios sociales"></app-subtitle-form>
           <div class="grid gap-4">
             <app-text-input
@@ -85,7 +105,7 @@
         <div class="mb-8">
           <app-subtitle-form text="Banda salarial"></app-subtitle-form>
           <div class="grid gap-4">
-            <app-radio-input [data]="coinOptions" [labelKey]="'moneda'">
+            <app-radio-input [data]="currencyOptions" [labelKey]="'currency'">
             </app-radio-input>
             <div class="grid gap-4 md:grid-cols-2">
               <app-text-input
@@ -230,14 +250,14 @@
               label="Idioma"
               optionName="Nombre del idioma"
               [data]="languageOptions"
-              [optionKey]="'idioma'"
+              [optionKey]="'language'"
             ></app-select-input>
             <app-select-input
               [id]="'idioma'"
               label="Nivel"
               optionName="Nivel del idioma"
               [data]="levelOptions"
-              [optionKey]="'nivel'"
+              [optionKey]="'level'"
             ></app-select-input>
           </div>
         </div>
