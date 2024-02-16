@@ -184,7 +184,7 @@
         [number_items]="1"
         type="edu"
       ></app-add-edit-attr>
-      <app-add-edit-attr
+      <app-add-edit-languages
         main_title="Idiomas"
         title="Inglés"
         description="Avanzado"
@@ -196,7 +196,18 @@
         [has_image]="false"
         [number_items]="1"
         type="lang"
-      ></app-add-edit-attr>
+      ></app-add-edit-languages>
+      <app-add-edit-feedback
+        main_title="Feedback"
+        title="Cesar Ortiz"
+        description="Ayudo siempre al equipo, es muy talentoso."
+        [modal_id]="'feedback-modal-form'"
+        modal_add_title="Agrega un nuevo feedback"
+        modal_add_description="Añade un puntaje y escribe un comentario."
+        [has_image]="true"
+        [number_items]="1"
+        type="feedback"
+      ></app-add-edit-feedback>
     </div>
   </div>
 </div>

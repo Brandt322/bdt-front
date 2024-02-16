@@ -37,6 +37,10 @@ import { NavFiltersComponent } from './components/layout/nav-filters/nav-filters
 import { TalentContentComponent } from './components/layout/talent-content/talent-content.component';
 import { SelectInputComponent } from './components/utils/form-inputs/select-input-component';
 import { RadioInputComponent } from './components/utils/form-inputs/radio-input-component';
+import { AddEditLanguagesComponent } from './components/utils/add-edit-languages/add-edit-languages.component';
+import { AddEditFeedbackComponent } from './components/utils/add-edit-feedback/add-edit-feedback.component';
+import { FeedbackModalFormComponent } from './components/utils/modals/forms/feedback-form-component';
+import { TextAreaInputComponent } from './components/utils/form-inputs/textarea-input.componen';
 
 @NgModule({
   declarations: [
@@ -47,6 +51,8 @@ import { RadioInputComponent } from './components/utils/form-inputs/radio-input-
     ButtonDropdownComponent,
     ProfileComponent,
     AddEditAttrComponent,
+    AddEditLanguagesComponent,
+    AddEditFeedbackComponent,
     /* Input */
     CheckboxInputComponent,
     TextInputComponent,
@@ -58,6 +64,7 @@ import { RadioInputComponent } from './components/utils/form-inputs/radio-input-
     LanguageLevelSelectComponent,
     SelectInputComponent,
     RadioInputComponent,
+    TextAreaInputComponent,
     /* Modal forms */
     BaseModalFormComponent,
     ModalFormsCollection,
@@ -75,7 +82,8 @@ import { RadioInputComponent } from './components/utils/form-inputs/radio-input-
     PillTagComponent,
     CheckboxDropdownSelectPrevModalComponent,
     NavFiltersComponent,
-    TalentContentComponent
+    TalentContentComponent,
+    FeedbackModalFormComponent
 
   ],
   imports: [CommonModule, AppRoutingModule],
@@ -89,6 +97,8 @@ import { RadioInputComponent } from './components/utils/form-inputs/radio-input-
     AddEditAttrComponent,
     NavFiltersComponent,
     TalentContentComponent,
+    AddEditLanguagesComponent,
+    AddEditFeedbackComponent,
     /* Form Inputs */
     CheckboxInputComponent,
     TextInputComponent,
@@ -97,11 +107,13 @@ import { RadioInputComponent } from './components/utils/form-inputs/radio-input-
     AddSkillButtonComponent,
     SelectInputComponent,
     RadioInputComponent,
+    TextAreaInputComponent,
     /* Modal forms */
     ModalFormsCollection,
     ExperienceModalFormComponent,
     EducationModalFormComponent,
     LanguageModalFormComponent,
+    FeedbackModalFormComponent,
     /* Dropdown modals */
     CheckboxDropdownSelectPrevModalComponent,
     CheckboxDropdownMultipleSelectModalComponent,
