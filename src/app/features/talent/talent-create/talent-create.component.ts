@@ -5,7 +5,7 @@ import { Level } from 'src/app/shared/models/interfaces/level-interface';
 import { LoaderService } from 'src/app/core/global/loader/loader.service';
 import { catchError, forkJoin, throwError } from 'rxjs';
 import { MasterService } from '../../../services/master/master.service';
-import { API_ENDPOINTS } from 'src/app/core/global/constants/api-endpoints';
+import { MASTER_API_ENDPOINTS } from 'src/app/core/global/constants/api-endpoints';
 import { finalize } from 'rxjs/operators';
 import { Coin } from 'src/app/shared/models/interfaces/coin.interface';
 
@@ -34,9 +34,9 @@ export class TalentCreateComponent implements OnInit {
   requestOptions() {
     this.loader.showLoader();
 
-    const languageRequest = this.masterService.getLanguage(API_ENDPOINTS.IDIOMAS);
-    const levelRequest = this.masterService.getLevel(API_ENDPOINTS.NIVELES);
-    const coinRequest = this.masterService.getCoin(API_ENDPOINTS.MONEDAS);
+    const languageRequest = this.masterService.getLanguage(MASTER_API_ENDPOINTS.LANGUAGES);
+    const levelRequest = this.masterService.getLevel(MASTER_API_ENDPOINTS.LEVELS);
+    const coinRequest = this.masterService.getCoin(MASTER_API_ENDPOINTS.COINS);
 
     forkJoin([languageRequest, levelRequest, coinRequest]).pipe(
       catchError((error) => {
