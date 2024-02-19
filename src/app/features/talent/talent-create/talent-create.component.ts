@@ -10,6 +10,7 @@ import { Currency } from 'src/app/shared/models/interfaces/currency.interface';
 import { Level } from 'src/app/shared/models/interfaces/level-interface';
 import { MasterService } from '../../../services/master/master.service';
 import Language from '../../../shared/models/interfaces/language.interface';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-talent-create',
@@ -24,15 +25,32 @@ export class TalentCreateComponent implements OnInit {
   countryOptions: Country[] = [];
   cityOptions: City[] = [];
   citiesByCountryOptions: City[] = [];
+  createTalentForm!: FormGroup;
 
   constructor(
     private router: Router,
     public loader: LoaderService,
-    private masterService: MasterService
+    private masterService: MasterService,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
     this.requestOptions();
+    this.createTalentForm = this.formBuilder.group({
+      profile: [''],
+      name: [''],
+      paternalSurname: [''],
+      maternalSurname: [''],
+      linkedinLink: [''],
+      githubLink: [''],
+      initialAmount: [0],
+      finalAmount: [0],
+    });
+  }
+
+  //Testeando el formulario
+  logFormValues() {
+    console.log(this.createTalentForm.value);
   }
 
   requestOptions() {

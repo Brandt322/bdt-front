@@ -42,6 +42,7 @@ import { AddEditFeedbackComponent } from './components/utils/add-edit-feedback/a
 import { FeedbackModalFormComponent } from './components/utils/modals/forms/feedback-form-component';
 import { TextAreaInputComponent } from './components/utils/form-inputs/textarea-input.componen';
 import { RatingComponent } from './components/utils/rating/rating.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,7 @@ import { RatingComponent } from './components/utils/rating/rating.component';
     RatingComponent
 
   ],
-  imports: [CommonModule, AppRoutingModule],
+  imports: [CommonModule, AppRoutingModule, FormsModule],
   exports: [
     HeaderComponent,
     MainComponent,
