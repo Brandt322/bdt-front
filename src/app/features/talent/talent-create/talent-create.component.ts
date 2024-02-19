@@ -17,27 +17,21 @@ import Language from '../../../shared/models/interfaces/language.interface';
   styleUrls: ['./talent-create.component.css'],
 })
 export class TalentCreateComponent implements OnInit {
-  @Input() maxRatting: number = 5;
-  @Input() SelectedStar: number = 0;
   selectedItemId!: number;
-
   languageOptions: Language[] = [];
   levelOptions: Level[] = [];
   currencyOptions: Currency[] = [];
   countryOptions: Country[] = [];
   cityOptions: City[] = [];
   citiesByCountryOptions: City[] = [];
-  maxRattingArr: any = [];
-  previousSelection: number = 0;
 
   constructor(
     private router: Router,
     public loader: LoaderService,
     private masterService: MasterService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.maxRattingArr = Array(this.maxRatting).fill(0);
     this.requestOptions();
   }
 
@@ -83,22 +77,6 @@ export class TalentCreateComponent implements OnInit {
         this.countryOptions = countries;
         this.cityOptions = cities;
       });
-  }
-
-  HandleMouseEnter(index: number) {
-    this.SelectedStar = index + 1;
-  }
-
-  HandleMouseLeave() {
-    if (this.previousSelection !== 0) {
-      this.SelectedStar = this.previousSelection;
-    } else {
-      this.SelectedStar = 0;
-    }
-  }
-  HandleClickRating(index: number) {
-    this.SelectedStar = index + 1;
-    this.previousSelection = this.SelectedStar;
   }
 
   onButtonClick() {

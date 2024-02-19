@@ -1,0 +1,10 @@
+<div
+  class="flex items-center"
+  *ngFor="let icon of ratingArray; let index = index"
+  [ngClass]="{ checked: selectedStar > index }"
+  (mouseenter)="handleMouseEnter(index)"
+  (mouseleave)="handleMouseLeave()"
+  (click)="handleClickRating(index)"
+>
+  <span class="fa fa-star puntero mr-2"></span>
+</div>

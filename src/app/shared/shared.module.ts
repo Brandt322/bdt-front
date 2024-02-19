@@ -41,6 +41,7 @@ import { AddEditLanguagesComponent } from './components/utils/add-edit-languages
 import { AddEditFeedbackComponent } from './components/utils/add-edit-feedback/add-edit-feedback.component';
 import { FeedbackModalFormComponent } from './components/utils/modals/forms/feedback-form-component';
 import { TextAreaInputComponent } from './components/utils/form-inputs/textarea-input.componen';
+import { RatingComponent } from './components/utils/rating/rating.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +84,8 @@ import { TextAreaInputComponent } from './components/utils/form-inputs/textarea-
     CheckboxDropdownSelectPrevModalComponent,
     NavFiltersComponent,
     TalentContentComponent,
-    FeedbackModalFormComponent
+    FeedbackModalFormComponent,
+    RatingComponent
 
   ],
   imports: [CommonModule, AppRoutingModule],
@@ -99,6 +101,7 @@ import { TextAreaInputComponent } from './components/utils/form-inputs/textarea-
     TalentContentComponent,
     AddEditLanguagesComponent,
     AddEditFeedbackComponent,
+    RatingComponent,
     /* Form Inputs */
     CheckboxInputComponent,
     TextInputComponent,
