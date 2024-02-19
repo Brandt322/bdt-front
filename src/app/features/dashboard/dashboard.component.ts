@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   profiles = FakeProfiles;
   talents: Talent[] = [];
 
-  constructor(private talentService: TalentService) {}
+  constructor(private talentService: TalentService) { }
 
   ngAfterViewInit(): void {
     initDropdowns();
@@ -30,7 +30,20 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         })
       )
       .subscribe((talents) => {
-        this.talents = talents;
+
+        // Añade el prefijo a cada imagen
+        talents.forEach(talent => {
+          let imagePrefix = 'data:image/jpeg;base64,';
+          if (talent.image.startsWith('iVBOR')) {
+            imagePrefix = 'data:image/png;base64,';
+          } else if (talent.image.startsWith('UklGR')) {
+            imagePrefix = 'data:image/webp;base64,';
+          }
+          talent.image = imagePrefix + talent.image;
+        });
+
+        // this.talents = talents;
+        this.talents = talents.slice(0, 5);
       });
   }
 
