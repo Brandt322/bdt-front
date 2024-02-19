@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, forkJoin, throwError } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -25,14 +25,25 @@ export class TalentCreateComponent implements OnInit {
   cityOptions: City[] = [];
   citiesByCountryOptions: City[] = [];
 
+  technicalSkillsNumber: number[] = [0];
+  softSkillsNumber: number[] = [0];
+
   constructor(
     private router: Router,
     public loader: LoaderService,
     private masterService: MasterService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.requestOptions();
+  }
+
+  addNewTechnicalSkill() {
+    this.technicalSkillsNumber.push(0);
+  }
+
+  addNewSoftSkill() {
+    this.softSkillsNumber.push(0);
   }
 
   requestOptions() {

@@ -127,32 +127,48 @@
         <div class="mb-8">
           <app-subtitle-form text="Habilidades técnicas"></app-subtitle-form>
           <div class="grid gap-4">
-            <app-text-input
-              [id]="'habilidad-tecnica-1'"
-              label="Habilidad técnica"
-              placeholder="Nombre de la habilidad"
+            <div class="grid gap-4" *ngFor="let index of technicalSkillsNumber">
+              <app-text-input
+                [id]="'habilidad-tecnica-1'"
+                label="Habilidad técnica"
+                placeholder="Nombre de la habilidad"
+              >
+              </app-text-input>
+              <app-text-input
+                [id]="'anios-exp-habilidad'"
+                label="Años de experiencia"
+                placeholder="Nro. de años"
+              >
+              </app-text-input>
+            </div>
+            <button
+              type="button"
+              class="text-start font-bold text-cyan-500"
+              (click)="addNewTechnicalSkill()"
             >
-            </app-text-input>
-            <app-text-input
-              [id]="'anios-exp-habilidad'"
-              label="Años de experiencia"
-              placeholder="Nro. de años"
-            >
-            </app-text-input>
-            <app-add-skill-button></app-add-skill-button>
+              +<span class="hover:underline">Agregar más</span>
+            </button>
           </div>
         </div>
 
         <div class="mb-8">
           <app-subtitle-form text="Habilidades blandas"></app-subtitle-form>
           <div class="grid gap-4">
-            <app-text-input
-              [id]="'habilidad-blanda-1'"
-              label="Habilidad blanda"
-              placeholder="Nombre de la habilidad"
+            <div class="grid gap-4" *ngFor="let index of softSkillsNumber">
+              <app-text-input
+                [id]="'habilidad-blanda-1'"
+                label="Habilidad blanda"
+                placeholder="Nombre de la habilidad"
+              >
+              </app-text-input>
+            </div>
+            <button
+              type="button"
+              class="text-start font-bold text-cyan-500"
+              (click)="addNewSoftSkill()"
             >
-            </app-text-input>
-            <app-add-skill-button></app-add-skill-button>
+              +<span class="hover:underline">Agregar más</span>
+            </button>
           </div>
         </div>
 
