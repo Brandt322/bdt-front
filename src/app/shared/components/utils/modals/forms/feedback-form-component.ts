@@ -10,16 +10,10 @@ import { Component, Input, OnInit } from '@angular/core';
     <form action="">
       <div class="grid gap-4 mb-8">
         <div class="flex items-center justify-start">
-          <div
-            class="flex items-center"
-            *ngFor="let icon of maxRattingArr; let index = index"
-            [ngClass]="{ checked: SelectedStar > index }"
-            (mouseenter)="HandleMouseEnter(index)"
-            (mouseleave)="HandleMouseLeave()"
-            (click)="HandleClickRating(index)"
-          >
-            <span class="fa fa-star puntero mr-2"></span>
-          </div>
+          <app-rating
+            [maxRating]="5"
+            [ngClass]="'flex items-center'"
+          ></app-rating>
         </div>
         <app-textarea-select></app-textarea-select>
       </div>
@@ -29,47 +23,11 @@ import { Component, Input, OnInit } from '@angular/core';
       ></app-cancel-save-buttons>
     </form>
   </app-base-modal-form>`,
-  styles: [
-    `
-      .checked {
-        color: orange;
-      }
-
-      .puntero {
-        cursor: pointer;
-      }
-    `,
-  ],
 })
 export class FeedbackModalFormComponent implements OnInit {
   modal_id: string = 'feedback-modal-form';
   @Input() title!: string;
   @Input() description!: string;
-  @Input() maxRatting: number = 5;
-  @Input() SelectedStar: number = 0;
 
-  maxRattingArr: any = [];
-  previousSelection: number = 0;
-
-
-  ngOnInit(): void {
-    this.maxRattingArr = Array(this.maxRatting).fill(0);
-  }
-
-  HandleMouseEnter(index: number) {
-    this.SelectedStar = index + 1;
-  }
-
-  HandleMouseLeave() {
-    if (this.previousSelection !== 0) {
-      this.SelectedStar = this.previousSelection;
-    } else {
-      this.SelectedStar = 0;
-    }
-  }
-
-  HandleClickRating(index: number) {
-    this.SelectedStar = index + 1;
-    this.previousSelection = this.SelectedStar;
-  }
+  ngOnInit(): void { }
 }
