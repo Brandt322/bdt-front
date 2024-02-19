@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, forkJoin, throwError } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -27,6 +27,9 @@ export class TalentCreateComponent implements OnInit {
   citiesByCountryOptions: City[] = [];
   createTalentForm!: FormGroup;
 
+  technicalSkillsNumber: number[] = [0];
+  softSkillsNumber: number[] = [0];
+
   constructor(
     private router: Router,
     public loader: LoaderService,
@@ -51,6 +54,14 @@ export class TalentCreateComponent implements OnInit {
   //Testeando el formulario
   logFormValues() {
     console.log(this.createTalentForm.value);
+  }
+
+  addNewTechnicalSkill() {
+    this.technicalSkillsNumber.push(0);
+  }
+
+  addNewSoftSkill() {
+    this.softSkillsNumber.push(0);
   }
 
   requestOptions() {

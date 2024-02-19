@@ -8,5 +8,5 @@ export const MASTER_API_ENDPOINTS = {
 
 export const TALENT_API_ENDPOINTS = {
   GETTALENT: 'talent',
-  NEWTALENT: 'to-talent',
+  NEWTALENT: 'create',
 };

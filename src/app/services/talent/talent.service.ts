@@ -18,4 +18,8 @@ export class TalentService {
   getTalent(): Observable<Talent[]> {
     return this.http.get<Talent[]>(`${this.uri}/${TALENT_API_ENDPOINTS.GETTALENT}`);
   }
+
+  createtalent(): Observable<Talent> {
+    return this.http.post<Talent>(`${this.uri}/${TALENT_API_ENDPOINTS.NEWTALENT}`, {});
+  }
 }
