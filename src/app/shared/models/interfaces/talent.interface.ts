@@ -12,4 +12,3 @@ export interface Talent {
   githubLink: string;
   creationDate: string;
 }
-

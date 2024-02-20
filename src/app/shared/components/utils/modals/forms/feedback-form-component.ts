@@ -15,7 +15,7 @@ import { Component, Input, OnInit } from '@angular/core';
             [ngClass]="'flex items-center'"
           ></app-rating>
         </div>
-        <app-textarea-select></app-textarea-select>
+        <app-textarea-select [variant]="'modal'" [label]="'Feedback'" [placeholder]="'Ingresa el feedback'"></app-textarea-select>
       </div>
       <app-cancel-save-buttons
         [modal_id]="modal_id"

@@ -67,6 +67,19 @@
               formControlName="maternalSurname"
             >
             </app-text-input>
+            <app-text-input
+              [id]="'numero-telefono'"
+              label="Numero de celular"
+              placeholder="Ingrese el numero de celular"
+              formControlName="cellPhoneNumber"
+            >
+            </app-text-input>
+            <app-textarea-select
+              [variant]="'textarea'"
+              [label]="'Descripción'"
+              [placeholder]="'Ingrese la descripción del talento'"
+              formControlName="description"
+            ></app-textarea-select>
           </div>
         </div>
 

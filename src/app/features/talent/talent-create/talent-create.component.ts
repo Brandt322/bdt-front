@@ -47,6 +47,8 @@ export class TalentCreateComponent implements OnInit {
       name: [''],
       paternalSurname: [''],
       maternalSurname: [''],
+      cellPhoneNumber: [''],
+      description: [''],
       linkedinLink: [''],
       githubLink: [''],
       initialAmount: [0],
