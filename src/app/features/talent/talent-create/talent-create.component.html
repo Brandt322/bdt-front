@@ -16,6 +16,7 @@
       <button
         type="button"
         (click)="logFormValues()"
+        (click)="onSubmit()"
         class="focus:outline-none text-white bg-[#009689] hover:bg-[#0a655f] focus:ring-4 focus:ring-[#51f7dd] font-medium rounded-lg text-sm py-2.5 px-5 dark:bg-green-600 dark:hover:bg-[#009689] dark:focus:ring-[#0a655f]"
       >
         Guardar
@@ -24,7 +25,7 @@
   </div>
   <div class="overflow-y-auto h-[400px] md:h-[580px]">
     <div class="mx-10 md:mx-16">
-      <form [formGroup]="createTalentForm">
+      <form [formGroup]="createTalentForm" #form="ngForm">
         <app-subtitle-form text="Curriculum Vitae"></app-subtitle-form>
         <app-file-input
           [id]="'cv'"
