@@ -28,6 +28,19 @@ export class TalentCreateComponent implements OnInit {
   technicalSkillsNumber: number[] = [0];
   softSkillsNumber: number[] = [0];
 
+  currentDate: Date = new Date();
+
+  currentlyWorkingOnFractal: boolean = false;
+  currentlyStudyingOnFractal: boolean = false;
+
+  defaultValue: string = '';
+
+  checkState(isChecked: boolean) {
+    this.currentlyWorkingOnFractal = isChecked;
+    this.defaultValue = isChecked ? 'Fractal' : '';
+    console.log(isChecked);
+  }
+
   constructor(
     private router: Router,
     public loader: LoaderService,
