@@ -92,6 +92,7 @@
               optionName="Nombre del país"
               [data]="countryOptions"
               [optionKey]="'country'"
+              (optionSelected)="onCountrySelected($event)"
             ></app-select-input>
             <app-select-input
               [id]="'city'"
