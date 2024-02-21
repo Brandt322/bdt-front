@@ -16,6 +16,10 @@ export class TalentService {
   constructor(private http: HttpClient) { }
 
   getTalent(): Observable<Talent[]> {
-    return this.http.get<Talent[]>(`${this.uri}/${TALENT_API_ENDPOINTS.GETTALENT}`);
+    return this.http.get<Talent[]>(`${this.uri}/${TALENT_API_ENDPOINTS.REQUESTMAPPING}`);
+  }
+
+  createtalent(talent: Talent): Observable<Object> {
+    return this.http.post(`${this.uri}/${TALENT_API_ENDPOINTS.REQUESTMAPPING}/${TALENT_API_ENDPOINTS.NEWTALENT}`, talent);
   }
 }

@@ -131,4 +131,4 @@ import { PillTagComponent } from './components/utils/tags/pill-tag/pill-tag-comp
     PillTagComponent,
   ],
 })
-export class SharedModule {}
+export class SharedModule { }

@@ -10,6 +10,9 @@ import { Currency } from 'src/app/shared/models/interfaces/currency.interface';
 import { Level } from 'src/app/shared/models/interfaces/level-interface';
 import { MasterService } from '../../../services/master/master.service';
 import Language from '../../../shared/models/interfaces/language.interface';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Talent } from 'src/app/shared/models/interfaces/talent.interface';
+import { TalentService } from 'src/app/services/talent/talent.service';
 
 @Component({
   selector: 'app-talent-create',
@@ -24,6 +27,7 @@ export class TalentCreateComponent implements OnInit {
   countryOptions: Country[] = [];
   cityOptions: City[] = [];
   citiesByCountryOptions: City[] = [];
+  createTalentForm!: FormGroup;
 
   technicalSkillsNumber: number[] = [0];
   softSkillsNumber: number[] = [0];
@@ -44,11 +48,60 @@ export class TalentCreateComponent implements OnInit {
   constructor(
     private router: Router,
     public loader: LoaderService,
-    private masterService: MasterService
-  ) {}
+    private masterService: MasterService,
+    private formBuilder: FormBuilder,
+    private talentService: TalentService
+  ) { }
 
   ngOnInit(): void {
     this.requestOptions();
+    this.createTalentForm = this.formBuilder.group({
+      profile: [''],
+      name: [''],
+      paternalSurname: [''],
+      maternalSurname: [''],
+      cellPhoneNumber: [''],
+      description: [''],
+      linkedinLink: [''],
+      githubLink: [''],
+      initialAmount: [0],
+      finalAmount: [0],
+    });
+  }
+
+  //Testeando el formulario
+  logFormValues() {
+    console.log(this.createTalentForm.value);
+  }
+
+  onSubmit(): void {
+    const formValues: { [key: string]: any; } = this.createTalentForm.value;
+    const profileFile: File = formValues['profile'];
+    if (profileFile) {
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        if (e.target?.result) {
+          formValues['image'] = (e.target.result as string).split(',')[1];
+          this.sendFormData(formValues);
+        }
+      };
+      reader.readAsDataURL(profileFile);
+    } else {
+      this.sendFormData(formValues);
+    }
+  }
+
+  sendFormData(formValues: { [key: string]: any; }): void {
+    const talent: Partial<Talent> = formValues; // Obtiene los valores del formulario y hace que las props sean opcionales
+    this.talentService.createtalent(talent as Talent)
+      .subscribe(
+        response => {
+          console.log(response);
+        },
+        error => {
+          console.error(error);
+        }
+      );
   }
 
   addNewTechnicalSkill() {

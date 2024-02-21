@@ -15,6 +15,8 @@
       </a>
       <button
         type="button"
+        (click)="logFormValues()"
+        (click)="onSubmit()"
         class="focus:outline-none text-white bg-[#009689] hover:bg-[#0a655f] focus:ring-4 focus:ring-[#51f7dd] font-medium rounded-lg text-sm py-2.5 px-5 dark:bg-green-600 dark:hover:bg-[#009689] dark:focus:ring-[#0a655f]"
       >
         Guardar
@@ -23,7 +25,7 @@
   </div>
   <div class="overflow-y-auto h-[400px] md:h-[580px]">
     <div class="mx-10 md:mx-16">
-      <form action="">
+      <form [formGroup]="createTalentForm" #form="ngForm">
         <app-subtitle-form text="Curriculum Vitae"></app-subtitle-form>
         <app-file-input
           [id]="'cv'"
@@ -38,6 +40,7 @@
           title="Foto de perfil"
           description="JPEG o PNG (Max. 800x400 px)"
           [accept]="'image/png, image/jpeg'"
+          formControlName="profile"
         ></app-file-input>
 
         <div class="mb-8">
@@ -47,20 +50,36 @@
               [id]="'nombre'"
               label="Nombre"
               placeholder="Ingrese el nombre"
+              formControlName="name"
             >
             </app-text-input>
             <app-text-input
               [id]="'apellido-paterno'"
               label="Apellido paterno"
               placeholder="Ingrese el apellido paterno"
+              formControlName="paternalSurname"
             >
             </app-text-input>
             <app-text-input
               [id]="'apellido-materno'"
               label="Apellido materno"
               placeholder="Ingrese el apellido materno"
+              formControlName="maternalSurname"
             >
             </app-text-input>
+            <app-text-input
+              [id]="'numero-telefono'"
+              label="Numero de celular"
+              placeholder="Ingrese el numero de celular"
+              formControlName="cellPhoneNumber"
+            >
+            </app-text-input>
+            <app-textarea-select
+              [variant]="'textarea'"
+              [label]="'Descripción'"
+              [placeholder]="'Ingrese la descripción del talento'"
+              formControlName="description"
+            ></app-textarea-select>
           </div>
         </div>
 
@@ -91,12 +110,14 @@
               [id]="'link-linkedin'"
               label="Link de Linkedin"
               placeholder="Link del perfil de LinkedIn"
+              formControlName="linkedinLink"
             >
             </app-text-input>
             <app-text-input
               [id]="'link-github'"
               label="Link de GitHub"
               placeholder="Link del perfil de GitHub"
+              formControlName="githubLink"
             >
             </app-text-input>
           </div>
@@ -112,12 +133,14 @@
                 [id]="'monto-inicial'"
                 label="Monto inicial"
                 placeholder="Ingrese el monto inicial"
+                formControlName="initialAmount"
               >
               </app-text-input>
               <app-text-input
                 [id]="'monto-final'"
                 label="Monto final"
                 placeholder="Ingrese el monto final"
+                formControlName="finalAmount"
               >
               </app-text-input>
             </div>
