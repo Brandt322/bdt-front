@@ -1,0 +1,42 @@
+<div class="grid gap-4">
+  <app-text-input
+    [id]="'empresa-1'"
+    label="Empresa"
+    placeholder="Nombre de la empresa"
+    [value]="inputValue"
+    [isDisabled]="disableTextInput"
+  >
+  </app-text-input>
+  <app-checkbox-input
+    [id]="'checkboxWorkingHere'"
+    label="Aquí en Fractal"
+    (isCheckedChange)="companyIfChecked($event)"
+  ></app-checkbox-input>
+  <app-text-input
+    [id]="'puesto'"
+    label="Puesto"
+    placeholder="Puesto en la empresa"
+  >
+  </app-text-input>
+  <div class="grid gap-4 md:grid-cols-2">
+    <app-date-input
+      [id]="'anio-mes-inicio'"
+      label="Año y mes de inicio"
+      placeholder="Fecha de inicio"
+    >
+    </app-date-input>
+    <app-date-input
+      [id]="'anio-mes-fin'"
+      label="Año y mes final"
+      placeholder="Fecha de fin"
+      [value]="endDateValue"
+      [isDisabled]="disableEndDateInput"
+    >
+    </app-date-input>
+  </div>
+  <app-checkbox-input
+    [id]="'checkboxCurrentlyWorking'"
+    label="Hasta la actualidad"
+    (isCheckedChange)="endDateIfChecked($event)"
+  ></app-checkbox-input>
+</div>

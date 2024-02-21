@@ -197,56 +197,23 @@
 
         <div class="mb-8">
           <app-subtitle-form text="Experiencias laborales"></app-subtitle-form>
-          <div class="grid gap-4">
-            <app-text-input
-              [id]="'empresa-1'"
-              label="Empresa"
-              placeholder="Nombre de la empresa"
-            >
-            </app-text-input>
-            <app-checkbox-input
-              [id]="'exp-fractal'"
-              label="Aquí en Fractal"
-            ></app-checkbox-input>
-            <app-text-input
-              [id]="'puesto'"
-              label="Puesto"
-              placeholder="Puesto en la empresa"
-            >
-            </app-text-input>
-            <div class="grid gap-4 md:grid-cols-2">
-              <app-text-input
-                [id]="'anio-mes-inicio'"
-                label="Año y mes de inicio"
-                placeholder="Fecha de inicio"
-              >
-              </app-text-input>
-              <app-text-input
-                [id]="'anio-mes-fin'"
-                label="Año y mes final"
-                placeholder="Fecha de fin"
-              >
-              </app-text-input>
-            </div>
-            <app-checkbox-input
-              [id]="'exp-actual'"
-              label="Hasta la actualidad"
-            ></app-checkbox-input>
-          </div>
+          <app-work-experience-form></app-work-experience-form>
         </div>
 
         <div class="mb-8">
           <app-subtitle-form text="Experiencias educativas"></app-subtitle-form>
-          <div class="grid gap-4">
+          <!-- <div class="grid gap-4">
             <app-text-input
               [id]="'institucion'"
               label="Institución"
               placeholder="Nombre de la institución"
+              [value]="defaultValue"
             >
             </app-text-input>
             <app-checkbox-input
               [id]="'edu-fractal'"
               label="Aquí en Fractal"
+              (isCheckedChange)="checkState($event)"
             ></app-checkbox-input>
             <app-text-input
               [id]="'carrera'"
@@ -261,24 +228,25 @@
             >
             </app-text-input>
             <div class="grid gap-4 md:grid-cols-2">
-              <app-text-input
+              <app-date-input
                 [id]="'edu-anio-mes-inicio'"
                 label="Año y mes de inicio"
                 placeholder="Fecha de inicio"
               >
-              </app-text-input>
-              <app-text-input
+              </app-date-input>
+              <app-date-input
                 [id]="'edu-anio-mes-fin'"
                 label="Año y mes final"
                 placeholder="Fecha de fin"
               >
-              </app-text-input>
+              </app-date-input>
             </div>
             <app-checkbox-input
               [id]="'exp-actual1'"
               label="Hasta la actualidad"
             ></app-checkbox-input>
-          </div>
+          </div> -->
+          <app-educational-experience-form></app-educational-experience-form>
         </div>
 
         <div class="mb-8">

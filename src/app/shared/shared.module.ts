@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../app-routing.module';
 import { HeaderComponent } from './components/layout/header/header.component';
 import { MainComponent } from './components/layout/main/main.component';
@@ -10,6 +11,8 @@ import { AddEditFeedbackComponent } from './components/utils/add-edit-feedback/a
 import { AddEditLanguagesComponent } from './components/utils/add-edit-languages/add-edit-languages.component';
 import { ButtonDropdownComponent } from './components/utils/buttons/button-dropdown.component';
 import { ProfileComponent } from './components/utils/cards/profile/profile.component';
+import { EducationalExperienceFormComponent } from './components/utils/experience-form/educational-experience-form/educational-experience-form.component';
+import { WorkExperienceFormComponent } from './components/utils/experience-form/work-experience-form/work-experience-form.component';
 import { CheckboxInputComponent } from './components/utils/form-inputs/checkbox-input-component';
 import { DateInputComponent } from './components/utils/form-inputs/date-input-component';
 import { FileInputComponent } from './components/utils/form-inputs/file-input-component';
@@ -40,7 +43,6 @@ import { SocialsModalFormComponent } from './components/utils/modals/forms/socia
 import { TechnicalSkillsModalFormComponent } from './components/utils/modals/forms/technical-skills-form-component';
 import { RadioModalComponent } from './components/utils/modals/radio-modal.component';
 import { RatingComponent } from './components/utils/rating/rating.component';
-import { FormsModule } from '@angular/forms';
 import { PillTagComponent } from './components/utils/tags/pill-tag/pill-tag-component';
 
 @NgModule({
@@ -65,6 +67,9 @@ import { PillTagComponent } from './components/utils/tags/pill-tag/pill-tag-comp
     SelectInputComponent,
     RadioInputComponent,
     TextAreaInputComponent,
+    /* Forms */
+    WorkExperienceFormComponent,
+    EducationalExperienceFormComponent,
     /* Modal forms */
     BaseModalFormComponent,
     ModalFormsCollection,
@@ -108,12 +113,16 @@ import { PillTagComponent } from './components/utils/tags/pill-tag/pill-tag-comp
     SelectInputComponent,
     RadioInputComponent,
     TextAreaInputComponent,
+    DateInputComponent,
     /* Modal forms */
     ModalFormsCollection,
     ExperienceModalFormComponent,
     EducationModalFormComponent,
     LanguageModalFormComponent,
     FeedbackModalFormComponent,
+    /* Forms */
+    WorkExperienceFormComponent,
+    EducationalExperienceFormComponent,
     /* Dropdown modals */
     CheckboxDropdownSelectPrevModalComponent,
     CheckboxDropdownMultipleSelectModalComponent,
