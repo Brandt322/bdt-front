@@ -18,6 +18,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/f
       [(ngModel)]="currentValue"
       (ngModelChange)="onChange($event)"
       [disabled]="isDisabled"
+      [ngClass]="{' border-red-500': hasError}"
     ></textarea> `,
   providers: [
     {
@@ -34,6 +35,7 @@ export class TextAreaInputComponent implements ControlValueAccessor {
   @Input() variant!: string;
   @Input() currentValue: string = '';
   @Input() isDisabled: boolean = false;
+  @Input() hasError!: boolean;
 
   onChange: any = () => { };
   onTouch: any = () => { };

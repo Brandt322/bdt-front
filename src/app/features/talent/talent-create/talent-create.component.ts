@@ -10,7 +10,7 @@ import { Currency } from 'src/app/shared/models/interfaces/currency.interface';
 import { Level } from 'src/app/shared/models/interfaces/level-interface';
 import { MasterService } from '../../../services/master/master.service';
 import Language from '../../../shared/models/interfaces/language.interface';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Talent } from 'src/app/shared/models/interfaces/talent.interface';
 import { TalentService } from 'src/app/services/talent/talent.service';
 
@@ -60,31 +60,91 @@ export class TalentCreateComponent implements OnInit {
 
   buildForm(): void {
     this.createTalentForm = this.formBuilder.group({
-      profile: [''],
+      cv: ['', [Validators.required, this.fileSizeValidator(5 * 1024 * 1024)]],
+      profile: ['', [Validators.required, this.fileSizeValidator(5 * 1024 * 1024)]],
       name: ['', [Validators.required, Validators.minLength(3)]],
       paternalSurname: ['', [Validators.required, Validators.minLength(3)]],
       maternalSurname: ['', [Validators.required, Validators.minLength(3)]],
-      cellPhoneNumber: [''],
+      cellPhoneNumber: ['', [Validators.required, Validators.minLength(9)]],
       description: ['', [Validators.required, Validators.minLength(10)]],
-      linkedinLink: [''],
-      githubLink: [''],
-      initialAmount: [0],
-      finalAmount: [0],
+      linkedinLink: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            '^(https?://)?([www.]+)?linkedin.com/(in|pub)/[a-zA-Z0-9_-]+(/)?$'
+          ),
+        ],
+      ],
+      githubLink: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            '^(https?://)?(www.)?github.com/[a-zA-Z0-9_-]+(/)?$'
+          ),
+        ],
+      ],
+      initialAmount: [0, [Validators.required, Validators.min(1000), Validators.max(20000)]],
+      finalAmount: [0, [Validators.required, Validators.min(1000), Validators.max(20000)]],
     });
+  }
+
+  fileSizeValidator(maxSize: number): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const file = control.value;
+      if (file && file.size > maxSize) {
+        return { 'fileSize': { value: 'El tamaño del archivo es demasiado grande' } };
+      }
+      return null;
+    };
+  }
+
+  isValidField(field: string): boolean {
+    const control = this.createTalentForm.controls[field];
+    return control ? control.errors !== null && control.touched : false;
+  }
+
+  getFieldError(field: string): string | null {
+    if (!this.createTalentForm.controls[field]) return null;
+
+    const errors = this.createTalentForm.controls[field].errors || {};
+
+    for (const key of Object.keys(errors)) {
+      switch (key) {
+        case 'required':
+          return `El campo ${field} es requerido`;
+        case 'minlength':
+          if (field === 'cellPhoneNumber') {
+            return `Debe tener mínimo ${errors['minlength'].requiredLength} dígitos`;
+          } else {
+            return `Debe tener mínimo ${errors['minlength'].requiredLength} letras`;
+          }
+        case 'min':
+          return `El valor mínimo es ${errors['min'].min}`;
+        case 'max':
+          return `El valor máximo es ${errors['max'].max}`;
+        case 'fileSize':
+          return 'El tamaño del archivo es demasiado grande';
+        default:
+          return null;
+      }
+    }
+    return null;
   }
 
   //Testeando el envio formulario
   logFormValues() {
     if (this.createTalentForm.invalid) {
-      this.createTalentForm.markAllAsTouched()
-      return
+      this.createTalentForm.markAllAsTouched();
+      return;
     } else {
       console.log(this.createTalentForm.value);
     }
   }
 
   onSubmit(): void {
-    const formValues: { [key: string]: any; } = this.createTalentForm.value;
+    const formValues: { [key: string]: any } = this.createTalentForm.value;
     const profileFile: File = formValues['profile'];
     if (profileFile) {
       const reader = new FileReader();
@@ -100,17 +160,16 @@ export class TalentCreateComponent implements OnInit {
     }
   }
 
-  sendFormData(formValues: { [key: string]: any; }): void {
+  sendFormData(formValues: { [key: string]: any }): void {
     const talent: Partial<Talent> = formValues; // Obtiene los valores del formulario y hace que las props sean opcionales
-    this.talentService.createtalent(talent as Talent)
-      .subscribe(
-        response => {
-          console.log(response);
-        },
-        error => {
-          console.error(error);
-        }
-      );
+    this.talentService.createtalent(talent as Talent).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
 
   addNewTechnicalSkill() {
