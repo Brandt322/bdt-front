@@ -80,6 +80,10 @@ export interface Talento {
   nu_monto_inicial: number;
   no_nombre: string;
   nu_celular: string;
+  softSkillList: HabilidadBlanda[];
+  technicalSkillList: HabilidadTecnica[];
+  educationalExperienceList: ExperienciaEducativa[];
+  workExperienceList: ExperienciaLaboral[];
 }
 
 export interface Usuario {

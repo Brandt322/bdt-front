@@ -10,7 +10,6 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       </label>
       <input
         type="text"
-        [value]="value"
         [id]="id"
         [(ngModel)]="value"
         (ngModelChange)="onChange($event)"
@@ -50,5 +49,9 @@ export class TextInputComponent implements ControlValueAccessor {
 
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.isDisabled = isDisabled;
   }
 }

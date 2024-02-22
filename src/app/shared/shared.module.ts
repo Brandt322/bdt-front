@@ -44,6 +44,7 @@ import { TechnicalSkillsModalFormComponent } from './components/utils/modals/for
 import { RadioModalComponent } from './components/utils/modals/radio-modal.component';
 import { RatingComponent } from './components/utils/rating/rating.component';
 import { PillTagComponent } from './components/utils/tags/pill-tag/pill-tag-component';
+import { FormErrorComponent } from './components/utils/form-error/form-error.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { PillTagComponent } from './components/utils/tags/pill-tag/pill-tag-comp
     /* Forms */
     WorkExperienceFormComponent,
     EducationalExperienceFormComponent,
+    FormErrorComponent,
     /* Modal forms */
     BaseModalFormComponent,
     ModalFormsCollection,
@@ -123,6 +125,7 @@ import { PillTagComponent } from './components/utils/tags/pill-tag/pill-tag-comp
     /* Forms */
     WorkExperienceFormComponent,
     EducationalExperienceFormComponent,
+    FormErrorComponent,
     /* Dropdown modals */
     CheckboxDropdownSelectPrevModalComponent,
     CheckboxDropdownMultipleSelectModalComponent,

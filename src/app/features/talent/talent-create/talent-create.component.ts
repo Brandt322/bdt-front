@@ -10,7 +10,7 @@ import { Currency } from 'src/app/shared/models/interfaces/currency.interface';
 import { Level } from 'src/app/shared/models/interfaces/level-interface';
 import { MasterService } from '../../../services/master/master.service';
 import Language from '../../../shared/models/interfaces/language.interface';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Talent } from 'src/app/shared/models/interfaces/talent.interface';
 import { TalentService } from 'src/app/services/talent/talent.service';
 
@@ -55,13 +55,17 @@ export class TalentCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.requestOptions();
+    this.buildForm();
+  }
+
+  buildForm(): void {
     this.createTalentForm = this.formBuilder.group({
       profile: [''],
-      name: [''],
-      paternalSurname: [''],
-      maternalSurname: [''],
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      paternalSurname: ['', [Validators.required, Validators.minLength(3)]],
+      maternalSurname: ['', [Validators.required, Validators.minLength(3)]],
       cellPhoneNumber: [''],
-      description: [''],
+      description: ['', [Validators.required, Validators.minLength(10)]],
       linkedinLink: [''],
       githubLink: [''],
       initialAmount: [0],
@@ -69,9 +73,14 @@ export class TalentCreateComponent implements OnInit {
     });
   }
 
-  //Testeando el formulario
+  //Testeando el envio formulario
   logFormValues() {
-    console.log(this.createTalentForm.value);
+    if (this.createTalentForm.invalid) {
+      this.createTalentForm.markAllAsTouched()
+      return
+    } else {
+      console.log(this.createTalentForm.value);
+    }
   }
 
   onSubmit(): void {

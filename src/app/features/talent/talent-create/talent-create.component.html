@@ -60,6 +60,13 @@
               formControlName="paternalSurname"
             >
             </app-text-input>
+            <app-form-error
+              *ngIf="
+                createTalentForm.controls['paternalSurname'].invalid &&
+                createTalentForm.controls['paternalSurname'].touched
+              "
+              [control]="createTalentForm.controls['paternalSurname']"
+            ></app-form-error>
             <app-text-input
               [id]="'apellido-materno'"
               label="Apellido materno"
@@ -67,6 +74,13 @@
               formControlName="maternalSurname"
             >
             </app-text-input>
+            <app-form-error
+              *ngIf="
+                createTalentForm.controls['maternalSurname'].invalid &&
+                createTalentForm.controls['maternalSurname'].touched
+              "
+              [control]="createTalentForm.controls['maternalSurname']"
+            ></app-form-error>
             <app-text-input
               [id]="'numero-telefono'"
               label="Numero de celular"
