@@ -10,7 +10,7 @@ import { Currency } from 'src/app/shared/models/interfaces/currency.interface';
 import { Level } from 'src/app/shared/models/interfaces/level-interface';
 import { MasterService } from '../../../services/master/master.service';
 import Language from '../../../shared/models/interfaces/language.interface';
-import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Talent } from 'src/app/shared/models/interfaces/talent.interface';
 import { TalentService } from 'src/app/services/talent/talent.service';
 
@@ -56,6 +56,7 @@ export class TalentCreateComponent implements OnInit {
   ngOnInit(): void {
     this.requestOptions();
     this.buildForm();
+    this.addNewTechnicalSkill();
   }
 
   buildForm(): void {
@@ -87,6 +88,7 @@ export class TalentCreateComponent implements OnInit {
       ],
       initialAmount: [0, [Validators.required, Validators.min(1000), Validators.max(20000)]],
       finalAmount: [0, [Validators.required, Validators.min(1000), Validators.max(20000)]],
+      technicalSkills: this.formBuilder.array([]),
     });
   }
 
@@ -101,19 +103,39 @@ export class TalentCreateComponent implements OnInit {
   }
 
   isValidField(field: string): boolean {
-    const control = this.createTalentForm.controls[field];
-    return control ? control.errors !== null && control.touched : false;
+    let control: AbstractControl | null;
+    if (field.includes('.')) {
+      const [arrayName, arrayIndex, controlName] = field.split('.');
+      const index = Number(arrayIndex);
+      if (isNaN(index)) return false;
+      control = ((this.createTalentForm.get(arrayName) as FormArray).controls[index] as FormGroup).get(controlName);
+    } else {
+      control = this.createTalentForm.get(field);
+    }
+    return (control?.touched && control?.invalid) ?? false;
   }
 
   getFieldError(field: string): string | null {
-    if (!this.createTalentForm.controls[field]) return null;
+    let control: AbstractControl | null;
+    let fieldName = field;
+    if (field.includes('.')) {
+      const [arrayName, arrayIndex, controlName] = field.split('.');
+      const index = Number(arrayIndex);
+      if (isNaN(index)) return null;
+      control = ((this.createTalentForm.get(arrayName) as FormArray).controls[index] as FormGroup).get(controlName);
+      fieldName = controlName;
+    } else {
+      control = this.createTalentForm.get(field);
+    }
 
-    const errors = this.createTalentForm.controls[field].errors || {};
+    if (!control) return null;
+
+    const errors = control.errors || {};
 
     for (const key of Object.keys(errors)) {
       switch (key) {
         case 'required':
-          return `El campo ${field} es requerido`;
+          return `El campo ${fieldName} es requerido`;
         case 'minlength':
           if (field === 'cellPhoneNumber') {
             return `Debe tener mínimo ${errors['minlength'].requiredLength} dígitos`;
@@ -126,6 +148,8 @@ export class TalentCreateComponent implements OnInit {
           return `El valor máximo es ${errors['max'].max}`;
         case 'fileSize':
           return 'El tamaño del archivo es demasiado grande';
+        case 'pattern':
+          return `El campo ${fieldName} debe ser una URL válida`;
         default:
           return null;
       }
@@ -173,11 +197,20 @@ export class TalentCreateComponent implements OnInit {
   }
 
   addNewTechnicalSkill() {
-    this.technicalSkillsNumber.push(0);
+    this.technicalSkillsNumber.push(this.technicalSkillsNumber.length);
+    const technicalSkills = this.createTalentForm.get('technicalSkills') as FormArray;
+    technicalSkills.push(this.formBuilder.group({
+      skill: ['', [Validators.required, Validators.minLength(3)]],
+      years: ['', [Validators.required, Validators.min(1), Validators.max(50)]],
+    }));
   }
 
   addNewSoftSkill() {
-    this.softSkillsNumber.push(0);
+    this.softSkillsNumber.push(this.softSkillsNumber.length);
+  }
+
+  get technicalSkills(): FormArray {
+    return this.createTalentForm.get('technicalSkills') as FormArray;
   }
 
   requestOptions() {

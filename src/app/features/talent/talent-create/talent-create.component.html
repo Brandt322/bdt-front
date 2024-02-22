@@ -231,19 +231,42 @@
         <div class="mb-8">
           <app-subtitle-form text="Habilidades técnicas"></app-subtitle-form>
           <div class="grid gap-4">
-            <div class="grid gap-4" *ngFor="let index of technicalSkillsNumber">
-              <app-text-input
-                [id]="'habilidad-tecnica-1'"
-                label="Habilidad técnica"
-                placeholder="Nombre de la habilidad"
+            <div class="grid gap-4" formArrayName="technicalSkills">
+              <div
+                class="grid gap-4"
+                *ngFor="
+                  let skillGroup of technicalSkills.controls;
+                  let i = index
+                "
+                [formGroupName]="i"
               >
-              </app-text-input>
-              <app-text-input
-                [id]="'anios-exp-habilidad'"
-                label="Años de experiencia"
-                placeholder="Nro. de años"
-              >
-              </app-text-input>
+                <app-text-input
+                  [id]="'habilidad-tecnica-' + i"
+                  label="Habilidad técnica"
+                  placeholder="Nombre de la habilidad"
+                  formControlName="skill"
+                >
+                </app-text-input>
+                <span
+                  *ngIf="isValidField('technicalSkills.' + i + '.skill')"
+                  class="font-medium text-red-500 leading-tight"
+                >
+                  {{ getFieldError("technicalSkills." + i + ".skill") }}
+                </span>
+                <app-text-input
+                  [id]="'anios-exp-habilidad-' + i"
+                  label="Años de experiencia"
+                  placeholder="Nro. de años"
+                  formControlName="years"
+                >
+                </app-text-input>
+                <span
+                  *ngIf="isValidField('technicalSkills.' + i + '.years')"
+                  class="font-medium text-red-500 leading-tight"
+                >
+                  {{ getFieldError("technicalSkills." + i + ".years") }}
+                </span>
+              </div>
             </div>
             <button
               type="button"
@@ -260,7 +283,7 @@
           <div class="grid gap-4">
             <div class="grid gap-4" *ngFor="let index of softSkillsNumber">
               <app-text-input
-                [id]="'habilidad-blanda-1'"
+                [id]="'habilidad-blanda-' + index"
                 label="Habilidad blanda"
                 placeholder="Nombre de la habilidad"
               >
