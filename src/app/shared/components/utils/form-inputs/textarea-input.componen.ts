@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-
+import { Component, Input, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms'
 @Component({
   selector: 'app-textarea-select',
   template: `<label
@@ -15,11 +15,46 @@ import { Component, Input } from '@angular/core';
       id="feedback"
       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full min-h-20 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       [placeholder]="placeholder"
+      [(ngModel)]="currentValue"
+      (ngModelChange)="onChange($event)"
+      [disabled]="isDisabled"
+      [ngClass]="{' border-red-500': hasError}"
     ></textarea> `,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => TextAreaInputComponent),
+      multi: true
+    }
+  ]
 })
-export class TextAreaInputComponent {
+export class TextAreaInputComponent implements ControlValueAccessor {
   @Input() id!: string;
   @Input() label!: string;
   @Input() placeholder!: string;
   @Input() variant!: string;
+  @Input() currentValue: string = '';
+  @Input() isDisabled: boolean = false;
+  @Input() hasError!: boolean;
+
+  onChange: any = () => { };
+  onTouch: any = () => { };
+
+  writeValue(value: string): void {
+    if (value) {
+      this.currentValue = value;
+      this.onChange(value);
+    }
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: any): void {
+    this.onTouch = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.isDisabled = isDisabled;
+  }
 }

@@ -4,9 +4,12 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 @Component({
   selector: 'app-file-input',
   template: `
-    <div class="flex items-center justify-center w-full mb-6">
+    <div
+
+        class="flex items-center justify-center w-full mb-2">
       <label
         [for]="id"
+        [ngClass]="{' border-red-500': hasError}"
         class="flex flex-col items-center justify-center w-full h-52 border-2 border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
       >
         <div class="flex flex-col items-center justify-center pt-5 pb-6">
@@ -55,7 +58,9 @@ export class FileInputComponent implements ControlValueAccessor {
   @Input() title!: string;
   @Input() description!: string;
   @Input() accept!: string;
+  @Input() hasError!: boolean;
   value!: File;
+
   onTouched: any = () => { };
   onChange: any = () => { };
 

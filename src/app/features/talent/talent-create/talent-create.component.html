@@ -32,7 +32,15 @@
           title="Curriculum Vitae"
           description="PDF (Max. 800x400 px)"
           [accept]="'application/pdf'"
+          formControlName="cv"
+          [hasError]="isValidField('cv')"
         ></app-file-input>
+        <span
+          *ngIf="isValidField('cv')"
+          class="font-medium text-red-500 leading-tight"
+        >
+          {{ getFieldError("cv") }}
+        </span>
 
         <app-subtitle-form text="Foto de perfil"></app-subtitle-form>
         <app-file-input
@@ -41,7 +49,14 @@
           description="JPEG o PNG (Max. 800x400 px)"
           [accept]="'image/png, image/jpeg'"
           formControlName="profile"
+          [hasError]="isValidField('profile')"
         ></app-file-input>
+        <span
+          *ngIf="isValidField('profile')"
+          class="font-medium text-red-500 leading-tight"
+        >
+          {{ getFieldError("profile") }}
+        </span>
 
         <div class="mb-8">
           <app-subtitle-form text="Datos"></app-subtitle-form>
@@ -51,35 +66,71 @@
               label="Nombre"
               placeholder="Ingrese el nombre"
               formControlName="name"
+              [hasError]="isValidField('name')"
             >
             </app-text-input>
+            <span
+              *ngIf="isValidField('name')"
+              class="font-medium text-red-500 leading-tight"
+            >
+              {{ getFieldError("name") }}
+            </span>
             <app-text-input
               [id]="'apellido-paterno'"
               label="Apellido paterno"
               placeholder="Ingrese el apellido paterno"
               formControlName="paternalSurname"
+              [hasError]="isValidField('paternalSurname')"
             >
             </app-text-input>
+            <span
+              *ngIf="isValidField('paternalSurname')"
+              class="font-medium text-red-500 leading-tight"
+            >
+              {{ getFieldError("paternalSurname") }}
+            </span>
             <app-text-input
               [id]="'apellido-materno'"
               label="Apellido materno"
               placeholder="Ingrese el apellido materno"
               formControlName="maternalSurname"
+              [hasError]="isValidField('maternalSurname')"
             >
             </app-text-input>
+            <app-form-error
+              *ngIf="
+                createTalentForm.controls['maternalSurname'].invalid &&
+                createTalentForm.controls['maternalSurname'].touched
+              "
+              [control]="createTalentForm.controls['maternalSurname']"
+            ></app-form-error>
             <app-text-input
               [id]="'numero-telefono'"
               label="Numero de celular"
               placeholder="Ingrese el numero de celular"
               formControlName="cellPhoneNumber"
+              [hasError]="isValidField('cellPhoneNumber')"
             >
             </app-text-input>
+            <span
+              *ngIf="isValidField('cellPhoneNumber')"
+              class="font-medium text-red-500 leading-tight"
+            >
+              {{ getFieldError("cellPhoneNumber") }}
+            </span>
             <app-textarea-select
               [variant]="'textarea'"
               [label]="'Descripción'"
               [placeholder]="'Ingrese la descripción del talento'"
               formControlName="description"
+              [hasError]="isValidField('description')"
             ></app-textarea-select>
+            <span
+              *ngIf="isValidField('description')"
+              class="font-medium text-red-500 leading-tight"
+            >
+              {{ getFieldError("description") }}
+            </span>
           </div>
         </div>
 
@@ -112,15 +163,29 @@
               label="Link de Linkedin"
               placeholder="Link del perfil de LinkedIn"
               formControlName="linkedinLink"
+              [hasError]="isValidField('linkedinLink')"
             >
             </app-text-input>
+            <span
+              *ngIf="isValidField('linkedinLink')"
+              class="font-medium text-red-500 leading-tight"
+            >
+              {{ getFieldError("linkedinLink") }}
+            </span>
             <app-text-input
               [id]="'link-github'"
               label="Link de GitHub"
               placeholder="Link del perfil de GitHub"
               formControlName="githubLink"
+              [hasError]="isValidField('githubLink')"
             >
             </app-text-input>
+            <span
+              *ngIf="isValidField('githubLink')"
+              class="font-medium text-red-500 leading-tight"
+            >
+              {{ getFieldError("githubLink") }}
+            </span>
           </div>
         </div>
 
@@ -135,6 +200,7 @@
                 label="Monto inicial"
                 placeholder="Ingrese el monto inicial"
                 formControlName="initialAmount"
+                [hasError]="isValidField('initialAmount')"
               >
               </app-text-input>
               <app-text-input
@@ -142,8 +208,23 @@
                 label="Monto final"
                 placeholder="Ingrese el monto final"
                 formControlName="finalAmount"
+                [hasError]="isValidField('finalAmount')"
               >
               </app-text-input>
+            </div>
+            <div class="grid gap-4 md:grid-cols-2">
+              <span
+                *ngIf="isValidField('initialAmount')"
+                class="font-medium text-red-500 leading-tight"
+              >
+                {{ getFieldError("initialAmount") }}
+              </span>
+              <span
+                *ngIf="isValidField('finalAmount')"
+                class="font-medium text-red-500 leading-tight"
+              >
+                {{ getFieldError("finalAmount") }}
+              </span>
             </div>
           </div>
         </div>
