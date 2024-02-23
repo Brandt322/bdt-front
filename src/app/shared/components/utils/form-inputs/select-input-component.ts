@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-select-input',
@@ -36,5 +36,4 @@ export class SelectInputComponent {
   onOptionSelected(event: any) {
     this.optionSelected.emit(Number(event.target.value));
   }
-
 }

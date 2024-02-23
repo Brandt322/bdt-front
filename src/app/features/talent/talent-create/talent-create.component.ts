@@ -28,6 +28,7 @@ export class TalentCreateComponent implements OnInit {
   allCities: City[] = [];
   cityOptions: City[] = [];
   citiesByCountryOptions: City[] = [];
+  cities: City[] = [];
   createTalentForm!: FormGroup;
 
   technicalSkillsNumber: number[] = [0];
@@ -51,7 +52,7 @@ export class TalentCreateComponent implements OnInit {
     public loader: LoaderService,
     private masterService: MasterService,
     private formBuilder: FormBuilder,
-    private talentService: TalentService
+    private talentService: TalentService,
   ) { }
 
   ngOnInit(): void {
@@ -214,6 +215,12 @@ export class TalentCreateComponent implements OnInit {
     );
   }
 
+  onCountrySelected(countryId: number) {
+    console.log('Country ID:', countryId);
+    console.log('City data:', this.cities);
+    this.cityOptions = this.cities.filter(city => Number(city.countryId) === countryId);
+    console.log('Filtered cities:', this.cityOptions);
+  }
 
   addNewTechnicalSkill() {
     this.technicalSkillsNumber.push(this.technicalSkillsNumber.length);
