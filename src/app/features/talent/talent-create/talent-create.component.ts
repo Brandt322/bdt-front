@@ -106,6 +106,7 @@ export class TalentCreateComponent implements OnInit {
       studyEndDate: ['', [Validators.required]],
       language: ['', [Validators.required]],
       level: ['', [Validators.required]],
+      stars: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
     });
   }
 

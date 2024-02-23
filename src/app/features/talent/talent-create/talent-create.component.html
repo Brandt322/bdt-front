@@ -414,7 +414,14 @@
             <app-rating
               [maxRating]="5"
               [ngClass]="'flex items-center'"
+              formControlName="stars"
             ></app-rating>
+            <span
+              *ngIf="isValidField('stars')"
+              class="font-medium text-red-500 leading-tight"
+            >
+              {{ getFieldError("stars") }}
+            </span>
           </div>
         </div>
       </form>
