@@ -143,6 +143,7 @@
               optionName="Nombre del país"
               [data]="countryOptions"
               [optionKey]="'country'"
+              (optionSelected)="onCountrySelected($event)"
             ></app-select-input>
             <app-select-input
               [id]="'city'"
@@ -280,14 +281,25 @@
 
         <div class="mb-8">
           <app-subtitle-form text="Habilidades blandas"></app-subtitle-form>
-          <div class="grid gap-4">
-            <div class="grid gap-4" *ngFor="let index of softSkillsNumber">
+          <div class="grid gap-4" formArrayName="softSkills">
+            <div
+              class="grid gap-4"
+              *ngFor="let skillGroup of softSkills.controls; let i = index"
+              [formGroupName]="i"
+            >
               <app-text-input
-                [id]="'habilidad-blanda-' + index"
+                [id]="'habilidad-blanda-' + i"
                 label="Habilidad blanda"
                 placeholder="Nombre de la habilidad"
+                formControlName="skill"
               >
               </app-text-input>
+              <span
+                *ngIf="isValidField('softSkills.' + i + '.skill')"
+                class="font-medium text-red-500 leading-tight"
+              >
+                {{ getFieldError("softSkills." + i + ".skill") }}
+              </span>
             </div>
             <button
               type="button"

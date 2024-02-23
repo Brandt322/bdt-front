@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-select-input',
@@ -8,6 +8,7 @@ import { Component, Input } from '@angular/core';
     </label>
     <select
       [id]="id"
+      (change)="onOptionSelected($event)"
       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
     >
       <option selected value="null">{{ optionName }}</option>
@@ -27,4 +28,9 @@ export class SelectInputComponent {
   @Input() optionName!: string;
   @Input() data?: { id: number;[key: string]: any; abr?: string }[];
   @Input() optionKey!: string;
+  @Output() optionSelected = new EventEmitter<number>();
+
+  onOptionSelected(event: any) {
+    this.optionSelected.emit(Number(event.target.value));
+  }
 }

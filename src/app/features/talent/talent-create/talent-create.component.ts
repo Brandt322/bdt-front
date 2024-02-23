@@ -25,6 +25,7 @@ export class TalentCreateComponent implements OnInit {
   levelOptions: Level[] = [];
   currencyOptions: Currency[] = [];
   countryOptions: Country[] = [];
+  allCities: City[] = [];
   cityOptions: City[] = [];
   citiesByCountryOptions: City[] = [];
   createTalentForm!: FormGroup;
@@ -57,6 +58,7 @@ export class TalentCreateComponent implements OnInit {
     this.requestOptions();
     this.buildForm();
     this.addNewTechnicalSkill();
+    this.addNewSoftSkill();
   }
 
   buildForm(): void {
@@ -89,6 +91,7 @@ export class TalentCreateComponent implements OnInit {
       initialAmount: [0, [Validators.required, Validators.min(1000), Validators.max(20000)]],
       finalAmount: [0, [Validators.required, Validators.min(1000), Validators.max(20000)]],
       technicalSkills: this.formBuilder.array([]),
+      softSkills: this.formBuilder.array([]),
     });
   }
 
@@ -207,6 +210,14 @@ export class TalentCreateComponent implements OnInit {
 
   addNewSoftSkill() {
     this.softSkillsNumber.push(this.softSkillsNumber.length);
+    const softSkills = this.createTalentForm.get('softSkills') as FormArray;
+    softSkills.push(this.formBuilder.group({
+      skill: ['', [Validators.required, Validators.minLength(4)]],
+    }));
+  }
+
+  get softSkills(): FormArray {
+    return this.createTalentForm.get('softSkills') as FormArray;
   }
 
   get technicalSkills(): FormArray {
@@ -253,8 +264,13 @@ export class TalentCreateComponent implements OnInit {
         this.levelOptions = levels;
         this.currencyOptions = currencies;
         this.countryOptions = countries;
-        this.cityOptions = cities;
+        this.cityOptions = [];
+        this.allCities = cities;
       });
+  }
+
+  onCountrySelected(countryId: number) {
+    this.cityOptions = this.allCities.filter(city => Number(city.countryId) === countryId);
   }
 
   onButtonClick() {
