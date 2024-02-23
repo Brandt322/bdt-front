@@ -6,15 +6,15 @@
     [value]="inputValue"
     [isDisabled]="disableTextInput"
     (input)="onInputChange($event, 'company')"
-    [hasError]="isValidField('company')"
+    [hasError]="isValidField ? isValidField('company') : false"
   >
   </app-text-input>
-  <ng-container *ngIf="{ field: createTalentForm.get('company') } as controls">
+  <ng-container *ngIf="{ field: createTalentForm?.get('company') } as controls">
     <span
       *ngIf="controls.field && !controls.field.valid && controls.field.touched"
       class="font-medium text-red-500 leading-tight"
     >
-      {{ getFieldError("company") }}
+      {{ getFieldError ? getFieldError("company") : "" }}
     </span>
   </ng-container>
   <app-checkbox-input
@@ -27,15 +27,17 @@
     label="Puesto"
     placeholder="Puesto en la empresa"
     (input)="onInputChange($event, 'position')"
-    [hasError]="isValidField('position')"
+    [hasError]="isValidField ? isValidField('position') : false"
   >
   </app-text-input>
-  <ng-container *ngIf="{ field: createTalentForm.get('position') } as controls">
+  <ng-container
+    *ngIf="{ field: createTalentForm?.get('position') } as controls"
+  >
     <span
       *ngIf="controls.field && !controls.field.valid && controls.field.touched"
       class="font-medium text-red-500 leading-tight"
     >
-      {{ getFieldError("position") }}
+      {{ getFieldError ? getFieldError("position") : "" }}
     </span>
   </ng-container>
   <div class="grid gap-4 md:grid-cols-2">
@@ -44,7 +46,7 @@
       label="Año y mes de inicio"
       placeholder="Fecha de inicio"
       (input)="onInputChange($event, 'startDate')"
-      [hasError]="isValidField('startDate')"
+      [hasError]="isValidField ? isValidField('startDate') : false"
     >
     </app-date-input>
 
@@ -55,13 +57,13 @@
       [value]="endDateValue"
       [isDisabled]="disableEndDateInput"
       (input)="onInputChange($event, 'endDate')"
-      [hasError]="isValidField('endDate')"
+      [hasError]="isValidField ? isValidField('endDate') : false"
     >
     </app-date-input>
   </div>
   <div class="grid gap-4 md:grid-cols-2">
     <ng-container
-      *ngIf="{ field: createTalentForm.get('startDate') } as controls"
+      *ngIf="{ field: createTalentForm?.get('startDate') } as controls"
     >
       <span
         *ngIf="
@@ -69,11 +71,11 @@
         "
         class="font-medium text-red-500 leading-tight"
       >
-        {{ getFieldError("startDate") }}
+        {{ getFieldError ? getFieldError("startDate") : "" }}
       </span>
     </ng-container>
     <ng-container
-      *ngIf="{ field: createTalentForm.get('endDate') } as controls"
+      *ngIf="{ field: createTalentForm?.get('endDate') } as controls"
     >
       <span
         *ngIf="
@@ -81,7 +83,7 @@
         "
         class="font-medium text-red-500 leading-tight"
       >
-        {{ getFieldError("endDate") }}
+        {{ getFieldError ? getFieldError("endDate") : "" }}
       </span>
     </ng-container>
   </div>

@@ -6,17 +6,17 @@
     [value]="inputValue"
     [isDisabled]="disableTextInput"
     (input)="onInputChange($event, 'institution')"
-    [hasError]="isValidField('institution')"
+    [hasError]="isValidField ? isValidField('institution') : false"
   >
   </app-text-input>
   <ng-container
-    *ngIf="{ field: createTalentForm.get('institution') } as controls"
+    *ngIf="{ field: createTalentForm?.get('institution') } as controls"
   >
     <span
       *ngIf="controls.field && !controls.field.valid && controls.field.touched"
       class="font-medium text-red-500 leading-tight"
     >
-      {{ getFieldError("institution") }}
+      {{ getFieldError ? getFieldError("institution") : "" }}
     </span>
   </ng-container>
   <app-checkbox-input
@@ -29,15 +29,15 @@
     label="Carrera"
     placeholder="Nombre de la carrera"
     (input)="onInputChange($event, 'career')"
-    [hasError]="isValidField('career')"
+    [hasError]="isValidField ? isValidField('career') : false"
   >
   </app-text-input>
-  <ng-container *ngIf="{ field: createTalentForm.get('career') } as controls">
+  <ng-container *ngIf="{ field: createTalentForm?.get('career') } as controls">
     <span
       *ngIf="controls.field && !controls.field.valid && controls.field.touched"
       class="font-medium text-red-500 leading-tight"
     >
-      {{ getFieldError("career") }}
+      {{ getFieldError ? getFieldError("career") : "" }}
     </span>
   </ng-container>
   <app-text-input
@@ -45,15 +45,15 @@
     label="Grado"
     placeholder="Grado de la carrera"
     (input)="onInputChange($event, 'degree')"
-    [hasError]="isValidField('degree')"
+    [hasError]="isValidField ? isValidField('degree') : false"
   >
   </app-text-input>
-  <ng-container *ngIf="{ field: createTalentForm.get('degree') } as controls">
+  <ng-container *ngIf="{ field: createTalentForm?.get('degree') } as controls">
     <span
       *ngIf="controls.field && !controls.field.valid && controls.field.touched"
       class="font-medium text-red-500 leading-tight"
     >
-      {{ getFieldError("degree") }}
+      {{ getFieldError ? getFieldError("degree") : "" }}
     </span>
   </ng-container>
   <div class="grid gap-4 md:grid-cols-2">
@@ -62,7 +62,7 @@
       label="Año y mes de inicio"
       placeholder="Fecha de inicio"
       (input)="onInputChange($event, 'studyStartDate')"
-      [hasError]="isValidField('studyStartDate')"
+      [hasError]="isValidField ? isValidField('studyStartDate') : false"
     >
     </app-date-input>
     <app-date-input
@@ -72,13 +72,13 @@
       [value]="endDateValue"
       [isDisabled]="disableEndDateInput"
       (input)="onInputChange($event, 'studyEndDate')"
-      [hasError]="isValidField('studyEndDate')"
+      [hasError]="isValidField ? isValidField('studyEndDate') : false"
     >
     </app-date-input>
   </div>
   <div class="grid gap-4 md:grid-cols-2">
     <ng-container
-      *ngIf="{ field: createTalentForm.get('studyStartDate') } as controls"
+      *ngIf="{ field: createTalentForm?.get('studyStartDate') } as controls"
     >
       <span
         *ngIf="
@@ -86,11 +86,11 @@
         "
         class="font-medium text-red-500 leading-tight"
       >
-        {{ getFieldError("studyStartDate") }}
+        {{ getFieldError ? getFieldError("studyStartDate") : "" }}
       </span>
     </ng-container>
     <ng-container
-      *ngIf="{ field: createTalentForm.get('studyEndDate') } as controls"
+      *ngIf="{ field: createTalentForm?.get('studyEndDate') } as controls"
     >
       <span
         *ngIf="
@@ -98,7 +98,7 @@
         "
         class="font-medium text-red-500 leading-tight"
       >
-        {{ getFieldError("studyEndDate") }}
+        {{ getFieldError ? getFieldError("studyEndDate") : "" }}
       </span>
     </ng-container>
   </div>
