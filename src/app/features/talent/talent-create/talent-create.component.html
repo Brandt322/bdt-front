@@ -144,6 +144,7 @@
               [data]="countryOptions"
               [optionKey]="'country'"
               (optionSelected)="onCountrySelected($event)"
+              [hasError]="isValidField('country')"
             ></app-select-input>
             <span
               *ngIf="isValidField('country')"
@@ -158,6 +159,7 @@
               [data]="cityOptions"
               [optionKey]="'city'"
               (optionSelected)="onCitySelected($event)"
+              [hasError]="isValidField('city')"
             ></app-select-input>
             <span
               *ngIf="isValidField('city')"
@@ -209,6 +211,7 @@
               [data]="currencyOptions"
               [labelKey]="'currency'"
               (optionSelected)="onCurrencySelected($event)"
+              [hasError]="isValidField('currency')"
             >
             </app-radio-input>
             <span
@@ -269,6 +272,11 @@
                   label="Habilidad técnica"
                   placeholder="Nombre de la habilidad"
                   formControlName="skill"
+                  [hasError]="
+                    (!skillGroup.get('skill')?.valid &&
+                      skillGroup.get('skill')?.touched) ||
+                    false
+                  "
                 >
                 </app-text-input>
                 <span
@@ -282,6 +290,11 @@
                   label="Años de experiencia"
                   placeholder="Nro. de años"
                   formControlName="years"
+                  [hasError]="
+                    (!skillGroup.get('years')?.valid &&
+                      skillGroup.get('years')?.touched) ||
+                    false
+                  "
                 >
                 </app-text-input>
                 <span
@@ -315,6 +328,11 @@
                 label="Habilidad blanda"
                 placeholder="Nombre de la habilidad"
                 formControlName="skill"
+                [hasError]="
+                  (!skillGroup.get('skill')?.valid &&
+                    skillGroup.get('skill')?.touched) ||
+                  false
+                "
               >
               </app-text-input>
               <span
@@ -338,13 +356,21 @@
           <app-subtitle-form text="Experiencias laborales"></app-subtitle-form>
           <app-work-experience-form
             (inputChange)="handleInputChange($event)"
+            [createTalentForm]="createTalentForm"
+            [getFieldError]="getFieldError.bind(this)"
+            [isValidField]="isValidField.bind(this)"
           ></app-work-experience-form>
         </div>
 
         <div class="mb-8">
           <app-subtitle-form text="Experiencias educativas"></app-subtitle-form>
 
-          <app-educational-experience-form></app-educational-experience-form>
+          <app-educational-experience-form
+            (inputChange)="handleInputChange($event)"
+            [createTalentForm]="createTalentForm"
+            [getFieldError]="getFieldError.bind(this)"
+            [isValidField]="isValidField.bind(this)"
+          ></app-educational-experience-form>
         </div>
 
         <div class="mb-8">

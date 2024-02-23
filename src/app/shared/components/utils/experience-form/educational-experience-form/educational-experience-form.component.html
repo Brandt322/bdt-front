@@ -5,8 +5,20 @@
     placeholder="Nombre de la institución"
     [value]="inputValue"
     [isDisabled]="disableTextInput"
+    (input)="onInputChange($event, 'institution')"
+    [hasError]="isValidField('institution')"
   >
   </app-text-input>
+  <ng-container
+    *ngIf="{ field: createTalentForm.get('institution') } as controls"
+  >
+    <span
+      *ngIf="controls.field && !controls.field.valid && controls.field.touched"
+      class="font-medium text-red-500 leading-tight"
+    >
+      {{ getFieldError("institution") }}
+    </span>
+  </ng-container>
   <app-checkbox-input
     [id]="'edu-fractal'"
     label="Aquí en Fractal"
@@ -16,19 +28,41 @@
     [id]="'carrera'"
     label="Carrera"
     placeholder="Nombre de la carrera"
+    (input)="onInputChange($event, 'career')"
+    [hasError]="isValidField('career')"
   >
   </app-text-input>
+  <ng-container *ngIf="{ field: createTalentForm.get('career') } as controls">
+    <span
+      *ngIf="controls.field && !controls.field.valid && controls.field.touched"
+      class="font-medium text-red-500 leading-tight"
+    >
+      {{ getFieldError("career") }}
+    </span>
+  </ng-container>
   <app-text-input
     [id]="'grado'"
     label="Grado"
     placeholder="Grado de la carrera"
+    (input)="onInputChange($event, 'degree')"
+    [hasError]="isValidField('degree')"
   >
   </app-text-input>
+  <ng-container *ngIf="{ field: createTalentForm.get('degree') } as controls">
+    <span
+      *ngIf="controls.field && !controls.field.valid && controls.field.touched"
+      class="font-medium text-red-500 leading-tight"
+    >
+      {{ getFieldError("degree") }}
+    </span>
+  </ng-container>
   <div class="grid gap-4 md:grid-cols-2">
     <app-date-input
       [id]="'edu-anio-mes-inicio'"
       label="Año y mes de inicio"
       placeholder="Fecha de inicio"
+      (input)="onInputChange($event, 'studyStartDate')"
+      [hasError]="isValidField('studyStartDate')"
     >
     </app-date-input>
     <app-date-input
@@ -37,8 +71,36 @@
       placeholder="Fecha de fin"
       [value]="endDateValue"
       [isDisabled]="disableEndDateInput"
+      (input)="onInputChange($event, 'studyEndDate')"
+      [hasError]="isValidField('studyEndDate')"
     >
     </app-date-input>
+  </div>
+  <div class="grid gap-4 md:grid-cols-2">
+    <ng-container
+      *ngIf="{ field: createTalentForm.get('studyStartDate') } as controls"
+    >
+      <span
+        *ngIf="
+          controls.field && !controls.field.valid && controls.field.touched
+        "
+        class="font-medium text-red-500 leading-tight"
+      >
+        {{ getFieldError("studyStartDate") }}
+      </span>
+    </ng-container>
+    <ng-container
+      *ngIf="{ field: createTalentForm.get('studyEndDate') } as controls"
+    >
+      <span
+        *ngIf="
+          controls.field && !controls.field.valid && controls.field.touched
+        "
+        class="font-medium text-red-500 leading-tight"
+      >
+        {{ getFieldError("studyEndDate") }}
+      </span>
+    </ng-container>
   </div>
   <app-checkbox-input
     [id]="'exp-actual1'"

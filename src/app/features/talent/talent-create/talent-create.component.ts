@@ -98,7 +98,12 @@ export class TalentCreateComponent implements OnInit {
       company: ['', [Validators.required, Validators.minLength(3)]],
       position: ['', [Validators.required, Validators.minLength(2)]],
       startDate: ['', [Validators.required]],
-      endDate: [''],
+      endDate: ['', [Validators.required]],
+      institution: ['', [Validators.required, Validators.minLength(3)]],
+      career: ['', [Validators.required, Validators.minLength(3)]],
+      degree: ['', [Validators.required, Validators.minLength(3)]],
+      studyStartDate: ['', [Validators.required]],
+      studyEndDate: ['', [Validators.required]],
     });
   }
 

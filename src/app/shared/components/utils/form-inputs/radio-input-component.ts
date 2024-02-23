@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 @Component({
   selector: 'app-radio-input',
   template: `<div
+    [ngClass]="{' border-red-500': hasError}"
     class="flex items-center ps-4 border rounded-lg border-gray-200 dark:border-gray-700 mb-2"
     *ngFor="let item of data"
   >
@@ -29,6 +30,7 @@ export class RadioInputComponent {
   @Input() data?: { id: number;[key: string]: any; abr?: string }[];
   @Input() labelKey!: string;
   @Output() optionSelected = new EventEmitter<number>();
+  @Input() hasError!: boolean;
 
   onOptionSelected(event: any) {
     this.optionSelected.emit(event.target.value);
