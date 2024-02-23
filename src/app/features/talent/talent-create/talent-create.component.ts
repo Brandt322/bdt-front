@@ -104,6 +104,8 @@ export class TalentCreateComponent implements OnInit {
       degree: ['', [Validators.required, Validators.minLength(3)]],
       studyStartDate: ['', [Validators.required]],
       studyEndDate: ['', [Validators.required]],
+      language: ['', [Validators.required]],
+      level: ['', [Validators.required]],
     });
   }
 
@@ -304,6 +306,20 @@ export class TalentCreateComponent implements OnInit {
     const cityControl = this.createTalentForm.get('city');
     if (cityControl) {
       cityControl.setValue(cityId);
+    }
+  }
+
+  onLanguageSelected(languageId: number) {
+    const cityControl = this.createTalentForm.get('language');
+    if (cityControl) {
+      cityControl.setValue(languageId);
+    }
+  }
+
+  onLevelSelected(levelId: number) {
+    const cityControl = this.createTalentForm.get('level');
+    if (cityControl) {
+      cityControl.setValue(levelId);
     }
   }
 

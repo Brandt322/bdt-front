@@ -382,14 +382,30 @@
               optionName="Nombre del idioma"
               [data]="languageOptions"
               [optionKey]="'language'"
+              (optionSelected)="onLanguageSelected($event)"
+              [hasError]="isValidField('language')"
             ></app-select-input>
+            <span
+              *ngIf="isValidField('language')"
+              class="font-medium text-red-500 leading-tight"
+            >
+              {{ getFieldError("language") }}
+            </span>
             <app-select-input
               [id]="'idioma'"
               label="Nivel"
               optionName="Nivel del idioma"
               [data]="levelOptions"
               [optionKey]="'level'"
+              (optionSelected)="onLevelSelected($event)"
+              [hasError]="isValidField('level')"
             ></app-select-input>
+            <span
+              *ngIf="isValidField('level')"
+              class="font-medium text-red-500 leading-tight"
+            >
+              {{ getFieldError("level") }}
+            </span>
           </div>
         </div>
 
