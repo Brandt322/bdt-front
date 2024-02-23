@@ -94,6 +94,7 @@ export class TalentCreateComponent implements OnInit {
       softSkills: this.formBuilder.array([]),
       country: ['', [Validators.required]],
       city: ['', [Validators.required]],
+      currency: ['', Validators.required],
     });
   }
 
@@ -283,6 +284,13 @@ export class TalentCreateComponent implements OnInit {
     const cityControl = this.createTalentForm.get('city');
     if (cityControl) {
       cityControl.setValue(cityId);
+    }
+  }
+
+  onCurrencySelected(currencyId: number) {
+    const currencyControl = this.createTalentForm.get('currency');
+    if (currencyControl) {
+      currencyControl.setValue(Number(currencyId));
     }
   }
 

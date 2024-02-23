@@ -205,8 +205,18 @@
         <div class="mb-8">
           <app-subtitle-form text="Banda salarial"></app-subtitle-form>
           <div class="grid gap-4">
-            <app-radio-input [data]="currencyOptions" [labelKey]="'currency'">
+            <app-radio-input
+              [data]="currencyOptions"
+              [labelKey]="'currency'"
+              (optionSelected)="onCurrencySelected($event)"
+            >
             </app-radio-input>
+            <span
+              *ngIf="isValidField('currency')"
+              class="font-medium text-red-500 leading-tight"
+            >
+              {{ getFieldError("currency") }}
+            </span>
             <div class="grid gap-4 md:grid-cols-2">
               <app-text-input
                 [id]="'monto-inicial'"
@@ -331,50 +341,7 @@
 
         <div class="mb-8">
           <app-subtitle-form text="Experiencias educativas"></app-subtitle-form>
-          <!-- <div class="grid gap-4">
-            <app-text-input
-              [id]="'institucion'"
-              label="Institución"
-              placeholder="Nombre de la institución"
-              [value]="defaultValue"
-            >
-            </app-text-input>
-            <app-checkbox-input
-              [id]="'edu-fractal'"
-              label="Aquí en Fractal"
-              (isCheckedChange)="checkState($event)"
-            ></app-checkbox-input>
-            <app-text-input
-              [id]="'carrera'"
-              label="Carrera"
-              placeholder="Nombre de la carrera"
-            >
-            </app-text-input>
-            <app-text-input
-              [id]="'grado'"
-              label="Grado"
-              placeholder="Grado de la carrera"
-            >
-            </app-text-input>
-            <div class="grid gap-4 md:grid-cols-2">
-              <app-date-input
-                [id]="'edu-anio-mes-inicio'"
-                label="Año y mes de inicio"
-                placeholder="Fecha de inicio"
-              >
-              </app-date-input>
-              <app-date-input
-                [id]="'edu-anio-mes-fin'"
-                label="Año y mes final"
-                placeholder="Fecha de fin"
-              >
-              </app-date-input>
-            </div>
-            <app-checkbox-input
-              [id]="'exp-actual1'"
-              label="Hasta la actualidad"
-            ></app-checkbox-input>
-          </div> -->
+
           <app-educational-experience-form></app-educational-experience-form>
         </div>
 

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-radio-input',
@@ -10,7 +10,8 @@ import { Component, Input } from '@angular/core';
       [id]="item.id"
       type="radio"
       [value]="item.id"
-      [name]="item[labelKey]"
+      name="currencyOption"
+      (change)="onOptionSelected($event)"
       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
     />
     <label
@@ -27,4 +28,9 @@ import { Component, Input } from '@angular/core';
 export class RadioInputComponent {
   @Input() data?: { id: number;[key: string]: any; abr?: string }[];
   @Input() labelKey!: string;
+  @Output() optionSelected = new EventEmitter<number>();
+
+  onOptionSelected(event: any) {
+    this.optionSelected.emit(event.target.value);
+  }
 }
