@@ -144,14 +144,29 @@
               [data]="countryOptions"
               [optionKey]="'country'"
               (optionSelected)="onCountrySelected($event)"
+              [hasError]="isValidField('country')"
             ></app-select-input>
+            <span
+              *ngIf="isValidField('country')"
+              class="font-medium text-red-500 leading-tight"
+            >
+              {{ getFieldError("country") }}
+            </span>
             <app-select-input
               [id]="'city'"
               label="Ciudad"
               optionName="Nombre de la ciudades"
               [data]="cityOptions"
               [optionKey]="'city'"
+              (optionSelected)="onCitySelected($event)"
+              [hasError]="isValidField('city')"
             ></app-select-input>
+            <span
+              *ngIf="isValidField('city')"
+              class="font-medium text-red-500 leading-tight"
+            >
+              {{ getFieldError("city") }}
+            </span>
           </div>
         </div>
 
@@ -192,8 +207,19 @@
         <div class="mb-8">
           <app-subtitle-form text="Banda salarial"></app-subtitle-form>
           <div class="grid gap-4">
-            <app-radio-input [data]="currencyOptions" [labelKey]="'currency'">
+            <app-radio-input
+              [data]="currencyOptions"
+              [labelKey]="'currency'"
+              (optionSelected)="onCurrencySelected($event)"
+              [hasError]="isValidField('currency')"
+            >
             </app-radio-input>
+            <span
+              *ngIf="isValidField('currency')"
+              class="font-medium text-red-500 leading-tight"
+            >
+              {{ getFieldError("currency") }}
+            </span>
             <div class="grid gap-4 md:grid-cols-2">
               <app-text-input
                 [id]="'monto-inicial'"
@@ -246,6 +272,11 @@
                   label="Habilidad técnica"
                   placeholder="Nombre de la habilidad"
                   formControlName="skill"
+                  [hasError]="
+                    (!skillGroup.get('skill')?.valid &&
+                      skillGroup.get('skill')?.touched) ||
+                    false
+                  "
                 >
                 </app-text-input>
                 <span
@@ -259,6 +290,11 @@
                   label="Años de experiencia"
                   placeholder="Nro. de años"
                   formControlName="years"
+                  [hasError]="
+                    (!skillGroup.get('years')?.valid &&
+                      skillGroup.get('years')?.touched) ||
+                    false
+                  "
                 >
                 </app-text-input>
                 <span
@@ -281,14 +317,30 @@
 
         <div class="mb-8">
           <app-subtitle-form text="Habilidades blandas"></app-subtitle-form>
-          <div class="grid gap-4">
-            <div class="grid gap-4" *ngFor="let index of softSkillsNumber">
+          <div class="grid gap-4" formArrayName="softSkills">
+            <div
+              class="grid gap-4"
+              *ngFor="let skillGroup of softSkills.controls; let i = index"
+              [formGroupName]="i"
+            >
               <app-text-input
-                [id]="'habilidad-blanda-' + index"
+                [id]="'habilidad-blanda-' + i"
                 label="Habilidad blanda"
                 placeholder="Nombre de la habilidad"
+                formControlName="skill"
+                [hasError]="
+                  (!skillGroup.get('skill')?.valid &&
+                    skillGroup.get('skill')?.touched) ||
+                  false
+                "
               >
               </app-text-input>
+              <span
+                *ngIf="isValidField('softSkills.' + i + '.skill')"
+                class="font-medium text-red-500 leading-tight"
+              >
+                {{ getFieldError("softSkills." + i + ".skill") }}
+              </span>
             </div>
             <button
               type="button"
@@ -302,56 +354,23 @@
 
         <div class="mb-8">
           <app-subtitle-form text="Experiencias laborales"></app-subtitle-form>
-          <app-work-experience-form></app-work-experience-form>
+          <app-work-experience-form
+            (inputChange)="handleInputChange($event)"
+            [createTalentForm]="createTalentForm"
+            [getFieldError]="getFieldError.bind(this)"
+            [isValidField]="isValidField.bind(this)"
+          ></app-work-experience-form>
         </div>
 
         <div class="mb-8">
           <app-subtitle-form text="Experiencias educativas"></app-subtitle-form>
-          <!-- <div class="grid gap-4">
-            <app-text-input
-              [id]="'institucion'"
-              label="Institución"
-              placeholder="Nombre de la institución"
-              [value]="defaultValue"
-            >
-            </app-text-input>
-            <app-checkbox-input
-              [id]="'edu-fractal'"
-              label="Aquí en Fractal"
-              (isCheckedChange)="checkState($event)"
-            ></app-checkbox-input>
-            <app-text-input
-              [id]="'carrera'"
-              label="Carrera"
-              placeholder="Nombre de la carrera"
-            >
-            </app-text-input>
-            <app-text-input
-              [id]="'grado'"
-              label="Grado"
-              placeholder="Grado de la carrera"
-            >
-            </app-text-input>
-            <div class="grid gap-4 md:grid-cols-2">
-              <app-date-input
-                [id]="'edu-anio-mes-inicio'"
-                label="Año y mes de inicio"
-                placeholder="Fecha de inicio"
-              >
-              </app-date-input>
-              <app-date-input
-                [id]="'edu-anio-mes-fin'"
-                label="Año y mes final"
-                placeholder="Fecha de fin"
-              >
-              </app-date-input>
-            </div>
-            <app-checkbox-input
-              [id]="'exp-actual1'"
-              label="Hasta la actualidad"
-            ></app-checkbox-input>
-          </div> -->
-          <app-educational-experience-form></app-educational-experience-form>
+
+          <app-educational-experience-form
+            (inputChange)="handleInputChange($event)"
+            [createTalentForm]="createTalentForm"
+            [getFieldError]="getFieldError.bind(this)"
+            [isValidField]="isValidField.bind(this)"
+          ></app-educational-experience-form>
         </div>
 
         <div class="mb-8">
@@ -363,14 +382,30 @@
               optionName="Nombre del idioma"
               [data]="languageOptions"
               [optionKey]="'language'"
+              (optionSelected)="onLanguageSelected($event)"
+              [hasError]="isValidField('language')"
             ></app-select-input>
+            <span
+              *ngIf="isValidField('language')"
+              class="font-medium text-red-500 leading-tight"
+            >
+              {{ getFieldError("language") }}
+            </span>
             <app-select-input
               [id]="'idioma'"
               label="Nivel"
               optionName="Nivel del idioma"
               [data]="levelOptions"
               [optionKey]="'level'"
+              (optionSelected)="onLevelSelected($event)"
+              [hasError]="isValidField('level')"
             ></app-select-input>
+            <span
+              *ngIf="isValidField('level')"
+              class="font-medium text-red-500 leading-tight"
+            >
+              {{ getFieldError("level") }}
+            </span>
           </div>
         </div>
 
@@ -379,7 +414,14 @@
             <app-rating
               [maxRating]="5"
               [ngClass]="'flex items-center'"
+              formControlName="stars"
             ></app-rating>
+            <span
+              *ngIf="isValidField('stars')"
+              class="font-medium text-red-500 leading-tight"
+            >
+              {{ getFieldError("stars") }}
+            </span>
           </div>
         </div>
       </form>

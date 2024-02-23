@@ -5,8 +5,18 @@
     placeholder="Nombre de la empresa"
     [value]="inputValue"
     [isDisabled]="disableTextInput"
+    (input)="onInputChange($event, 'company')"
+    [hasError]="isValidField('company')"
   >
   </app-text-input>
+  <ng-container *ngIf="{ field: createTalentForm.get('company') } as controls">
+    <span
+      *ngIf="controls.field && !controls.field.valid && controls.field.touched"
+      class="font-medium text-red-500 leading-tight"
+    >
+      {{ getFieldError("company") }}
+    </span>
+  </ng-container>
   <app-checkbox-input
     [id]="'checkboxWorkingHere'"
     label="Aquí en Fractal"
@@ -16,23 +26,64 @@
     [id]="'puesto'"
     label="Puesto"
     placeholder="Puesto en la empresa"
+    (input)="onInputChange($event, 'position')"
+    [hasError]="isValidField('position')"
   >
   </app-text-input>
+  <ng-container *ngIf="{ field: createTalentForm.get('position') } as controls">
+    <span
+      *ngIf="controls.field && !controls.field.valid && controls.field.touched"
+      class="font-medium text-red-500 leading-tight"
+    >
+      {{ getFieldError("position") }}
+    </span>
+  </ng-container>
   <div class="grid gap-4 md:grid-cols-2">
     <app-date-input
       [id]="'anio-mes-inicio'"
       label="Año y mes de inicio"
       placeholder="Fecha de inicio"
+      (input)="onInputChange($event, 'startDate')"
+      [hasError]="isValidField('startDate')"
     >
     </app-date-input>
+
     <app-date-input
       [id]="'anio-mes-fin'"
       label="Año y mes final"
       placeholder="Fecha de fin"
       [value]="endDateValue"
       [isDisabled]="disableEndDateInput"
+      (input)="onInputChange($event, 'endDate')"
+      [hasError]="isValidField('endDate')"
     >
     </app-date-input>
+  </div>
+  <div class="grid gap-4 md:grid-cols-2">
+    <ng-container
+      *ngIf="{ field: createTalentForm.get('startDate') } as controls"
+    >
+      <span
+        *ngIf="
+          controls.field && !controls.field.valid && controls.field.touched
+        "
+        class="font-medium text-red-500 leading-tight"
+      >
+        {{ getFieldError("startDate") }}
+      </span>
+    </ng-container>
+    <ng-container
+      *ngIf="{ field: createTalentForm.get('endDate') } as controls"
+    >
+      <span
+        *ngIf="
+          controls.field && !controls.field.valid && controls.field.touched
+        "
+        class="font-medium text-red-500 leading-tight"
+      >
+        {{ getFieldError("endDate") }}
+      </span>
+    </ng-container>
   </div>
   <app-checkbox-input
     [id]="'checkboxCurrentlyWorking'"

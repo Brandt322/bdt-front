@@ -25,6 +25,7 @@ export class TalentCreateComponent implements OnInit {
   levelOptions: Level[] = [];
   currencyOptions: Currency[] = [];
   countryOptions: Country[] = [];
+  allCities: City[] = [];
   cityOptions: City[] = [];
   citiesByCountryOptions: City[] = [];
   cities: City[] = [];
@@ -58,6 +59,7 @@ export class TalentCreateComponent implements OnInit {
     this.requestOptions();
     this.buildForm();
     this.addNewTechnicalSkill();
+    this.addNewSoftSkill();
   }
 
   buildForm(): void {
@@ -90,6 +92,22 @@ export class TalentCreateComponent implements OnInit {
       initialAmount: [0, [Validators.required, Validators.min(1000), Validators.max(20000)]],
       finalAmount: [0, [Validators.required, Validators.min(1000), Validators.max(20000)]],
       technicalSkills: this.formBuilder.array([]),
+      softSkills: this.formBuilder.array([]),
+      country: ['', [Validators.required]],
+      city: ['', [Validators.required]],
+      currency: ['', Validators.required],
+      company: ['', [Validators.required, Validators.minLength(3)]],
+      position: ['', [Validators.required, Validators.minLength(2)]],
+      startDate: ['', [Validators.required]],
+      endDate: ['', [Validators.required]],
+      institution: ['', [Validators.required, Validators.minLength(3)]],
+      career: ['', [Validators.required, Validators.minLength(3)]],
+      degree: ['', [Validators.required, Validators.minLength(3)]],
+      studyStartDate: ['', [Validators.required]],
+      studyEndDate: ['', [Validators.required]],
+      language: ['', [Validators.required]],
+      level: ['', [Validators.required]],
+      stars: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
     });
   }
 
@@ -215,10 +233,10 @@ export class TalentCreateComponent implements OnInit {
 
   addNewSoftSkill() {
     this.softSkillsNumber.push(this.softSkillsNumber.length);
-  }
-
-  get technicalSkills(): FormArray {
-    return this.createTalentForm.get('technicalSkills') as FormArray;
+    const softSkills = this.createTalentForm.get('softSkills') as FormArray;
+    softSkills.push(this.formBuilder.group({
+      skill: ['', [Validators.required, Validators.minLength(4)]],
+    }));
   }
 
   requestOptions() {
@@ -261,9 +279,63 @@ export class TalentCreateComponent implements OnInit {
         this.levelOptions = levels;
         this.currencyOptions = currencies;
         this.countryOptions = countries;
-        this.cityOptions = cities;
-        this.cities = cities;
+        this.cityOptions = [];
+        this.allCities = cities;
       });
+  }
+
+  get softSkills(): FormArray {
+    return this.createTalentForm.get('softSkills') as FormArray;
+  }
+
+  get technicalSkills(): FormArray {
+    return this.createTalentForm.get('technicalSkills') as FormArray;
+  }
+
+  handleInputChange({ id, value }: { id: string, value: string }) {
+    const control = this.createTalentForm.get(id);
+    if (control) {
+      control.setValue(value);
+      console.log(`El valor del control '${id}' es ahora '${control.value}'`);
+    } else {
+      console.log(`No se encontró el control con el id '${id}'`);
+    }
+  }
+
+  onCountrySelected(countryId: number) {
+    this.cityOptions = this.allCities.filter(city => Number(city.countryId) === countryId);
+    const countryControl = this.createTalentForm.get('country');
+    if (countryControl) {
+      countryControl.setValue(countryId);
+    }
+  }
+
+  onCitySelected(cityId: number) {
+    const cityControl = this.createTalentForm.get('city');
+    if (cityControl) {
+      cityControl.setValue(cityId);
+    }
+  }
+
+  onLanguageSelected(languageId: number) {
+    const cityControl = this.createTalentForm.get('language');
+    if (cityControl) {
+      cityControl.setValue(languageId);
+    }
+  }
+
+  onLevelSelected(levelId: number) {
+    const cityControl = this.createTalentForm.get('level');
+    if (cityControl) {
+      cityControl.setValue(levelId);
+    }
+  }
+
+  onCurrencySelected(currencyId: number) {
+    const currencyControl = this.createTalentForm.get('currency');
+    if (currencyControl) {
+      currencyControl.setValue(Number(currencyId));
+    }
   }
 
   onButtonClick() {
