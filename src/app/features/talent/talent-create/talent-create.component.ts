@@ -92,6 +92,8 @@ export class TalentCreateComponent implements OnInit {
       finalAmount: [0, [Validators.required, Validators.min(1000), Validators.max(20000)]],
       technicalSkills: this.formBuilder.array([]),
       softSkills: this.formBuilder.array([]),
+      country: ['', [Validators.required]],
+      city: ['', [Validators.required]],
     });
   }
 
@@ -271,6 +273,17 @@ export class TalentCreateComponent implements OnInit {
 
   onCountrySelected(countryId: number) {
     this.cityOptions = this.allCities.filter(city => Number(city.countryId) === countryId);
+    const countryControl = this.createTalentForm.get('country');
+    if (countryControl) {
+      countryControl.setValue(countryId);
+    }
+  }
+
+  onCitySelected(cityId: number) {
+    const cityControl = this.createTalentForm.get('city');
+    if (cityControl) {
+      cityControl.setValue(cityId);
+    }
   }
 
   onButtonClick() {

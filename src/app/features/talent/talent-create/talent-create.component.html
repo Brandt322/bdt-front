@@ -145,13 +145,26 @@
               [optionKey]="'country'"
               (optionSelected)="onCountrySelected($event)"
             ></app-select-input>
+            <span
+              *ngIf="isValidField('country')"
+              class="font-medium text-red-500 leading-tight"
+            >
+              {{ getFieldError("country") }}
+            </span>
             <app-select-input
               [id]="'city'"
               label="Ciudad"
               optionName="Nombre de la ciudades"
               [data]="cityOptions"
               [optionKey]="'city'"
+              (optionSelected)="onCitySelected($event)"
             ></app-select-input>
+            <span
+              *ngIf="isValidField('city')"
+              class="font-medium text-red-500 leading-tight"
+            >
+              {{ getFieldError("city") }}
+            </span>
           </div>
         </div>
 

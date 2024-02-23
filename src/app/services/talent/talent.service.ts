@@ -20,6 +20,6 @@ export class TalentService {
   }
 
   createtalent(talent: Talent): Observable<Object> {
-    return this.http.post(`${this.uri}/${TALENT_API_ENDPOINTS.REQUESTMAPPING}/${TALENT_API_ENDPOINTS.NEWTALENT}`, talent);
+    return this.http.post(`${this.uri}/${TALENT_API_ENDPOINTS.REQUESTMAPPING}`, talent);
   }
 }
