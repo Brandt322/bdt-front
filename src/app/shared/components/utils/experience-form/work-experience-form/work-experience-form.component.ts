@@ -14,8 +14,8 @@ export class WorkExperienceFormComponent {
   disableEndDateInput: boolean = false;
   @Output() inputChange = new EventEmitter<{ id: string, value: string }>();
   @Input() createTalentForm!: FormGroup;
-  @Input() getFieldError!: (fieldName: string) => string | null;
-  @Input() isValidField!: (fieldName: string) => boolean;
+  @Input() getFieldError?: (fieldName: string) => string | null;
+  @Input() isValidField?: (fieldName: string) => boolean;
 
   onInputChange(event: any, id: string) {
     if (event.target) {
