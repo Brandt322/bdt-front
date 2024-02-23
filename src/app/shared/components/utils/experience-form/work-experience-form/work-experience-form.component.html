@@ -5,6 +5,7 @@
     placeholder="Nombre de la empresa"
     [value]="inputValue"
     [isDisabled]="disableTextInput"
+    (input)="onInputChange($event, 'company')"
   >
   </app-text-input>
   <app-checkbox-input
@@ -16,6 +17,7 @@
     [id]="'puesto'"
     label="Puesto"
     placeholder="Puesto en la empresa"
+    (input)="onInputChange($event, 'position')"
   >
   </app-text-input>
   <div class="grid gap-4 md:grid-cols-2">
@@ -23,6 +25,7 @@
       [id]="'anio-mes-inicio'"
       label="Año y mes de inicio"
       placeholder="Fecha de inicio"
+      (input)="onInputChange($event, 'startDate')"
     >
     </app-date-input>
     <app-date-input
@@ -31,6 +34,7 @@
       placeholder="Fecha de fin"
       [value]="endDateValue"
       [isDisabled]="disableEndDateInput"
+      (input)="onInputChange($event, 'endDate')"
     >
     </app-date-input>
   </div>

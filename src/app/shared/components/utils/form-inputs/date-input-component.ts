@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-date-input',
@@ -12,7 +12,9 @@ import { Component, Input } from '@angular/core';
       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 disabled:text-gray-500"
       placeholder="{{ placeholder }}"
       [value]="value"
+      [(ngModel)]="value"
       [disabled]="isDisabled"
+      (ngModelChange)="onInputChange($event)"
     />
   </div>`,
 })
@@ -22,4 +24,11 @@ export class DateInputComponent {
   @Input() placeholder!: string;
   @Input() value: string = '';
   @Input() isDisabled: boolean = false;
+  @Output() valueChange = new EventEmitter<string>();
+
+  onInputChange(event: any) {
+    this.value = event.target.value;
+    this.valueChange.emit(this.value);
+  }
+
 }

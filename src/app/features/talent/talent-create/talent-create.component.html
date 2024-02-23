@@ -336,7 +336,9 @@
 
         <div class="mb-8">
           <app-subtitle-form text="Experiencias laborales"></app-subtitle-form>
-          <app-work-experience-form></app-work-experience-form>
+          <app-work-experience-form
+            (inputChange)="handleInputChange($event)"
+          ></app-work-experience-form>
         </div>
 
         <div class="mb-8">

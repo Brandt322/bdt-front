@@ -95,6 +95,10 @@ export class TalentCreateComponent implements OnInit {
       country: ['', [Validators.required]],
       city: ['', [Validators.required]],
       currency: ['', Validators.required],
+      company: ['', [Validators.required, Validators.minLength(3)]],
+      position: ['', [Validators.required, Validators.minLength(2)]],
+      startDate: ['', [Validators.required]],
+      endDate: [''],
     });
   }
 
@@ -202,6 +206,7 @@ export class TalentCreateComponent implements OnInit {
     );
   }
 
+
   addNewTechnicalSkill() {
     this.technicalSkillsNumber.push(this.technicalSkillsNumber.length);
     const technicalSkills = this.createTalentForm.get('technicalSkills') as FormArray;
@@ -217,14 +222,6 @@ export class TalentCreateComponent implements OnInit {
     softSkills.push(this.formBuilder.group({
       skill: ['', [Validators.required, Validators.minLength(4)]],
     }));
-  }
-
-  get softSkills(): FormArray {
-    return this.createTalentForm.get('softSkills') as FormArray;
-  }
-
-  get technicalSkills(): FormArray {
-    return this.createTalentForm.get('technicalSkills') as FormArray;
   }
 
   requestOptions() {
@@ -270,6 +267,24 @@ export class TalentCreateComponent implements OnInit {
         this.cityOptions = [];
         this.allCities = cities;
       });
+  }
+
+  get softSkills(): FormArray {
+    return this.createTalentForm.get('softSkills') as FormArray;
+  }
+
+  get technicalSkills(): FormArray {
+    return this.createTalentForm.get('technicalSkills') as FormArray;
+  }
+
+  handleInputChange({ id, value }: { id: string, value: string }) {
+    const control = this.createTalentForm.get(id);
+    if (control) {
+      control.setValue(value);
+      console.log(`El valor del control '${id}' es ahora '${control.value}'`);
+    } else {
+      console.log(`No se encontró el control con el id '${id}'`);
+    }
   }
 
   onCountrySelected(countryId: number) {
