@@ -11,8 +11,8 @@ import { Level } from 'src/app/shared/models/interfaces/level-interface';
 })
 export class NavFiltersComponent implements OnInit {
   data: Level[] = [];
-
-  constructor(private router: Router, private masterService: MasterService) {}
+  isOpen: boolean = false;
+  constructor(private router: Router, private masterService: MasterService) { }
 
   ngOnInit(): void {
     this.masterService
@@ -24,5 +24,9 @@ export class NavFiltersComponent implements OnInit {
 
   onButtonClick() {
     this.router.navigate(['/main/new-talent']);
+  }
+
+  isNavOpen() {
+    this.isOpen = !this.isOpen;
   }
 }

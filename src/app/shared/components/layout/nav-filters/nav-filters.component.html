@@ -1,90 +1,42 @@
-<nav class="bg-white border-gray-200 dark:bg-gray-900">
+<nav
+  class="bg-white border-gray-200 dark:bg-gray-900 mx-auto w-full max-w-full sm:flex sm:items-center sm:px-4 md:py-3 lg:py-2 md:justify-between xl:py-3 xl:max-w-screen-2xl"
+>
+  <div class="flex items-center justify-between gap-2 px-4 py-3 sm:p-0">
+    <div>
+      <a
+        (click)="onButtonClick()"
+        class="inline-block text-md font-medium text-center text-[#0B85C3] bg-white border border-[#84c2e0] focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-[#c7e2f0] rounded-lg py-2.5 px-5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 cursor-pointer"
+      >
+        + Nuevo Talento
+      </a>
+    </div>
+    <div class="sm:hidden">
+      <button
+        type="button"
+        class="block text-gray-500 hover:text-gray-600 font-medium text-4xl focus:outline-none"
+        (click)="isNavOpen()"
+      >
+        <span *ngIf="isOpen" class="fa-solid fa-xmark fill-current"></span>
+        <span *ngIf="!isOpen" class="fa-solid fa-bars fill-current"></span>
+      </button>
+    </div>
+  </div>
   <div
-    class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto gap-2 p-4"
+    class="sm:flex w-auto md:flex-row"
+    [ngClass]="{
+      'flex justify-center': isOpen === true,
+      hidden: isOpen === false
+    }"
   >
-    <a
-      (click)="onButtonClick()"
-      class="inline-block text-md font-medium text-center text-[#0B85C3] bg-white border border-[#84c2e0] focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-[#c7e2f0] rounded-lg py-2.5 px-5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 cursor-pointer"
+    <form
+      class="flex justify-around gap-2 items-center flex-col lg:flex-row lg:gap-6"
     >
-      + Nuevo Talento
-    </a>
-    <div
-      class="flex gap-8 max-w-screen-xl w-auto md:w-auto flex-col md:flex-row lg:flex-row"
-    >
-      <!-- Barra de busqueda, boton buscar y icono hamburguesa -->
-      <div
-        class="flex md:order-2 justify-between space-x-3 md:space-x-0 rtl:space-x-reverse"
-      >
-        <form class="flex gap-6 items-center">
-          <div class="relative md:block flex items-center">
-            <div
-              class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
-            >
-              <svg
-                class="w-4 h-4 text-gray-500 dark:text-gray-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                />
-              </svg>
-              <span class="sr-only">Search icon</span>
-            </div>
-            <input
-              type="text"
-              id="search-navbar"
-              class="block w-32 max-w-96 min-w-32 lg:w-full lg:max-w-96 p-2 ps-10 text-lg text-gray-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Buscar nuevo talento o puesto"
-            />
-          </div>
-          <button
-            type="button"
-            class="text-md font-medium text-white bg-[#009688] hover:bg-[#203634] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg px-4 py-2 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-          >
-            Buscar
-          </button>
-        </form>
-        <button
-          data-collapse-toggle="navbar-dropdown"
-          type="button"
-          class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-          aria-controls="navbar-dropdown"
-          aria-expanded="false"
-        >
-          <svg
-            class="w-5 h-5"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 17 14"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M1 1h15M1 7h15M1 13h15"
-            />
-          </svg>
-        </button>
-      </div>
-
-      <!-- Barra de busqueda, boton buscar y icono hamburguesa -->
-      <div
-        class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
-        id="navbar-dropdown"
-      >
+      <!-- Filtros de busqueda -->
+      <div class="flex items-center w-full">
         <ul
-          class="flex flex-col gap-4 font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
+          class="flex flex-col justify-center w-full min-w-72 max-w-full mx-auto gap-4 p-4 mt-4 sm:w-auto sm:flex-row sm:justify-between sm:items-center sm:mt-0 sm:p-0 md:w-auto lg:gap-6 font-medium bg-white dark:bg-gray-800 md:dark:bg-gray-900"
         >
-          <li>
+          <li class="block text-nowrap">
             <app-button-dropdown
               buttonId="skillsDropdown"
               dropdownToggle="skillsCheckbox"
@@ -105,7 +57,7 @@
             >
             </app-checkbox-dropdown-modal>
           </li>
-          <li>
+          <li class="block text-nowrap">
             <app-button-dropdown
               buttonId="languageCheckbox"
               dropdownToggle="languageDropdown"
@@ -119,7 +71,7 @@
               [labelKey]="'level'"
             ></app-checkbox-dropdown-select-data-modal>
           </li>
-          <li>
+          <li class="block text-nowrap">
             <app-button-dropdown
               buttonId="favoriteCheckbox"
               dropdownToggle="favoriteDropdown"
@@ -136,6 +88,44 @@
           </li>
         </ul>
       </div>
-    </div>
+
+      <!-- Barra de busqueda, boton buscar-->
+      <div class="flex w-full justify-center gap-8 sm:gap-4">
+        <div class="relative md:block flex items-center">
+          <div
+            class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+          >
+            <svg
+              class="w-4 h-4 text-gray-500 dark:text-gray-400"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 20"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+              />
+            </svg>
+            <span class="sr-only">Search icon</span>
+          </div>
+          <input
+            type="text"
+            id="search-navbar"
+            class="block w-[200px] sm:w-52 lg:w-56 xl:w-96 lg:max-w-full p-2 ps-10 text-lg text-gray-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Buscar nuevo talento o puesto"
+          />
+        </div>
+        <button
+          type="button"
+          class="text-md font-medium text-white bg-[#009688] hover:bg-[#203634] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg px-4 py-2 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+        >
+          Buscar
+        </button>
+      </div>
+    </form>
   </div>
 </nav>
