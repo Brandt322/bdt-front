@@ -45,6 +45,8 @@ import { RadioModalComponent } from './components/utils/modals/radio-modal.compo
 import { RatingComponent } from './components/utils/rating/rating.component';
 import { PillTagComponent } from './components/utils/tags/pill-tag/pill-tag-component';
 import { FormErrorComponent } from './components/utils/form-error/form-error.component';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -93,7 +95,7 @@ import { FormErrorComponent } from './components/utils/form-error/form-error.com
     FeedbackModalFormComponent,
     RatingComponent,
   ],
-  imports: [CommonModule, AppRoutingModule, FormsModule],
+  imports: [CommonModule, AppRoutingModule, FormsModule, BrowserAnimationsModule, ToastrModule.forRoot()],
   exports: [
     HeaderComponent,
     MainComponent,

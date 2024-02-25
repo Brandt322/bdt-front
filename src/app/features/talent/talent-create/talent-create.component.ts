@@ -13,6 +13,7 @@ import Language from '../../../shared/models/interfaces/language.interface';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Talent } from 'src/app/shared/models/interfaces/talent.interface';
 import { TalentService } from 'src/app/services/talent/talent.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-talent-create',
@@ -53,6 +54,7 @@ export class TalentCreateComponent implements OnInit {
     private masterService: MasterService,
     private formBuilder: FormBuilder,
     private talentService: TalentService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -187,6 +189,25 @@ export class TalentCreateComponent implements OnInit {
   }
 
   onSubmit(): void {
+    if (this.createTalentForm.invalid) {
+      this.createTalentForm.markAllAsTouched();
+      Object.keys(this.createTalentForm.controls).forEach(field => {
+        const control = this.createTalentForm.get(field);
+        if (control && control.invalid) {
+          const errors = control.errors;
+          if (errors) {
+            Object.keys(errors).forEach(key => {
+              const error = this.getFieldError(field);
+              if (error) {
+                this.toastr.error(error, '¡Error de validación!');
+              }
+            });
+          }
+        }
+      });
+      return;
+    }
+
     const formValues: { [key: string]: any } = this.createTalentForm.value;
     const profileFile: File = formValues['profile'];
     if (profileFile) {
@@ -208,9 +229,12 @@ export class TalentCreateComponent implements OnInit {
     this.talentService.createtalent(talent as Talent).subscribe(
       (response) => {
         console.log(response);
+        this.toastr.success('Talento creado exitosamente', '¡Éxito!');
+        this.router.navigate(['/main']);
       },
       (error) => {
         console.error(error);
+        this.toastr.error('Ocurrió un error al crear el talento', '¡Error!');
       }
     );
   }
