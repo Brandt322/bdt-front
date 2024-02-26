@@ -287,6 +287,7 @@ export class TalentCreateComponent implements OnInit {
     ])
       .pipe(
         catchError((error) => {
+          this.toastr.error('Ocurrió un error al cargar los datos', '¡Error!');
           return throwError(() => error);
         }),
         finalize(() => this.loader.hideLoader())
@@ -298,6 +299,7 @@ export class TalentCreateComponent implements OnInit {
         this.countryOptions = countries;
         this.cityOptions = [];
         this.allCities = cities;
+        this.toastr.success('Datos cargados exitosamente', '¡Éxito!');
       });
   }
 
