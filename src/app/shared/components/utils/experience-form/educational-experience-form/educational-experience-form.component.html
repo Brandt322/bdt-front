@@ -5,20 +5,28 @@
     placeholder="Nombre de la institución"
     [value]="inputValue"
     [isDisabled]="disableTextInput"
-    (input)="onInputChange($event, 'institution')"
-    [hasError]="isValidField ? isValidField('institution') : false"
+    (input)="onInputChange($event, 'educationalInstitute')"
+    [hasError]="
+      isValidField
+        ? isValidField('educationalExperiencesList.0.educationalInstitute')
+        : false
+    "
   >
   </app-text-input>
-  <ng-container
-    *ngIf="{ field: createTalentForm?.get('institution') } as controls"
+  <span
+    *ngIf="
+      isValidField
+        ? isValidField('educationalExperiencesList.0.educationalInstitute')
+        : false
+    "
+    class="font-medium text-red-500 leading-tight"
   >
-    <span
-      *ngIf="controls.field && !controls.field.valid && controls.field.touched"
-      class="font-medium text-red-500 leading-tight"
-    >
-      {{ getFieldError ? getFieldError("institution") : "" }}
-    </span>
-  </ng-container>
+    {{
+      getFieldError
+        ? getFieldError("educationalExperiencesList.0.educationalInstitute")
+        : ""
+    }}
+  </span>
   <app-checkbox-input
     [id]="'edu-fractal'"
     label="Aquí en Fractal"
@@ -29,40 +37,52 @@
     label="Carrera"
     placeholder="Nombre de la carrera"
     (input)="onInputChange($event, 'career')"
-    [hasError]="isValidField ? isValidField('career') : false"
+    [hasError]="
+      isValidField ? isValidField('educationalExperiencesList.0.career') : false
+    "
   >
   </app-text-input>
-  <ng-container *ngIf="{ field: createTalentForm?.get('career') } as controls">
-    <span
-      *ngIf="controls.field && !controls.field.valid && controls.field.touched"
-      class="font-medium text-red-500 leading-tight"
-    >
-      {{ getFieldError ? getFieldError("career") : "" }}
-    </span>
-  </ng-container>
+  <span
+    *ngIf="
+      isValidField ? isValidField('educationalExperiencesList.0.career') : false
+    "
+    class="font-medium text-red-500 leading-tight"
+  >
+    {{
+      getFieldError ? getFieldError("educationalExperiencesList.0.career") : ""
+    }}
+  </span>
   <app-text-input
     [id]="'grado'"
     label="Grado"
     placeholder="Grado de la carrera"
     (input)="onInputChange($event, 'degree')"
-    [hasError]="isValidField ? isValidField('degree') : false"
+    [hasError]="
+      isValidField ? isValidField('educationalExperiencesList.0.degree') : false
+    "
   >
   </app-text-input>
-  <ng-container *ngIf="{ field: createTalentForm?.get('degree') } as controls">
-    <span
-      *ngIf="controls.field && !controls.field.valid && controls.field.touched"
-      class="font-medium text-red-500 leading-tight"
-    >
-      {{ getFieldError ? getFieldError("degree") : "" }}
-    </span>
-  </ng-container>
+  <span
+    *ngIf="
+      isValidField ? isValidField('educationalExperiencesList.0.degree') : false
+    "
+    class="font-medium text-red-500 leading-tight"
+  >
+    {{
+      getFieldError ? getFieldError("educationalExperiencesList.0.degree") : ""
+    }}
+  </span>
   <div class="grid gap-4 md:grid-cols-2">
     <app-date-input
       [id]="'edu-anio-mes-inicio'"
       label="Año y mes de inicio"
       placeholder="Fecha de inicio"
-      (input)="onInputChange($event, 'studyStartDate')"
-      [hasError]="isValidField ? isValidField('studyStartDate') : false"
+      (input)="onInputChange($event, 'startDate')"
+      [hasError]="
+        isValidField
+          ? isValidField('educationalExperiencesList.0.startDate')
+          : false
+      "
     >
     </app-date-input>
     <app-date-input
@@ -71,36 +91,44 @@
       placeholder="Fecha de fin"
       [value]="endDateValue"
       [isDisabled]="disableEndDateInput"
-      (input)="onInputChange($event, 'studyEndDate')"
-      [hasError]="isValidField ? isValidField('studyEndDate') : false"
+      (input)="onInputChange($event, 'endDate')"
+      [hasError]="
+        isValidField
+          ? isValidField('educationalExperiencesList.0.endDate')
+          : false
+      "
     >
     </app-date-input>
   </div>
   <div class="grid gap-4 md:grid-cols-2">
-    <ng-container
-      *ngIf="{ field: createTalentForm?.get('studyStartDate') } as controls"
+    <span
+      *ngIf="
+        isValidField
+          ? isValidField('educationalExperiencesList.0.startDate')
+          : false
+      "
+      class="font-medium text-red-500 leading-tight"
     >
-      <span
-        *ngIf="
-          controls.field && !controls.field.valid && controls.field.touched
-        "
-        class="font-medium text-red-500 leading-tight"
-      >
-        {{ getFieldError ? getFieldError("studyStartDate") : "" }}
-      </span>
-    </ng-container>
-    <ng-container
-      *ngIf="{ field: createTalentForm?.get('studyEndDate') } as controls"
+      {{
+        getFieldError
+          ? getFieldError("educationalExperiencesList.0.startDate")
+          : ""
+      }}
+    </span>
+    <span
+      *ngIf="
+        isValidField
+          ? isValidField('educationalExperiencesList.0.endDate')
+          : false
+      "
+      class="font-medium text-red-500 leading-tight"
     >
-      <span
-        *ngIf="
-          controls.field && !controls.field.valid && controls.field.touched
-        "
-        class="font-medium text-red-500 leading-tight"
-      >
-        {{ getFieldError ? getFieldError("studyEndDate") : "" }}
-      </span>
-    </ng-container>
+      {{
+        getFieldError
+          ? getFieldError("educationalExperiencesList.0.endDate")
+          : ""
+      }}
+    </span>
   </div>
   <app-checkbox-input
     [id]="'exp-actual1'"

@@ -12,21 +12,21 @@ export class EducationalExperienceFormComponent {
   currentDate = new Date();
   disableTextInput: boolean = false;
   disableEndDateInput: boolean = false;
-  @Output() inputChange = new EventEmitter<{ id: string, value: string }>();
+  @Output() inputChange = new EventEmitter<{ id: string, value: string, arrayName: string }>();
   @Input() createTalentForm!: FormGroup;
   @Input() getFieldError?: (fieldName: string) => string | null;
   @Input() isValidField?: (fieldName: string) => boolean;
 
   onInputChange(event: any, id: string) {
     if (event.target) {
-      this.inputChange.emit({ id, value: event.target.value });
+      this.inputChange.emit({ id, value: event.target.value, arrayName: 'educationalExperiencesList' });
     }
   }
 
   institutionIfChecked(isChecked: boolean) {
     this.inputValue = isChecked ? 'Fractal' : '';
     this.disableTextInput = isChecked;
-    this.inputChange.emit({ id: 'institution', value: this.inputValue });
+    this.inputChange.emit({ id: 'educationalInstitute', value: this.inputValue, arrayName: 'educationalExperiencesList' });
   }
 
   endDateIfChecked(isChecked: boolean) {
@@ -34,6 +34,6 @@ export class EducationalExperienceFormComponent {
     this.endDateValue = isChecked
       ? formatDate(this.currentDate, 'yyyy-MM', 'en-US')
       : '';
-    this.inputChange.emit({ id: 'studyEndDate', value: this.endDateValue });
+    this.inputChange.emit({ id: 'endDate', value: this.endDateValue, arrayName: 'educationalExperiencesList' });
   }
 }

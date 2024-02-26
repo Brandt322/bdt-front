@@ -99,11 +99,7 @@ export class TalentCreateComponent implements OnInit {
       city: ['', [Validators.required]],
       currency: ['', Validators.required],
       workExperiencesList: this.formBuilder.array([this.createWorkExperience()]),
-      institution: ['', [Validators.required, Validators.minLength(3)]],
-      career: ['', [Validators.required, Validators.minLength(3)]],
-      degree: ['', [Validators.required, Validators.minLength(3)]],
-      studyStartDate: ['', [Validators.required]],
-      studyEndDate: ['', [Validators.required]],
+      educationalExperiencesList: this.formBuilder.array([this.createEducationalExperience()]),
       languageId: ['', [Validators.required]],
       level: ['', [Validators.required]],
       numberOfStars: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
@@ -245,6 +241,16 @@ export class TalentCreateComponent implements OnInit {
     });
   }
 
+  createEducationalExperience(): FormGroup {
+    return this.formBuilder.group({
+      educationalInstitute: ['', [Validators.required, Validators.minLength(3)]],
+      career: ['', [Validators.required, Validators.minLength(3)]],
+      degree: ['', [Validators.required, Validators.minLength(3)]],
+      startDate: ['', [Validators.required]],
+      endDate: ['', [Validators.required]],
+    });
+  }
+
   addNewTechnicalSkill() {
     this.technicalSkillsNumber.push(this.technicalSkillsNumber.length);
     const technicalSkills = this.createTalentForm.get('technicalSkills') as FormArray;
@@ -311,6 +317,10 @@ export class TalentCreateComponent implements OnInit {
 
   get workExperiencesList(): FormArray {
     return this.createTalentForm.get('workExperiencesList') as FormArray;
+  }
+
+  get educationalExperiencesList(): FormArray {
+    return this.createTalentForm.get('educationalExperiencesList') as FormArray;
   }
 
   get softSkills(): FormArray {
