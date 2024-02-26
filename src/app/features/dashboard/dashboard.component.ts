@@ -4,6 +4,7 @@ import { catchError, throwError } from 'rxjs';
 import { TalentService } from 'src/app/services/talent/talent.service';
 import { FakeProfiles } from 'src/app/shared/models/types';
 import { Talent } from '../../shared/models/interfaces/talent.interface';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +15,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   profiles = FakeProfiles;
   talents: Talent[] = [];
 
-  constructor(private talentService: TalentService) { }
+  constructor(private talentService: TalentService, private toastr: ToastrService) { }
 
   ngAfterViewInit(): void {
     initDropdowns();
@@ -26,6 +27,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       .getTalent()
       .pipe(
         catchError((error) => {
+          this.toastr.error('Error al obtener los talentos', 'Error');
           return throwError(() => error);
         })
       )
@@ -44,6 +46,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
         // this.talents = talents;
         this.talents = talents.slice(0, 5);
+        this.toastr.success('Talentos obtenidos correctamente', 'Éxito');
       });
   }
 

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { catchError, throwError } from 'rxjs';
 import { MASTER_API_ENDPOINTS } from 'src/app/core/global/constants/api-endpoints';
 import { MasterService } from 'src/app/services/master/master.service';
 import { Level } from 'src/app/shared/models/interfaces/level-interface';
@@ -12,13 +14,20 @@ import { Level } from 'src/app/shared/models/interfaces/level-interface';
 export class NavFiltersComponent implements OnInit {
   data: Level[] = [];
   isOpen: boolean = false;
-  constructor(private router: Router, private masterService: MasterService) { }
+  constructor(private router: Router, private masterService: MasterService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.masterService
       .getLevel(MASTER_API_ENDPOINTS.LEVELS)
+      .pipe(
+        catchError((error) => {
+          this.toastr.error('Error al obtener los niveles', 'Error');
+          return throwError(() => error);
+        })
+      )
       .subscribe((niveles) => {
         this.data = niveles;
+        this.toastr.success('Niveles obtenidos correctamente', 'Éxito');
       });
   }
 
