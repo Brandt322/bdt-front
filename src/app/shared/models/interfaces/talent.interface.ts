@@ -9,10 +9,10 @@ export interface TalentResponse {
   name: string;
   paternalSurname: string;
   maternalSurname: string;
-  countryId: number;
-  cityId: number;
-  currencyId: number;
-  profileId: number;
+  countryId: string;
+  cityId: string;
+  currencyId: string;
+  profileId: string;
   image: string;
   description: string;
   initialAmount: number;
@@ -28,7 +28,6 @@ export interface TalentResponse {
 }
 
 export interface TalentRequest {
-  id: number;
   name: string;
   paternalSurname: string;
   maternalSurname: string;

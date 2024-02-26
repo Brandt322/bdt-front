@@ -144,13 +144,13 @@
               [data]="countryOptions"
               [optionKey]="'country'"
               (optionSelected)="onCountrySelected($event)"
-              [hasError]="isValidField('country')"
+              [hasError]="isValidField('countryId')"
             ></app-select-input>
             <span
-              *ngIf="isValidField('country')"
+              *ngIf="isValidField('countryId')"
               class="font-medium text-red-500 leading-tight"
             >
-              {{ getFieldError("country") }}
+              {{ getFieldError("countryId") }}
             </span>
             <app-select-input
               [id]="'city'"
@@ -159,13 +159,13 @@
               [data]="cityOptions"
               [optionKey]="'city'"
               (optionSelected)="onCitySelected($event)"
-              [hasError]="isValidField('city')"
+              [hasError]="isValidField('cityId')"
             ></app-select-input>
             <span
-              *ngIf="isValidField('city')"
+              *ngIf="isValidField('cityId')"
               class="font-medium text-red-500 leading-tight"
             >
-              {{ getFieldError("city") }}
+              {{ getFieldError("cityId") }}
             </span>
           </div>
         </div>
@@ -211,14 +211,14 @@
               [data]="currencyOptions"
               [labelKey]="'currency'"
               (optionSelected)="onCurrencySelected($event)"
-              [hasError]="isValidField('currency')"
+              [hasError]="isValidField('currencyId')"
             >
             </app-radio-input>
             <span
-              *ngIf="isValidField('currency')"
+              *ngIf="isValidField('currencyId')"
               class="font-medium text-red-500 leading-tight"
             >
-              {{ getFieldError("currency") }}
+              {{ getFieldError("currencyId") }}
             </span>
             <div class="grid gap-4 md:grid-cols-2">
               <app-text-input
@@ -258,7 +258,7 @@
         <div class="mb-8">
           <app-subtitle-form text="Habilidades técnicas"></app-subtitle-form>
           <div class="grid gap-4">
-            <div class="grid gap-4" formArrayName="technicalSkills">
+            <div class="grid gap-4" formArrayName="technicalSkillsList">
               <div
                 class="grid gap-4"
                 *ngFor="
@@ -280,10 +280,10 @@
                 >
                 </app-text-input>
                 <span
-                  *ngIf="isValidField('technicalSkills.' + i + '.skill')"
+                  *ngIf="isValidField('technicalSkillsList.' + i + '.skill')"
                   class="font-medium text-red-500 leading-tight"
                 >
-                  {{ getFieldError("technicalSkills." + i + ".skill") }}
+                  {{ getFieldError("technicalSkillsList." + i + ".skill") }}
                 </span>
                 <app-text-input
                   [id]="'anios-exp-habilidad-' + i"
@@ -298,10 +298,10 @@
                 >
                 </app-text-input>
                 <span
-                  *ngIf="isValidField('technicalSkills.' + i + '.years')"
+                  *ngIf="isValidField('technicalSkillsList.' + i + '.years')"
                   class="font-medium text-red-500 leading-tight"
                 >
-                  {{ getFieldError("technicalSkills." + i + ".years") }}
+                  {{ getFieldError("technicalSkillsList." + i + ".years") }}
                 </span>
               </div>
             </div>
@@ -317,7 +317,7 @@
 
         <div class="mb-8">
           <app-subtitle-form text="Habilidades blandas"></app-subtitle-form>
-          <div class="grid gap-4" formArrayName="softSkills">
+          <div class="grid gap-4" formArrayName="softSkillsList">
             <div
               class="grid gap-4"
               *ngFor="let skillGroup of softSkills.controls; let i = index"
@@ -336,10 +336,10 @@
               >
               </app-text-input>
               <span
-                *ngIf="isValidField('softSkills.' + i + '.skill')"
+                *ngIf="isValidField('softSkillsList.' + i + '.skill')"
                 class="font-medium text-red-500 leading-tight"
               >
-                {{ getFieldError("softSkills." + i + ".skill") }}
+                {{ getFieldError("softSkillsList." + i + ".skill") }}
               </span>
             </div>
             <button
@@ -373,55 +373,59 @@
           ></app-educational-experience-form>
         </div>
 
-        <div class="mb-8">
+        <div
+          class="mb-8"
+          *ngFor="let language of languageList.controls; let i = index"
+          [formGroupName]="i"
+        >
           <app-subtitle-form text="Idiomas"></app-subtitle-form>
           <div class="grid gap-4">
             <app-select-input
-              [id]="'idioma'"
+              [id]="'idioma' + i"
               label="Idioma"
               optionName="Nombre del idioma"
               [data]="languageOptions"
               [optionKey]="'language'"
-              (optionSelected)="onLanguageSelected($event)"
-              [hasError]="isValidField('languageId')"
+              (optionSelected)="onLanguageSelected($event, i)"
+              [hasError]="isValidField('languageList.' + i + '.languageId')"
             ></app-select-input>
             <span
-              *ngIf="isValidField('languageId')"
+              *ngIf="isValidField('languageList.' + i + '.languageId')"
               class="font-medium text-red-500 leading-tight"
             >
-              {{ getFieldError("languageId") }}
+              {{ getFieldError("languageList." + i + ".languageId") }}
             </span>
             <app-select-input
-              [id]="'idioma'"
+              [id]="'nivel' + i"
               label="Nivel"
               optionName="Nivel del idioma"
               [data]="levelOptions"
               [optionKey]="'level'"
-              (optionSelected)="onLevelSelected($event)"
-              [hasError]="isValidField('level')"
+              (optionSelected)="onLevelSelected($event, i)"
+              [hasError]="isValidField('languageList.' + i + '.levelId')"
             ></app-select-input>
             <span
-              *ngIf="isValidField('level')"
+              *ngIf="isValidField('languageList.' + i + '.levelId')"
               class="font-medium text-red-500 leading-tight"
             >
-              {{ getFieldError("level") }}
+              {{ getFieldError("languageList." + i + ".levelId") }}
             </span>
           </div>
-        </div>
-
-        <div class="mb-8">
-          <div class="flex">
-            <app-rating
-              [maxRating]="5"
-              [ngClass]="'flex items-center'"
-              formControlName="numberOfStars"
-            ></app-rating>
-            <span
-              *ngIf="isValidField('numberOfStars')"
-              class="font-medium text-red-500 leading-tight"
-            >
-              {{ getFieldError("numberOfStars") }}
-            </span>
+          <div class="mt-8">
+            <div class="flex">
+              <app-rating
+                [maxRating]="5"
+                [ngClass]="'flex items-center'"
+                formControlName="numberOfStars"
+                (ratingChangeEmitter)="onRatingChange($event, i)"
+              ></app-rating>
+              <span
+                *ngIf="isValidField('languageList.' + i + '.numberOfStars')"
+                class="font-medium text-red-500 leading-tight"
+              >
+                {{ getFieldError("languageList." + i + ".numberOfStars") }}
+              </span>
+            </div>
           </div>
         </div>
       </form>
