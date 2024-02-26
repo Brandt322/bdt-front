@@ -48,14 +48,14 @@
           title="Foto de perfil"
           description="JPEG o PNG (Max. 800x400 px)"
           [accept]="'image/png, image/jpeg'"
-          formControlName="profile"
-          [hasError]="isValidField('profile')"
+          formControlName="image"
+          [hasError]="isValidField('image')"
         ></app-file-input>
         <span
-          *ngIf="isValidField('profile')"
+          *ngIf="isValidField('image')"
           class="font-medium text-red-500 leading-tight"
         >
-          {{ getFieldError("profile") }}
+          {{ getFieldError("image") }}
         </span>
 
         <div class="mb-8">
@@ -355,7 +355,7 @@
         <div class="mb-8">
           <app-subtitle-form text="Experiencias laborales"></app-subtitle-form>
           <app-work-experience-form
-            (inputChange)="handleInputChange($event)"
+            (inputChange)="handleInputChangeArray($event)"
             [createTalentForm]="createTalentForm"
             [getFieldError]="getFieldError.bind(this)"
             [isValidField]="isValidField.bind(this)"
@@ -383,13 +383,13 @@
               [data]="languageOptions"
               [optionKey]="'language'"
               (optionSelected)="onLanguageSelected($event)"
-              [hasError]="isValidField('language')"
+              [hasError]="isValidField('languageId')"
             ></app-select-input>
             <span
-              *ngIf="isValidField('language')"
+              *ngIf="isValidField('languageId')"
               class="font-medium text-red-500 leading-tight"
             >
-              {{ getFieldError("language") }}
+              {{ getFieldError("languageId") }}
             </span>
             <app-select-input
               [id]="'idioma'"
@@ -414,13 +414,13 @@
             <app-rating
               [maxRating]="5"
               [ngClass]="'flex items-center'"
-              formControlName="stars"
+              formControlName="numberOfStars"
             ></app-rating>
             <span
-              *ngIf="isValidField('stars')"
+              *ngIf="isValidField('numberOfStars')"
               class="font-medium text-red-500 leading-tight"
             >
-              {{ getFieldError("stars") }}
+              {{ getFieldError("numberOfStars") }}
             </span>
           </div>
         </div>

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { City } from 'src/app/shared/models/interfaces/city.interface';
 import { Country } from 'src/app/shared/models/interfaces/country.interface';
 import { Currency } from 'src/app/shared/models/interfaces/currency.interface';
-import Language from 'src/app/shared/models/interfaces/language.interface';
+import { Language } from 'src/app/shared/models/interfaces/language.interface';
 import { Level } from 'src/app/shared/models/interfaces/level-interface';
 import { environment } from 'src/environments/environment';
 @Injectable({
@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment';
 export class MasterService {
   private uri = environment.url;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getLevel(description: string): Observable<Level[]> {
     return this.http.get<Level[]>(`${this.uri}/${description}`);

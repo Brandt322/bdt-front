@@ -9,9 +9,9 @@ import { Country } from 'src/app/shared/models/interfaces/country.interface';
 import { Currency } from 'src/app/shared/models/interfaces/currency.interface';
 import { Level } from 'src/app/shared/models/interfaces/level-interface';
 import { MasterService } from '../../../services/master/master.service';
-import Language from '../../../shared/models/interfaces/language.interface';
+import { Language } from '../../../shared/models/interfaces/language.interface';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { Talent } from 'src/app/shared/models/interfaces/talent.interface';
+import { TalentRequest } from 'src/app/shared/models/interfaces/talent.interface';
 import { TalentService } from 'src/app/services/talent/talent.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -67,7 +67,7 @@ export class TalentCreateComponent implements OnInit {
   buildForm(): void {
     this.createTalentForm = this.formBuilder.group({
       cv: ['', [Validators.required, this.fileSizeValidator(5 * 1024 * 1024)]],
-      profile: ['', [Validators.required, this.fileSizeValidator(5 * 1024 * 1024)]],
+      image: ['', [Validators.required, this.fileSizeValidator(5 * 1024 * 1024)]],
       name: ['', [Validators.required, Validators.minLength(3)]],
       paternalSurname: ['', [Validators.required, Validators.minLength(3)]],
       maternalSurname: ['', [Validators.required, Validators.minLength(3)]],
@@ -98,18 +98,15 @@ export class TalentCreateComponent implements OnInit {
       country: ['', [Validators.required]],
       city: ['', [Validators.required]],
       currency: ['', Validators.required],
-      company: ['', [Validators.required, Validators.minLength(3)]],
-      position: ['', [Validators.required, Validators.minLength(2)]],
-      startDate: ['', [Validators.required]],
-      endDate: ['', [Validators.required]],
+      workExperiencesList: this.formBuilder.array([this.createWorkExperience()]),
       institution: ['', [Validators.required, Validators.minLength(3)]],
       career: ['', [Validators.required, Validators.minLength(3)]],
       degree: ['', [Validators.required, Validators.minLength(3)]],
       studyStartDate: ['', [Validators.required]],
       studyEndDate: ['', [Validators.required]],
-      language: ['', [Validators.required]],
+      languageId: ['', [Validators.required]],
       level: ['', [Validators.required]],
-      stars: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
+      numberOfStars: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
     });
   }
 
@@ -209,7 +206,7 @@ export class TalentCreateComponent implements OnInit {
     }
 
     const formValues: { [key: string]: any } = this.createTalentForm.value;
-    const profileFile: File = formValues['profile'];
+    const profileFile: File = formValues['image'];
     if (profileFile) {
       const reader = new FileReader();
       reader.onload = (e: ProgressEvent<FileReader>) => {
@@ -225,8 +222,8 @@ export class TalentCreateComponent implements OnInit {
   }
 
   sendFormData(formValues: { [key: string]: any }): void {
-    const talent: Partial<Talent> = formValues; // Obtiene los valores del formulario y hace que las props sean opcionales
-    this.talentService.createtalent(talent as Talent).subscribe(
+    const talent: Partial<TalentRequest> = formValues; // Obtiene los valores del formulario y hace que las props sean opcionales
+    this.talentService.createtalent(talent as TalentRequest).subscribe(
       (response) => {
         console.log(response);
         this.toastr.success('Talento creado exitosamente', '¡Éxito!');
@@ -237,6 +234,15 @@ export class TalentCreateComponent implements OnInit {
         this.toastr.error('Ocurrió un error al crear el talento', '¡Error!');
       }
     );
+  }
+
+  createWorkExperience(): FormGroup {
+    return this.formBuilder.group({
+      company: ['', [Validators.required, Validators.minLength(3)]],
+      position: ['', [Validators.required, Validators.minLength(2)]],
+      startDate: ['', [Validators.required]],
+      endDate: ['', [Validators.required]],
+    });
   }
 
   addNewTechnicalSkill() {
@@ -303,6 +309,10 @@ export class TalentCreateComponent implements OnInit {
       });
   }
 
+  get workExperiencesList(): FormArray {
+    return this.createTalentForm.get('workExperiencesList') as FormArray;
+  }
+
   get softSkills(): FormArray {
     return this.createTalentForm.get('softSkills') as FormArray;
   }
@@ -321,6 +331,21 @@ export class TalentCreateComponent implements OnInit {
     }
   }
 
+  handleInputChangeArray({ id, value, arrayName }: { id: string, value: string, arrayName: string }) {
+    const formArray = this.createTalentForm.get(arrayName) as FormArray;
+    if (formArray) {
+      for (let i = 0; i < formArray.length; i++) {
+        const control = formArray.at(i).get(id);
+        if (control) {
+          control.setValue(value);
+          console.log(`El valor del control '${id}' en el array '${arrayName}' es ahora '${control.value}'`);
+          return;
+        }
+      }
+    }
+    console.log(`No se encontró el control con el id '${id}' en el array '${arrayName}'`);
+  }
+
   onCountrySelected(countryId: number) {
     this.cityOptions = this.allCities.filter(city => Number(city.countryId) === countryId);
     const countryControl = this.createTalentForm.get('country');
@@ -337,7 +362,7 @@ export class TalentCreateComponent implements OnInit {
   }
 
   onLanguageSelected(languageId: number) {
-    const cityControl = this.createTalentForm.get('language');
+    const cityControl = this.createTalentForm.get('languageId');
     if (cityControl) {
       cityControl.setValue(languageId);
     }

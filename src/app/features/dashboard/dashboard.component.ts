@@ -3,7 +3,7 @@ import { initDropdowns, initModals } from 'flowbite';
 import { catchError, throwError } from 'rxjs';
 import { TalentService } from 'src/app/services/talent/talent.service';
 import { FakeProfiles } from 'src/app/shared/models/types';
-import { Talent } from '../../shared/models/interfaces/talent.interface';
+import { TalentResponse } from '../../shared/models/interfaces/talent.interface';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
   profiles = FakeProfiles;
-  talents: Talent[] = [];
+  talents: TalentResponse[] = [];
 
   constructor(private talentService: TalentService, private toastr: ToastrService) { }
 
