@@ -41,7 +41,9 @@ export class RatingComponent implements OnInit, ControlValueAccessor {
     this.selectedStar = index + 1;
     this.previousSelection = this.selectedStar;
     this.ratingChangeEmitter.emit(this.selectedStar); // Emitir evento para los componentes padre
-    this.ratingChange(this.selectedStar); // Notificar a Angular que el valor ha cambiado
+    if (this.ratingChange) {
+      this.ratingChange(this.selectedStar); // Notificar a Angular que el valor ha cambiado
+    }
   }
 
   onRatingChange(rating: number) {

@@ -93,20 +93,14 @@ export class TalentCreateComponent implements OnInit {
       ],
       initialAmount: [0, [Validators.required, Validators.min(1000), Validators.max(20000)]],
       finalAmount: [0, [Validators.required, Validators.min(1000), Validators.max(20000)]],
-      technicalSkills: this.formBuilder.array([]),
-      softSkills: this.formBuilder.array([]),
-      country: ['', [Validators.required]],
-      city: ['', [Validators.required]],
-      currency: ['', Validators.required],
+      technicalSkillsList: this.formBuilder.array([]),
+      softSkillsList: this.formBuilder.array([]),
+      countryId: ['', [Validators.required]],
+      cityId: ['', [Validators.required]],
+      currencyId: ['', Validators.required],
       workExperiencesList: this.formBuilder.array([this.createWorkExperience()]),
-      institution: ['', [Validators.required, Validators.minLength(3)]],
-      career: ['', [Validators.required, Validators.minLength(3)]],
-      degree: ['', [Validators.required, Validators.minLength(3)]],
-      studyStartDate: ['', [Validators.required]],
-      studyEndDate: ['', [Validators.required]],
-      languageId: ['', [Validators.required]],
-      level: ['', [Validators.required]],
-      numberOfStars: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
+      educationalExperiencesList: this.formBuilder.array([this.createEducationalExperience()]),
+      languageList: this.formBuilder.array([this.createLanguage()]),
     });
   }
 
@@ -245,9 +239,27 @@ export class TalentCreateComponent implements OnInit {
     });
   }
 
+  createEducationalExperience(): FormGroup {
+    return this.formBuilder.group({
+      educationalInstitute: ['', [Validators.required, Validators.minLength(3)]],
+      career: ['', [Validators.required, Validators.minLength(3)]],
+      degree: ['', [Validators.required, Validators.minLength(3)]],
+      startDate: ['', [Validators.required]],
+      endDate: ['', [Validators.required]],
+    });
+  }
+
+  createLanguage(): FormGroup {
+    return this.formBuilder.group({
+      languageId: ['', [Validators.required]],
+      levelId: ['', [Validators.required]],
+      numberOfStars: [null, [Validators.required, Validators.min(1), Validators.max(5)]],
+    });
+  }
+
   addNewTechnicalSkill() {
     this.technicalSkillsNumber.push(this.technicalSkillsNumber.length);
-    const technicalSkills = this.createTalentForm.get('technicalSkills') as FormArray;
+    const technicalSkills = this.createTalentForm.get('technicalSkillsList') as FormArray;
     technicalSkills.push(this.formBuilder.group({
       skill: ['', [Validators.required, Validators.minLength(3)]],
       years: ['', [Validators.required, Validators.min(1), Validators.max(50)]],
@@ -256,7 +268,7 @@ export class TalentCreateComponent implements OnInit {
 
   addNewSoftSkill() {
     this.softSkillsNumber.push(this.softSkillsNumber.length);
-    const softSkills = this.createTalentForm.get('softSkills') as FormArray;
+    const softSkills = this.createTalentForm.get('softSkillsList') as FormArray;
     softSkills.push(this.formBuilder.group({
       skill: ['', [Validators.required, Validators.minLength(4)]],
     }));
@@ -309,27 +321,35 @@ export class TalentCreateComponent implements OnInit {
       });
   }
 
+  get languageList(): FormArray {
+    return this.createTalentForm.get('languageList') as FormArray;
+  }
+
   get workExperiencesList(): FormArray {
     return this.createTalentForm.get('workExperiencesList') as FormArray;
   }
 
+  get educationalExperiencesList(): FormArray {
+    return this.createTalentForm.get('educationalExperiencesList') as FormArray;
+  }
+
   get softSkills(): FormArray {
-    return this.createTalentForm.get('softSkills') as FormArray;
+    return this.createTalentForm.get('softSkillsList') as FormArray;
   }
 
   get technicalSkills(): FormArray {
-    return this.createTalentForm.get('technicalSkills') as FormArray;
+    return this.createTalentForm.get('technicalSkillsList') as FormArray;
   }
 
-  handleInputChange({ id, value }: { id: string, value: string }) {
-    const control = this.createTalentForm.get(id);
-    if (control) {
-      control.setValue(value);
-      console.log(`El valor del control '${id}' es ahora '${control.value}'`);
-    } else {
-      console.log(`No se encontró el control con el id '${id}'`);
-    }
-  }
+  // handleInputChange({ id, value }: { id: string, value: string }) {
+  //   const control = this.createTalentForm.get(id);
+  //   if (control) {
+  //     control.setValue(value);
+  //     console.log(`El valor del control '${id}' es ahora '${control.value}'`);
+  //   } else {
+  //     console.log(`No se encontró el control con el id '${id}'`);
+  //   }
+  // }
 
   handleInputChangeArray({ id, value, arrayName }: { id: string, value: string, arrayName: string }) {
     const formArray = this.createTalentForm.get(arrayName) as FormArray;
@@ -348,35 +368,44 @@ export class TalentCreateComponent implements OnInit {
 
   onCountrySelected(countryId: number) {
     this.cityOptions = this.allCities.filter(city => Number(city.countryId) === countryId);
-    const countryControl = this.createTalentForm.get('country');
+    const countryControl = this.createTalentForm.get('countryId');
     if (countryControl) {
       countryControl.setValue(countryId);
     }
   }
 
   onCitySelected(cityId: number) {
-    const cityControl = this.createTalentForm.get('city');
+    const cityControl = this.createTalentForm.get('cityId');
     if (cityControl) {
       cityControl.setValue(cityId);
     }
   }
 
-  onLanguageSelected(languageId: number) {
-    const cityControl = this.createTalentForm.get('languageId');
-    if (cityControl) {
-      cityControl.setValue(languageId);
+  onLanguageSelected(languageId: number, index: number) {
+    const languageControl = (this.createTalentForm.get('languageList') as FormArray).at(index).get('languageId');
+    if (languageControl) {
+      languageControl.setValue(languageId);
+      console.log('Language selected:', languageId);
     }
   }
 
-  onLevelSelected(levelId: number) {
-    const cityControl = this.createTalentForm.get('level');
-    if (cityControl) {
-      cityControl.setValue(levelId);
+  onLevelSelected(levelId: number, index: number) {
+    const levelControl = (this.createTalentForm.get('languageList') as FormArray).at(index).get('levelId');
+    if (levelControl) {
+      levelControl.setValue(levelId);
+      console.log('Level selected:', levelId);
+    }
+  }
+
+  onRatingChange(rating: number, index: number) {
+    const languageControl = (this.createTalentForm.get('languageList') as FormArray).at(index).get('numberOfStars');
+    if (languageControl) {
+      languageControl.setValue(rating);
     }
   }
 
   onCurrencySelected(currencyId: number) {
-    const currencyControl = this.createTalentForm.get('currency');
+    const currencyControl = this.createTalentForm.get('currencyId');
     if (currencyControl) {
       currencyControl.setValue(Number(currencyId));
     }
