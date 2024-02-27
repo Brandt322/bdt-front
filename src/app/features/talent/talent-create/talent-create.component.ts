@@ -10,10 +10,11 @@ import { Currency } from 'src/app/shared/models/interfaces/currency.interface';
 import { Level } from 'src/app/shared/models/interfaces/level-interface';
 import { MasterService } from '../../../services/master/master.service';
 import { Language } from '../../../shared/models/interfaces/language.interface';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { TalentRequest } from 'src/app/shared/models/interfaces/talent.interface';
 import { TalentService } from 'src/app/services/talent/talent.service';
 import { ToastrService } from 'ngx-toastr';
+import { Profile } from 'src/app/shared/models/interfaces/profile.interface';
 
 @Component({
   selector: 'app-talent-create',
@@ -30,6 +31,7 @@ export class TalentCreateComponent implements OnInit {
   cityOptions: City[] = [];
   citiesByCountryOptions: City[] = [];
   cities: City[] = [];
+  profilesOptions: Profile[] = [];
   createTalentForm!: FormGroup;
 
   technicalSkillsNumber: number[] = [0];
@@ -98,10 +100,20 @@ export class TalentCreateComponent implements OnInit {
       countryId: ['', [Validators.required]],
       cityId: ['', [Validators.required]],
       currencyId: ['', Validators.required],
+      profileId: ['', Validators.required],
       workExperiencesList: this.formBuilder.array([this.createWorkExperience()]),
       educationalExperiencesList: this.formBuilder.array([this.createEducationalExperience()]),
       languageList: this.formBuilder.array([this.createLanguage()]),
-    });
+    }, { validators: this.amountValidator() });
+  }
+
+  amountValidator(): ValidatorFn {
+    return (group: AbstractControl): ValidationErrors | null => {
+      const initialAmount = group.get('initialAmount')?.value;
+      const finalAmount = group.get('finalAmount')?.value;
+
+      return finalAmount > initialAmount ? null : { 'amountInvalid': true };
+    };
   }
 
   fileSizeValidator(maxSize: number): ValidatorFn {
@@ -295,6 +307,9 @@ export class TalentCreateComponent implements OnInit {
       'A',
       MASTER_API_ENDPOINTS.CITIES
     );
+    const profileRequest = this.masterService.getProfile(
+      MASTER_API_ENDPOINTS.PROFILES
+    );
 
     forkJoin([
       languageRequest,
@@ -302,6 +317,7 @@ export class TalentCreateComponent implements OnInit {
       currencyRequest,
       countryRequest,
       cityRequest,
+      profileRequest
     ])
       .pipe(
         catchError((error) => {
@@ -310,13 +326,14 @@ export class TalentCreateComponent implements OnInit {
         }),
         finalize(() => this.loader.hideLoader())
       )
-      .subscribe(([languages, levels, currencies, countries, cities]) => {
+      .subscribe(([languages, levels, currencies, countries, cities, profileRequest]) => {
         this.languageOptions = languages;
         this.levelOptions = levels;
         this.currencyOptions = currencies;
         this.countryOptions = countries;
         this.cityOptions = [];
         this.allCities = cities;
+        this.profilesOptions = profileRequest;
         this.toastr.success('Datos cargados exitosamente', '¡Éxito!');
       });
   }
@@ -364,6 +381,13 @@ export class TalentCreateComponent implements OnInit {
       }
     }
     console.log(`No se encontró el control con el id '${id}' en el array '${arrayName}'`);
+  }
+
+  onProfileSelected(profileId: number) {
+    const profileControl = this.createTalentForm.get('profileId');
+    if (profileControl) {
+      profileControl.setValue(profileId);
+    }
   }
 
   onCountrySelected(countryId: number) {

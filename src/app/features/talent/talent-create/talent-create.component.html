@@ -131,6 +131,21 @@
             >
               {{ getFieldError("description") }}
             </span>
+            <app-select-input
+              [id]="'profile'"
+              label="Perfil"
+              optionName="Escoge tu perfil"
+              [data]="profilesOptions"
+              [optionKey]="'profile'"
+              (optionSelected)="onProfileSelected($event)"
+              [hasError]="isValidField('profileId')"
+            ></app-select-input>
+            <span
+              *ngIf="isValidField('profileId')"
+              class="font-medium text-red-500 leading-tight"
+            >
+              {{ getFieldError("profileId") }}
+            </span>
           </div>
         </div>
 
@@ -252,6 +267,12 @@
                 {{ getFieldError("finalAmount") }}
               </span>
             </div>
+            <span
+              *ngIf="createTalentForm.errors?.['amountInvalid'] && createTalentForm.touched"
+              class="font-medium text-red-500 leading-tight"
+            >
+              El monto final debe ser mayor que el monto inicial
+            </span>
           </div>
         </div>
 
