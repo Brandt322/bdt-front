@@ -27,20 +27,57 @@
     <div class="mx-10 md:mx-16">
       <form [formGroup]="createTalentForm" #form="ngForm">
         <app-subtitle-form text="Curriculum Vitae"></app-subtitle-form>
-        <app-file-input
-          [id]="'cv'"
-          title="Curriculum Vitae"
-          description="PDF (Max. 800x400 px)"
-          [accept]="'application/pdf'"
-          formControlName="cv"
-          [hasError]="isValidField('cv')"
-        ></app-file-input>
-        <span
-          *ngIf="isValidField('cv')"
-          class="font-medium text-red-500 leading-tight"
-        >
-          {{ getFieldError("cv") }}
-        </span>
+        <div class="grid gap-4" formArrayName="filesList">
+          <div
+            class="grid gap-4"
+            *ngFor="let fileControl of fileList.controls; let i = index"
+            [formGroupName]="i"
+          >
+            <app-text-input
+              [id]="'nombre_archivo' + i"
+              label="Nombre del archivo"
+              placeholder="Ingrese el nombre del archivo"
+              formControlName="fileName"
+              [hasError]="isValidField('filesList.' + i + '.fileName')"
+            >
+            </app-text-input>
+            <span
+              *ngIf="isValidField('filesList.' + i + '.fileName')"
+              class="font-medium text-red-500 leading-tight"
+            >
+              {{ getFieldError("filesList." + i + ".fileName") }}
+            </span>
+            <app-text-input
+              [id]="'tipo_archivo' + i"
+              label="Tipo de archivo"
+              placeholder="Ingrese el tipo del archivo"
+              formControlName="fileType"
+              [hasError]="isValidField('filesList.' + i + '.fileType')"
+            >
+            </app-text-input>
+            <span
+              *ngIf="isValidField('filesList.' + i + '.fileType')"
+              class="font-medium text-red-500 leading-tight"
+            >
+              {{ getFieldError("filesList." + i + ".fileType") }}
+            </span>
+
+            <app-file-input
+              [id]="'cv' + i"
+              title="Curriculum Vitae"
+              description="PDF (Max. 800x400 px)"
+              [accept]="'application/pdf'"
+              formControlName="file"
+              [hasError]="isValidField('filesList.' + i + '.file')"
+            ></app-file-input>
+            <span
+              *ngIf="isValidField('filesList.' + i + '.file')"
+              class="font-medium text-red-500 leading-tight"
+            >
+              {{ getFieldError("filesList." + i + ".file") }}
+            </span>
+          </div>
+        </div>
 
         <app-subtitle-form text="Foto de perfil"></app-subtitle-form>
         <app-file-input
@@ -408,13 +445,13 @@
               [data]="languageOptions"
               [optionKey]="'language'"
               (optionSelected)="onLanguageSelected($event, i)"
-              [hasError]="isValidField('languageList.' + i + '.languageId')"
+              [hasError]="isValidField('languagesList.' + i + '.languageId')"
             ></app-select-input>
             <span
-              *ngIf="isValidField('languageList.' + i + '.languageId')"
+              *ngIf="isValidField('languagesList.' + i + '.languageId')"
               class="font-medium text-red-500 leading-tight"
             >
-              {{ getFieldError("languageList." + i + ".languageId") }}
+              {{ getFieldError("languagesList." + i + ".languageId") }}
             </span>
             <app-select-input
               [id]="'nivel' + i"
@@ -423,13 +460,13 @@
               [data]="levelOptions"
               [optionKey]="'level'"
               (optionSelected)="onLevelSelected($event, i)"
-              [hasError]="isValidField('languageList.' + i + '.levelId')"
+              [hasError]="isValidField('languagesList.' + i + '.levelId')"
             ></app-select-input>
             <span
-              *ngIf="isValidField('languageList.' + i + '.levelId')"
+              *ngIf="isValidField('languagesList.' + i + '.levelId')"
               class="font-medium text-red-500 leading-tight"
             >
-              {{ getFieldError("languageList." + i + ".levelId") }}
+              {{ getFieldError("languagesList." + i + ".levelId") }}
             </span>
           </div>
           <div class="mt-8">
@@ -441,10 +478,10 @@
                 (ratingChangeEmitter)="onRatingChange($event, i)"
               ></app-rating>
               <span
-                *ngIf="isValidField('languageList.' + i + '.numberOfStars')"
+                *ngIf="isValidField('languagesList.' + i + '.numberOfStars')"
                 class="font-medium text-red-500 leading-tight"
               >
-                {{ getFieldError("languageList." + i + ".numberOfStars") }}
+                {{ getFieldError("languagesList." + i + ".numberOfStars") }}
               </span>
             </div>
           </div>

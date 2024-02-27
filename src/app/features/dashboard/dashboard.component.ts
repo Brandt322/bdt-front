@@ -45,7 +45,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         });
 
         // this.talents = talents;
-        this.talents = talents.slice(0, 5);
+        this.talents = talents.slice(talents.length - 6, talents.length - 1);
         this.toastr.success('Talentos obtenidos correctamente', 'Éxito');
       });
   }
