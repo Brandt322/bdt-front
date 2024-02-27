@@ -137,7 +137,7 @@
               optionName="Escoge tu perfil"
               [data]="profilesOptions"
               [optionKey]="'profile'"
-              (optionSelected)="onCountrySelected($event)"
+              (optionSelected)="onProfileSelected($event)"
               [hasError]="isValidField('profileId')"
             ></app-select-input>
             <span
@@ -267,6 +267,12 @@
                 {{ getFieldError("finalAmount") }}
               </span>
             </div>
+            <span
+              *ngIf="createTalentForm.errors?.['amountInvalid'] && createTalentForm.touched"
+              class="font-medium text-red-500 leading-tight"
+            >
+              El monto final debe ser mayor que el monto inicial
+            </span>
           </div>
         </div>
 

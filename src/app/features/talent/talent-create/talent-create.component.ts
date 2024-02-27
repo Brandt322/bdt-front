@@ -10,7 +10,7 @@ import { Currency } from 'src/app/shared/models/interfaces/currency.interface';
 import { Level } from 'src/app/shared/models/interfaces/level-interface';
 import { MasterService } from '../../../services/master/master.service';
 import { Language } from '../../../shared/models/interfaces/language.interface';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { TalentRequest } from 'src/app/shared/models/interfaces/talent.interface';
 import { TalentService } from 'src/app/services/talent/talent.service';
 import { ToastrService } from 'ngx-toastr';
@@ -104,7 +104,16 @@ export class TalentCreateComponent implements OnInit {
       workExperiencesList: this.formBuilder.array([this.createWorkExperience()]),
       educationalExperiencesList: this.formBuilder.array([this.createEducationalExperience()]),
       languageList: this.formBuilder.array([this.createLanguage()]),
-    });
+    }, { validators: this.amountValidator() });
+  }
+
+  amountValidator(): ValidatorFn {
+    return (group: AbstractControl): ValidationErrors | null => {
+      const initialAmount = group.get('initialAmount')?.value;
+      const finalAmount = group.get('finalAmount')?.value;
+
+      return finalAmount > initialAmount ? null : { 'amountInvalid': true };
+    };
   }
 
   fileSizeValidator(maxSize: number): ValidatorFn {
@@ -372,6 +381,13 @@ export class TalentCreateComponent implements OnInit {
       }
     }
     console.log(`No se encontró el control con el id '${id}' en el array '${arrayName}'`);
+  }
+
+  onProfileSelected(profileId: number) {
+    const profileControl = this.createTalentForm.get('profileId');
+    if (profileControl) {
+      profileControl.setValue(profileId);
+    }
   }
 
   onCountrySelected(countryId: number) {
