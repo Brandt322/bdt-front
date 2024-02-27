@@ -6,6 +6,7 @@ import { Country } from 'src/app/shared/models/interfaces/country.interface';
 import { Currency } from 'src/app/shared/models/interfaces/currency.interface';
 import { Language } from 'src/app/shared/models/interfaces/language.interface';
 import { Level } from 'src/app/shared/models/interfaces/level-interface';
+import { Profile } from 'src/app/shared/models/interfaces/profile.interface';
 import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
@@ -33,6 +34,10 @@ export class MasterService {
 
   getCity(description: string): Observable<City[]> {
     return this.http.get<City[]>(`${this.uri}/${description}`);
+  }
+
+  getProfile(description: string): Observable<Profile[]> {
+    return this.http.get<Profile[]>(`${this.uri}/${description}`);
   }
 
   getCitiesByCountry(

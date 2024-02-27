@@ -146,12 +146,6 @@ export interface Moneda {
   abreviatura: string;
 }
 
-export interface Perfil {
-  id: number;
-  perfil: string;
-  abreviatura: string;
-}
-
 export interface Idioma {
   id: number;
   idioma: string;
