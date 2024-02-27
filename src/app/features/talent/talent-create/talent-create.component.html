@@ -77,6 +77,31 @@
               {{ getFieldError("filesList." + i + ".file") }}
             </span>
           </div>
+          <div class="flex justify-between">
+            <button
+              type="button"
+              class="text-start font-bold text-cyan-500"
+              (click)="addNewFile()"
+            >
+              +<span class="hover:underline">Agregar más</span>
+            </button>
+            <button
+              type="button"
+              class="text-end font-bold"
+              (click)="deleteFile()"
+              [ngClass]="{
+                'text-gray-400':
+                  createTalentForm.get('filesList')?.value?.length <= 1,
+                'cursor-not-allowed':
+                  createTalentForm.get('filesList')?.value?.length <= 1,
+                'text-cyan-500':
+                  createTalentForm.get('filesList')?.value?.length > 1
+              }"
+              [disabled]="createTalentForm.get('filesList')?.value?.length <= 1"
+            >
+              -<span class="hover:underline">Eliminar último</span>
+            </button>
+          </div>
         </div>
 
         <app-subtitle-form text="Foto de perfil"></app-subtitle-form>
@@ -306,7 +331,7 @@
             </div>
             <span
               *ngIf="createTalentForm.errors?.['amountInvalid'] && createTalentForm.touched"
-              class="font-medium text-red-500 leading-tight"
+              class="font-medium text-yellow-500 leading-tight"
             >
               El monto final debe ser mayor que el monto inicial
             </span>
@@ -363,13 +388,37 @@
                 </span>
               </div>
             </div>
-            <button
-              type="button"
-              class="text-start font-bold text-cyan-500"
-              (click)="addNewTechnicalSkill()"
-            >
-              +<span class="hover:underline">Agregar más</span>
-            </button>
+            <div class="flex justify-between">
+              <button
+                type="button"
+                class="text-start font-bold text-cyan-500"
+                (click)="addNewTechnicalSkill()"
+              >
+                +<span class="hover:underline">Agregar más</span>
+              </button>
+              <button
+                type="button"
+                class="text-start font-bold"
+                [ngClass]="{
+                  'text-gray-400':
+                    createTalentForm.get('technicalSkillsList')?.value
+                      ?.length <= 1,
+                  'cursor-not-allowed':
+                    createTalentForm.get('technicalSkillsList')?.value
+                      ?.length <= 1,
+                  'text-cyan-500':
+                    createTalentForm.get('technicalSkillsList')?.value?.length >
+                    1
+                }"
+                [disabled]="
+                  createTalentForm.get('technicalSkillsList')?.value?.length <=
+                  1
+                "
+                (click)="deleteTechnicalSkill()"
+              >
+                -<span class="hover:underline">Eliminar último</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -400,13 +449,33 @@
                 {{ getFieldError("softSkillsList." + i + ".skill") }}
               </span>
             </div>
-            <button
-              type="button"
-              class="text-start font-bold text-cyan-500"
-              (click)="addNewSoftSkill()"
-            >
-              +<span class="hover:underline">Agregar más</span>
-            </button>
+            <div class="flex justify-between">
+              <button
+                type="button"
+                class="text-start font-bold text-cyan-500"
+                (click)="addNewSoftSkill()"
+              >
+                +<span class="hover:underline">Agregar más</span>
+              </button>
+              <button
+                type="button"
+                class="text-start font-bold"
+                [ngClass]="{
+                  'text-gray-400':
+                    createTalentForm.get('softSkillsList')?.value?.length <= 1,
+                  'cursor-not-allowed':
+                    createTalentForm.get('softSkillsList')?.value?.length <= 1,
+                  'text-cyan-500':
+                    createTalentForm.get('softSkillsList')?.value?.length > 1
+                }"
+                [disabled]="
+                  createTalentForm.get('softSkillsList')?.value?.length <= 1
+                "
+                (click)="deleteSoftSkill()"
+              >
+                -<span class="hover:underline">Eliminar último</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -431,59 +500,88 @@
           ></app-educational-experience-form>
         </div>
 
-        <div
-          class="mb-8"
-          *ngFor="let language of languageList.controls; let i = index"
-          [formGroupName]="i"
-        >
-          <app-subtitle-form text="Idiomas"></app-subtitle-form>
-          <div class="grid gap-4">
-            <app-select-input
-              [id]="'idioma' + i"
-              label="Idioma"
-              optionName="Nombre del idioma"
-              [data]="languageOptions"
-              [optionKey]="'language'"
-              (optionSelected)="onLanguageSelected($event, i)"
-              [hasError]="isValidField('languagesList.' + i + '.languageId')"
-            ></app-select-input>
-            <span
-              *ngIf="isValidField('languagesList.' + i + '.languageId')"
-              class="font-medium text-red-500 leading-tight"
-            >
-              {{ getFieldError("languagesList." + i + ".languageId") }}
-            </span>
-            <app-select-input
-              [id]="'nivel' + i"
-              label="Nivel"
-              optionName="Nivel del idioma"
-              [data]="levelOptions"
-              [optionKey]="'level'"
-              (optionSelected)="onLevelSelected($event, i)"
-              [hasError]="isValidField('languagesList.' + i + '.levelId')"
-            ></app-select-input>
-            <span
-              *ngIf="isValidField('languagesList.' + i + '.levelId')"
-              class="font-medium text-red-500 leading-tight"
-            >
-              {{ getFieldError("languagesList." + i + ".levelId") }}
-            </span>
-          </div>
-          <div class="mt-8">
-            <div class="flex">
-              <app-rating
-                [maxRating]="5"
-                [ngClass]="'flex items-center'"
-                formControlName="numberOfStars"
-                (ratingChangeEmitter)="onRatingChange($event, i)"
-              ></app-rating>
+        <div formArrayName="languagesList">
+          <div
+            class="mb-4"
+            *ngFor="let language of languageList.controls; let i = index"
+            [formGroupName]="i"
+          >
+            <app-subtitle-form text="Idiomas"></app-subtitle-form>
+            <div class="grid gap-4">
+              <app-select-input
+                [id]="'idioma' + i"
+                label="Idioma"
+                optionName="Nombre del idioma"
+                [data]="languageOptions"
+                [optionKey]="'language'"
+                (optionSelected)="onLanguageSelected($event, i)"
+                [hasError]="isValidField('languagesList.' + i + '.languageId')"
+              ></app-select-input>
               <span
-                *ngIf="isValidField('languagesList.' + i + '.numberOfStars')"
+                *ngIf="isValidField('languagesList.' + i + '.languageId')"
                 class="font-medium text-red-500 leading-tight"
               >
-                {{ getFieldError("languagesList." + i + ".numberOfStars") }}
+                {{ getFieldError("languagesList." + i + ".languageId") }}
+              </span>
+              <app-select-input
+                [id]="'nivel' + i"
+                label="Nivel"
+                optionName="Nivel del idioma"
+                [data]="levelOptions"
+                [optionKey]="'level'"
+                (optionSelected)="onLevelSelected($event, i)"
+                [hasError]="isValidField('languagesList.' + i + '.levelId')"
+              ></app-select-input>
+              <span
+                *ngIf="isValidField('languagesList.' + i + '.levelId')"
+                class="font-medium text-red-500 leading-tight"
+              >
+                {{ getFieldError("languagesList." + i + ".levelId") }}
               </span>
             </div>
+            <div class="mt-8">
+              <div class="flex">
+                <app-rating
+                  [maxRating]="5"
+                  [ngClass]="'flex items-center'"
+                  formControlName="numberOfStars"
+                  (ratingChangeEmitter)="onRatingChange($event, i)"
+                ></app-rating>
+                <span
+                  *ngIf="isValidField('languagesList.' + i + '.numberOfStars')"
+                  class="font-medium text-red-500 leading-tight"
+                >
+                  {{ getFieldError("languagesList." + i + ".numberOfStars") }}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="flex justify-between mb-2">
+            <button
+              type="button"
+              class="text-start font-bold text-cyan-500"
+              (click)="addNewLanguage()"
+            >
+              +<span class="hover:underline">Agregar más</span>
+            </button>
+            <button
+              type="button"
+              class="text-end font-bold"
+              (click)="deleteLanguage()"
+              [ngClass]="{
+                'text-gray-400':
+                  createTalentForm.get('languagesList')?.value?.length <= 1,
+                'cursor-not-allowed':
+                  createTalentForm.get('languagesList')?.value?.length <= 1,
+                'text-cyan-500':
+                  createTalentForm.get('languagesList')?.value?.length > 1
+              }"
+              [disabled]="
+                createTalentForm.get('languagesList')?.value?.length <= 1
+              "
+            >
+              -<span class="hover:underline">Eliminar último</span>
+            </button>
           </div>
         </div>
       </form>
