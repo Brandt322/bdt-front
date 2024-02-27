@@ -36,6 +36,8 @@ export class TalentCreateComponent implements OnInit {
 
   technicalSkillsNumber: number[] = [0];
   softSkillsNumber: number[] = [0];
+  fileListNumber: number[] = [0];
+  languageListNumber: number[] = [0];
 
   currentDate: Date = new Date();
 
@@ -64,11 +66,13 @@ export class TalentCreateComponent implements OnInit {
     this.buildForm();
     this.addNewTechnicalSkill();
     this.addNewSoftSkill();
+    this.addNewFile();
+    this.addNewLanguage();
   }
 
   buildForm(): void {
     this.createTalentForm = this.formBuilder.group({
-      filesList: this.formBuilder.array([this.createFile()]),
+      filesList: this.formBuilder.array([]),
       image: ['', [Validators.required, this.fileSizeValidator(5 * 1024 * 1024)]],
       name: ['', [Validators.required, Validators.minLength(3)]],
       paternalSurname: ['', [Validators.required, Validators.minLength(3)]],
@@ -103,7 +107,7 @@ export class TalentCreateComponent implements OnInit {
       profileId: ['', Validators.required],
       workExperiencesList: this.formBuilder.array([this.createWorkExperience()]),
       educationalExperiencesList: this.formBuilder.array([this.createEducationalExperience()]),
-      languagesList: this.formBuilder.array([this.createLanguage()]),
+      languagesList: this.formBuilder.array([]),
     }, { validators: this.amountValidator() });
   }
 
@@ -269,14 +273,6 @@ export class TalentCreateComponent implements OnInit {
     });
   }
 
-  createFile(): FormGroup {
-    return this.formBuilder.group({
-      fileName: ['', [Validators.required]],
-      fileType: ['', [Validators.required]],
-      file: ['', [Validators.required, this.fileSizeValidator(5 * 1024 * 1024)]],
-    });
-  }
-
   createWorkExperience(): FormGroup {
     return this.formBuilder.group({
       company: ['', [Validators.required, Validators.minLength(3)]],
@@ -296,14 +292,6 @@ export class TalentCreateComponent implements OnInit {
     });
   }
 
-  createLanguage(): FormGroup {
-    return this.formBuilder.group({
-      languageId: ['', [Validators.required]],
-      levelId: ['', [Validators.required]],
-      numberOfStars: [null, [Validators.required, Validators.min(1), Validators.max(5)]],
-    });
-  }
-
   addNewTechnicalSkill() {
     this.technicalSkillsNumber.push(this.technicalSkillsNumber.length);
     const technicalSkills = this.createTalentForm.get('technicalSkillsList') as FormArray;
@@ -319,6 +307,58 @@ export class TalentCreateComponent implements OnInit {
     softSkills.push(this.formBuilder.group({
       skill: ['', [Validators.required, Validators.minLength(4)]],
     }));
+  }
+
+  addNewLanguage() {
+    this.languageListNumber.push(this.languageListNumber.length);
+    const languages = this.createTalentForm.get('languagesList') as FormArray;
+    languages.push(this.formBuilder.group({
+      languageId: ['', [Validators.required]],
+      levelId: ['', [Validators.required]],
+      numberOfStars: [null, [Validators.required, Validators.min(1), Validators.max(5)]],
+    }));
+  }
+
+  addNewFile() {
+    this.fileListNumber.push(this.fileListNumber.length);
+    const files = this.createTalentForm.get('filesList') as FormArray;
+    files.push(this.formBuilder.group({
+      fileName: ['', [Validators.required]],
+      fileType: ['', [Validators.required]],
+      file: ['', [Validators.required, this.fileSizeValidator(5 * 1024 * 1024)]],
+    }));
+  }
+
+  deleteTechnicalSkill() {
+    const technicalSkills = this.createTalentForm.get('technicalSkillsList') as FormArray;
+    if (technicalSkills.length > 1) {
+      technicalSkills.removeAt(technicalSkills.length - 1);
+      this.technicalSkillsNumber.pop();
+    }
+  }
+
+  deleteSoftSkill() {
+    const softSkills = this.createTalentForm.get('softSkillsList') as FormArray;
+    if (softSkills.length > 1) {
+      softSkills.removeAt(softSkills.length - 1);
+      this.softSkillsNumber.pop();
+    }
+  }
+
+  deleteFile() {
+    const files = this.createTalentForm.get('filesList') as FormArray;
+    if (files.length > 1) {
+      files.removeAt(files.length - 1);
+      this.fileListNumber.pop();
+    }
+  }
+
+  deleteLanguage() {
+    const languages = this.createTalentForm.get('languagesList') as FormArray;
+    if (languages.length > 1) {
+      languages.removeAt(languages.length - 1);
+      this.languageListNumber.pop();
+    }
   }
 
   requestOptions() {
@@ -396,16 +436,6 @@ export class TalentCreateComponent implements OnInit {
   get fileList(): FormArray {
     return this.createTalentForm.get('filesList') as FormArray;
   }
-
-  // handleInputChange({ id, value }: { id: string, value: string }) {
-  //   const control = this.createTalentForm.get(id);
-  //   if (control) {
-  //     control.setValue(value);
-  //     console.log(`El valor del control '${id}' es ahora '${control.value}'`);
-  //   } else {
-  //     console.log(`No se encontró el control con el id '${id}'`);
-  //   }
-  // }
 
   handleInputChangeArray({ id, value, arrayName }: { id: string, value: string, arrayName: string }) {
     const formArray = this.createTalentForm.get(arrayName) as FormArray;
