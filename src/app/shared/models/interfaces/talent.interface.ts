@@ -12,6 +12,7 @@ export interface TalentResponse {
   countryId: string;
   cityId: string;
   currencyId: string;
+  fileList: File[];
   profileId: string;
   image: string;
   description: string;
@@ -34,7 +35,7 @@ export interface TalentRequest {
   countryId: number;
   cityId: number;
   currencyId: number;
-  profileId: number;
+  fileList: File[];
   image: string;
   description: string;
   initialAmount: number;

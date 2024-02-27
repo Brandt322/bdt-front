@@ -68,7 +68,7 @@ export class TalentCreateComponent implements OnInit {
 
   buildForm(): void {
     this.createTalentForm = this.formBuilder.group({
-      cv: ['', [Validators.required, this.fileSizeValidator(5 * 1024 * 1024)]],
+      filesList: this.formBuilder.array([this.createFile()]),
       image: ['', [Validators.required, this.fileSizeValidator(5 * 1024 * 1024)]],
       name: ['', [Validators.required, Validators.minLength(3)]],
       paternalSurname: ['', [Validators.required, Validators.minLength(3)]],
@@ -103,7 +103,7 @@ export class TalentCreateComponent implements OnInit {
       profileId: ['', Validators.required],
       workExperiencesList: this.formBuilder.array([this.createWorkExperience()]),
       educationalExperiencesList: this.formBuilder.array([this.createEducationalExperience()]),
-      languageList: this.formBuilder.array([this.createLanguage()]),
+      languagesList: this.formBuilder.array([this.createLanguage()]),
     }, { validators: this.amountValidator() });
   }
 
@@ -191,7 +191,7 @@ export class TalentCreateComponent implements OnInit {
     }
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     if (this.createTalentForm.invalid) {
       this.createTalentForm.markAllAsTouched();
       Object.keys(this.createTalentForm.controls).forEach(field => {
@@ -214,17 +214,27 @@ export class TalentCreateComponent implements OnInit {
     const formValues: { [key: string]: any } = this.createTalentForm.value;
     const profileFile: File = formValues['image'];
     if (profileFile) {
-      const reader = new FileReader();
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        if (e.target?.result) {
-          formValues['image'] = (e.target.result as string).split(',')[1];
-          this.sendFormData(formValues);
-        }
-      };
-      reader.readAsDataURL(profileFile);
-    } else {
-      this.sendFormData(formValues);
+      try {
+        formValues['image'] = await this.convertFileToBase64(profileFile);
+      } catch (error) {
+        console.error(error);
+        this.toastr.error('Ocurrió un error al leer el archivo', '¡Error!');
+        return;
+      }
     }
+
+    const fileList: File[] = formValues['filesList'].map((fileGroup: any) => fileGroup.file);
+    for (let i = 0; i < fileList.length; i++) {
+      try {
+        formValues['filesList'][i].file = await this.convertFileToBase64(fileList[i]);
+      } catch (error) {
+        console.error(error);
+        this.toastr.error(`Ocurrió un error al leer el archivo ${i + 1}`, '¡Error!');
+        return;
+      }
+    }
+
+    this.sendFormData(formValues);
   }
 
   sendFormData(formValues: { [key: string]: any }): void {
@@ -240,6 +250,31 @@ export class TalentCreateComponent implements OnInit {
         this.toastr.error('Ocurrió un error al crear el talento', '¡Error!');
       }
     );
+  }
+
+  convertFileToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        if (e.target?.result) {
+          resolve((e.target.result as string).split(',')[1]);
+        } else {
+          reject('No se pudo leer el archivo');
+        }
+      };
+      reader.onerror = (error) => {
+        reject(error);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  createFile(): FormGroup {
+    return this.formBuilder.group({
+      fileName: ['', [Validators.required]],
+      fileType: ['', [Validators.required]],
+      file: ['', [Validators.required, this.fileSizeValidator(5 * 1024 * 1024)]],
+    });
   }
 
   createWorkExperience(): FormGroup {
@@ -339,7 +374,7 @@ export class TalentCreateComponent implements OnInit {
   }
 
   get languageList(): FormArray {
-    return this.createTalentForm.get('languageList') as FormArray;
+    return this.createTalentForm.get('languagesList') as FormArray;
   }
 
   get workExperiencesList(): FormArray {
@@ -356,6 +391,10 @@ export class TalentCreateComponent implements OnInit {
 
   get technicalSkills(): FormArray {
     return this.createTalentForm.get('technicalSkillsList') as FormArray;
+  }
+
+  get fileList(): FormArray {
+    return this.createTalentForm.get('filesList') as FormArray;
   }
 
   // handleInputChange({ id, value }: { id: string, value: string }) {
@@ -406,7 +445,7 @@ export class TalentCreateComponent implements OnInit {
   }
 
   onLanguageSelected(languageId: number, index: number) {
-    const languageControl = (this.createTalentForm.get('languageList') as FormArray).at(index).get('languageId');
+    const languageControl = (this.createTalentForm.get('languagesList') as FormArray).at(index).get('languageId');
     if (languageControl) {
       languageControl.setValue(languageId);
       console.log('Language selected:', languageId);
@@ -414,7 +453,7 @@ export class TalentCreateComponent implements OnInit {
   }
 
   onLevelSelected(levelId: number, index: number) {
-    const levelControl = (this.createTalentForm.get('languageList') as FormArray).at(index).get('levelId');
+    const levelControl = (this.createTalentForm.get('languagesList') as FormArray).at(index).get('levelId');
     if (levelControl) {
       levelControl.setValue(levelId);
       console.log('Level selected:', levelId);
@@ -422,7 +461,7 @@ export class TalentCreateComponent implements OnInit {
   }
 
   onRatingChange(rating: number, index: number) {
-    const languageControl = (this.createTalentForm.get('languageList') as FormArray).at(index).get('numberOfStars');
+    const languageControl = (this.createTalentForm.get('languagesList') as FormArray).at(index).get('numberOfStars');
     if (languageControl) {
       languageControl.setValue(rating);
     }
