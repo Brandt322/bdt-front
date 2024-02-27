@@ -32,7 +32,7 @@ export class EducationalExperienceFormComponent {
   endDateIfChecked(isChecked: boolean) {
     this.disableEndDateInput = isChecked;
     this.endDateValue = isChecked
-      ? formatDate(this.currentDate, 'yyyy-MM', 'en-US')
+      ? formatDate(this.currentDate, 'yyyy-MM-dd', 'en-US')
       : '';
     this.inputChange.emit({ id: 'endDate', value: this.endDateValue, arrayName: 'educationalExperiencesList' });
   }
