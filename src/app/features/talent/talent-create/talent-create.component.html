@@ -166,20 +166,41 @@
               "
               [control]="createTalentForm.controls['maternalSurname']"
             ></app-form-error>
-            <app-text-input
-              [id]="'numero-telefono'"
-              label="Numero de celular"
-              placeholder="Ingrese el numero de celular"
-              formControlName="cellPhoneNumber"
-              [hasError]="isValidField('cellPhoneNumber')"
-            >
-            </app-text-input>
-            <span
-              *ngIf="isValidField('cellPhoneNumber')"
-              class="font-medium text-red-500 leading-tight"
-            >
-              {{ getFieldError("cellPhoneNumber") }}
-            </span>
+            <div class="grid gap-4">
+              <div class="flex justify-center gap-4">
+                <app-value-select-input
+                  [id]="'prefix'"
+                  label="Prefijo"
+                  optionName="Escoge el prefijo de tu país"
+                  [data]="prefixOptions"
+                  [optionKey]="'callPrefix'"
+                  (optionSelected)="onPrefixSelected($event)"
+                  [hasError]="isValidField('callPrefix')"
+                ></app-value-select-input>
+                <app-text-input
+                  [id]="'numero-telefono'"
+                  label="Numero de celular"
+                  placeholder="Ingrese el numero de celular"
+                  formControlName="cellPhoneNumber"
+                  [hasError]="isValidField('cellPhoneNumber')"
+                >
+                </app-text-input>
+              </div>
+              <div class="flex justify-center gap-4">
+                <span
+                  *ngIf="isValidField('callPrefix')"
+                  class="font-medium text-red-500 leading-tight"
+                >
+                  {{ getFieldError("callPrefix") }}
+                </span>
+                <span
+                  *ngIf="isValidField('cellPhoneNumber')"
+                  class="font-medium text-red-500 leading-tight"
+                >
+                  {{ getFieldError("cellPhoneNumber") }}
+                </span>
+              </div>
+            </div>
             <app-textarea-select
               [variant]="'textarea'"
               [label]="'Descripción'"
