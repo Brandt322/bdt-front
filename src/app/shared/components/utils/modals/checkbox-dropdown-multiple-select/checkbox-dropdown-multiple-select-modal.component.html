@@ -30,9 +30,9 @@
         [ngClass]="{ 'bg-gray-200': isChecked[i] }"
         [id]="skill.id"
       >
-        <label class="text-sm font-medium text-gray-900 dark:text-gray-300">{{
+        <span class="text-sm font-medium text-gray-900 dark:text-gray-300">{{
           skill.name
-        }}</label>
+        }}</span>
         <i class="fa-solid fa-check text-blue-500" *ngIf="isChecked[i]"></i>
       </div>
     </li>

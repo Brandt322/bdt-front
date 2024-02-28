@@ -9,8 +9,8 @@ import { Component, Input } from '@angular/core';
   >
     <form action="">
       <div class="grid gap-4 mb-8">
-        <app-language-select></app-language-select>
-        <app-language-level-select></app-language-level-select>
+        <app-language-select [id]="'languageId'"></app-language-select>
+        <app-language-level-select [id]="'levelId'"></app-language-level-select>
         <div class="flex items-center justify-start mt-1">
         <app-rating
             [maxRating]="5"
