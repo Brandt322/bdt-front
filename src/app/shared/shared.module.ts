@@ -47,6 +47,7 @@ import { PillTagComponent } from './components/utils/tags/pill-tag/pill-tag-comp
 import { FormErrorComponent } from './components/utils/form-error/form-error.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SelectInputByValueComponent } from './components/utils/form-inputs/select-input-byvalue-component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SelectInputComponent,
     RadioInputComponent,
     TextAreaInputComponent,
+    SelectInputByValueComponent,
     /* Forms */
     WorkExperienceFormComponent,
     EducationalExperienceFormComponent,
@@ -118,6 +120,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RadioInputComponent,
     TextAreaInputComponent,
     DateInputComponent,
+    SelectInputByValueComponent,
     /* Modal forms */
     ModalFormsCollection,
     ExperienceModalFormComponent,

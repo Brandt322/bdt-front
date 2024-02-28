@@ -26,6 +26,7 @@ export class TalentCreateComponent implements OnInit {
   languageOptions: Language[] = [];
   levelOptions: Level[] = [];
   currencyOptions: Currency[] = [];
+  prefixOptions: Country[] = [];
   countryOptions: Country[] = [];
   allCities: City[] = [];
   cityOptions: City[] = [];
@@ -77,6 +78,7 @@ export class TalentCreateComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(3)]],
       paternalSurname: ['', [Validators.required, Validators.minLength(3)]],
       maternalSurname: ['', [Validators.required, Validators.minLength(3)]],
+      callPrefix: ['', [Validators.required]],
       cellPhoneNumber: ['', [Validators.required, Validators.minLength(9)]],
       description: ['', [Validators.required, Validators.minLength(10)]],
       linkedinLink: [
@@ -216,6 +218,8 @@ export class TalentCreateComponent implements OnInit {
     }
 
     const formValues: { [key: string]: any } = this.createTalentForm.value;
+    const phoneNumberWithPrefix = `${formValues['callPrefix']} ${formValues['cellPhoneNumber']}`;
+    formValues['cellPhoneNumber'] = phoneNumberWithPrefix;
     const profileFile: File = formValues['image'];
     if (profileFile) {
       try {
@@ -405,6 +409,7 @@ export class TalentCreateComponent implements OnInit {
         this.levelOptions = levels;
         this.currencyOptions = currencies;
         this.countryOptions = countries;
+        this.prefixOptions = countries;
         this.cityOptions = [];
         this.allCities = cities;
         this.profilesOptions = profileRequest;
@@ -450,29 +455,41 @@ export class TalentCreateComponent implements OnInit {
     console.log(`No se encontró el control con el id '${id}' en el array '${arrayName}'`);
   }
 
-  onProfileSelected(profileId: number) {
+  onPrefixSelected(prefix: string) {
+    const prefixControl = this.createTalentForm.get('callPrefix');
+    if (prefixControl) {
+      prefixControl.setValue(prefix);
+      console.log(prefixControl.value)
+    }
+  }
+
+  onProfileSelected(profileId: number | null) {
     const profileControl = this.createTalentForm.get('profileId');
     if (profileControl) {
       profileControl.setValue(profileId);
     }
   }
 
-  onCountrySelected(countryId: number) {
+  onCountrySelected(countryId: number | null) {
     this.cityOptions = this.allCities.filter(city => Number(city.countryId) === countryId);
     const countryControl = this.createTalentForm.get('countryId');
+    const cityControl = this.createTalentForm.get('cityId');
     if (countryControl) {
       countryControl.setValue(countryId);
     }
+    if (cityControl) {
+      cityControl.setValue(null); // Reset the city field when a new country is selected
+    }
   }
 
-  onCitySelected(cityId: number) {
+  onCitySelected(cityId: number | null) {
     const cityControl = this.createTalentForm.get('cityId');
     if (cityControl) {
       cityControl.setValue(cityId);
     }
   }
 
-  onLanguageSelected(languageId: number, index: number) {
+  onLanguageSelected(languageId: number | null, index: number) {
     const languageControl = (this.createTalentForm.get('languagesList') as FormArray).at(index).get('languageId');
     if (languageControl) {
       languageControl.setValue(languageId);
@@ -480,7 +497,7 @@ export class TalentCreateComponent implements OnInit {
     }
   }
 
-  onLevelSelected(levelId: number, index: number) {
+  onLevelSelected(levelId: number | null, index: number) {
     const levelControl = (this.createTalentForm.get('languagesList') as FormArray).at(index).get('levelId');
     if (levelControl) {
       levelControl.setValue(levelId);

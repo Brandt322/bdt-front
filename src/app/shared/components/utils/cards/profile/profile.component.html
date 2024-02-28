@@ -23,14 +23,13 @@
     >
       <div class="relative flex items-center">
         <div
-          class="rounded-full shadow-lg overflow-hidden"
+          class="rounded-full shadow-lg overflow-hidden bg-center bg-cover bg-no-repeat"
           [ngClass]="{
             'w-20 h-20': variant === 'main-profile',
             'w-[100px] h-[100px]': variant !== 'main-profile'
           }"
-        >
-          <img class="w-full h-full object-cover" [src]="image" [alt]="name" />
-        </div>
+          [style.backgroundImage]="'url(' + image + ')'"
+        ></div>
         <button
           class="absolute flex items-center bottom-0 right-0 bg-white hover:bg-indigo-300 dark:text-slate-100 dark:bg-gray-600 dark:hover:bg-gray-700 rounded-full p-2 shadow-lg"
           *ngIf="iconEditImg"
