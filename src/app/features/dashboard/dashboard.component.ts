@@ -5,6 +5,7 @@ import { TalentService } from 'src/app/services/talent/talent.service';
 import { FakeProfiles } from 'src/app/shared/models/types';
 import { TalentResponse } from '../../shared/models/interfaces/talent.interface';
 import { ToastrService } from 'ngx-toastr';
+import { TalentDetailService } from '../services/talent-detail.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,7 +16,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   profiles = FakeProfiles;
   talents: TalentResponse[] = [];
 
-  constructor(private talentService: TalentService, private toastr: ToastrService) { }
+  constructor(private talentService: TalentService, private toastr: ToastrService, private talentDetailService: TalentDetailService) { }
 
   ngAfterViewInit(): void {
     initDropdowns();
@@ -57,4 +58,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.modalTitle = title;
     this.modalDescription = description;
   }
+
+  onTalentClick(talent: TalentResponse) {
+    this.talentDetailService.changeTalent(talent);
+  }
+
 }

@@ -5,6 +5,6 @@ import { Component, Input } from '@angular/core';
 })
 
 export class PillTagComponent {
-  @Input() data: { id: string; skill: string; years?: number }[] = [];
+  @Input() data: { skill: string; years?: number }[] = [];
   @Input() variant!: string;
 }

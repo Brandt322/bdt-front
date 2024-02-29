@@ -3,13 +3,14 @@
 >
   <div class="flex flex-col justify-center flex-1 flex-grow-1">
     <app-profile
-      [name]="'Juan Lopez Perez'"
-      [image]="'../../../assets/8ee6c5268d3404f8441329ce18972f60.jpeg'"
+      [name]="talent?.name || ''"
+      [image]="talent?.image || ''"
       [iconEditImg]="true"
-      [location]="'Lima, Peru'"
-      [stack]="'Full-stack developer'"
-      [initialMont]="1000"
-      [finalMont]="3000"
+      [country]="talent?.country || ''"
+      [city]="talent?.city || ''"
+      [stack]="talent?.profile || ''"
+      [initialMont]="talent?.initialAmount || 0"
+      [finalMont]="talent?.finalAmount || 0"
       [iconEditMont]="true"
       [feedbackNumber]="2"
       [options]="true"
@@ -115,18 +116,7 @@
             <i class="fa-solid fa-plus text-gray-500"></i>
           </button>
         </div>
-        <app-pill-tag-component
-          [variant]="'blue'"
-          [data]="[
-            { id: 'tag-1', skill: 'Data Structure', years: 3.5 },
-            { id: 'tag-2', skill: 'Docker', years: 1 },
-            { id: 'tag-3', skill: 'Express', years: 2 },
-            { id: 'tag-4', skill: 'Github', years: 3 },
-            { id: 'tag-5', skill: 'Javascript', years: 5 },
-            { id: 'tag-6', skill: 'Nginx', years: 2 },
-            { id: 'tag-7', skill: 'Node.js', years: 2 }
-          ]"
-        >
+        <app-pill-tag-component [variant]="'blue'" [data]="technicalSkills">
         </app-pill-tag-component>
       </div>
       <div class="flex flex-col justify-start min-h-[120px] w-5/12 gap-1 p-2">
@@ -141,14 +131,7 @@
             <i class="fa-solid fa-plus text-gray-500"></i>
           </button>
         </div>
-        <app-pill-tag-component
-          [variant]="'pink'"
-          [data]="[
-            { id: 'tag-1', skill: 'Comunicación' },
-            { id: 'tag-2', skill: 'Auto-aprendizaje' },
-            { id: 'tag-3', skill: 'Empatía' }
-          ]"
-        >
+        <app-pill-tag-component [variant]="'pink'" [data]="softSkills">
         </app-pill-tag-component>
       </div>
     </div>
@@ -158,16 +141,13 @@
     <div class="grid grid-cols-1 gap-6 ms-4 me-4 md:me-32">
       <div class="w-full">
         <p class="text-md text-gray-600 dark:text-gray-400">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit
-          iure saepe in nihil, quo voluptatum quidem est dicta tempora maxime,
-          necessitatibus dolores beatae voluptatibus eligendi voluptatem
-          accusantium nam. Eveniet, omnis?
+          {{ description }}
         </p>
       </div>
       <app-add-edit-attr
         main_title="Experiencia"
-        title="Fractal"
-        description="Full-Stack Developer 2015-2021 6 años"
+        [title]="companyWork"
+        [description]="workExperienceDescription"
         [modal_id]="'experience-modal-form'"
         [modal_add_title]="'Agrega una nueva experiencia'"
         modal_add_description="Describe y agrega la nueva experiencia laboral."
@@ -179,8 +159,8 @@
       ></app-add-edit-attr>
       <app-add-edit-attr
         main_title="Educación"
-        title="Pontificia Universidad Católica del Perú"
-        description="Bachiller en Ingeniería de Sistemas 2015-2021"
+        [title]="educationaInstitute"
+        [description]="educationalExperienceDescription"
         [modal_id]="'education-modal-form'"
         [modal_add_title]="'Agrega una nueva experiencia educativa'"
         modal_add_description="Describe y agrega la nueva experiencia educativa."

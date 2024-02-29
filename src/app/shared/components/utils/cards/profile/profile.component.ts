@@ -19,7 +19,8 @@ export class ProfileComponent implements OnInit {
   @Input() image!: string;
   @Input() stack!: string;
   @Input() iconEditImg?: boolean;
-  @Input() location!: string;
+  @Input() city!: string;
+  @Input() country!: string;
   @Input() initialMont!: number;
   @Input() finalMont!: number;
   @Input() iconEditMont?: boolean;
