@@ -1,10 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-add-edit-attr',
   templateUrl: './add-edit-attr.component.html',
 })
-export class AddEditAttrComponent {
+export class AddEditAttrComponent implements OnInit {
   @Input() main_title!: string;
   @Input() title!: string;
   @Input() description!: string;
@@ -19,6 +19,14 @@ export class AddEditAttrComponent {
 
   modalTitle: string = '';
   modalDescription: string = '';
+
+  addModalId!: string;
+  editModalId!: string;
+
+  ngOnInit() {
+    this.addModalId = this.modal_id + '-add';
+    this.editModalId = this.modal_id + '-edit';
+  }
 
   setAddModalTitle() {
     this.modalTitle = this.modal_add_title;

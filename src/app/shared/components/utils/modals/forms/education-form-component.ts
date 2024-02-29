@@ -19,7 +19,7 @@ import { Component, Input } from '@angular/core';
   </app-base-modal-form>`,
 })
 export class EducationModalFormComponent {
-  modal_id: string = 'education-modal-form';
+  @Input() modal_id!: string;
   @Input() title!: string;
   @Input() description!: string;
 }

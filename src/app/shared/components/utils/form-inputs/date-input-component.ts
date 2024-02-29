@@ -28,8 +28,8 @@ export class DateInputComponent {
   @Input() hasError!: boolean;
   @Output() valueChange = new EventEmitter<string>();
 
-  onInputChange(event: any) {
-    this.value = event.target.value;
+  onInputChange(value: string) {
+    this.value = value;
     this.valueChange.emit(this.value);
   }
 
