@@ -9,6 +9,7 @@
       <app-profile
         *ngFor="let talent of talents"
         [variant]="'main-profile'"
+        [selected]="talent === selectedTalent"
         [name]="talent.name"
         [image]="talent.image"
         [country]="talent.country"

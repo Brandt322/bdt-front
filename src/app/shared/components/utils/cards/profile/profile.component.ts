@@ -1,12 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
 
-interface Image {
-  url: string;
-  alt: string;
-  width: number,
-  height: number,
-}
-
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -26,6 +19,7 @@ export class ProfileComponent implements OnInit {
   @Input() iconEditMont?: boolean;
   @Input() feedbackNumber?: number;
   @Input() options?: boolean;
+  @Input() selected = false;
 
   constructor() { }
 

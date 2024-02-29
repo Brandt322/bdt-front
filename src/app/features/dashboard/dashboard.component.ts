@@ -15,6 +15,7 @@ import { TalentDetailService } from '../services/talent-detail.service';
 export class DashboardComponent implements OnInit, AfterViewInit {
   profiles = FakeProfiles;
   talents: TalentResponse[] = [];
+  selectedTalent!: TalentResponse;
 
   constructor(private talentService: TalentService, private toastr: ToastrService, private talentDetailService: TalentDetailService) { }
 
@@ -46,8 +47,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         });
 
         // this.talents = talents;
-        this.talents = talents.slice(-5);
+        this.talents = talents.reverse().slice(0, 5);
         this.toastr.success('Talentos obtenidos correctamente', 'Éxito');
+        if (this.talents.length > 0) {
+          this.selectedTalent = this.talents[0]; // Selecciona el primer talento
+          this.onTalentClick(this.talents[0]);
+        }
       });
   }
 
@@ -60,6 +65,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   onTalentClick(talent: TalentResponse) {
+    this.selectedTalent = talent; // Actualiza el talento seleccionado cuando se hace clic en un talento
     this.talentDetailService.changeTalent(talent);
   }
 
