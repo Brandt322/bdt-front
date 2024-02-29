@@ -4,8 +4,8 @@
       {{ main_title }}
     </h4>
     <button
-      [attr.data-modal-target]="modal_id"
-      [attr.data-modal-toggle]="modal_id"
+      [attr.data-modal-target]="addModalId"
+      [attr.data-modal-toggle]="addModalId"
       (click)="setAddModalTitle()"
     >
       <i class="fa-solid fa-plus text-gray-500"></i>
@@ -34,8 +34,8 @@
         </div>
       </div>
       <button
-        [attr.data-modal-target]="modal_id"
-        [attr.data-modal-toggle]="modal_id"
+        [attr.data-modal-target]="editModalId"
+        [attr.data-modal-toggle]="editModalId"
         (click)="setEditModalTitle()"
       >
         <span
@@ -49,16 +49,25 @@
 </div>
 <app-experience-modal-form
   *ngIf="type == 'exp'"
+  [modal_id]="addModalId"
+  title="{{ modalTitle }}"
+  description="{{ modalDescription }}"
+></app-experience-modal-form>
+<app-experience-modal-form
+  *ngIf="type == 'exp'"
+  [modal_id]="editModalId"
   title="{{ modalTitle }}"
   description="{{ modalDescription }}"
 ></app-experience-modal-form>
 <app-education-modal-form
   *ngIf="type == 'edu'"
+  [modal_id]="addModalId"
   title="{{ modalTitle }}"
   description="{{ modalDescription }}"
 ></app-education-modal-form>
-<app-language-modal-form
-  *ngIf="type == 'lang'"
+<app-education-modal-form
+  *ngIf="type == 'edu'"
+  [modal_id]="editModalId"
   title="{{ modalTitle }}"
   description="{{ modalDescription }}"
-></app-language-modal-form>
+></app-education-modal-form>

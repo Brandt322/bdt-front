@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core';
     title="{{ title }}"
     description="{{ description }}"
   >
-    <form action="">
+    <form>
       <div class="mb-8">
         <app-work-experience-form></app-work-experience-form>
       </div>
@@ -19,7 +19,7 @@ import { Component, Input } from '@angular/core';
   </app-base-modal-form>`,
 })
 export class ExperienceModalFormComponent {
-  modal_id: string = 'experience-modal-form';
+  @Input() modal_id!: string;
   @Input() title!: string;
   @Input() description!: string;
 }

@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-add-edit-languages',
   templateUrl: './add-edit-languages.component.html',
   styleUrls: ['./add-edit-languages.component.css']
 })
-export class AddEditLanguagesComponent {
+export class AddEditLanguagesComponent implements OnInit {
 
   @Input() main_title!: string;
   @Input() title!: string;
@@ -22,7 +22,12 @@ export class AddEditLanguagesComponent {
   modalTitle: string = '';
   modalDescription: string = '';
 
+  addModalId!: string;
+  editModalId!: string;
+
   ngOnInit(): void {
+    this.addModalId = this.modal_id + '-add';
+    this.editModalId = this.modal_id + '-edit';
   }
 
   setAddModalTitle() {

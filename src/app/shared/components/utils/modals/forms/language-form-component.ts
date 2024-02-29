@@ -26,11 +26,8 @@ import { Component, Input } from '@angular/core';
   </app-base-modal-form>`
 })
 export class LanguageModalFormComponent {
-  modal_id: string = 'language-modal-form';
+  @Input() modal_id!: string;
   @Input() title!: string;
   @Input() description!: string;
-
-  ngOnInit(): void {
-  }
 
 }
