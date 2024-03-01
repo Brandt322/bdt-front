@@ -1,4 +1,4 @@
-<div class="flex flex-col justify-center w-full gap-2">
+<div class="flex flex-col justify-center w-full gap-2" *ngIf="languagesList">
   <div class="flex justify-between items-center">
     <h4 class="font-semibold text-md text-gray-500 dark:text-gray-400">
       {{ main_title }}
@@ -13,16 +13,22 @@
   </div>
 
   <div
-    *ngFor="let _ of [].constructor(number_items)"
+    *ngFor="let language of languagesList; let i = index"
     class="flex justify-start items-center p-2 gap-4 rounded-md bg-gray-50 hover:bg-gray-200 shadow-sm-light"
   >
     <div class="flex flex-col justify-center item">
       <h1 class="font-medium text-xl text-black dark:text-gray-400">
-        {{ title }}
+        {{
+          language.language.charAt(0).toUpperCase() +
+            language.language.slice(1).toLowerCase()
+        }}
       </h1>
       <div class="flex justify-between gap-2 w-full">
         <p class="text-md font-normal text-gray-500 dark:text-gray-400">
-          {{ description }}
+          {{
+            language.level.charAt(0).toUpperCase() +
+              language.level.slice(1).toLowerCase()
+          }}
         </p>
       </div>
     </div>
@@ -34,9 +40,9 @@
         ></app-rating>
       </div>
       <button
-        [attr.data-modal-target]="editModalId"
-        [attr.data-modal-toggle]="editModalId"
-        (click)="setEditModalTitle()"
+        [attr.data-modal-target]="editModalId[i]"
+        [attr.data-modal-toggle]="editModalId[i]"
+        (click)="editLanguage(i)"
       >
         <span
           class="material-symbols-outlined text-gray-600 dark:text-slate-100"
@@ -53,9 +59,11 @@
   title="{{ modalTitle }}"
   description="{{ modalDescription }}"
 ></app-language-modal-form>
-<app-language-modal-form
-  *ngIf="type == 'lang'"
-  [modal_id]="editModalId"
-  title="{{ modalTitle }}"
-  description="{{ modalDescription }}"
-></app-language-modal-form>
+<ng-container *ngFor="let language of languagesList; let i = index">
+  <app-language-modal-form
+    *ngIf="type == 'lang'"
+    [modal_id]="editModalId[i]"
+    title="{{ modalTitle }}"
+    description="{{ modalDescription }}"
+  ></app-language-modal-form>
+</ng-container>

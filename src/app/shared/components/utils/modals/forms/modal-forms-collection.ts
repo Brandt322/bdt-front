@@ -6,7 +6,8 @@ import { Component } from '@angular/core';
     ><app-salary-band-modal-form></app-salary-band-modal-form
     ><app-socials-modal-form></app-socials-modal-form
     ><app-technical-skills-modal-form></app-technical-skills-modal-form
-    ><app-new-file-modal-form></app-new-file-modal-form>
+    ><app-new-file-modal-form></app-new-file-modal-form
+    ><app-language-modal-form></app-language-modal-form>
     <app-feedback-modal-form></app-feedback-modal-form>`,
 })
 export class ModalFormsCollection { }

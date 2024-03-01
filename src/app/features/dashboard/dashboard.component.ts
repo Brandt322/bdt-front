@@ -2,7 +2,6 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { initDropdowns, initModals } from 'flowbite';
 import { catchError, throwError } from 'rxjs';
 import { TalentService } from 'src/app/services/talent/talent.service';
-import { FakeProfiles } from 'src/app/shared/models/types';
 import { TalentResponse } from '../../shared/models/interfaces/talent.interface';
 import { ToastrService } from 'ngx-toastr';
 import { TalentDetailService } from '../services/talent-detail.service';
@@ -13,7 +12,6 @@ import { TalentDetailService } from '../services/talent-detail.service';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
-  profiles = FakeProfiles;
   talents: TalentResponse[] = [];
   selectedTalent!: TalentResponse;
 

@@ -172,15 +172,13 @@
       ></app-add-edit-attr>
       <app-add-edit-languages
         main_title="Idiomas"
-        title="Inglés"
-        description="Avanzado"
+        [languagesList]="talent?.languagesList || []"
         [modal_id]="'language-modal-form'"
         modal_add_title="Agrega un nuevo idioma"
         modal_add_description="Agrega un nuevo idioma aprendido."
         modal_edit_title="Edita la habilidad en el idioma"
         modal_edit_description="Edita la habilidad en el idioma"
         [has_image]="false"
-        [number_items]="1"
         type="lang"
       ></app-add-edit-languages>
       <app-add-edit-feedback
