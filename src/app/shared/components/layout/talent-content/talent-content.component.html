@@ -146,28 +146,24 @@
       </div>
       <app-add-edit-attr
         main_title="Experiencia"
-        [title]="companyWork"
-        [description]="workExperienceDescription"
+        [workList]="talent?.workExperiencesList || []"
         [modal_id]="'experience-modal-form'"
         [modal_add_title]="'Agrega una nueva experiencia'"
         modal_add_description="Describe y agrega la nueva experiencia laboral."
         modal_edit_title="Editar la experiencia laboral"
         modal_edit_description="La vida esta llena de cambios. Edita la experiencia laboral."
         [has_image]="true"
-        [number_items]="1"
         type="exp"
       ></app-add-edit-attr>
       <app-add-edit-attr
         main_title="Educación"
-        [title]="educationaInstitute"
-        [description]="educationalExperienceDescription"
+        [educationList]="talent?.educationalExperiencesList || []"
         [modal_id]="'education-modal-form'"
         [modal_add_title]="'Agrega una nueva experiencia educativa'"
         modal_add_description="Describe y agrega la nueva experiencia educativa."
         modal_edit_title="Editar la experiencia educativa"
         modal_edit_description="La vida esta llena de cambios. Edita la experiencia educativa."
         [has_image]="true"
-        [number_items]="1"
         type="edu"
       ></app-add-edit-attr>
       <app-add-edit-languages

@@ -42,11 +42,11 @@ export class AddEditLanguagesComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['languagesList'] && changes['languagesList'].currentValue) {
       this.addModalId = this.modal_id + '-add';
-      console.log('addModalId:', this.addModalId);
+      // console.log('addModalId:', this.addModalId);
 
       for (let i = 0; i < this.languagesList.length; i++) {
         this.editModalId[i] = this.modal_id + '-edit-' + i;
-        console.log('editModalId[' + i + ']:', this.editModalId[i]);
+        // console.log('editModalId[' + i + ']:', this.editModalId[i]);
       }
       setTimeout(() => initModals(), 0);
     }
@@ -69,7 +69,7 @@ export class AddEditLanguagesComponent implements OnInit, OnChanges {
     }
 
     this.setEditModalTitle();
-    console.log('Id:', i, 'moda_Id' + this.editModalId[i]);
+    // console.log('Id:', i, 'moda_Id' + this.editModalId[i]);
   }
 
 }

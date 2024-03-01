@@ -13,8 +13,9 @@
   </div>
 
   <div
-    *ngFor="let _ of [].constructor(number_items)"
+    *ngFor="let item of workList; let i = index"
     class="flex justify-start items-center p-2 gap-2 rounded-md bg-gray-50 hover:bg-gray-200 shadow-sm-light"
+    [hidden]="type != 'exp'"
   >
     <img
       *ngIf="has_image"
@@ -25,18 +26,53 @@
     <div class="flex justify-between items-center w-full">
       <div class="flex flex-col justify-center item">
         <h1 class="font-medium text-xl text-black dark:text-gray-400">
-          {{ title }}
+          {{ companyWork }}
         </h1>
         <div class="flex justify-between gap-2 w-full">
           <p class="text-md font-normal text-gray-500 dark:text-gray-400">
-            {{ description }}
+            {{ workExperienceDescription }}
           </p>
         </div>
       </div>
       <button
-        [attr.data-modal-target]="editModalId"
-        [attr.data-modal-toggle]="editModalId"
-        (click)="setEditModalTitle()"
+        [attr.data-modal-target]="editWorkModalId"
+        [attr.data-modal-toggle]="editWorkModalId"
+        (click)="editWorkOrEducational(i)"
+      >
+        <span
+          class="material-symbols-outlined text-gray-600 dark:text-slate-100"
+        >
+          edit
+        </span>
+      </button>
+    </div>
+  </div>
+  <div
+    *ngFor="let item of educationList; let i = index"
+    class="flex justify-start items-center p-2 gap-2 rounded-md bg-gray-50 hover:bg-gray-200 shadow-sm-light"
+    [hidden]="type != 'edu'"
+  >
+    <img
+      *ngIf="has_image"
+      class="h-12 rounded-full"
+      src="../../../assets/fractal (1).png "
+      alt=""
+    />
+    <div class="flex justify-between items-center w-full">
+      <div class="flex flex-col justify-center item">
+        <h1 class="font-medium text-xl text-black dark:text-gray-400">
+          {{ educationaInstitute }}
+        </h1>
+        <div class="flex justify-between gap-2 w-full">
+          <p class="text-md font-normal text-gray-500 dark:text-gray-400">
+            {{ educationalExperienceDescription }}
+          </p>
+        </div>
+      </div>
+      <button
+        [attr.data-modal-target]="editEducationalModalId"
+        [attr.data-modal-toggle]="editEducationalModalId"
+        (click)="editWorkOrEducational(i)"
       >
         <span
           class="material-symbols-outlined text-gray-600 dark:text-slate-100"
@@ -47,15 +83,10 @@
     </div>
   </div>
 </div>
+
 <app-experience-modal-form
   *ngIf="type == 'exp'"
   [modal_id]="addModalId"
-  title="{{ modalTitle }}"
-  description="{{ modalDescription }}"
-></app-experience-modal-form>
-<app-experience-modal-form
-  *ngIf="type == 'exp'"
-  [modal_id]="editModalId"
   title="{{ modalTitle }}"
   description="{{ modalDescription }}"
 ></app-experience-modal-form>
@@ -65,9 +96,20 @@
   title="{{ modalTitle }}"
   description="{{ modalDescription }}"
 ></app-education-modal-form>
-<app-education-modal-form
-  *ngIf="type == 'edu'"
-  [modal_id]="editModalId"
-  title="{{ modalTitle }}"
-  description="{{ modalDescription }}"
-></app-education-modal-form>
+
+<ng-container *ngFor="let id of editWorkModalId; let i = index">
+  <app-experience-modal-form
+    *ngIf="type == 'exp'"
+    [modal_id]="id"
+    title="{{ modalTitle }}"
+    description="{{ modalDescription }}"
+  ></app-experience-modal-form>
+</ng-container>
+<ng-container *ngFor="let id of editEducationalModalId; let i = index">
+  <app-education-modal-form
+    *ngIf="type == 'edu'"
+    [modal_id]="id"
+    title="{{ modalTitle }}"
+    description="{{ modalDescription }}"
+  ></app-education-modal-form>
+</ng-container>

@@ -31,6 +31,58 @@ export class NavFiltersComponent implements OnInit {
       });
   }
 
+
+  // requestOptions() {
+  //   this.loader.showLoader();
+
+  //   const languageRequest = this.masterService.getLanguage(
+  //     MASTER_API_ENDPOINTS.LANGUAGES
+  //   );
+  //   const levelRequest = this.masterService.getLevel(
+  //     MASTER_API_ENDPOINTS.LEVELS
+  //   );
+  //   const currencyRequest = this.masterService.getCurrency(
+  //     MASTER_API_ENDPOINTS.CURRENCIES
+  //   );
+  //   const countryRequest = this.masterService.getCountry(
+  //     MASTER_API_ENDPOINTS.COUNTRIES
+  //   );
+  //   const cityRequest = this.masterService.getCity(MASTER_API_ENDPOINTS.CITIES);
+  //   const citiesByCountryRequest = this.masterService.getCitiesByCountry(
+  //     MASTER_API_ENDPOINTS.COUNTRIES,
+  //     'A',
+  //     MASTER_API_ENDPOINTS.CITIES
+  //   );
+  //   const profileRequest = this.masterService.getProfile(
+  //     MASTER_API_ENDPOINTS.PROFILES
+  //   );
+
+  //   forkJoin([
+  //     languageRequest,
+  //     levelRequest,
+  //     currencyRequest,
+  //     countryRequest,
+  //     cityRequest,
+  //     profileRequest
+  //   ])
+  //     .pipe(
+  //       catchError((error) => {
+  //         return throwError(() => error);
+  //       }),
+  //       finalize(() => this.loader.hideLoader())
+  //     )
+  //     .subscribe(([languages, levels, currencies, countries, cities, profileRequest]) => {
+  //       this.languageOptions = languages;
+  //       this.levelOptions = levels;
+  //       this.currencyOptions = currencies;
+  //       this.countryOptions = countries;
+  //       this.prefixOptions = countries;
+  //       this.cityOptions = [];
+  //       this.allCities = cities;
+  //       this.profilesOptions = profileRequest;
+  //     });
+  // }
+
   onButtonClick() {
     this.router.navigate(['/main/new-talent']);
   }

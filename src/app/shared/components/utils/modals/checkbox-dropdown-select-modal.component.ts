@@ -20,9 +20,9 @@ import { Component, Input } from '@angular/core';
             [ngClass]="{ 'bg-gray-200': selectedIndex === i}"
             [id]="item.id"
           >
-            <label
+            <span
               class="text-sm font-medium text-gray-900 dark:text-gray-300"
-              >{{ item[labelKey].charAt(0).toUpperCase() + item[labelKey].slice(1).toLowerCase() }}</label
+              >{{ item[labelKey].charAt(0).toUpperCase() + item[labelKey].slice(1).toLowerCase() }}</span
             >
             <i class="fa-solid fa-check text-blue-500" *ngIf="selectedIndex === i"></i>
           </div>
