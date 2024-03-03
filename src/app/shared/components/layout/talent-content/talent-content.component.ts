@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
 import { TalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
 
@@ -11,13 +12,18 @@ export class TalentContentComponent implements OnInit {
 
   talent: TalentResponse | null = null;
 
-  constructor(private talentDetailService: TalentDetailService) { }
+  constructor(private talentDetailService: TalentDetailService, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.talentDetailService.currentTalent.subscribe(talent => {
       this.talent = talent;
       console.log(this.talent?.filesList);
+
     });
+  }
+
+  sanitizeUrl(url: string) {
+    return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
   get technicalSkills() {
