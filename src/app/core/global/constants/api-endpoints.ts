@@ -5,8 +5,10 @@ export const MASTER_API_ENDPOINTS = {
   LEVELS: 'levels',
   COUNTRIES: 'countries',
   PROFILES: 'profiles',
+  SKILLS: 'all_technical_skills',
 };
 
 export const TALENT_API_ENDPOINTS = {
   REQUESTMAPPING: 'talent',
+  FILTER: 'filter_talents',
 };

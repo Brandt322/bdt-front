@@ -8,10 +8,10 @@ import { Component, Input, OnInit } from "@angular/core";
 export class CheckboxDropdownMultipleSelectModalComponent implements OnInit {
   @Input() modalId!: string;
   @Input() labelledby!: string;
-  @Input() skills!: { id: string; name: string }[];
+  @Input() skills!: string[];
 
   isChecked: boolean[] = [];
-  selectedSkills: { id: string; name: string }[] = []; // propiedad para los elementos seleccionados
+  selectedSkills: string[] = []; // propiedad para los elementos seleccionados
 
   ngOnInit() {
     // Inicializa el array isChecked con el mismo número de elementos que skills, todos en false
@@ -25,18 +25,18 @@ export class CheckboxDropdownMultipleSelectModalComponent implements OnInit {
     if (this.isChecked[index]) {
       this.selectedSkills.push(this.skills[index]);
     } else {
-      this.selectedSkills = this.selectedSkills.filter(skill => skill.id !== this.skills[index].id);
+      this.selectedSkills = this.selectedSkills.filter(skill => skill !== this.skills[index]);
     }
   }
 
-  handleCancel(skill: { id: string; name: string }) {
+  handleCancel(skill: string) {
     // Encuentra el índice del elemento en skills
-    const index = this.skills.findIndex(s => s.id === skill.id);
+    const index = this.skills.findIndex(s => s === skill);
 
     // Actualiza el estado de isChecked para ese elemento
     this.isChecked[index] = false;
 
     // Elimina el elemento de selectedSkills
-    this.selectedSkills = this.selectedSkills.filter(s => s.id !== skill.id);
+    this.selectedSkills = this.selectedSkills.filter(s => s !== skill);
   }
 }

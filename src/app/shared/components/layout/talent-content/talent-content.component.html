@@ -17,177 +17,143 @@
     ></app-profile>
 
     <div class="flex w-full p-1 gap-2">
-      <div class="flex items-center w-full p-2">
-        <label
-          for="dropzone-file1"
-          class="flex flex-col items-center justify-center w-full h-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+      <div class="flex w-full p-1 gap-2">
+        <div
+          *ngFor="let file of talent?.filesList; let i = index"
+          class="flex items-center w-full p-2"
         >
-          <div class="flex flex-col items-center justify-center">
-            <svg
-              class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 20 16"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-              />
-            </svg>
-            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-              <span class="font-semibold">Click to upload</span>
-            </p>
-          </div>
-          <input id="dropzone-file1" type="file" class="hidden" />
-        </label>
-      </div>
-      <div class="flex items-center w-full p-1">
-        <label
-          for="dropzone-file2"
-          class="flex flex-col items-center justify-center w-full h-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-        >
-          <div class="flex flex-col items-center justify-center">
-            <svg
-              class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 20 16"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-              />
-            </svg>
-            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-              <span class="font-semibold">Click to upload</span>
-            </p>
-          </div>
-          <input id="dropzone-file2" type="file" class="hidden" />
-        </label>
-      </div>
-      <div class="flex items-center w-full p-1">
-        <button
-          for="dropzone-file3"
-          data-modal-target="new-file-modal-form"
-          data-modal-toggle="new-file-modal-form"
-          class="flex flex-col items-center justify-center w-full h-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-        >
-          <div class="flex flex-col items-center justify-center">
-            <svg
-              class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 20 16"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-              />
-            </svg>
-            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-              <span class="font-semibold">Click to upload</span>
-            </p>
-          </div>
-        </button>
-      </div>
-    </div>
-    <div class="flex items-center justify-start w-full h-full p-1 gap-2">
-      <div class="flex flex-col justify-start min-h-[120px] w-7/12 gap-1 p-2">
-        <div class="flex items-center justify-between gap-2">
-          <h4 class="font-semibold text-md text-gray-500 dark:text-gray-400">
-            Habilidades Técnicas
-          </h4>
-          <button
-            data-modal-target="technical-skills-modal"
-            data-modal-toggle="technical-skills-modal"
+          <label
+            [for]="'dropzone-file' + i"
+            class="flex flex-col items-center justify-center w-full h-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
           >
-            <i class="fa-solid fa-plus text-gray-500"></i>
+            <div class="flex flex-col items-center justify-center relative">
+              <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                <span class="font-semibold">{{ file.fileName }}</span>
+              </p>
+              <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                <span class="font-semibold">{{ file.fileType }}</span>
+              </p>
+            </div>
+            <input [id]="'dropzone-file' + i" type="file" class="hidden" />
+          </label>
+        </div>
+        <div class="flex items-center w-full p-1"></div>
+        <div class="flex items-center w-full p-1">
+          <button
+            for="dropzone-file3"
+            data-modal-target="new-file-modal-form"
+            data-modal-toggle="new-file-modal-form"
+            class="flex flex-col items-center justify-center w-full h-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+          >
+            <div class="flex flex-col items-center justify-center">
+              <svg
+                class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 20 16"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                />
+              </svg>
+              <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                <span class="font-semibold">Click to upload</span>
+              </p>
+            </div>
           </button>
         </div>
-        <app-pill-tag-component [variant]="'blue'" [data]="technicalSkills">
-        </app-pill-tag-component>
       </div>
-      <div class="flex flex-col justify-start min-h-[120px] w-5/12 gap-1 p-2">
-        <div class="flex items-center justify-between gap-2">
-          <h4 class="font-semibold text-md text-gray-500 dark:text-gray-400">
-            Habilidades Blandas
-          </h4>
-          <button
-            data-modal-target="technical-skills-modal"
-            data-modal-toggle="technical-skills-modal"
-          >
-            <i class="fa-solid fa-plus text-gray-500"></i>
-          </button>
+      <div class="flex items-center justify-start w-full h-full p-1 gap-2">
+        <div class="flex flex-col justify-start min-h-[120px] w-7/12 gap-1 p-2">
+          <div class="flex items-center justify-between gap-2">
+            <h4 class="font-semibold text-md text-gray-500 dark:text-gray-400">
+              Habilidades Técnicas
+            </h4>
+            <button
+              data-modal-target="technical-skills-modal"
+              data-modal-toggle="technical-skills-modal"
+            >
+              <i class="fa-solid fa-plus text-gray-500"></i>
+            </button>
+          </div>
+          <app-pill-tag-component [variant]="'blue'" [data]="technicalSkills">
+          </app-pill-tag-component>
         </div>
-        <app-pill-tag-component [variant]="'pink'" [data]="softSkills">
-        </app-pill-tag-component>
+        <div class="flex flex-col justify-start min-h-[120px] w-5/12 gap-1 p-2">
+          <div class="flex items-center justify-between gap-2">
+            <h4 class="font-semibold text-md text-gray-500 dark:text-gray-400">
+              Habilidades Blandas
+            </h4>
+            <button
+              data-modal-target="technical-skills-modal"
+              data-modal-toggle="technical-skills-modal"
+            >
+              <i class="fa-solid fa-plus text-gray-500"></i>
+            </button>
+          </div>
+          <app-pill-tag-component [variant]="'pink'" [data]="softSkills">
+          </app-pill-tag-component>
+        </div>
       </div>
-    </div>
-    <!-- <div
+      <!-- <div
             class="flex flex-col items-start justify-between w-5/6 gap-2 p-4"
           > -->
-    <div class="grid grid-cols-1 gap-6 ms-4 me-4 md:me-32">
-      <div class="w-full">
-        <p class="text-md text-gray-600 dark:text-gray-400">
-          {{ description }}
-        </p>
+      <div class="grid grid-cols-1 gap-6 ms-4 me-4 md:me-32">
+        <div class="w-full">
+          <p class="text-md text-gray-600 dark:text-gray-400">
+            {{ description }}
+          </p>
+        </div>
+        <app-add-edit-attr
+          main_title="Experiencia"
+          [workList]="talent?.workExperiencesList || []"
+          [modal_id]="'experience-modal-form'"
+          [modal_add_title]="'Agrega una nueva experiencia'"
+          modal_add_description="Describe y agrega la nueva experiencia laboral."
+          modal_edit_title="Editar la experiencia laboral"
+          modal_edit_description="La vida esta llena de cambios. Edita la experiencia laboral."
+          [has_image]="true"
+          type="exp"
+        ></app-add-edit-attr>
+        <app-add-edit-attr
+          main_title="Educación"
+          [educationList]="talent?.educationalExperiencesList || []"
+          [modal_id]="'education-modal-form'"
+          [modal_add_title]="'Agrega una nueva experiencia educativa'"
+          modal_add_description="Describe y agrega la nueva experiencia educativa."
+          modal_edit_title="Editar la experiencia educativa"
+          modal_edit_description="La vida esta llena de cambios. Edita la experiencia educativa."
+          [has_image]="true"
+          type="edu"
+        ></app-add-edit-attr>
+        <app-add-edit-languages
+          main_title="Idiomas"
+          [languagesList]="talent?.languagesList || []"
+          [modal_id]="'language-modal-form'"
+          modal_add_title="Agrega un nuevo idioma"
+          modal_add_description="Agrega un nuevo idioma aprendido."
+          modal_edit_title="Edita la habilidad en el idioma"
+          modal_edit_description="Edita la habilidad en el idioma"
+          [has_image]="false"
+          type="lang"
+        ></app-add-edit-languages>
+        <app-add-edit-feedback
+          main_title="Feedback"
+          title="Cesar Ortiz"
+          description="Ayudo siempre al equipo, es muy talentoso."
+          [modal_id]="'feedback-modal-form'"
+          modal_add_title="Agrega un nuevo feedback"
+          modal_add_description="Añade un puntaje y escribe un comentario."
+          [has_image]="true"
+          [number_items]="1"
+          type="feedback"
+        ></app-add-edit-feedback>
       </div>
-      <app-add-edit-attr
-        main_title="Experiencia"
-        [workList]="talent?.workExperiencesList || []"
-        [modal_id]="'experience-modal-form'"
-        [modal_add_title]="'Agrega una nueva experiencia'"
-        modal_add_description="Describe y agrega la nueva experiencia laboral."
-        modal_edit_title="Editar la experiencia laboral"
-        modal_edit_description="La vida esta llena de cambios. Edita la experiencia laboral."
-        [has_image]="true"
-        type="exp"
-      ></app-add-edit-attr>
-      <app-add-edit-attr
-        main_title="Educación"
-        [educationList]="talent?.educationalExperiencesList || []"
-        [modal_id]="'education-modal-form'"
-        [modal_add_title]="'Agrega una nueva experiencia educativa'"
-        modal_add_description="Describe y agrega la nueva experiencia educativa."
-        modal_edit_title="Editar la experiencia educativa"
-        modal_edit_description="La vida esta llena de cambios. Edita la experiencia educativa."
-        [has_image]="true"
-        type="edu"
-      ></app-add-edit-attr>
-      <app-add-edit-languages
-        main_title="Idiomas"
-        [languagesList]="talent?.languagesList || []"
-        [modal_id]="'language-modal-form'"
-        modal_add_title="Agrega un nuevo idioma"
-        modal_add_description="Agrega un nuevo idioma aprendido."
-        modal_edit_title="Edita la habilidad en el idioma"
-        modal_edit_description="Edita la habilidad en el idioma"
-        [has_image]="false"
-        type="lang"
-      ></app-add-edit-languages>
-      <app-add-edit-feedback
-        main_title="Feedback"
-        title="Cesar Ortiz"
-        description="Ayudo siempre al equipo, es muy talentoso."
-        [modal_id]="'feedback-modal-form'"
-        modal_add_title="Agrega un nuevo feedback"
-        modal_add_description="Añade un puntaje y escribe un comentario."
-        [has_image]="true"
-        [number_items]="1"
-        type="feedback"
-      ></app-add-edit-feedback>
     </div>
   </div>
 </div>

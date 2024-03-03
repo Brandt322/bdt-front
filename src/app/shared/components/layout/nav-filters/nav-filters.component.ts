@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { catchError, throwError } from 'rxjs';
+import { catchError, finalize, forkJoin, throwError } from 'rxjs';
 import { MASTER_API_ENDPOINTS } from 'src/app/core/global/constants/api-endpoints';
+import { LoaderService } from 'src/app/core/global/loader/loader.service';
 import { MasterService } from 'src/app/services/master/master.service';
 import { Level } from 'src/app/shared/models/interfaces/level-interface';
 
@@ -12,76 +13,14 @@ import { Level } from 'src/app/shared/models/interfaces/level-interface';
   styleUrls: ['./nav-filters.component.css'],
 })
 export class NavFiltersComponent implements OnInit {
-  data: Level[] = [];
   isOpen: boolean = false;
-  constructor(private router: Router, private masterService: MasterService, private toastr: ToastrService) { }
+  levels: Level[] = [];
+  skills: string[] = [];
+  constructor(private router: Router, private masterService: MasterService, private toastr: ToastrService, private loader: LoaderService) { }
 
   ngOnInit(): void {
-    this.masterService
-      .getLevel(MASTER_API_ENDPOINTS.LEVELS)
-      .pipe(
-        catchError((error) => {
-          this.toastr.error('Error al obtener los niveles', 'Error');
-          return throwError(() => error);
-        })
-      )
-      .subscribe((niveles) => {
-        this.data = niveles;
-        this.toastr.success('Niveles obtenidos correctamente', 'Éxito');
-      });
+    this.requestOptions();
   }
-
-
-  // requestOptions() {
-  //   this.loader.showLoader();
-
-  //   const languageRequest = this.masterService.getLanguage(
-  //     MASTER_API_ENDPOINTS.LANGUAGES
-  //   );
-  //   const levelRequest = this.masterService.getLevel(
-  //     MASTER_API_ENDPOINTS.LEVELS
-  //   );
-  //   const currencyRequest = this.masterService.getCurrency(
-  //     MASTER_API_ENDPOINTS.CURRENCIES
-  //   );
-  //   const countryRequest = this.masterService.getCountry(
-  //     MASTER_API_ENDPOINTS.COUNTRIES
-  //   );
-  //   const cityRequest = this.masterService.getCity(MASTER_API_ENDPOINTS.CITIES);
-  //   const citiesByCountryRequest = this.masterService.getCitiesByCountry(
-  //     MASTER_API_ENDPOINTS.COUNTRIES,
-  //     'A',
-  //     MASTER_API_ENDPOINTS.CITIES
-  //   );
-  //   const profileRequest = this.masterService.getProfile(
-  //     MASTER_API_ENDPOINTS.PROFILES
-  //   );
-
-  //   forkJoin([
-  //     languageRequest,
-  //     levelRequest,
-  //     currencyRequest,
-  //     countryRequest,
-  //     cityRequest,
-  //     profileRequest
-  //   ])
-  //     .pipe(
-  //       catchError((error) => {
-  //         return throwError(() => error);
-  //       }),
-  //       finalize(() => this.loader.hideLoader())
-  //     )
-  //     .subscribe(([languages, levels, currencies, countries, cities, profileRequest]) => {
-  //       this.languageOptions = languages;
-  //       this.levelOptions = levels;
-  //       this.currencyOptions = currencies;
-  //       this.countryOptions = countries;
-  //       this.prefixOptions = countries;
-  //       this.cityOptions = [];
-  //       this.allCities = cities;
-  //       this.profilesOptions = profileRequest;
-  //     });
-  // }
 
   onButtonClick() {
     this.router.navigate(['/main/new-talent']);
@@ -89,5 +28,33 @@ export class NavFiltersComponent implements OnInit {
 
   isNavOpen() {
     this.isOpen = !this.isOpen;
+  }
+  requestOptions() {
+    this.loader.showLoader();
+
+    const skillRequest = this.masterService.getSkills(
+      MASTER_API_ENDPOINTS.SKILLS
+    );
+    const levelRequest = this.masterService.getLevel(
+      MASTER_API_ENDPOINTS.LEVELS
+    );
+
+
+    forkJoin([
+      skillRequest,
+      levelRequest,
+    ])
+      .pipe(
+        catchError((error) => {
+          this.toastr.error('Error al obtener los niveles', 'Error');
+          return throwError(() => error);
+        }),
+        finalize(() => this.loader.hideLoader())
+      )
+      .subscribe(([skills, levels]) => {
+        this.skills = skills;
+        this.levels = levels;
+        this.toastr.success('Niveles obtenidos correctamente', 'Éxito');
+      });
   }
 }

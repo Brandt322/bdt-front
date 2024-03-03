@@ -46,14 +46,7 @@
             <app-checkbox-dropdown-modal
               modalId="skillsCheckbox"
               labelledby="skillsDropdown"
-              [skills]="[
-                { id: 'checkbox-item-1-habilidades', name: 'Data Structure' },
-                { id: 'checkbox-item-2-habilidades', name: 'Docker' },
-                { id: 'checkbox-item-3-habilidades', name: 'Express' },
-                { id: 'checkbox-item-4-habilidades', name: 'Github' },
-                { id: 'checkbox-item-5-habilidades', name: 'Nginx' },
-                { id: 'checkbox-item-6-habilidades', name: 'Node.js' }
-              ]"
+              [skills]="skills"
             >
             </app-checkbox-dropdown-modal>
           </li>
@@ -67,7 +60,7 @@
             <app-checkbox-dropdown-select-data-modal
               modalId="languageDropdown"
               labelledby="languageCheckbox"
-              [data]="data"
+              [data]="levels"
               [labelKey]="'level'"
             ></app-checkbox-dropdown-select-data-modal>
           </li>

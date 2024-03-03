@@ -42,6 +42,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             imagePrefix = 'data:image/webp;base64,';
           }
           talent.image = imagePrefix + talent.image;
+
+          if (talent.filesList) {
+            let filePrefix = 'data:application/pdf;base64,';
+            talent.filesList.forEach(file => {
+              file.file = filePrefix + file.file;
+            });
+          }
         });
 
         // this.talents = talents;

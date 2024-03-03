@@ -1,4 +1,5 @@
 import { EducationalExperienceRequest, EducationalExperienceResponse } from "./educationalExperience.interface";
+import { File } from "./file.interface";
 import { LanguageRequest, LanguageResponse } from "./language.interface";
 import { SoftSkill, SoftSkillRequest } from "./softSkill.interface";
 import { TechnicalSkillRequest, TechnicalSkillResponse } from "./technicalSkill.interface";
@@ -12,7 +13,7 @@ export interface TalentResponse {
   country: string;
   city: string;
   currency: string;
-  fileList: File[];
+  filesList: File[];
   profile: string;
   image: string;
   description: string;
@@ -49,3 +50,19 @@ export interface TalentRequest {
   workExperiencesList: WorkExperienceRequest[];
   languagesList: LanguageRequest[];
 }
+
+
+export interface TalentFilterParams {
+  languageId: number;
+  levelId: number;
+  technicalSkills: string[];
+}
+
+export interface FilterTalentResponse {
+  talentId: number;
+  language: string;
+  level: string;
+  technicalSkills: string[];
+}
+
+
