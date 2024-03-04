@@ -60,9 +60,6 @@ export interface TalentFilterParams {
 
 export interface FilterTalentResponse {
   talentId: number;
-  language: string;
-  level: string;
-  technicalSkills: string[];
 }
 
 

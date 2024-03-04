@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 @Component({
   selector: 'app-checkbox-dropdown-select-data-modal',
   template: `
@@ -37,10 +37,12 @@ export class CheckboxDropdownSelectDataModalComponent {
   @Input() labelledby!: string;
   @Input() data?: { id: number;[key: string]: any }[];
   @Input() labelKey!: string;
+  @Output() optionSelected = new EventEmitter<number>();
 
   selectedIndex: number | null = null;
 
   handleChecked(index: number) {
     this.selectedIndex = index; // Actualiza el índice del elemento seleccionado
+    this.optionSelected.emit(index)
   }
 }

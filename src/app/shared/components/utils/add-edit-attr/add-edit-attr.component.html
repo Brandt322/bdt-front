@@ -1,4 +1,7 @@
-<div class="flex flex-col justify-center w-full gap-2">
+<div
+  class="flex flex-col justify-center w-full gap-2"
+  *ngIf="educationList || workList"
+>
   <div class="flex justify-between items-center">
     <h4 class="font-semibold text-md text-gray-500 dark:text-gray-400">
       {{ main_title }}
@@ -35,8 +38,8 @@
         </div>
       </div>
       <button
-        [attr.data-modal-target]="editWorkModalId"
-        [attr.data-modal-toggle]="editWorkModalId"
+        [attr.data-modal-target]="editWorkModalId[i]"
+        [attr.data-modal-toggle]="editWorkModalId[i]"
         (click)="editWorkOrEducational(i)"
       >
         <span
@@ -70,8 +73,8 @@
         </div>
       </div>
       <button
-        [attr.data-modal-target]="editEducationalModalId"
-        [attr.data-modal-toggle]="editEducationalModalId"
+        [attr.data-modal-target]="editEducationalModalId[i]"
+        [attr.data-modal-toggle]="editEducationalModalId[i]"
         (click)="editWorkOrEducational(i)"
       >
         <span

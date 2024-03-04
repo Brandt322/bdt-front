@@ -20,6 +20,8 @@ export class ProfileComponent implements OnInit {
   @Input() feedbackNumber?: number;
   @Input() options?: boolean;
   @Input() selected = false;
+  @Input() githubLink!: string;
+  @Input() linkedinLink!: string;
 
   constructor() { }
 

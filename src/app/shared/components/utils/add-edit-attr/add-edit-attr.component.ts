@@ -35,12 +35,15 @@ export class AddEditAttrComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if ((changes['educationList'] && changes['educationList'].currentValue) || (changes['workList'] && changes['workList'].currentValue)) {
       this.addModalId = this.modal_id + '-add';
+
       for (let i = 0; i < this.workList.length; i++) {
         this.editWorkModalId[i] = this.modal_id + '-edit-' + i;
+        // console.log('editWorkModalId[' + i + ']:', this.editWorkModalId[i]);
       }
 
       for (let i = 0; i < this.educationList.length; i++) {
         this.editEducationalModalId[i] = this.modal_id + '-edit-' + i;
+        // console.log('editEducationalModalId[' + i + ']:', this.editEducationalModalId[i]);
       }
       // Espera un ciclo de detección de cambios antes de inicializar los modals
       setTimeout(() => initModals(), 0);

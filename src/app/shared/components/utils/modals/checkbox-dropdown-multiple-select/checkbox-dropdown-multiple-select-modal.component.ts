@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 
 @Component({
   selector: 'app-checkbox-dropdown-modal',
@@ -9,6 +9,7 @@ export class CheckboxDropdownMultipleSelectModalComponent implements OnInit {
   @Input() modalId!: string;
   @Input() labelledby!: string;
   @Input() skills!: string[];
+  @Output() selectedSkillsChange = new EventEmitter<string[]>();
 
   isChecked: boolean[] = [];
   selectedSkills: string[] = []; // propiedad para los elementos seleccionados
@@ -27,6 +28,8 @@ export class CheckboxDropdownMultipleSelectModalComponent implements OnInit {
     } else {
       this.selectedSkills = this.selectedSkills.filter(skill => skill !== this.skills[index]);
     }
+
+    this.selectedSkillsChange.emit(this.selectedSkills);
   }
 
   handleCancel(skill: string) {
@@ -38,5 +41,7 @@ export class CheckboxDropdownMultipleSelectModalComponent implements OnInit {
 
     // Elimina el elemento de selectedSkills
     this.selectedSkills = this.selectedSkills.filter(s => s !== skill);
+
+    this.selectedSkillsChange.emit(this.selectedSkills);
   }
 }

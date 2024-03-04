@@ -18,7 +18,6 @@ export class TalentContentComponent implements OnInit {
     this.talentDetailService.currentTalent.subscribe(talent => {
       this.talent = talent;
       console.log(this.talent?.filesList);
-
     });
   }
 
