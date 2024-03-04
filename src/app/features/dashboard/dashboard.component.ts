@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { initDropdowns, initModals } from 'flowbite';
-import { catchError, forkJoin, switchMap, throwError } from 'rxjs';
+import { catchError, throwError } from 'rxjs';
 import { TalentService } from 'src/app/services/talent/talent.service';
 import { TalentResponse } from '../../shared/models/interfaces/talent.interface';
 import { ToastrService } from 'ngx-toastr';
@@ -19,8 +19,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   constructor(private talentService: TalentService, private toastr: ToastrService, private talentDetailService: TalentDetailService, private loader: LoaderService) {
     this.talentService.getTalent().subscribe((talents: TalentResponse[]) => {
-      const filterTalentResponses = talents.map(talent => ({ talentId: talent.id }));
-      this.talentDetailService.updateTalentList(filterTalentResponses);
+      this.talentDetailService.updateTalentList(talents);
       this.isFiltered = false;
     });
   }
@@ -32,22 +31,16 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.talentDetailService.talentList$.pipe(
-      switchMap((filterTalentResponse) => {
-        const talentObservables = filterTalentResponse.map(filterTalentResponse =>
-          this.talentService.getTalentById(filterTalentResponse.talentId)
-        );
-        return forkJoin(talentObservables);
-      }),
       catchError((error) => {
         this.toastr.error('Error al obtener los talentos', 'Error');
         return throwError(() => error);
       })
     ).subscribe((talents) => {
-      // Añade el prefijo a cada imagen
-
-
       // this.talents = talents.reverse().slice(0, 5);
-      this.talents = this.isFiltered ? talents.reverse() : talents.reverse().slice(0, 5);
+      this.talents = talents.reverse();
+      if (!this.isFiltered) {
+        this.talents = this.talents.slice(0, 5);
+      }
       // this.toastr.success('Talentos obtenidos correctamente', 'Éxito');
       if (this.talents.length > 0) {
         this.selectedTalent = this.talents[0]; // Selecciona el primer talento

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { TalentService } from 'src/app/services/talent/talent.service';
-import { FilterTalentResponse, TalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
+import { TalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class TalentDetailService {
   private currentTalentValue: TalentResponse | null = null;
   currentTalent = this.talentSource.asObservable();
 
-  private talentListSubject = new BehaviorSubject<FilterTalentResponse[]>([]);
+  private talentListSubject = new BehaviorSubject<TalentResponse[]>([]);
   talentList$ = this.talentListSubject.asObservable();
 
   constructor(private talentService: TalentService) { }
@@ -27,7 +27,7 @@ export class TalentDetailService {
     });
   }
 
-  updateTalentList(talents: FilterTalentResponse[]) {
+  updateTalentList(talents: TalentResponse[]): void {
     this.talentListSubject.next(talents);
   }
 }

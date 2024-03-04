@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, finalize, forkJoin, tap, throwError } from 'rxjs';
@@ -7,10 +7,9 @@ import { MASTER_API_ENDPOINTS } from 'src/app/core/global/constants/api-endpoint
 import { LoaderService } from 'src/app/core/global/loader/loader.service';
 import { MasterService } from 'src/app/services/master/master.service';
 import { Level } from 'src/app/shared/models/interfaces/level-interface';
-import { TechnicalSkill } from '../../../models/interfaces/technicalSkill.interface';
 import { TalentService } from 'src/app/services/talent/talent.service';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
-import { FilterTalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
+import { TalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
 
 @Component({
   selector: 'app-nav-filters',
@@ -50,12 +49,12 @@ export class NavFiltersComponent implements OnInit {
     console.log(formValue);
     this.talentService.getTalentsByTechnicalSkillsLanguageAndLevel(formValue)
       .pipe(
-        tap((response: FilterTalentResponse[]) => {
+        tap((response: TalentResponse[]) => {
           if (response.length === 0) {
             this.toastr.info('No hay registros de ese tipo', 'Información');
           } else {
-            this.talentListService.updateTalentList(response);
             this.isFiltered.emit(true);
+            this.talentListService.updateTalentList(response);
           }
         }),
         catchError((error) => {
@@ -74,17 +73,19 @@ export class NavFiltersComponent implements OnInit {
     })
   }
 
-  handleOptionSelected(index: number) {
-    const selectedLevelId = this.levels[index].id;
+  handleOptionSelected(index: number | null) {
+    if (index !== null) {
+      const selectedLevelId = this.levels[index].id;
 
-    // Establece el valor de 'levelId' en el formulario
-    this.myForm.get('levelId')?.setValue(selectedLevelId);
+      // Establece el valor de 'levelId' en el formulario
+      this.myForm.get('levelId')?.setValue(selectedLevelId);
 
-    if (selectedLevelId) {
-      this.myForm.get('languageId')?.setValue(2);
-    } else {
-      this.myForm.get('languageId')?.setValue(null);
-      this.myForm.get('levelId')?.setValue(null);
+      if (selectedLevelId) {
+        this.myForm.get('languageId')?.setValue(2);
+      } else {
+        this.myForm.get('languageId')?.setValue(null);
+        this.myForm.get('levelId')?.setValue(null);
+      }
     }
   }
 

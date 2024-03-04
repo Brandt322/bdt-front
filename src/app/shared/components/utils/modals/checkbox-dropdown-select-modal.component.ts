@@ -37,12 +37,19 @@ export class CheckboxDropdownSelectDataModalComponent {
   @Input() labelledby!: string;
   @Input() data?: { id: number;[key: string]: any }[];
   @Input() labelKey!: string;
-  @Output() optionSelected = new EventEmitter<number>();
+  @Output() optionSelected = new EventEmitter<number | null>();
 
   selectedIndex: number | null = null;
 
   handleChecked(index: number) {
-    this.selectedIndex = index; // Actualiza el índice del elemento seleccionado
-    this.optionSelected.emit(index)
+    if (this.selectedIndex === index) {
+      // Si el índice seleccionado es el mismo que el índice actual, deselecciona el elemento
+      this.selectedIndex = null;
+      this.optionSelected.emit(null);
+    } else {
+      // De lo contrario, selecciona el elemento
+      this.selectedIndex = index; // Actualiza el índice del elemento seleccionado
+      this.optionSelected.emit(index);
+    }
   }
 }
