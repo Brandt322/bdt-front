@@ -2,7 +2,7 @@ import { TALENT_API_ENDPOINTS } from './../../core/global/constants/api-endpoint
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { FilterTalentResponse, TalentFilterParams, TalentRequest, TalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
 import { environment } from 'src/environments/environment';
 
@@ -20,7 +20,26 @@ export class TalentService {
   }
 
   getTalentById(id: number): Observable<TalentResponse> {
-    return this.http.get<TalentResponse>(`${this.uri}/${TALENT_API_ENDPOINTS.REQUESTMAPPING}/${id}`);
+    return this.http.get<TalentResponse>(`${this.uri}/${TALENT_API_ENDPOINTS.REQUESTMAPPING}/${id}`).pipe(
+      map(talent => {
+        if (talent.image) {
+          let imagePrefix = 'data:image/jpeg;base64,';
+          if (talent.image.startsWith('iVBOR')) {
+            imagePrefix = 'data:image/png;base64,';
+          } else if (talent.image.startsWith('UklGR')) {
+            imagePrefix = 'data:image/webp;base64,';
+          }
+          talent.image = imagePrefix + talent.image;
+        }
+        if (talent.filesList) {
+          let filePrefix = 'data:application/pdf;base64,';
+          talent.filesList.forEach(file => {
+            file.file = filePrefix + file.file;
+          });
+        }
+        return talent;
+      })
+    );
   }
 
   createtalent(talent: TalentRequest): Observable<Object> {

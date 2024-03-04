@@ -5,6 +5,7 @@ import { TalentService } from 'src/app/services/talent/talent.service';
 import { TalentResponse } from '../../shared/models/interfaces/talent.interface';
 import { ToastrService } from 'ngx-toastr';
 import { TalentDetailService } from '../services/talent-detail.service';
+import { LoaderService } from 'src/app/core/global/loader/loader.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +17,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   selectedTalent!: TalentResponse;
   isFiltered: boolean = false;
 
-  constructor(private talentService: TalentService, private toastr: ToastrService, private talentDetailService: TalentDetailService) {
+  constructor(private talentService: TalentService, private toastr: ToastrService, private talentDetailService: TalentDetailService, private loader: LoaderService) {
     this.talentService.getTalent().subscribe((talents: TalentResponse[]) => {
       const filterTalentResponses = talents.map(talent => ({ talentId: talent.id }));
       this.talentDetailService.updateTalentList(filterTalentResponses);
@@ -43,23 +44,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       })
     ).subscribe((talents) => {
       // Añade el prefijo a cada imagen
-      talents.forEach(talent => {
-        if (talent.image) {
-          let imagePrefix = 'data:image/jpeg;base64,';
-          if (talent.image.startsWith('iVBOR')) {
-            imagePrefix = 'data:image/png;base64,';
-          } else if (talent.image.startsWith('UklGR')) {
-            imagePrefix = 'data:image/webp;base64,';
-          }
-          talent.image = imagePrefix + talent.image;
-        }
-        if (talent.filesList) {
-          let filePrefix = 'data:application/pdf;base64,';
-          talent.filesList.forEach(file => {
-            file.file = filePrefix + file.file;
-          });
-        }
-      });
+
 
       // this.talents = talents.reverse().slice(0, 5);
       this.talents = this.isFiltered ? talents.reverse() : talents.reverse().slice(0, 5);
@@ -73,7 +58,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   onSearchPerformed() {
     this.isFiltered = true;
-    console.log('Evento searchPerformed recibido, isFiltered establecido:' + this.isFiltered);
+    // console.log('Evento searchPerformed recibido, isFiltered establecido:' + this.isFiltered);
   }
 
   modalTitle: string = '';
@@ -85,9 +70,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   onTalentClick(talent: TalentResponse) {
+    this.loader.showLoader();
     this.selectedTalent = talent; // Actualiza el talento seleccionado cuando se hace clic en un talento
-    this.talentDetailService.changeTalent(talent);
+    this.talentDetailService.changeTalent(talent.id);
+    this.loader.hideLoader();
   }
-
-
 }
