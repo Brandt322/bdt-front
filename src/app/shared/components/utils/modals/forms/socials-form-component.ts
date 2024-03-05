@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { SharedDataService } from '../../../services/shared-data-service.service';
 
 @Component({
   selector: 'app-socials-modal-form',
@@ -11,12 +12,14 @@ import { Component, Input } from '@angular/core';
       <div class="grid gap-4 mb-8">
         <app-text-input
           [id]="'link-linkedin'"
+          [value]="linkedinLink"
           label="Link de Linkedin"
           placeholder="Link del perfil de LinkedIn"
         >
         </app-text-input>
         <app-text-input
           [id]="'link-github'"
+          [value]="githubLink"
           label="Link de GitHub"
           placeholder="Link del perfil de GitHub"
         >
@@ -33,4 +36,12 @@ export class SocialsModalFormComponent {
   modal_id: string = 'socials-modal';
   @Input() id!: string;
   @Input() title!: string;
+  githubLink!: string;
+  linkedinLink!: string;
+  constructor(private data: SharedDataService) { }
+
+  ngOnInit() {
+    this.data.currentGithubLink.subscribe(link => this.githubLink = link);
+    this.data.currentLinkedinLink.subscribe(link => this.linkedinLink = link);
+  }
 }

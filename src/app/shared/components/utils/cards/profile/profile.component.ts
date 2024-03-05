@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { SharedDataService } from "../../../services/shared-data-service.service";
 
 @Component({
   selector: 'app-profile',
@@ -21,11 +22,22 @@ export class ProfileComponent implements OnInit {
   @Input() selected = false;
   @Input() githubLink!: string;
   @Input() linkedinLink!: string;
+  @Input() currency?: string;
 
-  constructor() { }
+  constructor(private data: SharedDataService) { }
 
   ngOnInit(): void {
 
   }
 
+  openModalSocial() {
+    this.data.changeGithubLink(this.githubLink);
+    this.data.changeLinkedinLink(this.linkedinLink);
+  }
+
+  openModalMont() {
+    this.data.changeInitialMont(this.initialMont);
+    this.data.changeFinalMont(this.finalMont);
+    this.data.changeCurrency(this.currency || '')
+  }
 }

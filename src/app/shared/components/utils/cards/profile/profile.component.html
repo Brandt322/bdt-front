@@ -111,6 +111,7 @@
                 data-modal-target="salary-band-modal"
                 data-modal-toggle="salary-band-modal"
                 class="flex items-center"
+                (click)="openModalMont()"
                 *ngIf="iconEditMont"
               >
                 <span
@@ -215,6 +216,7 @@
         <button
           data-modal-target="socials-modal"
           data-modal-toggle="socials-modal"
+          (click)="openModalSocial()"
           class="flex items-center hover:bg-gray-200 rounded-lg p-2 focus:ring-2 focus:ring-gray-300"
         >
           <span
