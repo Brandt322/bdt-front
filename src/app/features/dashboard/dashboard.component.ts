@@ -18,10 +18,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   isFiltered: boolean = false;
 
   constructor(private talentService: TalentService, private toastr: ToastrService, private talentDetailService: TalentDetailService, private loader: LoaderService) {
-    this.talentService.getTalent().subscribe((talents: TalentResponse[]) => {
-      this.talentDetailService.updateTalentList(talents);
-      this.isFiltered = false;
-    });
   }
 
   ngAfterViewInit(): void {
@@ -30,6 +26,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+
+    this.talentService.getTalent().subscribe((talents: TalentResponse[]) => {
+      this.talentDetailService.updateTalentList(talents);
+      this.isFiltered = false;
+    });
+
     this.talentDetailService.talentList$.pipe(
       catchError((error) => {
         this.toastr.error('Error al obtener los talentos', 'Error');

@@ -86,6 +86,10 @@ export class NavFiltersComponent implements OnInit {
         this.myForm.get('languageId')?.setValue(null);
         this.myForm.get('levelId')?.setValue(null);
       }
+    } else {
+      // Si el índice es null, resetea los valores de 'languageId' y 'levelId'
+      this.myForm.get('languageId')?.reset();
+      this.myForm.get('levelId')?.reset();
     }
   }
 
