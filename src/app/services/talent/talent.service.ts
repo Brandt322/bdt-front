@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { File } from 'src/app/shared/models/interfaces/file.interface';
-import { TalentFilterParams, TalentRequest, TalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
+import { FilterTalentResponse, TalentFilterParams, TalentRequest, TalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -44,6 +44,14 @@ export class TalentService {
     return talent;
   }
 
+  private handleFilterTalentData(talent: FilterTalentResponse) {
+    if (talent.image) {
+      talent.image = this.handleImage(talent.image);
+    }
+    // No intentes manejar filesList aquí, ya que FilterTalentResponse no tiene esa propiedad
+    return talent;
+  }
+
   getTalent(): Observable<TalentResponse[]> {
     return this.http.get<TalentResponse[]>(`${this.uri}/${TALENT_API_ENDPOINTS.REQUESTMAPPING}`).pipe(
       map(talents => talents.map(talent => this.handleTalentData(talent)))
@@ -61,9 +69,9 @@ export class TalentService {
   }
 
   //Post request to filter talents by technical skills, language and level
-  getTalentsByTechnicalSkillsLanguageAndLevel(params: TalentFilterParams[]): Observable<TalentResponse[]> {
-    return this.http.post<TalentResponse[]>(`${this.uri}/${TALENT_API_ENDPOINTS.REQUESTMAPPING}/${TALENT_API_ENDPOINTS.FILTER}`, params).pipe(
-      map(talents => talents.map(talent => this.handleTalentData(talent)))
+  getTalentsByTechnicalSkillsLanguageAndLevel(params: TalentFilterParams[]): Observable<FilterTalentResponse[]> {
+    return this.http.post<FilterTalentResponse[]>(`${this.uri}/${TALENT_API_ENDPOINTS.REQUESTMAPPING}/${TALENT_API_ENDPOINTS.FILTER}`, params).pipe(
+      map(talents => talents.map(talent => this.handleFilterTalentData(talent)))
     );
   }
 

@@ -30,12 +30,14 @@
   <app-checkbox-input
     [id]="'edu-fractal'"
     label="Aquí en Fractal"
+    [isChecked]="isEducationalFractal"
     (isCheckedChange)="institutionIfChecked($event)"
   ></app-checkbox-input>
   <app-text-input
     [id]="'carrera'"
     label="Carrera"
     placeholder="Nombre de la carrera"
+    [value]="careerValue"
     (input)="onInputChange($event, 'career')"
     [hasError]="
       isValidField ? isValidField('educationalExperiencesList.0.career') : false
@@ -56,6 +58,7 @@
     [id]="'grado'"
     label="Grado"
     placeholder="Grado de la carrera"
+    [value]="degreeValue"
     (input)="onInputChange($event, 'degree')"
     [hasError]="
       isValidField ? isValidField('educationalExperiencesList.0.degree') : false
@@ -77,6 +80,7 @@
       [id]="'edu-anio-mes-inicio'"
       label="Año y mes de inicio"
       placeholder="Fecha de inicio"
+      [value]="startDateValue"
       (input)="onInputChange($event, 'startDate')"
       [hasError]="
         isValidField
@@ -133,6 +137,7 @@
   <app-checkbox-input
     [id]="'exp-actual1'"
     label="Hasta la actualidad"
+    [isChecked]="isCurrentlyStudying"
     (isCheckedChange)="endDateIfChecked($event)"
   ></app-checkbox-input>
 </div>

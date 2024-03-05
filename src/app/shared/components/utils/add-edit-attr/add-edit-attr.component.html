@@ -113,6 +113,7 @@
   <app-education-modal-form
     *ngIf="type == 'edu'"
     [modal_id]="id"
+    [educationalExperience]="educationList[i]"
     title="{{ modalTitle }}"
     description="{{ modalDescription }}"
   ></app-education-modal-form>

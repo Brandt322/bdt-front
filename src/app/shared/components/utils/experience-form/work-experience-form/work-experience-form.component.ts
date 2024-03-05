@@ -17,6 +17,7 @@ export class WorkExperienceFormComponent implements OnChanges {
   currentDate = new Date();
   disableTextInput: boolean = false;
   disableEndDateInput: boolean = false;
+
   @Output() inputChange = new EventEmitter<{ id: string, value: string, arrayName: string }>();
   @Input() createTalentForm!: FormGroup;
   @Input() getFieldError?: (fieldName: string) => string | null;

@@ -9,7 +9,7 @@ import { MasterService } from 'src/app/services/master/master.service';
 import { Level } from 'src/app/shared/models/interfaces/level-interface';
 import { TalentService } from 'src/app/services/talent/talent.service';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
-import { TalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
+import { FilterTalentResponse, TalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
 
 @Component({
   selector: 'app-nav-filters',
@@ -49,7 +49,7 @@ export class NavFiltersComponent implements OnInit {
     console.log(formValue);
     this.talentService.getTalentsByTechnicalSkillsLanguageAndLevel(formValue)
       .pipe(
-        tap((response: TalentResponse[]) => {
+        tap((response: FilterTalentResponse[]) => {
           if (response.length === 0) {
             this.toastr.info('No hay registros de ese tipo', 'Información');
           } else {

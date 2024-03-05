@@ -51,7 +51,6 @@ export interface TalentRequest {
   languagesList: LanguageRequest[];
 }
 
-
 export interface TalentFilterParams {
   languageId: number;
   levelId: number;
@@ -59,7 +58,17 @@ export interface TalentFilterParams {
 }
 
 export interface FilterTalentResponse {
-  talentId: number;
+  id: number;
+  name: string;
+  paternalSurname: string;
+  maternalSurname: string;
+  country: string;
+  city: string;
+  currency: string;
+  profile: string;
+  initialAmount: number;
+  finalAmount: number;
+  image: string;
 }
 
 

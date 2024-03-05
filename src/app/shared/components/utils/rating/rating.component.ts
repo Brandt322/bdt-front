@@ -15,6 +15,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class RatingComponent implements OnInit, ControlValueAccessor {
   @Input() maxRating: number = 5;
+  @Input() currentRating: number = 0;
+  @Input() readonly: boolean = false;
   @Output() ratingChangeEmitter = new EventEmitter<number>();
   private ratingChange: any;
   ratingArray: any[] = [];
@@ -23,13 +25,20 @@ export class RatingComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit(): void {
     this.ratingArray = Array(this.maxRating).fill(0);
+    this.selectedStar = this.currentRating; // Inicializamos selectedStar con currentRating
   }
 
   handleMouseEnter(index: number) {
+    if (this.readonly) {
+      return; // Si readonly es true, no hagas nada
+    }
     this.selectedStar = index + 1;
   }
 
   handleMouseLeave() {
+    if (this.readonly) {
+      return; // Si readonly es true, no hagas nada
+    }
     if (this.previousSelection !== 0) {
       this.selectedStar = this.previousSelection;
     } else {
@@ -38,6 +47,10 @@ export class RatingComponent implements OnInit, ControlValueAccessor {
   }
 
   handleClickRating(index: number) {
+    if (this.readonly) {
+      return; // Si readonly es true, no hagas nada
+    }
+
     this.selectedStar = index + 1;
     this.previousSelection = this.selectedStar;
     this.ratingChangeEmitter.emit(this.selectedStar); // Emitir evento para los componentes padre

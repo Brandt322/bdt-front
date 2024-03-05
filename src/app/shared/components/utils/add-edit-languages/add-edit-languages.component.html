@@ -36,6 +36,8 @@
       <div class="flex items-center justify-start">
         <app-rating
           [maxRating]="5"
+          [currentRating]="language.numberOfStars"
+          [readonly]="true"
           [ngClass]="'flex items-center'"
         ></app-rating>
       </div>
@@ -65,5 +67,6 @@
     [modal_id]="editModalId[i]"
     title="{{ modalTitle }}"
     description="{{ modalDescription }}"
+    [rating]="language.numberOfStars"
   ></app-language-modal-form>
 </ng-container>

@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { initDropdowns, initModals } from 'flowbite';
 import { Subject, catchError, filter, takeUntil, throwError } from 'rxjs';
 import { TalentService } from 'src/app/services/talent/talent.service';
-import { TalentResponse } from '../../shared/models/interfaces/talent.interface';
+import { FilterTalentResponse, TalentResponse } from '../../shared/models/interfaces/talent.interface';
 import { ToastrService } from 'ngx-toastr';
 import { TalentDetailService } from '../services/talent-detail.service';
 import { LoaderService } from 'src/app/core/global/loader/loader.service';
@@ -13,8 +13,8 @@ import { LoaderService } from 'src/app/core/global/loader/loader.service';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
-  talents: TalentResponse[] = [];
-  selectedTalent!: TalentResponse;
+  talents: FilterTalentResponse[] = [];
+  selectedTalent!: FilterTalentResponse;
   isFiltered: boolean = false;
   private destroy$ = new Subject<void>();
   // private talentListSubscription: Subscription | null = null;
@@ -80,7 +80,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.modalDescription = description;
   }
 
-  onTalentClick(talent: TalentResponse) {
+  onTalentClick(talent: FilterTalentResponse) {
     this.loader.showLoader();
     this.selectedTalent = talent; // Actualiza el talento seleccionado cuando se hace clic en un talento
     this.talentDetailService.changeTalent(talent.id);
