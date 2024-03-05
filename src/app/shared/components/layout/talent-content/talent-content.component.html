@@ -3,74 +3,47 @@
 >
   <div class="flex flex-col justify-center flex-1 flex-grow-1">
     <app-profile
-      [name]="'Juan Lopez Perez'"
-      [image]="'../../../assets/8ee6c5268d3404f8441329ce18972f60.jpeg'"
+      [name]="talent?.name || ''"
+      [image]="talent?.image || ''"
       [iconEditImg]="true"
-      [location]="'Lima, Peru'"
-      [stack]="'Full-stack developer'"
-      [initialMont]="1000"
-      [finalMont]="3000"
+      [country]="talent?.country || ''"
+      [city]="talent?.city || ''"
+      [stack]="talent?.profile || ''"
+      [initialMont]="talent?.initialAmount || 0"
+      [finalMont]="talent?.finalAmount || 0"
       [iconEditMont]="true"
       [feedbackNumber]="2"
+      [githubLink]="talent?.githubLink || ''"
+      [linkedinLink]="talent?.linkedinLink || ''"
       [options]="true"
     ></app-profile>
 
     <div class="flex w-full p-1 gap-2">
-      <div class="flex items-center w-full p-2">
-        <label
-          for="dropzone-file1"
+      <div
+        *ngFor="let file of talent?.filesList || []; let i = index"
+        class="flex items-center w-full p-2"
+      >
+        <div
           class="flex flex-col items-center justify-center w-full h-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
         >
-          <div class="flex flex-col items-center justify-center">
-            <svg
-              class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 20 16"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-              />
-            </svg>
+          <!-- <div class="flex w-full h-1/2">
+            <img [src]="sanitizeUrl(file.file)" alt="PDF Preview" />
+          </div> -->
+          <a
+            [href]="sanitizeUrl(file.file)"
+            [download]="file.fileName"
+            class="flex flex-col items-center justify-center"
+          >
             <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-              <span class="font-semibold">Click to upload</span>
+              <span class="font-semibold">{{ file.fileName }}</span>
             </p>
-          </div>
-          <input id="dropzone-file1" type="file" class="hidden" />
-        </label>
-      </div>
-      <div class="flex items-center w-full p-1">
-        <label
-          for="dropzone-file2"
-          class="flex flex-col items-center justify-center w-full h-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-        >
-          <div class="flex flex-col items-center justify-center">
-            <svg
-              class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 20 16"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-              />
-            </svg>
             <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-              <span class="font-semibold">Click to upload</span>
+              <span class="font-semibold">{{
+                file.fileType.toUpperCase()
+              }}</span>
             </p>
-          </div>
-          <input id="dropzone-file2" type="file" class="hidden" />
-        </label>
+          </a>
+        </div>
       </div>
       <div class="flex items-center w-full p-1">
         <button
@@ -115,18 +88,7 @@
             <i class="fa-solid fa-plus text-gray-500"></i>
           </button>
         </div>
-        <app-pill-tag-component
-          [variant]="'blue'"
-          [data]="[
-            { id: 'tag-1', skill: 'Data Structure', years: 3.5 },
-            { id: 'tag-2', skill: 'Docker', years: 1 },
-            { id: 'tag-3', skill: 'Express', years: 2 },
-            { id: 'tag-4', skill: 'Github', years: 3 },
-            { id: 'tag-5', skill: 'Javascript', years: 5 },
-            { id: 'tag-6', skill: 'Nginx', years: 2 },
-            { id: 'tag-7', skill: 'Node.js', years: 2 }
-          ]"
-        >
+        <app-pill-tag-component [variant]="'blue'" [data]="technicalSkills">
         </app-pill-tag-component>
       </div>
       <div class="flex flex-col justify-start min-h-[120px] w-5/12 gap-1 p-2">
@@ -141,14 +103,7 @@
             <i class="fa-solid fa-plus text-gray-500"></i>
           </button>
         </div>
-        <app-pill-tag-component
-          [variant]="'pink'"
-          [data]="[
-            { id: 'tag-1', skill: 'Comunicación' },
-            { id: 'tag-2', skill: 'Auto-aprendizaje' },
-            { id: 'tag-3', skill: 'Empatía' }
-          ]"
-        >
+        <app-pill-tag-component [variant]="'pink'" [data]="softSkills">
         </app-pill-tag-component>
       </div>
     </div>
@@ -158,49 +113,40 @@
     <div class="grid grid-cols-1 gap-6 ms-4 me-4 md:me-32">
       <div class="w-full">
         <p class="text-md text-gray-600 dark:text-gray-400">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit
-          iure saepe in nihil, quo voluptatum quidem est dicta tempora maxime,
-          necessitatibus dolores beatae voluptatibus eligendi voluptatem
-          accusantium nam. Eveniet, omnis?
+          {{ description }}
         </p>
       </div>
       <app-add-edit-attr
         main_title="Experiencia"
-        title="Fractal"
-        description="Full-Stack Developer 2015-2021 6 años"
+        [workList]="talent?.workExperiencesList || []"
         [modal_id]="'experience-modal-form'"
         [modal_add_title]="'Agrega una nueva experiencia'"
         modal_add_description="Describe y agrega la nueva experiencia laboral."
         modal_edit_title="Editar la experiencia laboral"
         modal_edit_description="La vida esta llena de cambios. Edita la experiencia laboral."
         [has_image]="true"
-        [number_items]="1"
         type="exp"
       ></app-add-edit-attr>
       <app-add-edit-attr
         main_title="Educación"
-        title="Pontificia Universidad Católica del Perú"
-        description="Bachiller en Ingeniería de Sistemas 2015-2021"
+        [educationList]="talent?.educationalExperiencesList || []"
         [modal_id]="'education-modal-form'"
         [modal_add_title]="'Agrega una nueva experiencia educativa'"
         modal_add_description="Describe y agrega la nueva experiencia educativa."
         modal_edit_title="Editar la experiencia educativa"
         modal_edit_description="La vida esta llena de cambios. Edita la experiencia educativa."
         [has_image]="true"
-        [number_items]="1"
         type="edu"
       ></app-add-edit-attr>
       <app-add-edit-languages
         main_title="Idiomas"
-        title="Inglés"
-        description="Avanzado"
+        [languagesList]="talent?.languagesList || []"
         [modal_id]="'language-modal-form'"
         modal_add_title="Agrega un nuevo idioma"
         modal_add_description="Agrega un nuevo idioma aprendido."
         modal_edit_title="Edita la habilidad en el idioma"
         modal_edit_description="Edita la habilidad en el idioma"
         [has_image]="false"
-        [number_items]="1"
         type="lang"
       ></app-add-edit-languages>
       <app-add-edit-feedback

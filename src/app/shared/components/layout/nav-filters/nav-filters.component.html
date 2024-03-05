@@ -29,6 +29,8 @@
     }"
   >
     <form
+      [formGroup]="myForm"
+      (ngSubmit)="onSave()"
       class="flex justify-around gap-2 items-center flex-col lg:flex-row lg:gap-6"
     >
       <!-- Filtros de busqueda -->
@@ -44,16 +46,10 @@
             ></app-button-dropdown>
             <!-- Dropdown menu -->
             <app-checkbox-dropdown-modal
+              (selectedSkillsChange)="technicalSkills.setValue($event)"
               modalId="skillsCheckbox"
               labelledby="skillsDropdown"
-              [skills]="[
-                { id: 'checkbox-item-1-habilidades', name: 'Data Structure' },
-                { id: 'checkbox-item-2-habilidades', name: 'Docker' },
-                { id: 'checkbox-item-3-habilidades', name: 'Express' },
-                { id: 'checkbox-item-4-habilidades', name: 'Github' },
-                { id: 'checkbox-item-5-habilidades', name: 'Nginx' },
-                { id: 'checkbox-item-6-habilidades', name: 'Node.js' }
-              ]"
+              [skills]="skills"
             >
             </app-checkbox-dropdown-modal>
           </li>
@@ -67,8 +63,9 @@
             <app-checkbox-dropdown-select-data-modal
               modalId="languageDropdown"
               labelledby="languageCheckbox"
-              [data]="data"
+              [data]="levels"
               [labelKey]="'level'"
+              (optionSelected)="handleOptionSelected($event)"
             ></app-checkbox-dropdown-select-data-modal>
           </li>
           <li class="block text-nowrap">
@@ -120,7 +117,7 @@
           />
         </div>
         <button
-          type="button"
+          type="submit"
           class="text-md font-medium text-white bg-[#009688] hover:bg-[#203634] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg px-4 py-2 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
         >
           Buscar

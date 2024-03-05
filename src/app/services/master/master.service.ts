@@ -49,4 +49,8 @@ export class MasterService {
       `${this.uri}/${descriptionOne}/${countryId}/${descriptionTwo}`
     );
   }
+
+  getSkills(description: string): Observable<string[]> {
+    return this.http.get<string[]>(`${this.uri}/${description}`);
+  }
 }

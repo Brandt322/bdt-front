@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../app-routing.module';
 import { HeaderComponent } from './components/layout/header/header.component';
 import { MainComponent } from './components/layout/main/main.component';
@@ -97,7 +97,7 @@ import { SelectInputByValueComponent } from './components/utils/form-inputs/sele
     FeedbackModalFormComponent,
     RatingComponent,
   ],
-  imports: [CommonModule, AppRoutingModule, FormsModule, BrowserAnimationsModule, ToastrModule.forRoot()],
+  imports: [CommonModule, AppRoutingModule, FormsModule, BrowserAnimationsModule, ToastrModule.forRoot(), ReactiveFormsModule],
   exports: [
     HeaderComponent,
     MainComponent,

@@ -1,19 +1,20 @@
-import { EducationalExperience, EducationalExperienceRequest } from "./educationalExperience.interface";
+import { EducationalExperienceRequest, EducationalExperienceResponse } from "./educationalExperience.interface";
+import { File } from "./file.interface";
 import { LanguageRequest, LanguageResponse } from "./language.interface";
 import { SoftSkill, SoftSkillRequest } from "./softSkill.interface";
-import { TechnicalSkill, TechnicalSkillRequest } from "./technicalSkill.interface";
-import { WorkExperience, WorkExperienceRequest } from "./workExperience.interface";
+import { TechnicalSkillRequest, TechnicalSkillResponse } from "./technicalSkill.interface";
+import { WorkExperienceRequest, WorkExperienceResponse } from "./workExperience.interface";
 
 export interface TalentResponse {
   id: number;
   name: string;
   paternalSurname: string;
   maternalSurname: string;
-  countryId: string;
-  cityId: string;
-  currencyId: string;
-  fileList: File[];
-  profileId: string;
+  country: string;
+  city: string;
+  currency: string;
+  filesList: File[];
+  profile: string;
   image: string;
   description: string;
   initialAmount: number;
@@ -22,9 +23,9 @@ export interface TalentResponse {
   linkedinLink: string;
   githubLink: string;
   softSkillsList: SoftSkill[];
-  technicalSkillsList: TechnicalSkill[];
-  educationalExperiencesList: EducationalExperience[];
-  workExperiencesList: WorkExperience[];
+  technicalSkillsList: TechnicalSkillResponse[];
+  educationalExperiencesList: EducationalExperienceResponse[];
+  workExperiencesList: WorkExperienceResponse[];
   languagesList: LanguageResponse[];
 }
 
@@ -49,3 +50,16 @@ export interface TalentRequest {
   workExperiencesList: WorkExperienceRequest[];
   languagesList: LanguageRequest[];
 }
+
+
+export interface TalentFilterParams {
+  languageId: number;
+  levelId: number;
+  technicalSkills: string[];
+}
+
+export interface FilterTalentResponse {
+  talentId: number;
+}
+
+

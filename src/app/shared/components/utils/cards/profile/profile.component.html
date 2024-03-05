@@ -1,9 +1,10 @@
 <div
   class="flex items-center w-full"
   [ngClass]="{
-    'max-w-xl rounded-md bg-gray-50 hover:bg-sky-50 p-2 shadow-sm-light':
+    'max-w-xl rounded-md cursor-pointer bg-gray-50 hover:bg-sky-50 p-2 shadow-sm-light':
       variant === 'main-profile',
-    'flex p-1 justify-center': variant !== 'main-profile'
+    'flex p-1 justify-center': variant !== 'main-profile',
+    'bg-sky-50': selected
   }"
 >
   <div
@@ -88,7 +89,17 @@
             <p
               class="mb-1 text-md text-gray-600 dark:font-medium dark:text-gray-400"
             >
-              {{ location }}
+              {{
+                city
+                  ? city.charAt(0).toUpperCase() + city.slice(1).toLowerCase()
+                  : ""
+              }},
+              {{
+                country
+                  ? country.charAt(0).toUpperCase() +
+                    country.slice(1).toLowerCase()
+                  : ""
+              }}
             </p>
             <div class="flex gap-1">
               <p
@@ -194,11 +205,11 @@
         <div
           class="border rounded-lg flex flex-wrap items-center justify-center gap-2 p-2"
         >
-          <a href="">
-            <img src="../../../assets/github.png" alt="" />
+          <a *ngIf="githubLink" [href]="githubLink" target="_blank">
+            <img src="../../../assets/github.png" alt="githubLink" />
           </a>
-          <a href="">
-            <img src="../../../assets/linkedin.png" alt="" />
+          <a *ngIf="linkedinLink" [href]="linkedinLink" target="_blank">
+            <img src="../../../assets/linkedin.png" alt="linkedinLink" />
           </a>
         </div>
         <button

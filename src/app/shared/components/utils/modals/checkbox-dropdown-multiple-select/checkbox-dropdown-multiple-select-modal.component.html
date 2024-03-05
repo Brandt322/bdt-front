@@ -7,7 +7,7 @@
       class="flex gap-1 items-center rounded-full bg-gray-100 p-2 hover:bg-gray-200"
       *ngFor="let skill of selectedSkills"
     >
-      {{ skill.name
+      {{ skill
       }}<span
         class="material-symbols-outlined hover:text-red-500 cursor-pointer"
         (click)="handleCancel(skill)"
@@ -28,10 +28,10 @@
       <div
         class="flex items-center justify-between p-3"
         [ngClass]="{ 'bg-gray-200': isChecked[i] }"
-        [id]="skill.id"
+        [id]="skill"
       >
         <span class="text-sm font-medium text-gray-900 dark:text-gray-300">{{
-          skill.name
+          skill
         }}</span>
         <i class="fa-solid fa-check text-blue-500" *ngIf="isChecked[i]"></i>
       </div>

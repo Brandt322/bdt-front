@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 @Component({
   selector: 'app-checkbox-dropdown-select-data-modal',
   template: `
@@ -20,9 +20,9 @@ import { Component, Input } from '@angular/core';
             [ngClass]="{ 'bg-gray-200': selectedIndex === i}"
             [id]="item.id"
           >
-            <label
+            <span
               class="text-sm font-medium text-gray-900 dark:text-gray-300"
-              >{{ item[labelKey].charAt(0).toUpperCase() + item[labelKey].slice(1).toLowerCase() }}</label
+              >{{ item[labelKey].charAt(0).toUpperCase() + item[labelKey].slice(1).toLowerCase() }}</span
             >
             <i class="fa-solid fa-check text-blue-500" *ngIf="selectedIndex === i"></i>
           </div>
@@ -37,10 +37,19 @@ export class CheckboxDropdownSelectDataModalComponent {
   @Input() labelledby!: string;
   @Input() data?: { id: number;[key: string]: any }[];
   @Input() labelKey!: string;
+  @Output() optionSelected = new EventEmitter<number | null>();
 
   selectedIndex: number | null = null;
 
   handleChecked(index: number) {
-    this.selectedIndex = index; // Actualiza el índice del elemento seleccionado
+    if (this.selectedIndex === index) {
+      // Si el índice seleccionado es el mismo que el índice actual, deselecciona el elemento
+      this.selectedIndex = null;
+      this.optionSelected.emit(null);
+    } else {
+      // De lo contrario, selecciona el elemento
+      this.selectedIndex = index; // Actualiza el índice del elemento seleccionado
+      this.optionSelected.emit(index);
+    }
   }
 }

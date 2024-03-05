@@ -43,7 +43,11 @@ export class ServerErrorsInterceptor implements HttpInterceptor {
       // }
 
       if (error.status === 404) {
-        this.toast.error(`${error.error.message}`, 'Error 404', { timeOut: 3000 });
+        if (error.error.message === 'No se encontraron registros') {
+          this.toast.info('No hay registros de ese tipo', 'Información', { timeOut: 3000 });
+        } else {
+          this.toast.error(`${error.error.message}`, 'Error 404', { timeOut: 3000 });
+        }
       }
 
       if (error.status === 500) {
