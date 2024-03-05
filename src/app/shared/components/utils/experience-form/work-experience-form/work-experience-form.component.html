@@ -20,12 +20,14 @@
   <app-checkbox-input
     [id]="'checkboxWorkingHere'"
     label="Aquí en Fractal"
+    [isChecked]="isCompanyFractal"
     (isCheckedChange)="companyIfChecked($event)"
   ></app-checkbox-input>
   <app-text-input
     [id]="'puesto'"
     label="Puesto"
     placeholder="Puesto en la empresa"
+    [value]="positionValue"
     (input)="onInputChange($event, 'position')"
     [hasError]="
       isValidField ? isValidField('workExperiencesList.0.position') : false
@@ -45,6 +47,7 @@
       [id]="'anio-mes-inicio'"
       label="Año y mes de inicio"
       placeholder="Fecha de inicio"
+      [value]="startDateValue"
       (input)="onInputChange($event, 'startDate')"
       [hasError]="
         isValidField ? isValidField('workExperiencesList.0.startDate') : false
@@ -88,6 +91,7 @@
   <app-checkbox-input
     [id]="'checkboxCurrentlyWorking'"
     label="Hasta la actualidad"
+    [isChecked]="isCurrentlyWorking"
     (isCheckedChange)="endDateIfChecked($event)"
   ></app-checkbox-input>
 </div>

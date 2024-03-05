@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { WorkExperienceRequest } from 'src/app/shared/models/interfaces/workExperience.interface';
 
 @Component({
   selector: 'app-experience-modal-form',
@@ -9,7 +10,7 @@ import { Component, Input } from '@angular/core';
   >
     <form>
       <div class="mb-8">
-        <app-work-experience-form></app-work-experience-form>
+        <app-work-experience-form [workExperience]="workExperience"></app-work-experience-form>
       </div>
       <app-cancel-save-buttons
         [modal_id]="modal_id"
@@ -22,4 +23,5 @@ export class ExperienceModalFormComponent {
   @Input() modal_id!: string;
   @Input() title!: string;
   @Input() description!: string;
+  @Input() workExperience!: WorkExperienceRequest;
 }

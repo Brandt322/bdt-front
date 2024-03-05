@@ -23,7 +23,7 @@ export class DateInputComponent {
   @Input() id!: string;
   @Input() label!: string;
   @Input() placeholder!: string;
-  @Input() value: string = '';
+  @Input() value: string | Date = '';
   @Input() isDisabled: boolean = false;
   @Input() hasError!: boolean;
   @Output() valueChange = new EventEmitter<string>();
