@@ -22,7 +22,7 @@ export class CheckboxInputComponent {
   @Input() id!: string;
   @Input() label!: string;
 
-  isChecked = false;
+  @Input() isChecked: boolean = false;
 
   @Output() isCheckedChange = new EventEmitter<boolean>();
 

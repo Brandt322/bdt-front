@@ -104,6 +104,7 @@
   <app-experience-modal-form
     *ngIf="type == 'exp'"
     [modal_id]="id"
+    [workExperience]="workList[i]"
     title="{{ modalTitle }}"
     description="{{ modalDescription }}"
   ></app-experience-modal-form>

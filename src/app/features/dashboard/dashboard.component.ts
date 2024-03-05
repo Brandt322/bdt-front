@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { initDropdowns, initModals } from 'flowbite';
-import { catchError, throwError } from 'rxjs';
+import { Subject, catchError, filter, takeUntil, throwError } from 'rxjs';
 import { TalentService } from 'src/app/services/talent/talent.service';
 import { TalentResponse } from '../../shared/models/interfaces/talent.interface';
 import { ToastrService } from 'ngx-toastr';
@@ -12,12 +12,24 @@ import { LoaderService } from 'src/app/core/global/loader/loader.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
-export class DashboardComponent implements OnInit, AfterViewInit {
+export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   talents: TalentResponse[] = [];
   selectedTalent!: TalentResponse;
   isFiltered: boolean = false;
+  private destroy$ = new Subject<void>();
+  // private talentListSubscription: Subscription | null = null;
 
-  constructor(private talentService: TalentService, private toastr: ToastrService, private talentDetailService: TalentDetailService, private loader: LoaderService) {
+  constructor(
+    private talentService: TalentService,
+    private toastr: ToastrService,
+    private talentDetailService: TalentDetailService,
+    private loader: LoaderService,
+  ) {
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   ngAfterViewInit(): void {
@@ -26,27 +38,31 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.initializeState();
+  }
 
-    this.talentService.getTalent().subscribe((talents: TalentResponse[]) => {
+  initializeState(): void {
+    this.talentService.getTalent().pipe(takeUntil(this.destroy$)).subscribe((talents: TalentResponse[]) => {
       this.talentDetailService.updateTalentList(talents);
       this.isFiltered = false;
     });
 
     this.talentDetailService.talentList$.pipe(
+      takeUntil(this.destroy$),
       catchError((error) => {
         this.toastr.error('Error al obtener los talentos', 'Error');
         return throwError(() => error);
       })
     ).subscribe((talents) => {
-      // this.talents = talents.reverse().slice(0, 5);
-      this.talents = talents.reverse();
-      if (!this.isFiltered) {
-        this.talents = this.talents.slice(0, 5);
-      }
-      // this.toastr.success('Talentos obtenidos correctamente', 'Éxito');
-      if (this.talents.length > 0) {
-        this.selectedTalent = this.talents[0]; // Selecciona el primer talento
-        this.onTalentClick(this.talents[0]);
+      if (this.talents !== talents) {
+        this.talents = talents.reverse();
+        if (!this.isFiltered) {
+          this.talents = this.talents.slice(0, 5);
+        }
+        if (this.talents.length > 0) {
+          this.selectedTalent = this.talents[0]; // Selecciona el primer talento
+          this.onTalentClick(this.talents[0]);
+        }
       }
     });
   }

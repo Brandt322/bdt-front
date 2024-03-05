@@ -22,8 +22,10 @@ export class TalentDetailService {
     }
 
     this.talentService.getTalentById(talentId).subscribe(talent => { // Obtiene los detalles del talento del servidor
-      this.currentTalentValue = talent;
-      this.talentSource.next(talent);
+      if (this.currentTalentValue?.id !== talent.id) {
+        this.currentTalentValue = talent;
+        this.talentSource.next(talent);
+      }
     });
   }
 
