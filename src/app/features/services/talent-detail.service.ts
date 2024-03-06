@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { BehaviorSubject, catchError } from 'rxjs';
 import { TalentService } from 'src/app/services/talent/talent.service';
-import { FilterTalentResponse, TalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
+import { FilterTalentResponse, TalentResponse, TalentTechnicalSkillRequest } from 'src/app/shared/models/interfaces/talent.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class TalentDetailService {
   private talentListSubject = new BehaviorSubject<FilterTalentResponse[]>([]);
   talentList$ = this.talentListSubject.asObservable();
 
-  constructor(private talentService: TalentService) { }
+  constructor(private talentService: TalentService, private toast: ToastrService) { }
 
   changeTalent(talentId: number) { // Cambia el parámetro a un ID de talento
     if (this.currentTalentValue?.id === talentId) { // Comprueba si el ID del talento seleccionado es el mismo que el del talento actualmente seleccionado
@@ -31,5 +32,27 @@ export class TalentDetailService {
 
   updateTalentList(talents: FilterTalentResponse[]): void {
     this.talentListSubject.next(talents);
+  }
+
+  addTechnicalSkillToCurrentTalent(skillName: string, yearsOfExperience: number) {
+    if (this.currentTalentValue) {
+      const technicalSkillRequest: TalentTechnicalSkillRequest = {
+        skill: skillName,
+        years: yearsOfExperience
+      };
+      this.talentService.addTechnicalSkill(this.currentTalentValue.id, technicalSkillRequest).pipe(
+        catchError(error => {
+          this.toast.error('Hubo un error al agregar la habilidad técnica');
+          throw error;
+        })
+      ).subscribe(() => {
+        if (this.currentTalentValue) {
+          this.currentTalentValue.technicalSkillsList.push(technicalSkillRequest);
+          this.talentSource.next(this.currentTalentValue);
+
+          this.toast.success('Se agregó una habilidad técnica');
+        }
+      });
+    }
   }
 }

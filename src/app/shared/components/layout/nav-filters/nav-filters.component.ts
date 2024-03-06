@@ -59,6 +59,7 @@ export class NavFiltersComponent implements OnInit {
         }),
         catchError((error) => {
           console.error(error);
+          this.toastr.error('Error al obtener los talentos', 'Error');
           return throwError(error);
         })
       )

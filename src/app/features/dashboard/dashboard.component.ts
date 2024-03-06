@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { initDropdowns, initModals } from 'flowbite';
 import { Subject, catchError, filter, takeUntil, throwError } from 'rxjs';
 import { TalentService } from 'src/app/services/talent/talent.service';
-import { FilterTalentResponse, TalentResponse } from '../../shared/models/interfaces/talent.interface';
+import { BasicTalentResponse, FilterTalentResponse, TalentResponse } from '../../shared/models/interfaces/talent.interface';
 import { ToastrService } from 'ngx-toastr';
 import { TalentDetailService } from '../services/talent-detail.service';
 import { LoaderService } from 'src/app/core/global/loader/loader.service';
@@ -13,8 +13,8 @@ import { LoaderService } from 'src/app/core/global/loader/loader.service';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
-  talents: FilterTalentResponse[] = [];
-  selectedTalent!: FilterTalentResponse;
+  talents: BasicTalentResponse[] = [];
+  selectedTalent!: BasicTalentResponse;
   isFiltered: boolean = false;
   private destroy$ = new Subject<void>();
   // private talentListSubscription: Subscription | null = null;
@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   initializeState(): void {
-    this.talentService.getTalent().pipe(takeUntil(this.destroy$)).subscribe((talents: TalentResponse[]) => {
+    this.talentService.getBasicTalent().pipe(takeUntil(this.destroy$)).subscribe((talents: BasicTalentResponse[]) => {
       this.talentDetailService.updateTalentList(talents);
       this.isFiltered = false;
     });
@@ -80,7 +80,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.modalDescription = description;
   }
 
-  onTalentClick(talent: FilterTalentResponse) {
+  onTalentClick(talent: BasicTalentResponse) {
     this.loader.showLoader();
     this.selectedTalent = talent; // Actualiza el talento seleccionado cuando se hace clic en un talento
     this.talentDetailService.changeTalent(talent.id);

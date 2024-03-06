@@ -5,6 +5,20 @@ import { SoftSkill, SoftSkillRequest } from "./softSkill.interface";
 import { TechnicalSkillRequest, TechnicalSkillResponse } from "./technicalSkill.interface";
 import { WorkExperienceRequest, WorkExperienceResponse } from "./workExperience.interface";
 
+export interface BasicTalentResponse {
+  id: number;
+  name: string;
+  paternalSurname: string;
+  maternalSurname: string;
+  country: string;
+  city: string;
+  currency: string;
+  profile: string;
+  initialAmount: number;
+  finalAmount: number;
+  image: string;
+}
+
 export interface TalentResponse {
   id: number;
   name: string;
@@ -71,4 +85,7 @@ export interface FilterTalentResponse {
   image: string;
 }
 
-
+export interface TalentTechnicalSkillRequest {
+  skill: string;
+  years: number;
+}
