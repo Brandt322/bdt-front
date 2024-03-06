@@ -58,7 +58,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
         <div class="grid gap-4 md:grid-cols-2">
           <app-text-input
             [id]="'monto-inicial'"
-            [value]="initialMont.toString()"
+            [value]="initialAmount.toString()"
             formControlName="initialAmount"
             label="Monto inicial"
             placeholder="Ingrese el monto inicial"
@@ -67,7 +67,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
           <app-text-input
             [id]="'monto-final'"
-            [value]="finalMont.toString()"
+            [value]="finalAmount.toString()"
             formControlName="finalAmount"
             label="Monto final"
             placeholder="Ingrese el monto final"
@@ -98,7 +98,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
       <app-cancel-save-buttons
         [form]="salaryBandForm"
         [modal_id]="modal_id"
-        [save_button_id]="'save_'"
+        [save_button_id]="'btn-salary-band'"
         (cancelClicked)="salaryBandForm.reset()"
       ></app-cancel-save-buttons>
     </form>
@@ -108,8 +108,8 @@ export class SalaryBandModalForm {
   modal_id: string = 'salary-band-modal';
   @Input() id!: string;
   @Input() title!: string;
-  initialMont!: number;
-  finalMont!: number;
+  initialAmount!: number;
+  finalAmount!: number;
   currency!: string;
   salaryBandForm!: FormGroup;
 
@@ -130,12 +130,12 @@ export class SalaryBandModalForm {
 
     // Actualiza los valores del formulario cuando los datos cambian
     this.data.currentInitialMont.subscribe((mont) => {
-      this.initialMont = mont;
-      this.salaryBandForm.get('initialAmount')?.setValue(this.initialMont);
+      this.initialAmount = mont;
+      this.salaryBandForm.get('initialAmount')?.setValue(this.initialAmount);
     });
     this.data.currentFinalMont.subscribe((mont) => {
-      this.finalMont = mont;
-      this.salaryBandForm.get('finalAmount')?.setValue(this.finalMont);
+      this.finalAmount = mont;
+      this.salaryBandForm.get('finalAmount')?.setValue(this.finalAmount);
     });
     this.data.currentCurrency.subscribe((currency) => {
       this.currency = currency;

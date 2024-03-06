@@ -90,7 +90,6 @@ export class TalentDetailService {
           this.talentSource.next(this.currentTalentValue);
 
           this.toast.success('Se actualizó la banda salarial');
-
         }
       });
     }

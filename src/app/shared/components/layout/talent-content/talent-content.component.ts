@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
+import { TalentService } from 'src/app/services/talent/talent.service';
 import { TalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
 
 @Component({
@@ -12,7 +13,7 @@ export class TalentContentComponent implements OnInit {
 
   talent: TalentResponse | null = null;
 
-  constructor(private talentDetailService: TalentDetailService, private sanitizer: DomSanitizer) { }
+  constructor(private talentDetailService: TalentDetailService, private sanitizer: DomSanitizer, private talentService: TalentService) { }
 
   ngOnInit() {
     this.talentDetailService.currentTalent.subscribe(talent => {

@@ -17,7 +17,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedTalent!: BasicTalentResponse;
   isFiltered: boolean = false;
   private destroy$ = new Subject<void>();
-  // private talentListSubscription: Subscription | null = null;
 
   constructor(
     private talentService: TalentService,
