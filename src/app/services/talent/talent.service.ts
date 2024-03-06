@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { File } from 'src/app/shared/models/interfaces/file.interface';
-import { FilterTalentResponse, TalentFilterParams, TalentRequest, TalentResponse, BasicTalentResponse, TalentTechnicalSkillRequest } from 'src/app/shared/models/interfaces/talent.interface';
+import { FilterTalentResponse, TalentFilterParams, TalentRequest, TalentResponse, BasicTalentResponse, TalentTechnicalSkillRequest, TalentSoftSkillRequest } from 'src/app/shared/models/interfaces/talent.interface';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -98,4 +98,8 @@ export class TalentService {
     return this.http.post(url, technicalSkillRequest);
   }
 
+  addSoftSkill(talentId: number, softSkillRequest: TalentSoftSkillRequest): Observable<object> {
+    const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.ADD_SOFT_SKILL}/${talentId}`;
+    return this.http.post(url, softSkillRequest);
+  }
 }

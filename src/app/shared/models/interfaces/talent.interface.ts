@@ -1,7 +1,7 @@
 import { EducationalExperienceRequest, EducationalExperienceResponse } from "./educationalExperience.interface";
 import { File } from "./file.interface";
 import { LanguageRequest, LanguageResponse } from "./language.interface";
-import { SoftSkill, SoftSkillRequest } from "./softSkill.interface";
+import { SoftSkill, SoftSkillRequest, SoftSkillResponse } from "./softSkill.interface";
 import { TechnicalSkillRequest, TechnicalSkillResponse } from "./technicalSkill.interface";
 import { WorkExperienceRequest, WorkExperienceResponse } from "./workExperience.interface";
 
@@ -36,7 +36,7 @@ export interface TalentResponse {
   cellPhoneNumber: string;
   linkedinLink: string;
   githubLink: string;
-  softSkillsList: SoftSkill[];
+  softSkillsList: SoftSkillResponse[];
   technicalSkillsList: TechnicalSkillResponse[];
   educationalExperiencesList: EducationalExperienceResponse[];
   workExperiencesList: WorkExperienceResponse[];
@@ -88,4 +88,8 @@ export interface FilterTalentResponse {
 export interface TalentTechnicalSkillRequest {
   skill: string;
   years: number;
+}
+
+export interface TalentSoftSkillRequest {
+  skill: string;
 }

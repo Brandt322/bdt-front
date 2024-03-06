@@ -1,19 +1,18 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, Input, } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
-import { Modal } from 'flowbite';
 @Component({
-  selector: 'app-technical-skills-modal-form',
+  selector: 'app-soft-skills-modal-form',
   template: `<app-base-modal-form
     [id]="modal_id"
-    title="Agrega una nueva habilidad técnica"
+    title="Agrega una nueva habilidad blanda"
   >
     <form [formGroup]="form" (ngSubmit)="addTechnicalSkillToCurrentTalent()">
       <div class="grid gap-4 mb-6">
         <app-text-input
           formControlName="skill"
-          [id]="'technical-skill'"
-          label="Habilidad técnica"
+          [id]="'soft-skill'"
+          label="Habilidad blanda"
           placeholder="Nombre de la habilidad"
         >
         </app-text-input>
@@ -21,21 +20,6 @@ import { Modal } from 'flowbite';
           class="font-medium text-red-500 leading-tight"
           *ngIf="
             form.controls['skill'].invalid && form.controls['skill'].touched
-          "
-        >
-          Este campo es obligatorio.
-        </span>
-        <app-text-input
-          formControlName="years"
-          [id]="'link-github'"
-          label="Años de experiencia"
-          placeholder="Nro. de años"
-        >
-        </app-text-input>
-        <span
-          class="font-medium text-red-500 leading-tight"
-          *ngIf="
-            form.controls['years'].invalid && form.controls['years'].touched
           "
         >
           Este campo es obligatorio.
@@ -50,8 +34,8 @@ import { Modal } from 'flowbite';
     </form>
   </app-base-modal-form>`,
 })
-export class TechnicalSkillsModalFormComponent {
-  modal_id: string = 'technical-skills-modal';
+export class SoftSkillsModalFormComponent {
+  modal_id: string = 'soft-skills-modal';
   @Input() id!: string;
   @Input() title!: string;
 
@@ -60,16 +44,14 @@ export class TechnicalSkillsModalFormComponent {
 
   form = new FormGroup({
     skill: new FormControl('', Validators.required),
-    years: new FormControl('', Validators.required),
   });
 
 
   addTechnicalSkillToCurrentTalent() {
     if (this.form.valid) {
-      const { skill, years } = this.form.value;
-      this.talentDetailService.addTechnicalSkillToCurrentTalent(
-        skill,
-        Number(years)
+      const { skill } = this.form.value;
+      this.talentDetailService.addSoftSkillToCurrentTalent(
+        skill
       );
       this.form.reset();
     }

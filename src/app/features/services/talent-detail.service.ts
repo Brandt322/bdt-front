@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, catchError } from 'rxjs';
 import { TalentService } from 'src/app/services/talent/talent.service';
-import { FilterTalentResponse, TalentResponse, TalentTechnicalSkillRequest } from 'src/app/shared/models/interfaces/talent.interface';
+import { FilterTalentResponse, TalentResponse, TalentSoftSkillRequest, TalentTechnicalSkillRequest } from 'src/app/shared/models/interfaces/talent.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +51,27 @@ export class TalentDetailService {
           this.talentSource.next(this.currentTalentValue);
 
           this.toast.success('Se agregó una habilidad técnica');
+        }
+      });
+    }
+  }
+
+  addSoftSkillToCurrentTalent(skillName: string) {
+    if (this.currentTalentValue) {
+      const softSkillRequest: TalentSoftSkillRequest = {
+        skill: skillName
+      };
+      this.talentService.addSoftSkill(this.currentTalentValue.id, softSkillRequest).pipe(
+        catchError(error => {
+          this.toast.error('Hubo un error al agregar la habilidad blanda');
+          throw error;
+        })
+      ).subscribe(() => {
+        if (this.currentTalentValue) {
+          this.currentTalentValue.softSkillsList.push(softSkillRequest);
+          this.talentSource.next(this.currentTalentValue);
+
+          this.toast.success('Se agregó una habilidad blanda');
         }
       });
     }

@@ -14,4 +14,5 @@ export const TALENT_API_ENDPOINTS = {
   FILTER: 'filter_talents',
   UPDATE_SALARY_TALENT: 'update_salary_band',
   ADD_TECHNICAL_SKILL: 'add_technical_skill',
+  ADD_SOFT_SKILL: 'add_soft_skill',
 };
