@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, catchError } from 'rxjs';
 import { TalentService } from 'src/app/services/talent/talent.service';
-import { FilterTalentResponse, TalentResponse, TalentSoftSkillRequest, TalentTechnicalSkillRequest } from 'src/app/shared/models/interfaces/talent.interface';
+import { FilterTalentResponse, TalentResponse, TalentSalaryRequest, TalentSoftSkillRequest, TalentTechnicalSkillRequest } from 'src/app/shared/models/interfaces/talent.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -72,6 +72,25 @@ export class TalentDetailService {
           this.talentSource.next(this.currentTalentValue);
 
           this.toast.success('Se agregó una habilidad blanda');
+        }
+      });
+    }
+  }
+
+  updateSalaryBandForCurrentTalent(salaryRequest: TalentSalaryRequest) {
+    if (this.currentTalentValue) {
+      this.talentService.updateSalaryBand(this.currentTalentValue.id, salaryRequest).pipe(
+        catchError(error => {
+          this.toast.error('Hubo un error al actualizar la banda salarial');
+          throw error;
+        })
+      ).subscribe(() => {
+        if (this.currentTalentValue) {
+          // Aquí puedes actualizar la banda salarial en currentTalentValue si es necesario
+          this.talentSource.next(this.currentTalentValue);
+
+          this.toast.success('Se actualizó la banda salarial');
+
         }
       });
     }

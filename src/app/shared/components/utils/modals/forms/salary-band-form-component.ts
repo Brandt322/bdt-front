@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { SharedDataService } from '../../../services/shared-data-service.service';
+import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-salary-band-modal-form',
@@ -8,7 +10,7 @@ import { SharedDataService } from '../../../services/shared-data-service.service
     title="Agrega la banda salarial"
     description="Agrega el rango de tus espectativas salariales."
   >
-    <form action="">
+    <form [formGroup]="salaryBandForm" (ngSubmit)="update()">
       <div class="grid gap-4 mb-8">
         <div
           class="flex items-center ps-4 border rounded-lg border-gray-200 dark:border-gray-700 space-y-reverse"
@@ -17,8 +19,8 @@ import { SharedDataService } from '../../../services/shared-data-service.service
             id="bordered-radio-1"
             type="radio"
             value="SOL"
-            [(ngModel)]="currency"
-            name="bordered-radio"
+            formControlName="currencyId"
+            name="currencyId"
             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
           />
           <label
@@ -34,8 +36,8 @@ import { SharedDataService } from '../../../services/shared-data-service.service
             id="bordered-radio-2"
             type="radio"
             value="DOLAR"
-            [(ngModel)]="currency"
-            name="bordered-radio"
+            formControlName="currencyId"
+            name="currencyId"
             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
           />
           <label
@@ -44,26 +46,60 @@ import { SharedDataService } from '../../../services/shared-data-service.service
             >Dólares</label
           >
         </div>
+        <span
+          class="font-medium text-red-500 leading-tight"
+          *ngIf="
+            salaryBandForm.controls['currencyId'].invalid &&
+            salaryBandForm.controls['currencyId'].touched
+          "
+        >
+          Este campo es obligatorio.
+        </span>
         <div class="grid gap-4 md:grid-cols-2">
           <app-text-input
             [id]="'monto-inicial'"
             [value]="initialMont.toString()"
+            formControlName="initialAmount"
             label="Monto inicial"
             placeholder="Ingrese el monto inicial"
           >
           </app-text-input>
+
           <app-text-input
             [id]="'monto-final'"
             [value]="finalMont.toString()"
+            formControlName="finalAmount"
             label="Monto final"
             placeholder="Ingrese el monto final"
           >
           </app-text-input>
         </div>
+        <div class="grid gap-4 md:grid-cols-2">
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="
+              salaryBandForm.controls['initialAmount'].invalid &&
+              salaryBandForm.controls['initialAmount'].touched
+            "
+          >
+            Este campo es obligatorio.
+          </span>
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="
+              salaryBandForm.controls['finalAmount'].invalid &&
+              salaryBandForm.controls['finalAmount'].touched
+            "
+          >
+            Este campo es obligatorio.
+          </span>
+        </div>
       </div>
       <app-cancel-save-buttons
+        [form]="salaryBandForm"
         [modal_id]="modal_id"
         [save_button_id]="'save_'"
+        (cancelClicked)="salaryBandForm.reset()"
       ></app-cancel-save-buttons>
     </form>
   </app-base-modal-form>`,
@@ -75,11 +111,58 @@ export class SalaryBandModalForm {
   initialMont!: number;
   finalMont!: number;
   currency!: string;
-  constructor(private data: SharedDataService) { }
+  salaryBandForm!: FormGroup;
+
+  private currencyMap = {
+    'SOL': 1,
+    'DOLAR': 2
+  };
+
+  constructor(
+    private data: SharedDataService,
+    private formBuilder: FormBuilder,
+    private talentDetailService: TalentDetailService
+  ) { }
 
   ngOnInit() {
-    this.data.currentInitialMont.subscribe(mont => this.initialMont = mont);
-    this.data.currentFinalMont.subscribe(mont => this.finalMont = mont);
-    this.data.currentCurrency.subscribe(currency => this.currency = currency);
+    // Inicializa el formulario con valores vacíos
+    this.buildForm();
+
+    // Actualiza los valores del formulario cuando los datos cambian
+    this.data.currentInitialMont.subscribe((mont) => {
+      this.initialMont = mont;
+      this.salaryBandForm.get('initialAmount')?.setValue(this.initialMont);
+    });
+    this.data.currentFinalMont.subscribe((mont) => {
+      this.finalMont = mont;
+      this.salaryBandForm.get('finalAmount')?.setValue(this.finalMont);
+    });
+    this.data.currentCurrency.subscribe((currency) => {
+      this.currency = currency;
+      this.salaryBandForm.get('currencyId')?.setValue(this.currency);
+    });
+  }
+
+  buildForm() {
+    this.salaryBandForm = this.formBuilder.group({
+      initialAmount: ['', Validators.required],
+      finalAmount: ['', Validators.required],
+      currencyId: ['', Validators.required],
+    });
+  }
+
+  update() {
+    if (this.salaryBandForm.valid) {
+      let { initialAmount, finalAmount, currencyId } = this.salaryBandForm.value;
+
+      currencyId = this.currencyMap[currencyId as 'SOL' | 'DOLAR'];
+
+      this.talentDetailService.updateSalaryBandForCurrentTalent({
+        initialAmount,
+        finalAmount,
+        currencyId,
+      });
+      this.salaryBandForm.reset();
+    }
   }
 }

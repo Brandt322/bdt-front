@@ -93,3 +93,9 @@ export interface TalentTechnicalSkillRequest {
 export interface TalentSoftSkillRequest {
   skill: string;
 }
+
+export interface TalentSalaryRequest {
+  initialAmount: number;
+  finalAmount: number;
+  currencyId: number;
+}

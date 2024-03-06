@@ -5,6 +5,7 @@ export interface Language {
 }
 
 export interface LanguageResponse {
+  languageId: number;
   language: string;
   level: string;
   numberOfStars: number;
