@@ -20,6 +20,9 @@ export class TalentContentComponent implements OnInit {
       this.talent = talent;
       // console.log(this.talent?.filesList);
     });
+    this.talentDetailService.updatedTalent.subscribe(updatedTalent => {
+      this.talent = updatedTalent;
+    });
   }
 
   sanitizeUrl(url: string) {

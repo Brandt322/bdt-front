@@ -1,12 +1,13 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
 import { SharedDataService } from "../../../services/shared-data-service.service";
+import { TalentResponse } from "src/app/shared/models/interfaces/talent.interface";
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html'
 })
 
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnChanges {
   @Input() variant!: string;
   @Input() name!: string;
   @Input() image!: string;
@@ -23,11 +24,19 @@ export class ProfileComponent implements OnInit {
   @Input() githubLink!: string;
   @Input() linkedinLink!: string;
   @Input() currency?: string;
+  @Input() talent!: TalentResponse;
 
-  constructor(private data: SharedDataService) { }
+  constructor(private data: SharedDataService, private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
 
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['talent']) {
+      // Aquí, actualiza la vista con el talento actualizado.
+      this.cd.markForCheck();
+    }
   }
 
   openModalSocial() {

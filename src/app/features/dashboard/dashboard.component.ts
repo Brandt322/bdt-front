@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { initDropdowns, initModals } from 'flowbite';
-import { Subject, catchError, filter, takeUntil, throwError } from 'rxjs';
+import { BehaviorSubject, Subject, catchError, filter, takeUntil, throwError } from 'rxjs';
 import { TalentService } from 'src/app/services/talent/talent.service';
 import { BasicTalentResponse, FilterTalentResponse, TalentResponse } from '../../shared/models/interfaces/talent.interface';
 import { ToastrService } from 'ngx-toastr';
@@ -13,9 +13,11 @@ import { LoaderService } from 'src/app/core/global/loader/loader.service';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
-  talents: BasicTalentResponse[] = [];
-  selectedTalent!: BasicTalentResponse;
+  talents$: BehaviorSubject<BasicTalentResponse[]> = new BehaviorSubject<BasicTalentResponse[]>([]);
+  selectedTalent$: BehaviorSubject<BasicTalentResponse | null> = new BehaviorSubject<BasicTalentResponse | null>(null);
+
   isFiltered: boolean = false;
+
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -53,15 +55,29 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         return throwError(() => error);
       })
     ).subscribe((talents) => {
-      if (this.talents !== talents) {
-        this.talents = talents.reverse();
+      if (this.talents$.getValue() !== talents) {
+        this.talents$.next(talents.reverse());
         if (!this.isFiltered) {
-          this.talents = this.talents.slice(0, 5);
+          this.talents$.next(this.talents$.getValue().slice(0, 5));
         }
-        if (this.talents.length > 0) {
-          this.selectedTalent = this.talents[0]; // Selecciona el primer talento
-          this.onTalentClick(this.talents[0]);
+        if (this.talents$.getValue().length > 0) {
+          this.selectedTalent$.next(this.talents$.getValue()[0]);
+          this.onTalentClick(this.talents$.getValue()[0]);
         }
+      }
+    });
+
+    this.talentDetailService.updatedTalent.pipe(takeUntil(this.destroy$)).subscribe((updatedTalent: TalentResponse) => {
+      const talents = this.talents$.getValue();
+      const index = talents.findIndex(talent => talent.id === updatedTalent.id);
+      if (index !== -1) {
+        talents[index] = updatedTalent;
+        this.talents$.next(talents);
+      }
+      // Actualiza el talento seleccionado si es el que se actualizó
+      let selectedTalent = this.selectedTalent$.getValue();
+      if (selectedTalent !== null && selectedTalent.id === updatedTalent.id) {
+        this.selectedTalent$.next(updatedTalent);
       }
     });
   }
@@ -81,7 +97,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onTalentClick(talent: BasicTalentResponse) {
     this.loader.showLoader();
-    this.selectedTalent = talent; // Actualiza el talento seleccionado cuando se hace clic en un talento
+    this.selectedTalent$.next(talent);// Actualiza el talento seleccionado cuando se hace clic en un talento
     this.talentDetailService.changeTalent(talent.id);
     this.loader.hideLoader();
   }

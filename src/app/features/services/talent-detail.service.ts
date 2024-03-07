@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, catchError } from 'rxjs';
+import { BehaviorSubject, Subject, catchError } from 'rxjs';
 import { TalentService } from 'src/app/services/talent/talent.service';
 import { FilterTalentResponse, TalentResponse, TalentSalaryRequest, TalentSoftSkillRequest, TalentTechnicalSkillRequest } from 'src/app/shared/models/interfaces/talent.interface';
 
@@ -15,10 +15,15 @@ export class TalentDetailService {
   private talentListSubject = new BehaviorSubject<FilterTalentResponse[]>([]);
   talentList$ = this.talentListSubject.asObservable();
 
+  // En TalentDetailService
+  updatedTalent = new Subject<TalentResponse>();
+
   constructor(private talentService: TalentService, private toast: ToastrService) { }
 
   changeTalent(talentId: number) { // Cambia el parámetro a un ID de talento
-    if (this.currentTalentValue?.id === talentId) { // Comprueba si el ID del talento seleccionado es el mismo que el del talento actualmente seleccionado
+    console.log('changeTalent called with talentId:', talentId);
+    if (this.currentTalentValue?.id === talentId) {
+      console.log('currentTalentValue.id is equal to talentId');
       return;
     }
 
@@ -26,6 +31,9 @@ export class TalentDetailService {
       if (this.currentTalentValue?.id !== talent.id) {
         this.currentTalentValue = talent;
         this.talentSource.next(talent);
+        this.updatedTalent.next(talent);
+
+        console.log(`Talent updated: ${JSON.stringify(talent)}`);
       }
     });
   }
@@ -78,7 +86,9 @@ export class TalentDetailService {
   }
 
   updateSalaryBandForCurrentTalent(salaryRequest: TalentSalaryRequest) {
+    // console.log('updateSalaryBandForCurrentTalent called');
     if (this.currentTalentValue) {
+      // console.log('currentTalentValue is not null');
       this.talentService.updateSalaryBand(this.currentTalentValue.id, salaryRequest).pipe(
         catchError(error => {
           this.toast.error('Hubo un error al actualizar la banda salarial');
@@ -86,9 +96,13 @@ export class TalentDetailService {
         })
       ).subscribe(() => {
         if (this.currentTalentValue) {
-          // Aquí puedes actualizar la banda salarial en currentTalentValue si es necesario
+          // console.log('currentTalentValue is not null after subscribe');
+          this.currentTalentValue.initialAmount = salaryRequest.initialAmount;
+          this.currentTalentValue.finalAmount = salaryRequest.finalAmount;
+          this.currentTalentValue.currency = salaryRequest.currencyId.toString();
           this.talentSource.next(this.currentTalentValue);
-
+          // console.log('Calling changeTalent');
+          this.changeTalent(this.currentTalentValue.id);
           this.toast.success('Se actualizó la banda salarial');
         }
       });
