@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { File } from 'src/app/shared/models/interfaces/file.interface';
-import { FilterTalentResponse, TalentFilterParams, TalentRequest, TalentResponse, BasicTalentResponse, TalentTechnicalSkillRequest, TalentSoftSkillRequest, TalentSalaryRequest } from 'src/app/shared/models/interfaces/talent.interface';
+import { FilterTalentResponse, TalentFilterParams, TalentRequest, TalentResponse, BasicTalentResponse, TalentTechnicalSkillRequest, TalentSoftSkillRequest, TalentSalaryRequest, TalentSocialRequest } from 'src/app/shared/models/interfaces/talent.interface';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -91,6 +91,11 @@ export class TalentService {
   updateSalaryBand(talentId: number, talentRequest: TalentSalaryRequest): Observable<object> {
     const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.UPDATE_SALARY_TALENT}/${talentId}`;
     return this.http.put(url, talentRequest);
+  }
+
+  updateSocials(talentId: number, socialRequest: TalentSocialRequest): Observable<object> {
+    const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.UPDATE_SOCIALS}/${talentId}`;
+    return this.http.put(url, socialRequest);
   }
 
   addTechnicalSkill(talentId: number, technicalSkillRequest: TalentTechnicalSkillRequest): Observable<object> {

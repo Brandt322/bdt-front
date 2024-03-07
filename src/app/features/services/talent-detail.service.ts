@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Subject, catchError } from 'rxjs';
 import { TalentService } from 'src/app/services/talent/talent.service';
-import { FilterTalentResponse, TalentResponse, TalentSalaryRequest, TalentSoftSkillRequest, TalentTechnicalSkillRequest } from 'src/app/shared/models/interfaces/talent.interface';
+import { FilterTalentResponse, TalentResponse, TalentSalaryRequest, TalentSocialRequest, TalentSoftSkillRequest, TalentTechnicalSkillRequest } from 'src/app/shared/models/interfaces/talent.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -33,10 +33,10 @@ export class TalentDetailService {
         this.talentSource.next(talent);
         this.updatedTalent.next(talent);
 
-        console.log(`Talent updated: ${JSON.stringify(talent.currencyId)}`);
-        console.log(`Talent updated: ${JSON.stringify(talent.currency)}`);
-        console.log(`Talent updated: ${JSON.stringify(talent.initialAmount)}`);
-        console.log(`Talent updated: ${JSON.stringify(talent.finalAmount)}`);
+        // console.log(`Talent updated: ${JSON.stringify(talent.currencyId)}`);
+        // console.log(`Talent updated: ${JSON.stringify(talent.currency)}`);
+        // console.log(`Talent updated: ${JSON.stringify(talent.initialAmount)}`);
+        // console.log(`Talent updated: ${JSON.stringify(talent.finalAmount)}`);
       }
     });
   }
@@ -107,6 +107,24 @@ export class TalentDetailService {
           // console.log('Calling changeTalent');
           this.changeTalent(this.currentTalentValue.id);
           this.toast.success('Se actualizó la banda salarial');
+        }
+      });
+    }
+  }
+
+  updateSocialsForCurrentTalent(socialRequest: TalentSocialRequest) {
+    if (this.currentTalentValue) {
+      this.talentService.updateSocials(this.currentTalentValue.id, socialRequest).pipe(
+        catchError(error => {
+          this.toast.error('Hubo un error al actualizar los enlaces sociales');
+          throw error;
+        })
+      ).subscribe(() => {
+        if (this.currentTalentValue) {
+          this.currentTalentValue.githubLink = socialRequest.githubLink;
+          this.currentTalentValue.linkedinLink = socialRequest.linkedinLink;
+          this.talentSource.next(this.currentTalentValue);
+          this.toast.success('Se actualizaron los enlaces sociales');
         }
       });
     }

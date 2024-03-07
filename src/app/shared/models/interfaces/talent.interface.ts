@@ -89,6 +89,11 @@ export interface FilterTalentResponse {
   image: string;
 }
 
+export interface TalentSocialRequest {
+  githubLink: string;
+  linkedinLink: string;
+}
+
 export interface TalentTechnicalSkillRequest {
   skill: string;
   years: number;
