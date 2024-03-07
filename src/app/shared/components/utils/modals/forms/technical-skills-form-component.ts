@@ -57,7 +57,6 @@ export class TechnicalSkillsModalFormComponent {
 
   constructor(private talentDetailService: TalentDetailService) { }
 
-
   form = new FormGroup({
     skill: new FormControl('', Validators.required),
     years: new FormControl('', Validators.required),
@@ -66,8 +65,9 @@ export class TechnicalSkillsModalFormComponent {
 
   addTechnicalSkillToCurrentTalent() {
     if (this.form.valid) {
-      const { skill, years } = this.form.value;
+      const { id, skill, years } = this.form.value;
       this.talentDetailService.addTechnicalSkillToCurrentTalent(
+        id,
         skill,
         Number(years)
       );

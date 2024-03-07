@@ -24,11 +24,15 @@ export interface TalentResponse {
   name: string;
   paternalSurname: string;
   maternalSurname: string;
+  countryId: number;
+  cityId: number;
+  currencyId: number;
+  profileId: number;
   country: string;
   city: string;
   currency: string;
-  filesList: File[];
   profile: string;
+  filesList: File[];
   image: string;
   description: string;
   initialAmount: number;

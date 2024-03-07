@@ -5,6 +5,7 @@ export interface Language {
 }
 
 export interface LanguageResponse {
+  id: number;
   languageId: number;
   language: string;
   level: string;

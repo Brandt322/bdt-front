@@ -24,6 +24,7 @@ export class ProfileComponent implements OnInit, OnChanges {
   @Input() githubLink!: string;
   @Input() linkedinLink!: string;
   @Input() currency?: string;
+  @Input() currencyId?: number;
   @Input() talent!: TalentResponse;
 
   constructor(private data: SharedDataService, private cd: ChangeDetectorRef) { }
@@ -35,6 +36,7 @@ export class ProfileComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['talent']) {
       // Aquí, actualiza la vista con el talento actualizado.
+      console.log('Talent updated: ', this.talent.currency);
       this.cd.markForCheck();
     }
   }
@@ -47,6 +49,6 @@ export class ProfileComponent implements OnInit, OnChanges {
   openModalMont() {
     this.data.changeInitialMont(this.initialMont);
     this.data.changeFinalMont(this.finalMont);
-    this.data.changeCurrency(this.currency || '')
+    this.data.changeCurrency(this.currencyId || 0)
   }
 }

@@ -18,7 +18,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
           <input
             id="bordered-radio-1"
             type="radio"
-            value="SOL"
+            value="1"
             formControlName="currencyId"
             name="currencyId"
             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
@@ -35,7 +35,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
           <input
             id="bordered-radio-2"
             type="radio"
-            value="DOLAR"
+            value="2"
             formControlName="currencyId"
             name="currencyId"
             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
@@ -111,12 +111,8 @@ export class SalaryBandModalForm {
   initialAmount!: number;
   finalAmount!: number;
   currency!: string;
+  currencyId!: number
   salaryBandForm!: FormGroup;
-
-  private currencyMap = {
-    'SOL': 1,
-    'DOLAR': 2
-  };
 
   constructor(
     private data: SharedDataService,
@@ -138,8 +134,8 @@ export class SalaryBandModalForm {
       this.salaryBandForm.get('finalAmount')?.setValue(this.finalAmount);
     });
     this.data.currentCurrency.subscribe((currency) => {
-      this.currency = currency;
-      this.salaryBandForm.get('currencyId')?.setValue(this.currency);
+      this.currencyId = currency;
+      this.salaryBandForm.get('currencyId')?.setValue(this.currencyId.toString());
     });
   }
 
@@ -147,15 +143,13 @@ export class SalaryBandModalForm {
     this.salaryBandForm = this.formBuilder.group({
       initialAmount: ['', Validators.required],
       finalAmount: ['', Validators.required],
-      currencyId: ['', Validators.required],
+      currencyId: [0, Validators.required],
     });
   }
 
   update() {
     if (this.salaryBandForm.valid) {
       let { initialAmount, finalAmount, currencyId } = this.salaryBandForm.value;
-
-      currencyId = this.currencyMap[currencyId as 'SOL' | 'DOLAR'];
 
       this.talentDetailService.updateSalaryBandForCurrentTalent({
         initialAmount,

@@ -10,7 +10,7 @@ export class SharedDataService {
   private linkedinLinkSource = new BehaviorSubject<string>('');
   private initialMontSource = new BehaviorSubject<number>(0);
   private finalMontSource = new BehaviorSubject<number>(0);
-  private currencySource = new BehaviorSubject<string>('');
+  private currencySource = new BehaviorSubject<number>(0);
 
   currentInitialMont = this.initialMontSource.asObservable();
   currentFinalMont = this.finalMontSource.asObservable();
@@ -26,7 +26,7 @@ export class SharedDataService {
     this.finalMontSource.next(mont);
   }
 
-  changeCurrency(currency: string) {
+  changeCurrency(currency: number) {
     this.currencySource.next(currency);
   }
 

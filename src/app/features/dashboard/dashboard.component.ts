@@ -77,6 +77,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       // Actualiza el talento seleccionado si es el que se actualizó
       let selectedTalent = this.selectedTalent$.getValue();
       if (selectedTalent !== null && selectedTalent.id === updatedTalent.id) {
+        console.log('Talento seleccionado actualizado' + updatedTalent.id)
         this.selectedTalent$.next(updatedTalent);
       }
     });

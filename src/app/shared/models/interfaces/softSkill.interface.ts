@@ -4,6 +4,7 @@ export interface SoftSkill {
 }
 
 export interface SoftSkillResponse {
+  id: number;
   skill: string;
 }
 

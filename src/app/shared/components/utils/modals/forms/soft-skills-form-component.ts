@@ -49,8 +49,9 @@ export class SoftSkillsModalFormComponent {
 
   addTechnicalSkillToCurrentTalent() {
     if (this.form.valid) {
-      const { skill } = this.form.value;
+      const { id, skill } = this.form.value;
       this.talentDetailService.addSoftSkillToCurrentTalent(
+        id,
         skill
       );
       this.form.reset();

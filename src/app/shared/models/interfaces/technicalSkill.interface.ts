@@ -5,6 +5,7 @@ export interface TechnicalSkill {
 }
 
 export interface TechnicalSkillResponse {
+  id: number;
   skill: string;
   years: number;
 }

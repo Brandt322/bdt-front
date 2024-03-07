@@ -33,7 +33,10 @@ export class TalentDetailService {
         this.talentSource.next(talent);
         this.updatedTalent.next(talent);
 
-        console.log(`Talent updated: ${JSON.stringify(talent)}`);
+        console.log(`Talent updated: ${JSON.stringify(talent.currencyId)}`);
+        console.log(`Talent updated: ${JSON.stringify(talent.currency)}`);
+        console.log(`Talent updated: ${JSON.stringify(talent.initialAmount)}`);
+        console.log(`Talent updated: ${JSON.stringify(talent.finalAmount)}`);
       }
     });
   }
@@ -42,7 +45,7 @@ export class TalentDetailService {
     this.talentListSubject.next(talents);
   }
 
-  addTechnicalSkillToCurrentTalent(skillName: string, yearsOfExperience: number) {
+  addTechnicalSkillToCurrentTalent(id: number | null, skillName: string, yearsOfExperience: number) {
     if (this.currentTalentValue) {
       const technicalSkillRequest: TalentTechnicalSkillRequest = {
         skill: skillName,
@@ -55,7 +58,7 @@ export class TalentDetailService {
         })
       ).subscribe(() => {
         if (this.currentTalentValue) {
-          this.currentTalentValue.technicalSkillsList.push(technicalSkillRequest);
+          this.currentTalentValue.technicalSkillsList.push({ id: 0, skill: technicalSkillRequest.skill, years: technicalSkillRequest.years });
           this.talentSource.next(this.currentTalentValue);
 
           this.toast.success('Se agregó una habilidad técnica');
@@ -64,7 +67,7 @@ export class TalentDetailService {
     }
   }
 
-  addSoftSkillToCurrentTalent(skillName: string) {
+  addSoftSkillToCurrentTalent(id: number | null, skillName: string) {
     if (this.currentTalentValue) {
       const softSkillRequest: TalentSoftSkillRequest = {
         skill: skillName
@@ -76,7 +79,7 @@ export class TalentDetailService {
         })
       ).subscribe(() => {
         if (this.currentTalentValue) {
-          this.currentTalentValue.softSkillsList.push(softSkillRequest);
+          this.currentTalentValue.softSkillsList.push({ id: 0, skill: softSkillRequest.skill });
           this.talentSource.next(this.currentTalentValue);
 
           this.toast.success('Se agregó una habilidad blanda');
@@ -99,7 +102,7 @@ export class TalentDetailService {
           // console.log('currentTalentValue is not null after subscribe');
           this.currentTalentValue.initialAmount = salaryRequest.initialAmount;
           this.currentTalentValue.finalAmount = salaryRequest.finalAmount;
-          this.currentTalentValue.currency = salaryRequest.currencyId.toString();
+          this.currentTalentValue.currencyId = salaryRequest.currencyId;
           this.talentSource.next(this.currentTalentValue);
           // console.log('Calling changeTalent');
           this.changeTalent(this.currentTalentValue.id);
