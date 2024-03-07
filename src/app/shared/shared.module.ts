@@ -49,6 +49,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SelectInputByValueComponent } from './components/utils/form-inputs/select-input-byvalue-component';
 import { SoftSkillsModalFormComponent } from './components/utils/modals/forms/soft-skills-form-component';
+import { DescriptionModalFormComponent } from './components/utils/modals/forms/description-moda-form-component';
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import { SoftSkillsModalFormComponent } from './components/utils/modals/forms/so
     TalentContentComponent,
     FeedbackModalFormComponent,
     RatingComponent,
-    SoftSkillsModalFormComponent
+    SoftSkillsModalFormComponent,
+    DescriptionModalFormComponent
   ],
   imports: [CommonModule, AppRoutingModule, FormsModule, BrowserAnimationsModule, ToastrModule.forRoot(), ReactiveFormsModule],
   exports: [
@@ -130,6 +132,7 @@ import { SoftSkillsModalFormComponent } from './components/utils/modals/forms/so
     LanguageModalFormComponent,
     FeedbackModalFormComponent,
     SoftSkillsModalFormComponent,
+    DescriptionModalFormComponent,
     /* Forms */
     WorkExperienceFormComponent,
     EducationalExperienceFormComponent,

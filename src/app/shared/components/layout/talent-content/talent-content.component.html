@@ -113,10 +113,22 @@
             class="flex flex-col items-start justify-between w-5/6 gap-2 p-4"
           > -->
     <div class="grid grid-cols-1 gap-6 ms-4 me-4 md:me-32">
-      <div class="w-full">
+      <div class="w-full flex gap-1">
         <p class="text-md text-gray-600 dark:text-gray-400">
           {{ description }}
         </p>
+        <button
+          class="flex items-center"
+          data-modal-target="description-modal"
+          data-modal-toggle="description-modal"
+          (click)="editDescription()"
+        >
+          <span
+            class="material-symbols-outlined text-gray-600 dark:text-slate-100"
+          >
+            edit
+          </span>
+        </button>
       </div>
       <app-add-edit-attr
         main_title="Experiencia"

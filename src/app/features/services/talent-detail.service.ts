@@ -129,4 +129,21 @@ export class TalentDetailService {
       });
     }
   }
+
+  updateDescriptionForCurrentTalent(description: string) {
+    if (this.currentTalentValue) {
+      this.talentService.updateDescription(this.currentTalentValue.id, description).pipe(
+        catchError(error => {
+          this.toast.error('Hubo un error al actualizar la descripción');
+          throw error;
+        })
+      ).subscribe(() => {
+        if (this.currentTalentValue) {
+          this.currentTalentValue.description = description;
+          this.talentSource.next(this.currentTalentValue);
+          this.toast.success('Se actualizó la descripción');
+        }
+      });
+    }
+  }
 }

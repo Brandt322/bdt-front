@@ -98,6 +98,11 @@ export class TalentService {
     return this.http.put(url, socialRequest);
   }
 
+  updateDescription(talentId: number, description: string) {
+    const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.UPDATE_DESCRIPTION}/${talentId}`;
+    return this.http.put(url, { description });
+  }
+
   addTechnicalSkill(talentId: number, technicalSkillRequest: TalentTechnicalSkillRequest): Observable<object> {
     const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.ADD_TECHNICAL_SKILL}/${talentId}`;
     return this.http.post(url, technicalSkillRequest);

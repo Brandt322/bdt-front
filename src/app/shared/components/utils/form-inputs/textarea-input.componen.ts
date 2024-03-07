@@ -1,5 +1,5 @@
 import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 @Component({
   selector: 'app-textarea-select',
   template: `<label
@@ -18,15 +18,15 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
       [(ngModel)]="currentValue"
       (ngModelChange)="onChange($event)"
       [disabled]="isDisabled"
-      [ngClass]="{' border-red-500': hasError}"
+      [ngClass]="{ ' border-red-500': hasError }"
     ></textarea> `,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => TextAreaInputComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class TextAreaInputComponent implements ControlValueAccessor {
   @Input() id!: string;

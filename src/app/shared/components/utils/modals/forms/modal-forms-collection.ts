@@ -11,6 +11,7 @@ import { Component } from '@angular/core';
     <app-new-file-modal-form></app-new-file-modal-form>
     <app-language-modal-form></app-language-modal-form>
     <app-feedback-modal-form></app-feedback-modal-form>
+    <app-description-modal-form></app-description-modal-form>
   `,
 })
 export class ModalFormsCollection { }

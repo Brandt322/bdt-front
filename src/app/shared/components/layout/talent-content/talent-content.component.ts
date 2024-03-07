@@ -3,6 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
 import { TalentService } from 'src/app/services/talent/talent.service';
 import { TalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
+import { SharedDataService } from '../../services/shared-data-service.service';
 
 @Component({
   selector: 'app-talent-content',
@@ -13,7 +14,7 @@ export class TalentContentComponent implements OnInit {
 
   talent: TalentResponse | null = null;
 
-  constructor(private talentDetailService: TalentDetailService, private sanitizer: DomSanitizer, private talentService: TalentService) { }
+  constructor(private talentDetailService: TalentDetailService, private sanitizer: DomSanitizer, private talentService: TalentService, private data: SharedDataService) { }
 
   ngOnInit() {
     this.talentDetailService.currentTalent.subscribe(talent => {
@@ -79,5 +80,9 @@ export class TalentContentComponent implements OnInit {
 
       return `${experience.degree} ${startDate.getFullYear()}-${endDate.getFullYear()}`;
     }).join(' ') || '';
+  }
+
+  editDescription() {
+    this.data.changeDescription(this.description);
   }
 }
