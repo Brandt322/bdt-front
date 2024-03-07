@@ -3,6 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Subject, catchError } from 'rxjs';
 import { TalentService } from 'src/app/services/talent/talent.service';
 import { FilterTalentResponse, TalentResponse, TalentSalaryRequest, TalentSocialRequest, TalentSoftSkillRequest, TalentTechnicalSkillRequest } from 'src/app/shared/models/interfaces/talent.interface';
+import { WorkExperienceRequest } from 'src/app/shared/models/interfaces/workExperience.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -142,6 +143,23 @@ export class TalentDetailService {
           this.currentTalentValue.description = description;
           this.talentSource.next(this.currentTalentValue);
           this.toast.success('Se actualizó la descripción');
+        }
+      });
+    }
+  }
+
+  addWorkExperienceToCurrentTalent(workExperience: WorkExperienceRequest) {
+    if (this.currentTalentValue) {
+      this.talentService.addWorkExperience(this.currentTalentValue.id, workExperience).pipe(
+        catchError(error => {
+          this.toast.error('Hubo un error al agregar la experiencia laboral');
+          throw error;
+        })
+      ).subscribe(() => {
+        if (this.currentTalentValue) {
+          this.currentTalentValue.workExperiencesList.push(workExperience);
+          this.talentSource.next(this.currentTalentValue);
+          this.toast.success('Se agregó una experiencia laboral');
         }
       });
     }
