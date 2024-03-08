@@ -6,13 +6,11 @@ import { HeaderComponent } from './components/layout/header/header.component';
 import { MainComponent } from './components/layout/main/main.component';
 import { NavFiltersComponent } from './components/layout/nav-filters/nav-filters.component';
 import { TalentContentComponent } from './components/layout/talent-content/talent-content.component';
-import { AddEditAttrComponent } from './components/utils/add-edit-attr/add-edit-attr.component';
 import { AddEditFeedbackComponent } from './components/utils/add-edit-feedback/add-edit-feedback.component';
 import { AddEditLanguagesComponent } from './components/utils/add-edit-languages/add-edit-languages.component';
 import { ButtonDropdownComponent } from './components/utils/buttons/button-dropdown.component';
 import { ProfileComponent } from './components/utils/cards/profile/profile.component';
 import { EducationalExperienceFormComponent } from './components/utils/experience-form/educational-experience-form/educational-experience-form.component';
-import { WorkExperienceFormComponent } from './components/utils/experience-form/work-experience-form/work-experience-form.component';
 import { CheckboxInputComponent } from './components/utils/form-inputs/checkbox-input-component';
 import { DateInputComponent } from './components/utils/form-inputs/date-input-component';
 import { FileInputComponent } from './components/utils/form-inputs/file-input-component';
@@ -51,6 +49,12 @@ import { SelectInputByValueComponent } from './components/utils/form-inputs/sele
 import { SoftSkillsModalFormComponent } from './components/utils/modals/forms/soft-skills-form-component';
 import { DescriptionModalFormComponent } from './components/utils/modals/forms/description-moda-form-component';
 
+import { WorkExperienceFormComponent } from './components/utils/experience-form/work-experience-form/work-experience-form-component';
+import { AddWorkExperiencesFormComponent } from './components/utils/modals/experiences-form/add-experiences/add-work-experience/add-work-experiences-form.component';
+import { AddEducationalExperiencesFormComponent } from './components/utils/modals/experiences-form/add-experiences/add-educational-experience/add-educational-experiences-form.component';
+import { EditEducationalExperiencesFormComponent } from './components/utils/modals/experiences-form/edit-experiences/edit-educational-experience/edit-educational-experiences-form.component';
+import { EditWorkExperiencesFormComponent } from './components/utils/modals/experiences-form/edit-experiences/edit-work-experience/edit-work-experiences-form.component';
+
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -59,7 +63,6 @@ import { DescriptionModalFormComponent } from './components/utils/modals/forms/d
     CheckboxModalComponent,
     ButtonDropdownComponent,
     ProfileComponent,
-    AddEditAttrComponent,
     AddEditLanguagesComponent,
     AddEditFeedbackComponent,
     /* Input */
@@ -99,7 +102,11 @@ import { DescriptionModalFormComponent } from './components/utils/modals/forms/d
     FeedbackModalFormComponent,
     RatingComponent,
     SoftSkillsModalFormComponent,
-    DescriptionModalFormComponent
+    DescriptionModalFormComponent,
+    AddWorkExperiencesFormComponent,
+    AddEducationalExperiencesFormComponent,
+    EditEducationalExperiencesFormComponent,
+    EditWorkExperiencesFormComponent
   ],
   imports: [CommonModule, AppRoutingModule, FormsModule, BrowserAnimationsModule, ToastrModule.forRoot(), ReactiveFormsModule],
   exports: [
@@ -109,7 +116,6 @@ import { DescriptionModalFormComponent } from './components/utils/modals/forms/d
     CheckboxModalComponent,
     ButtonDropdownComponent,
     ProfileComponent,
-    AddEditAttrComponent,
     NavFiltersComponent,
     TalentContentComponent,
     AddEditLanguagesComponent,
@@ -133,9 +139,13 @@ import { DescriptionModalFormComponent } from './components/utils/modals/forms/d
     FeedbackModalFormComponent,
     SoftSkillsModalFormComponent,
     DescriptionModalFormComponent,
+    AddEducationalExperiencesFormComponent,
+    AddWorkExperiencesFormComponent,
+    EditEducationalExperiencesFormComponent,
+    EditWorkExperiencesFormComponent,
     /* Forms */
-    WorkExperienceFormComponent,
     EducationalExperienceFormComponent,
+    WorkExperienceFormComponent,
     FormErrorComponent,
     /* Dropdown modals */
     CheckboxDropdownSelectPrevModalComponent,

@@ -1,0 +1,69 @@
+<app-base-modal-form
+  [id]="modal_id"
+  title="Edita tu experiencia educativa"
+  description="La vida esta llena de cambios. Edita tu experiencia educativa."
+>
+  <form>
+    <div class="mb-8">
+      <div class="grid gap-4">
+        <app-text-input
+          [id]="'institucion'"
+          label="Institución"
+          placeholder="Nombre de la institución"
+          [value]="institutionValue"
+          [isDisabled]="disableTextInput"
+        >
+        </app-text-input>
+        <app-checkbox-input
+          [id]="'edu-fractal'"
+          label="Aquí en Fractal"
+          [isChecked]="isEducationalFractal"
+          (isCheckedChange)="institutionIfChecked($event)"
+        ></app-checkbox-input>
+        <app-text-input
+          [id]="'carrera'"
+          label="Carrera"
+          placeholder="Nombre de la carrera"
+          [value]="careerValue"
+        >
+        </app-text-input>
+        <app-text-input
+          [id]="'grado'"
+          label="Grado"
+          placeholder="Grado de la carrera"
+          [value]="degreeValue"
+        >
+        </app-text-input>
+
+        <div class="grid gap-4 md:grid-cols-2">
+          <app-date-input
+            [id]="'edu-anio-mes-inicio'"
+            label="Año y mes de inicio"
+            placeholder="Fecha de inicio"
+            [value]="startDateValue"
+          >
+          </app-date-input>
+          <app-date-input
+            [id]="'edu-anio-mes-fin'"
+            label="Año y mes final"
+            placeholder="Fecha de fin"
+            [value]="endDateValue"
+            [isDisabled]="disableEndDateInput"
+          >
+          </app-date-input>
+        </div>
+
+        <app-checkbox-input
+          [id]="'exp-actual1'"
+          label="Hasta la actualidad"
+          [isChecked]="isCurrentlyStudying"
+          (isCheckedChange)="endDateIfChecked($event)"
+        ></app-checkbox-input>
+      </div>
+    </div>
+    <app-cancel-save-buttons
+      [modal_id]="modal_id"
+      [save_button_id]="'save-experience'"
+    ></app-cancel-save-buttons>
+  </form>
+</app-base-modal-form>

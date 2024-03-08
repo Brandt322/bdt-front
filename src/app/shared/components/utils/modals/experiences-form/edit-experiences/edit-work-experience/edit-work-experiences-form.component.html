@@ -1,0 +1,62 @@
+<app-base-modal-form
+  [id]="modal_id"
+  title="Edita tu experiencia"
+  description="La vida esta llena de cambios. Edita tu experiencia laboral."
+>
+  <form>
+    <div class="mb-8">
+      <div class="grid gap-4">
+        <app-text-input
+          [id]="'empresa-1'"
+          label="Empresa"
+          placeholder="Nombre de la empresa"
+          [value]="inputValue"
+          [isDisabled]="disableTextInput"
+        >
+        </app-text-input>
+
+        <app-checkbox-input
+          [id]="'checkboxWorkingHereEdit'"
+          label="Aquí en Fractal"
+          [isChecked]="isCompanyFractal"
+          (isCheckedChange)="companyIfChecked($event)"
+        ></app-checkbox-input>
+        <app-text-input
+          [id]="'puesto'"
+          label="Puesto"
+          placeholder="Puesto en la empresa"
+        >
+        </app-text-input>
+
+        <div class="grid gap-4 md:grid-cols-2">
+          <app-date-input
+            [id]="'anio-mes-inicio'"
+            label="Año y mes de inicio"
+            placeholder="Fecha de inicio"
+          >
+          </app-date-input>
+
+          <app-date-input
+            [id]="'anio-mes-fin'"
+            label="Año y mes final"
+            placeholder="Fecha de fin"
+            [value]="endDateValue"
+            [isDisabled]="disableEndDateInput"
+          >
+          </app-date-input>
+        </div>
+        <div class="grid gap-4 md:grid-cols-2"></div>
+        <app-checkbox-input
+          [id]="'edit-checkboxCurrentlyWorking'"
+          label="Hasta la actualidad"
+          [isChecked]="isCurrentlyWorking"
+          (isCheckedChange)="endDateIfChecked($event)"
+        ></app-checkbox-input>
+      </div>
+    </div>
+    <app-cancel-save-buttons
+      [modal_id]="modal_id"
+      [save_button_id]="'save-experience'"
+    ></app-cancel-save-buttons>
+  </form>
+</app-base-modal-form>

@@ -130,28 +130,98 @@
           </span>
         </button>
       </div>
-      <app-add-edit-attr
-        main_title="Experiencia"
-        [workList]="talent?.workExperiencesList || []"
-        [modal_id]="'experience-modal-form'"
-        [modal_add_title]="'Agrega una nueva experiencia'"
-        modal_add_description="Describe y agrega la nueva experiencia laboral."
-        modal_edit_title="Editar la experiencia laboral"
-        modal_edit_description="La vida esta llena de cambios. Edita la experiencia laboral."
-        [has_image]="true"
-        type="exp"
-      ></app-add-edit-attr>
-      <app-add-edit-attr
-        main_title="Educación"
-        [educationList]="talent?.educationalExperiencesList || []"
-        [modal_id]="'education-modal-form'"
-        [modal_add_title]="'Agrega una nueva experiencia educativa'"
-        modal_add_description="Describe y agrega la nueva experiencia educativa."
-        modal_edit_title="Editar la experiencia educativa"
-        modal_edit_description="La vida esta llena de cambios. Edita la experiencia educativa."
-        [has_image]="true"
-        type="edu"
-      ></app-add-edit-attr>
+
+      <div class="flex flex-col justify-center w-full gap-2">
+        <div class="flex justify-between items-center">
+          <h4 class="font-semibold text-md text-gray-500 dark:text-gray-400">
+            Experiencia
+          </h4>
+          <button
+            data-modal-target="add-work-experience-modal"
+            data-modal-toggle="add-work-experience-modal"
+          >
+            <i class="fa-solid fa-plus text-gray-500"></i>
+          </button>
+        </div>
+
+        <div
+          class="flex justify-start items-center p-2 gap-2 rounded-md bg-gray-50 hover:bg-gray-200 shadow-sm-light"
+        >
+          <img
+            class="h-12 rounded-full"
+            src="../../../assets/fractal (1).png "
+            alt=""
+          />
+          <div class="flex justify-between items-center w-full">
+            <div class="flex flex-col justify-center item">
+              <h1 class="font-medium text-xl text-black dark:text-gray-400">
+                {{ companyWork }}
+              </h1>
+              <div class="flex justify-between gap-2 w-full">
+                <p class="text-md font-normal text-gray-500 dark:text-gray-400">
+                  {{ workExperienceDescription }}
+                </p>
+              </div>
+            </div>
+            <button
+              data-modal-target="edit-work-experience-modal"
+              data-modal-toggle="edit-work-experience-modal"
+            >
+              <span
+                class="material-symbols-outlined text-gray-600 dark:text-slate-100"
+              >
+                edit
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col justify-center w-full gap-2">
+        <div class="flex justify-between items-center">
+          <h4 class="font-semibold text-md text-gray-500 dark:text-gray-400">
+            Educación
+          </h4>
+          <button
+            data-modal-target="add-educational-experience-modal"
+            data-modal-toggle="add-educational-experience-modal"
+          >
+            <i class="fa-solid fa-plus text-gray-500"></i>
+          </button>
+        </div>
+
+        <div
+          class="flex justify-start items-center p-2 gap-2 rounded-md bg-gray-50 hover:bg-gray-200 shadow-sm-light"
+        >
+          <img
+            class="h-12 rounded-full"
+            src="../../../assets/fractal (1).png "
+            alt=""
+          />
+          <div class="flex justify-between items-center w-full">
+            <div class="flex flex-col justify-center item">
+              <h1 class="font-medium text-xl text-black dark:text-gray-400">
+                {{ educationaInstitute }}
+              </h1>
+              <div class="flex justify-between gap-2 w-full">
+                <p class="text-md font-normal text-gray-500 dark:text-gray-400">
+                  {{ educationalExperienceDescription }}
+                </p>
+              </div>
+            </div>
+            <button
+              data-modal-target="edit-educational-experience-modal"
+              data-modal-toggle="edit-educational-experience-modal"
+            >
+              <span
+                class="material-symbols-outlined text-gray-600 dark:text-slate-100"
+              >
+                edit
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+
       <app-add-edit-languages
         main_title="Idiomas"
         [languagesList]="talent?.languagesList || []"
