@@ -17,6 +17,7 @@ export class AddWorkExperiencesFormComponent implements OnInit {
   workExperienceForm!: FormGroup;
 
   companyValue: string = '';
+  positionValue: string = ''
   currentDate = new Date();
   isCompanyFractal: boolean = false;
   isCurrentlyWorking: boolean = false;
@@ -24,7 +25,6 @@ export class AddWorkExperiencesFormComponent implements OnInit {
   disableEndDateInput: boolean = false;
   startDateValue: string | Date = '';
   endDateValue!: string | Date;
-
   @ViewChild(CheckboxInputComponent) checkboxComponent!: CheckboxInputComponent;
 
   constructor(private fb: FormBuilder, private talentDetailService: TalentDetailService) { }
@@ -38,6 +38,7 @@ export class AddWorkExperiencesFormComponent implements OnInit {
     this.workExperienceForm.reset();
     this.checkboxComponent.resetCheckbox();
     this.companyValue = '';
+    this.positionValue = '';
     this.disableTextInput = false;
     this.disableEndDateInput = false;
     this.endDateValue = '';

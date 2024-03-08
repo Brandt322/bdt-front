@@ -65,6 +65,8 @@
     <app-cancel-save-buttons
       [modal_id]="modal_id"
       [save_button_id]="'save-experience'"
+      [form]="workExperienceForm"
+      (cancelClicked)="cancelForm()"
     ></app-cancel-save-buttons>
   </form>
 </app-base-modal-form>
