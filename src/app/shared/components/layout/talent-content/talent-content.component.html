@@ -137,8 +137,12 @@
             Experiencia
           </h4>
           <button
-            data-modal-target="add-work-experience-modal"
-            data-modal-toggle="add-work-experience-modal"
+            [attr.data-modal-target]="
+              talent?.name + '-add-work-experience-modal'
+            "
+            [attr.data-modal-toggle]="
+              talent?.name + '-add-work-experience-modal'
+            "
           >
             <i class="fa-solid fa-plus text-gray-500"></i>
           </button>
@@ -165,8 +169,12 @@
               </div>
             </div>
             <button
-              [attr.data-modal-target]="'edit-work-experience-modal-' + i"
-              [attr.data-modal-toggle]="'edit-work-experience-modal-' + i"
+              [attr.data-modal-target]="
+                'edit-work-experience-modal-' + i + talent?.name
+              "
+              [attr.data-modal-toggle]="
+                'edit-work-experience-modal-' + i + talent?.name
+              "
             >
               <span
                 class="material-symbols-outlined text-gray-600 dark:text-slate-100"
@@ -256,11 +264,16 @@
     </div>
   </div>
 </div>
+
+<app-add-work-experiences-form
+  [modal_id]="talent?.name + '-add-work-experience-modal'"
+></app-add-work-experiences-form>
+
 <ng-container
   *ngFor="let experience of processedWorkExperiences; let i = index"
 >
   <app-edit-work-experiences-form
-    [index]="i"
+    [modal_id]="'edit-work-experience-modal-' + i + talent?.name"
     [workExperience]="experience"
   ></app-edit-work-experiences-form>
 </ng-container>

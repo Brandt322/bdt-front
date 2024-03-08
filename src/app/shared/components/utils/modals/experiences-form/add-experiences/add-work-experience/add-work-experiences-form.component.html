@@ -3,15 +3,16 @@
   title="Agrega una nueva experiencia"
   description="Describe y agrega la nueva experiencia laboral."
 >
-  <form>
+  <form [formGroup]="workExperienceForm" (ngSubmit)="submitForm()">
     <div class="mb-8">
       <div class="grid gap-4">
         <app-text-input
           [id]="'empresa-1'"
           label="Empresa"
           placeholder="Nombre de la empresa"
-          [value]="inputValue"
+          [value]="companyValue"
           [isDisabled]="disableTextInput"
+          formControlName="company"
         >
         </app-text-input>
 
@@ -20,11 +21,13 @@
           label="Aquí en Fractal"
           [isChecked]="isCompanyFractal"
           (isCheckedChange)="companyIfChecked($event)"
+          formControlName="isCompanyFractal"
         ></app-checkbox-input>
         <app-text-input
           [id]="'puesto'"
           label="Puesto"
           placeholder="Puesto en la empresa"
+          formControlName="position"
         >
         </app-text-input>
 
@@ -33,6 +36,7 @@
             [id]="'anio-mes-inicio'"
             label="Año y mes de inicio"
             placeholder="Fecha de inicio"
+            formControlName="startDate"
           >
           </app-date-input>
 
@@ -42,21 +46,25 @@
             placeholder="Fecha de fin"
             [value]="endDateValue"
             [isDisabled]="disableEndDateInput"
+            formControlName="endDate"
           >
           </app-date-input>
         </div>
         <div class="grid gap-4 md:grid-cols-2"></div>
         <app-checkbox-input
-          [id]="'checkboxCurrentlyWorking'"
+          [id]="'anio-mes-add'"
           label="Hasta la actualidad"
           [isChecked]="isCurrentlyWorking"
           (isCheckedChange)="endDateIfChecked($event)"
+          formControlName="isCurrentlyWorking"
         ></app-checkbox-input>
       </div>
     </div>
     <app-cancel-save-buttons
       [modal_id]="modal_id"
       [save_button_id]="'save-experience'"
+      [form]="workExperienceForm"
+      (cancelClicked)="cancelForm()"
     ></app-cancel-save-buttons>
   </form>
 </app-base-modal-form>

@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-date-input',
@@ -18,8 +19,15 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
       (ngModelChange)="onInputChange($event)"
     />
   </div>`,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => DateInputComponent),
+      multi: true
+    }
+  ]
 })
-export class DateInputComponent {
+export class DateInputComponent implements ControlValueAccessor {
   @Input() id!: string;
   @Input() label!: string;
   @Input() placeholder!: string;
@@ -31,6 +39,26 @@ export class DateInputComponent {
   onInputChange(value: string) {
     this.value = value;
     this.valueChange.emit(this.value);
+    this.onChange(value);
+  }
+
+  onChange = (value: any) => { };
+  onTouched = () => { };
+
+  writeValue(value: any): void {
+    this.value = value;
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState?(isDisabled: boolean): void {
+    this.isDisabled = isDisabled;
   }
 
 }

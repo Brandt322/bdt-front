@@ -33,7 +33,6 @@ export class TalentDetailService {
         this.currentTalentValue = talent;
         this.talentSource.next(talent);
         this.updatedTalent.next(talent);
-
         // console.log(`Talent updated: ${JSON.stringify(talent.currencyId)}`);
         // console.log(`Talent updated: ${JSON.stringify(talent.currency)}`);
         // console.log(`Talent updated: ${JSON.stringify(talent.initialAmount)}`);
@@ -84,6 +83,30 @@ export class TalentDetailService {
           this.talentSource.next(this.currentTalentValue);
 
           this.toast.success('Se agregó una habilidad blanda');
+        }
+      });
+    }
+  }
+
+  addWorkExperienceToCurrentTalent(company: string, position: string, startDate: Date, endDate: Date) {
+    if (this.currentTalentValue) {
+      const workExperience: WorkExperienceRequest = {
+        company: company,
+        position: position,
+        startDate: startDate,
+        endDate: endDate
+      };
+      this.talentService.addWorkExperience(this.currentTalentValue.id, workExperience).pipe(
+        catchError(error => {
+          this.toast.error('Hubo un error al agregar la experiencia laboral');
+          throw error;
+        })
+      ).subscribe(() => {
+        if (this.currentTalentValue) {
+          this.currentTalentValue.workExperiencesList.push(workExperience);
+          this.talentSource.next(this.currentTalentValue);
+          this.changeTalent(this.currentTalentValue.id);
+          this.toast.success('Se agregó una experiencia laboral');
         }
       });
     }
@@ -148,20 +171,5 @@ export class TalentDetailService {
     }
   }
 
-  addWorkExperienceToCurrentTalent(workExperience: WorkExperienceRequest) {
-    if (this.currentTalentValue) {
-      this.talentService.addWorkExperience(this.currentTalentValue.id, workExperience).pipe(
-        catchError(error => {
-          this.toast.error('Hubo un error al agregar la experiencia laboral');
-          throw error;
-        })
-      ).subscribe(() => {
-        if (this.currentTalentValue) {
-          this.currentTalentValue.workExperiencesList.push(workExperience);
-          this.talentSource.next(this.currentTalentValue);
-          this.toast.success('Se agregó una experiencia laboral');
-        }
-      });
-    }
-  }
+
 }

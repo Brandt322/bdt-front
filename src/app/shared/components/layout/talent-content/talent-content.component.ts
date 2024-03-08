@@ -7,6 +7,7 @@ import { SharedDataService } from '../../services/shared-data-service.service';
 import { ProcesseEducationalExperiences, ProcessedWorkExperiences } from 'src/app/shared/models/types';
 
 
+
 @Component({
   selector: 'app-talent-content',
   templateUrl: './talent-content.component.html',
@@ -29,6 +30,7 @@ export class TalentContentComponent implements OnInit {
     this.talentDetailService.updatedTalent.subscribe(updatedTalent => {
       this.talent = updatedTalent;
       this.processedWorkExperiences = this.workExperiences;
+      this.processeEducationalExperiences = this.educationalExperiences;
     });
   }
 
