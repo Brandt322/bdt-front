@@ -1,5 +1,6 @@
 import { formatDate } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { SharedDataService } from 'src/app/shared/components/services/shared-data-service.service';
 import { WorkExperienceRequest } from 'src/app/shared/models/interfaces/workExperience.interface';
 
 @Component({
@@ -7,10 +8,11 @@ import { WorkExperienceRequest } from 'src/app/shared/models/interfaces/workExpe
   templateUrl: './edit-work-experiences-form.component.html'
 })
 export class EditWorkExperiencesFormComponent implements OnInit {
-  modal_id: string = 'edit-work-experience-modal';
+  @Input() index!: number;
   @Input() title!: string;
   @Input() description!: string;
   @Input() workExperience!: WorkExperienceRequest;
+  modal_id!: string;
   inputValue: string = '';
   currentDate = new Date();
   isCompanyFractal: boolean = false;
@@ -19,9 +21,12 @@ export class EditWorkExperiencesFormComponent implements OnInit {
   disableEndDateInput: boolean = false;
   startDateValue: string | Date = '';
   endDateValue!: string | Date;
-  constructor() { }
+  modalsInitialized = false;
+  constructor(private data: SharedDataService) { }
 
   ngOnInit(): void {
+    // console.log(this.modal_id);
+    this.modal_id = 'edit-work-experience-modal-' + this.index;
   }
 
   companyIfChecked(isChecked: boolean) {

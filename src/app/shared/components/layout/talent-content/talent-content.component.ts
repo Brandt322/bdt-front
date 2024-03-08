@@ -5,6 +5,7 @@ import { TalentService } from 'src/app/services/talent/talent.service';
 import { TalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
 import { SharedDataService } from '../../services/shared-data-service.service';
 
+
 @Component({
   selector: 'app-talent-content',
   templateUrl: './talent-content.component.html',
@@ -13,16 +14,19 @@ import { SharedDataService } from '../../services/shared-data-service.service';
 export class TalentContentComponent implements OnInit {
 
   talent: TalentResponse | null = null;
-
+  processedWorkExperiences: any[] = [];
   constructor(private talentDetailService: TalentDetailService, private sanitizer: DomSanitizer, private talentService: TalentService, private data: SharedDataService) { }
+
 
   ngOnInit() {
     this.talentDetailService.currentTalent.subscribe(talent => {
       this.talent = talent;
       // console.log(this.talent?.filesList);
+      this.processedWorkExperiences = this.workExperiences;
     });
     this.talentDetailService.updatedTalent.subscribe(updatedTalent => {
       this.talent = updatedTalent;
+      this.processedWorkExperiences = this.workExperiences;
     });
   }
 
@@ -46,22 +50,30 @@ export class TalentContentComponent implements OnInit {
     return this.talent?.workExperiencesList?.map(experience => experience.company).join(' ') || '';
   }
 
-  get workExperienceDescription() {
+
+  get workExperiences() {
     return this.talent?.workExperiencesList?.map(experience => {
       const startDate = new Date(experience.startDate);
       const endDate = new Date(experience.endDate);
       const years = endDate.getFullYear() - startDate.getFullYear();
+      let description;
 
       if (years === 0) {
-        return `${experience.position} ${startDate.getFullYear()} - Hasta la actualidad`;
+        description = `${experience.position} ${startDate.getFullYear()} - Hasta la actualidad`;
+      } else if (years === 1) {
+        description = `${experience.position} ${startDate.getFullYear()}-${endDate.getFullYear()} 1 año`;
+      } else {
+        description = `${experience.position} ${startDate.getFullYear()}-${endDate.getFullYear()} ${years} años`;
       }
 
-      if (years === 1) {
-        return `${experience.position} ${startDate.getFullYear()}-${endDate.getFullYear()} 1 año`;
-      }
-
-      return `${experience.position} ${startDate.getFullYear()}-${endDate.getFullYear()} ${years} años`;
-    }).join(' ') || '';
+      return {
+        company: experience.company,
+        position: experience.position,
+        startDate: experience.startDate,
+        endDate: experience.endDate,
+        description: description
+      };
+    }) || [];
   }
 
   get educationaInstitute() {
