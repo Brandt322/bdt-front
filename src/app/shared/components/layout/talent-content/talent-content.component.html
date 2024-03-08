@@ -283,6 +283,7 @@
   <app-edit-work-experiences-form
     [modal_id]="'edit-work-experience-modal-' + i + talent?.name"
     [workExperience]="experience"
+    [id]="experience.id || 0"
   ></app-edit-work-experiences-form>
 </ng-container>
 <ng-container

@@ -4,13 +4,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SharedDataService } from 'src/app/shared/components/services/shared-data-service.service';
 import { WorkExperienceRequest } from 'src/app/shared/models/interfaces/workExperience.interface';
 import { CheckboxInputComponent } from '../../../../form-inputs/checkbox-input-component';
+import { TalentDetailService } from '../../../../../../../features/services/talent-detail.service';
 
 @Component({
   selector: 'app-edit-work-experiences-form',
   templateUrl: './edit-work-experiences-form.component.html'
 })
 export class EditWorkExperiencesFormComponent implements OnInit {
-  @Input() index!: string;
+  @Input() id!: number;
   @Input() title!: string;
   @Input() description!: string;
   @Input() workExperience!: WorkExperienceRequest;
@@ -29,7 +30,7 @@ export class EditWorkExperiencesFormComponent implements OnInit {
   modalsInitialized = false;
 
   @ViewChild(CheckboxInputComponent) checkboxComponent!: CheckboxInputComponent;
-  constructor(private data: SharedDataService, private fb: FormBuilder) { }
+  constructor(private data: SharedDataService, private fb: FormBuilder, private talentDetailService: TalentDetailService) { }
 
 
   cancelForm() {
@@ -76,7 +77,7 @@ export class EditWorkExperiencesFormComponent implements OnInit {
     // console.log(this.modal_id);
     this.formBuild();
     // console.log(this.modal_id)
-    console.log(this.workExperience.endDate)
+    // console.log(this.workExperience.endDate)
   }
 
   formBuild() {
@@ -132,5 +133,14 @@ export class EditWorkExperiencesFormComponent implements OnInit {
     this.endDateValue = isChecked
       ? formatDate(this.currentDate, 'yyyy-MM-dd', 'en-US')
       : '';
+  }
+
+  submitForm() {
+    if (this.workExperienceForm.valid) {
+      const formValues = this.workExperienceForm.value;
+      let { id, company, position, startDate, endDate } = formValues;
+      this.talentDetailService.updateWorkExperienceForCurrentTalent(this.id, id, company, position, startDate, endDate);
+      this.cancelForm();
+    }
   }
 }

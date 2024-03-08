@@ -3,7 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Subject, catchError } from 'rxjs';
 import { TalentService } from 'src/app/services/talent/talent.service';
 import { FilterTalentResponse, TalentResponse, TalentSalaryRequest, TalentSocialRequest, TalentSoftSkillRequest, TalentTechnicalSkillRequest } from 'src/app/shared/models/interfaces/talent.interface';
-import { WorkExperienceRequest } from 'src/app/shared/models/interfaces/workExperience.interface';
+import { WorkExperience, WorkExperienceRequest } from 'src/app/shared/models/interfaces/workExperience.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -88,9 +88,10 @@ export class TalentDetailService {
     }
   }
 
-  addWorkExperienceToCurrentTalent(company: string, position: string, startDate: Date, endDate: Date) {
+  addWorkExperienceToCurrentTalent(id: number, company: string, position: string, startDate: Date, endDate: Date) {
     if (this.currentTalentValue) {
-      const workExperience: WorkExperienceRequest = {
+      const workExperience: WorkExperience = {
+        id: id,
         company: company,
         position: position,
         startDate: startDate,
@@ -132,6 +133,33 @@ export class TalentDetailService {
           this.talentSource.next(this.currentTalentValue);
           this.changeTalent(this.currentTalentValue.id);
           this.toast.success('Se agregó una experiencia educativa');
+        }
+      });
+    }
+  }
+
+  updateWorkExperienceForCurrentTalent(workExpId: number, id: number, company: string, position: string, startDate: Date, endDate: Date) {
+    if (this.currentTalentValue) {
+      const newWorkExperience = {
+        id: id,
+        company: company,
+        position: position,
+        startDate: startDate,
+        endDate: endDate
+      };
+      this.talentService.updateWorkExperience(this.currentTalentValue.id, workExpId, newWorkExperience).pipe(
+        catchError(error => {
+          this.toast.error('Hubo un error al actualizar la experiencia laboral');
+          throw error;
+        })
+      ).subscribe(() => {
+        if (this.currentTalentValue) {
+          const index = this.currentTalentValue.workExperiencesList.findIndex(we => we.id === workExpId);
+          if (index !== -1) {
+            this.currentTalentValue.workExperiencesList[index] = newWorkExperience;
+            this.talentSource.next(this.currentTalentValue);
+            this.toast.success('Se actualizó la experiencia laboral');
+          }
         }
       });
     }

@@ -3,7 +3,7 @@ import { File } from "./file.interface";
 import { LanguageRequest, LanguageResponse } from "./language.interface";
 import { SoftSkill, SoftSkillRequest, SoftSkillResponse } from "./softSkill.interface";
 import { TechnicalSkillRequest, TechnicalSkillResponse } from "./technicalSkill.interface";
-import { WorkExperienceRequest, WorkExperienceResponse } from "./workExperience.interface";
+import { WorkExperience, WorkExperienceRequest, WorkExperienceResponse } from "./workExperience.interface";
 
 export interface BasicTalentResponse {
   id: number;
@@ -43,7 +43,7 @@ export interface TalentResponse {
   softSkillsList: SoftSkillResponse[];
   technicalSkillsList: TechnicalSkillResponse[];
   educationalExperiencesList: EducationalExperienceResponse[];
-  workExperiencesList: WorkExperienceResponse[];
+  workExperiencesList: WorkExperience[];
   languagesList: LanguageResponse[];
 }
 

@@ -3,11 +3,11 @@
   title="Edita tu experiencia"
   description="La vida esta llena de cambios. Edita tu experiencia laboral."
 >
-  <form [formGroup]="workExperienceForm">
+  <form [formGroup]="workExperienceForm" (ngSubmit)="submitForm()">
     <div class="mb-8">
       <div class="grid gap-4">
         <app-text-input
-          [id]="'empresa-1'"
+          [id]="'empresa-' + id"
           label="Empresa"
           placeholder="Nombre de la empresa"
           [value]="companyValue"
@@ -17,14 +17,14 @@
         </app-text-input>
 
         <app-checkbox-input
-          [id]="'checkboxWorkingHereEdit'"
+          [id]="'checkboxWorkingHereEdit' + id"
           label="Aquí en Fractal"
           [isChecked]="isCompanyFractal"
           (isCheckedChange)="companyIfChecked($event)"
           formControlName="isCompanyFractal"
         ></app-checkbox-input>
         <app-text-input
-          [id]="'puesto'"
+          [id]="'puesto' + id"
           label="Puesto"
           [value]="positionValue"
           placeholder="Puesto en la empresa"
@@ -34,7 +34,7 @@
 
         <div class="grid gap-4 md:grid-cols-2">
           <app-date-input
-            [id]="'anio-mes-inicio'"
+            [id]="'anio-mes-inicio' + id"
             [value]="startDateValue"
             label="Año y mes de inicio"
             placeholder="Fecha de inicio"
@@ -43,7 +43,7 @@
           </app-date-input>
 
           <app-date-input
-            [id]="'anio-mes-fin'"
+            [id]="'anio-mes-fin' + id"
             label="Año y mes final"
             placeholder="Fecha de fin"
             [value]="endDateValue"
@@ -54,7 +54,7 @@
         </div>
         <div class="grid gap-4 md:grid-cols-2"></div>
         <app-checkbox-input
-          [id]="'edit-checkboxCurrentlyWorking'"
+          [id]="'edit-checkboxCurrentlyWorking' + id"
           label="Hasta la actualidad"
           [isChecked]="isCurrentlyWorking"
           (isCheckedChange)="endDateIfChecked($event)"
@@ -64,7 +64,7 @@
     </div>
     <app-cancel-save-buttons
       [modal_id]="modal_id"
-      [save_button_id]="'save-experience'"
+      [save_button_id]="'save-experience' + id"
       [form]="workExperienceForm"
       (cancelClicked)="cancelForm()"
     ></app-cancel-save-buttons>

@@ -71,6 +71,7 @@ export class TalentContentComponent implements OnInit {
       }
 
       return {
+        id: experience.id,
         company: experience.company,
         position: experience.position,
         startDate: experience.startDate,
