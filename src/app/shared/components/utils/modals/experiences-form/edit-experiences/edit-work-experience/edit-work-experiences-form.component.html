@@ -10,7 +10,7 @@
           [id]="'empresa-1'"
           label="Empresa"
           placeholder="Nombre de la empresa"
-          [value]="inputValue"
+          [value]="companyValue"
           [isDisabled]="disableTextInput"
         >
         </app-text-input>
@@ -24,6 +24,7 @@
         <app-text-input
           [id]="'puesto'"
           label="Puesto"
+          [value]="positionValue"
           placeholder="Puesto en la empresa"
         >
         </app-text-input>
@@ -31,6 +32,7 @@
         <div class="grid gap-4 md:grid-cols-2">
           <app-date-input
             [id]="'anio-mes-inicio'"
+            [value]="startDateValue"
             label="Año y mes de inicio"
             placeholder="Fecha de inicio"
           >

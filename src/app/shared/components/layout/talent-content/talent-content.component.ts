@@ -17,7 +17,6 @@ export class TalentContentComponent implements OnInit {
   processedWorkExperiences: any[] = [];
   constructor(private talentDetailService: TalentDetailService, private sanitizer: DomSanitizer, private talentService: TalentService, private data: SharedDataService) { }
 
-
   ngOnInit() {
     this.talentDetailService.currentTalent.subscribe(talent => {
       this.talent = talent;

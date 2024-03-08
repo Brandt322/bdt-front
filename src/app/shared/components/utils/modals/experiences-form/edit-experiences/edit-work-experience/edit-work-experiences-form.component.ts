@@ -13,7 +13,8 @@ export class EditWorkExperiencesFormComponent implements OnInit {
   @Input() description!: string;
   @Input() workExperience!: WorkExperienceRequest;
   modal_id!: string;
-  inputValue: string = '';
+  companyValue: string = '';
+  positionValue: string = '';
   currentDate = new Date();
   isCompanyFractal: boolean = false;
   isCurrentlyWorking: boolean = false;
@@ -22,15 +23,30 @@ export class EditWorkExperiencesFormComponent implements OnInit {
   startDateValue: string | Date = '';
   endDateValue!: string | Date;
   modalsInitialized = false;
+
   constructor(private data: SharedDataService) { }
 
   ngOnInit(): void {
     // console.log(this.modal_id);
     this.modal_id = 'edit-work-experience-modal-' + this.index;
+    this.companyValue = this.workExperience.company;
+    this.isCompanyFractal = this.companyValue === 'Fractal';
+    this.positionValue = this.workExperience.position;
+    this.startDateValue = this.workExperience.startDate;
+    this.endDateValue = this.workExperience.endDate;
+    this.isCurrentlyWorking = this.workExperience.endDate instanceof Date && this.isToday(this.workExperience.endDate);
+    console.log(this.workExperience)
+  }
+
+  isToday(date: Date): boolean {
+    const today = new Date();
+    return date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear();
   }
 
   companyIfChecked(isChecked: boolean) {
-    this.inputValue = isChecked ? 'Fractal' : '';
+    this.companyValue = isChecked ? 'Fractal' : '';
     this.disableTextInput = isChecked;
   }
 

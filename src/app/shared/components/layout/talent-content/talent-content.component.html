@@ -251,5 +251,8 @@
 <ng-container
   *ngFor="let experience of processedWorkExperiences; let i = index"
 >
-  <app-edit-work-experiences-form [index]="i"></app-edit-work-experiences-form>
+  <app-edit-work-experiences-form
+    [index]="i"
+    [workExperience]="experience"
+  ></app-edit-work-experiences-form>
 </ng-container>
