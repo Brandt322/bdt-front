@@ -12,7 +12,6 @@ import { Component } from '@angular/core';
     <app-language-modal-form></app-language-modal-form>
     <app-feedback-modal-form></app-feedback-modal-form>
     <app-description-modal-form></app-description-modal-form>
-    <app-add-educational-experiences-form></app-add-educational-experiences-form>
   `,
 })
 export class ModalFormsCollection { }

@@ -112,6 +112,31 @@ export class TalentDetailService {
     }
   }
 
+  addEducationalExperienceToCurrentTalent(educationalInstitute: string, career: string, degree: string, startDate: Date, endDate: Date) {
+    if (this.currentTalentValue) {
+      const educationalExperience = {
+        educationalInstitute: educationalInstitute,
+        career: career,
+        degree: degree,
+        startDate: startDate,
+        endDate: endDate
+      };
+      this.talentService.addEducationalExperience(this.currentTalentValue.id, educationalExperience).pipe(
+        catchError(error => {
+          this.toast.error('Hubo un error al agregar la experiencia educativa');
+          throw error;
+        })
+      ).subscribe(() => {
+        if (this.currentTalentValue) {
+          this.currentTalentValue.educationalExperiencesList.push(educationalExperience);
+          this.talentSource.next(this.currentTalentValue);
+          this.changeTalent(this.currentTalentValue.id);
+          this.toast.success('Se agregó una experiencia educativa');
+        }
+      });
+    }
+  }
+
   updateSalaryBandForCurrentTalent(salaryRequest: TalentSalaryRequest) {
     // console.log('updateSalaryBandForCurrentTalent called');
     if (this.currentTalentValue) {

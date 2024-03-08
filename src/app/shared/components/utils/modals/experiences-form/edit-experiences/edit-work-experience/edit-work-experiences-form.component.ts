@@ -42,8 +42,8 @@ export class EditWorkExperiencesFormComponent implements OnInit, AfterViewInit {
     // console.log(this.modal_id);
     // this.modal_id = 'edit-work-experience-modal-' + this.index;
     this.formBuild();
-    console.log(this.modal_id)
-    console.log(this.workExperience)
+    // console.log(this.modal_id)
+    // console.log(this.workExperience)
   }
 
   formBuild() {

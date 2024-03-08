@@ -3,7 +3,7 @@
   title="Edita tu experiencia educativa"
   description="La vida esta llena de cambios. Edita tu experiencia educativa."
 >
-  <form>
+  <form [formGroup]="educationalExperienceForm" (ngSubmit)="submitForm()">
     <div class="mb-8">
       <div class="grid gap-4">
         <app-text-input
@@ -12,6 +12,7 @@
           placeholder="Nombre de la institución"
           [value]="institutionValue"
           [isDisabled]="disableTextInput"
+          formControlName="educationalInstitute"
         >
         </app-text-input>
         <app-checkbox-input
@@ -19,12 +20,14 @@
           label="Aquí en Fractal"
           [isChecked]="isEducationalFractal"
           (isCheckedChange)="institutionIfChecked($event)"
+          formControlName="isEducationalFractal"
         ></app-checkbox-input>
         <app-text-input
           [id]="'carrera'"
           label="Carrera"
           placeholder="Nombre de la carrera"
           [value]="careerValue"
+          formControlName="career"
         >
         </app-text-input>
         <app-text-input
@@ -32,6 +35,7 @@
           label="Grado"
           placeholder="Grado de la carrera"
           [value]="degreeValue"
+          formControlName="degree"
         >
         </app-text-input>
 
@@ -41,6 +45,7 @@
             label="Año y mes de inicio"
             placeholder="Fecha de inicio"
             [value]="startDateValue"
+            formControlName="startDate"
           >
           </app-date-input>
           <app-date-input
@@ -49,6 +54,7 @@
             placeholder="Fecha de fin"
             [value]="endDateValue"
             [isDisabled]="disableEndDateInput"
+            formControlName="endDate"
           >
           </app-date-input>
         </div>
@@ -58,12 +64,15 @@
           label="Hasta la actualidad"
           [isChecked]="isCurrentlyStudying"
           (isCheckedChange)="endDateIfChecked($event)"
+          formControlName="isCurrentlyStudying"
         ></app-checkbox-input>
       </div>
     </div>
     <app-cancel-save-buttons
       [modal_id]="modal_id"
-      [save_button_id]="'save-experience'"
+      [save_button_id]="'save-educational-experience'"
+      [form]="educationalExperienceForm"
+      (cancelClicked)="cancelForm()"
     ></app-cancel-save-buttons>
   </form>
 </app-base-modal-form>

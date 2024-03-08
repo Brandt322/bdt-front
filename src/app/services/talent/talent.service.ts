@@ -3,6 +3,7 @@ import { TALENT_API_ENDPOINTS } from './../../core/global/constants/api-endpoint
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
+import { EducationalExperienceRequest } from 'src/app/shared/models/interfaces/educationalExperience.interface';
 import { File } from 'src/app/shared/models/interfaces/file.interface';
 import { FilterTalentResponse, TalentFilterParams, TalentRequest, TalentResponse, BasicTalentResponse, TalentTechnicalSkillRequest, TalentSoftSkillRequest, TalentSalaryRequest, TalentSocialRequest } from 'src/app/shared/models/interfaces/talent.interface';
 import { WorkExperienceRequest } from 'src/app/shared/models/interfaces/workExperience.interface';
@@ -117,5 +118,10 @@ export class TalentService {
   addWorkExperience(talentId: number, workExperienceRequest: WorkExperienceRequest): Observable<object> {
     const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.ADD_WORK_EXPERIENCE}/${talentId}`;
     return this.http.post(url, workExperienceRequest);
+  }
+
+  addEducationalExperience(talentId: number, educationalExperienceRequest: EducationalExperienceRequest): Observable<object> {
+    const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.ADD_EDUCATIONAL_EXPERIENCE}/${talentId}`;
+    return this.http.post(url, educationalExperienceRequest);
   }
 }

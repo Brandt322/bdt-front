@@ -16,6 +16,7 @@ export const TALENT_API_ENDPOINTS = {
   ADD_TECHNICAL_SKILL: 'add_technical_skill',
   ADD_SOFT_SKILL: 'add_soft_skill',
   ADD_WORK_EXPERIENCE: 'add_work_exp',
+  ADD_EDUCATIONAL_EXPERIENCE: 'add_edu_exp',
   UPDATE_SOCIALS: 'update_socials',
   UPDATE_DESCRIPTION: 'update_description',
 };

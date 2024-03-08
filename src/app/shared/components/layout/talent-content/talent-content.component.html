@@ -191,8 +191,12 @@
             Educación
           </h4>
           <button
-            data-modal-target="add-educational-experience-modal"
-            data-modal-toggle="add-educational-experience-modal"
+            [attr.data-modal-target]="
+              talent?.name + '-add-educational-experience-modal'
+            "
+            [attr.data-modal-toggle]="
+              talent?.name + '-add-educational-experience-modal'
+            "
           >
             <i class="fa-solid fa-plus text-gray-500"></i>
           </button>
@@ -268,6 +272,10 @@
 <app-add-work-experiences-form
   [modal_id]="talent?.name + '-add-work-experience-modal'"
 ></app-add-work-experiences-form>
+<app-add-educational-experiences-form
+  [modal_id]="talent?.name + '-add-educational-experience-modal'"
+>
+</app-add-educational-experiences-form>
 
 <ng-container
   *ngFor="let experience of processedWorkExperiences; let i = index"
