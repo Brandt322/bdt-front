@@ -14,7 +14,6 @@ import { Component } from '@angular/core';
     <app-description-modal-form></app-description-modal-form>
     <app-add-work-experiences-form></app-add-work-experiences-form>
     <app-add-educational-experiences-form></app-add-educational-experiences-form>
-    <app-edit-educational-experiences-form></app-edit-educational-experiences-form>
   `,
 })
 export class ModalFormsCollection { }

@@ -7,10 +7,11 @@ import { EducationalExperienceRequest } from 'src/app/shared/models/interfaces/e
   templateUrl: './edit-educational-experiences-form.component.html'
 })
 export class EditEducationalExperiencesFormComponent implements OnInit {
-  modal_id: string = 'edit-educational-experience-modal';
+  @Input() index!: number;
   @Input() title!: string;
   @Input() description!: string;
   @Input() educationalExperience!: EducationalExperienceRequest;
+  modal_id!: string;
   institutionValue: string = '';
 
   startDateValue: string | Date = '';
@@ -27,6 +28,21 @@ export class EditEducationalExperiencesFormComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.modal_id = 'edit-educational-experience-modal-' + this.index;
+    this.institutionValue = this.educationalExperience.educationalInstitute;
+    this.isEducationalFractal = this.institutionValue === 'Fractal';
+    this.careerValue = this.educationalExperience.career;
+    this.degreeValue = this.educationalExperience.degree;
+    this.startDateValue = this.educationalExperience.startDate;
+    this.endDateValue = this.educationalExperience.endDate;
+    this.isCurrentlyStudying = this.educationalExperience.endDate instanceof Date && this.isToday(this.educationalExperience.endDate);
+  }
+
+  isToday(date: Date): boolean {
+    const today = new Date();
+    return date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear();
   }
 
   institutionIfChecked(isChecked: boolean) {

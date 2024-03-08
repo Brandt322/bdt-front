@@ -4,6 +4,7 @@ import { TalentDetailService } from 'src/app/features/services/talent-detail.ser
 import { TalentService } from 'src/app/services/talent/talent.service';
 import { TalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
 import { SharedDataService } from '../../services/shared-data-service.service';
+import { ProcesseEducationalExperiences, ProcessedWorkExperiences } from 'src/app/shared/models/types';
 
 
 @Component({
@@ -14,7 +15,8 @@ import { SharedDataService } from '../../services/shared-data-service.service';
 export class TalentContentComponent implements OnInit {
 
   talent: TalentResponse | null = null;
-  processedWorkExperiences: any[] = [];
+  processedWorkExperiences: ProcessedWorkExperiences[] = [];
+  processeEducationalExperiences: ProcesseEducationalExperiences[] = [];
   constructor(private talentDetailService: TalentDetailService, private sanitizer: DomSanitizer, private talentService: TalentService, private data: SharedDataService) { }
 
   ngOnInit() {
@@ -22,6 +24,7 @@ export class TalentContentComponent implements OnInit {
       this.talent = talent;
       // console.log(this.talent?.filesList);
       this.processedWorkExperiences = this.workExperiences;
+      this.processeEducationalExperiences = this.educationalExperiences;
     });
     this.talentDetailService.updatedTalent.subscribe(updatedTalent => {
       this.talent = updatedTalent;
@@ -79,18 +82,28 @@ export class TalentContentComponent implements OnInit {
     return this.talent?.educationalExperiencesList?.map(experience => experience.educationalInstitute).join(' ') || '';
   }
 
-  get educationalExperienceDescription() {
+  get educationalExperiences() {
     const currentYear = new Date().getFullYear();
     return this.talent?.educationalExperiencesList?.map(experience => {
       const startDate = new Date(experience.startDate);
       const endDate = new Date(experience.endDate);
+      let description;
 
       if (endDate.getFullYear() === currentYear) {
-        return `${experience.degree} ${startDate.getFullYear()} - En curso`;
+        description = `${experience.degree} ${startDate.getFullYear()} - En curso`;
+      } else {
+        description = `${experience.degree} ${startDate.getFullYear()}-${endDate.getFullYear()}`;
       }
 
-      return `${experience.degree} ${startDate.getFullYear()}-${endDate.getFullYear()}`;
-    }).join(' ') || '';
+      return {
+        educationalInstitute: experience.educationalInstitute,
+        career: experience.career,
+        degree: experience.degree,
+        startDate: experience.startDate,
+        endDate: experience.endDate,
+        description: description
+      };
+    }) || [];
   }
 
   editDescription() {

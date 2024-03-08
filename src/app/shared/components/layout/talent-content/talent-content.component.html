@@ -192,6 +192,10 @@
 
         <div
           class="flex justify-start items-center p-2 gap-2 rounded-md bg-gray-50 hover:bg-gray-200 shadow-sm-light"
+          *ngFor="
+            let experience of processeEducationalExperiences;
+            let i = index
+          "
         >
           <img
             class="h-12 rounded-full"
@@ -201,17 +205,21 @@
           <div class="flex justify-between items-center w-full">
             <div class="flex flex-col justify-center item">
               <h1 class="font-medium text-xl text-black dark:text-gray-400">
-                {{ educationaInstitute }}
+                {{ experience.educationalInstitute }}
               </h1>
               <div class="flex justify-between gap-2 w-full">
                 <p class="text-md font-normal text-gray-500 dark:text-gray-400">
-                  {{ educationalExperienceDescription }}
+                  {{ experience.description }}
                 </p>
               </div>
             </div>
             <button
-              data-modal-target="edit-educational-experience-modal"
-              data-modal-toggle="edit-educational-experience-modal"
+              [attr.data-modal-target]="
+                'edit-educational-experience-modal-' + i
+              "
+              [attr.data-modal-toggle]="
+                'edit-educational-experience-modal-' + i
+              "
             >
               <span
                 class="material-symbols-outlined text-gray-600 dark:text-slate-100"
@@ -255,4 +263,12 @@
     [index]="i"
     [workExperience]="experience"
   ></app-edit-work-experiences-form>
+</ng-container>
+<ng-container
+  *ngFor="let experience of processeEducationalExperiences; let i = index"
+>
+  <app-edit-educational-experiences-form
+    [index]="i"
+    [educationalExperience]="experience"
+  ></app-edit-educational-experiences-form>
 </ng-container>
