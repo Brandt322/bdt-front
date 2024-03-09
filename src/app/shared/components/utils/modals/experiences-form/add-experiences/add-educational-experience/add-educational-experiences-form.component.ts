@@ -93,8 +93,9 @@ export class AddEducationalExperiencesFormComponent implements OnInit {
   submitForm() {
     if (this.educationalExperienceForm.valid) {
       const formValues = this.educationalExperienceForm.value;
-      let { educationalInstitute, career, degree, startDate, endDate } = formValues
+      let { id, educationalInstitute, career, degree, startDate, endDate } = formValues
       this.talentDetailService.addEducationalExperienceToCurrentTalent(
+        id,
         educationalInstitute,
         career,
         degree,

@@ -129,4 +129,9 @@ export class TalentService {
     const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${talentId}/${TALENT_API_ENDPOINTS.UPDATE_WORK_EXPERIENCE}/${workExpId}`;
     return this.http.put(url, workExperienceRequest);
   }
+
+  updateEducationalExperience(talentId: number, eduExpId: number, educationalExperienceRequest: EducationalExperienceRequest): Observable<object> {
+    const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${talentId}/${TALENT_API_ENDPOINTS.UPDATE_EDUCATIONAL_EXPERIENCE}/${eduExpId}`;
+    return this.http.put(url, educationalExperienceRequest);
+  }
 }

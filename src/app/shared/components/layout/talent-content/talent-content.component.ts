@@ -99,6 +99,7 @@ export class TalentContentComponent implements OnInit {
       }
 
       return {
+        id: experience.id,
         educationalInstitute: experience.educationalInstitute,
         career: experience.career,
         degree: experience.degree,

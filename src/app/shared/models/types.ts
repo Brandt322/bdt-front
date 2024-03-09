@@ -8,6 +8,7 @@ export interface ProcessedWorkExperiences {
 }
 
 export interface ProcesseEducationalExperiences {
+  id?: number;
   educationalInstitute: string;
   career: string;
   degree: string;

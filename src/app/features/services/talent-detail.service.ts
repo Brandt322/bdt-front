@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Subject, catchError } from 'rxjs';
 import { TalentService } from 'src/app/services/talent/talent.service';
+import { EducationalExperience } from 'src/app/shared/models/interfaces/educationalExperience.interface';
 import { FilterTalentResponse, TalentResponse, TalentSalaryRequest, TalentSocialRequest, TalentSoftSkillRequest, TalentTechnicalSkillRequest } from 'src/app/shared/models/interfaces/talent.interface';
-import { WorkExperience, WorkExperienceRequest } from 'src/app/shared/models/interfaces/workExperience.interface';
+import { WorkExperience } from 'src/app/shared/models/interfaces/workExperience.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -21,10 +22,11 @@ export class TalentDetailService {
 
   constructor(private talentService: TalentService, private toast: ToastrService) { }
 
-  changeTalent(talentId: number) { // Cambia el parámetro a un ID de talento
+  changeTalent(talentId: number) {
     console.log('changeTalent called with talentId:', talentId);
     if (this.currentTalentValue?.id === talentId) {
       console.log('currentTalentValue.id is equal to talentId');
+      console.log(this.currentTalentValue.workExperiencesList)
       return;
     }
 
@@ -113,9 +115,10 @@ export class TalentDetailService {
     }
   }
 
-  addEducationalExperienceToCurrentTalent(educationalInstitute: string, career: string, degree: string, startDate: Date, endDate: Date) {
+  addEducationalExperienceToCurrentTalent(id: number, educationalInstitute: string, career: string, degree: string, startDate: Date, endDate: Date) {
     if (this.currentTalentValue) {
-      const educationalExperience = {
+      const educationalExperience: EducationalExperience = {
+        id: id,
         educationalInstitute: educationalInstitute,
         career: career,
         degree: degree,
@@ -140,7 +143,7 @@ export class TalentDetailService {
 
   updateWorkExperienceForCurrentTalent(workExpId: number, id: number, company: string, position: string, startDate: Date, endDate: Date) {
     if (this.currentTalentValue) {
-      const newWorkExperience = {
+      const newWorkExperience: WorkExperience = {
         id: id,
         company: company,
         position: position,
@@ -158,7 +161,39 @@ export class TalentDetailService {
           if (index !== -1) {
             this.currentTalentValue.workExperiencesList[index] = newWorkExperience;
             this.talentSource.next(this.currentTalentValue);
+            this.updatedTalent.next(this.currentTalentValue);
+            this.changeTalent(this.currentTalentValue.id);
             this.toast.success('Se actualizó la experiencia laboral');
+          }
+        }
+      });
+    }
+  }
+
+  updateEducationalExperienceForCurrentTalent(eduExpId: number, id: number, educationalInstitute: string, career: string, degree: string, startDate: Date, endDate: Date) {
+    if (this.currentTalentValue) {
+      const newEducationalExperience: EducationalExperience = {
+        id: id,
+        educationalInstitute: educationalInstitute,
+        career: career,
+        degree: degree,
+        startDate: startDate,
+        endDate: endDate
+      };
+      this.talentService.updateEducationalExperience(this.currentTalentValue.id, eduExpId, newEducationalExperience).pipe(
+        catchError(error => {
+          this.toast.error('Hubo un error al actualizar la experiencia educativa');
+          throw error;
+        })
+      ).subscribe(() => {
+        if (this.currentTalentValue) {
+          const index = this.currentTalentValue.educationalExperiencesList.findIndex(ee => ee.id === eduExpId);
+          if (index !== -1) {
+            this.currentTalentValue.educationalExperiencesList[index] = newEducationalExperience;
+            this.talentSource.next(this.currentTalentValue);
+            this.updatedTalent.next(this.currentTalentValue);
+            this.changeTalent(this.currentTalentValue.id);
+            this.toast.success('Se actualizó la experiencia educativa');
           }
         }
       });

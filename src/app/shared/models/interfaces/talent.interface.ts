@@ -1,4 +1,4 @@
-import { EducationalExperienceRequest, EducationalExperienceResponse } from "./educationalExperience.interface";
+import { EducationalExperience, EducationalExperienceRequest, EducationalExperienceResponse } from "./educationalExperience.interface";
 import { File } from "./file.interface";
 import { LanguageRequest, LanguageResponse } from "./language.interface";
 import { SoftSkill, SoftSkillRequest, SoftSkillResponse } from "./softSkill.interface";
@@ -42,7 +42,7 @@ export interface TalentResponse {
   githubLink: string;
   softSkillsList: SoftSkillResponse[];
   technicalSkillsList: TechnicalSkillResponse[];
-  educationalExperiencesList: EducationalExperienceResponse[];
+  educationalExperiencesList: EducationalExperience[];
   workExperiencesList: WorkExperience[];
   languagesList: LanguageResponse[];
 }
