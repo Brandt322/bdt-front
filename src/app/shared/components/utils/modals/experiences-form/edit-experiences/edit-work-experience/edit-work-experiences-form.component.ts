@@ -1,14 +1,15 @@
 import { formatDate } from '@angular/common';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { WorkExperienceRequest } from 'src/app/shared/models/interfaces/workExperience.interface';
 import { TalentDetailService } from '../../../../../../../features/services/talent-detail.service';
+import { initModals } from 'flowbite';
 
 @Component({
   selector: 'app-edit-work-experiences-form',
   templateUrl: './edit-work-experiences-form.component.html'
 })
-export class EditWorkExperiencesFormComponent implements OnInit {
+export class EditWorkExperiencesFormComponent implements OnInit, AfterViewInit {
   @Input() id!: number;
   @Input() title!: string;
   @Input() description!: string;
@@ -28,12 +29,17 @@ export class EditWorkExperiencesFormComponent implements OnInit {
   startDateValue: string | Date = '';
   endDateValue!: string | Date;
 
-  constructor(private fb: FormBuilder, private talentDetailService: TalentDetailService) { }
+  constructor(private fb: FormBuilder, private talentDetailService: TalentDetailService, private cdr: ChangeDetectorRef) { }
+
+  ngAfterViewInit(): void {
+
+  }
 
   ngOnInit(): void {
-    // console.log(this.modal_id);
+    console.log(this.modal_id);
     this.formBuild();
-    // console.log(this.modal_id)
+    setTimeout(() => initModals())
+    // this.cdr.detectChanges();
     // console.log(this.workExperience.endDate)
   }
 
@@ -58,10 +64,11 @@ export class EditWorkExperiencesFormComponent implements OnInit {
 
     // Disable the company input if the company is 'Fractal'
     const companyControl = this.workExperienceForm.get('company');
-    if (companyControl && this.workExperience.company === 'Fractal') {
+    if (companyControl && this.isCompanyFractal) {
       this.disableTextInput = true;
-      companyControl.disable();
     }
+
+    // this.cdr.detectChanges();
   }
 
   cancelForm() {
@@ -98,7 +105,7 @@ export class EditWorkExperiencesFormComponent implements OnInit {
     // Disable the company input if the company is 'Fractal'
     const companyControl = this.workExperienceForm.get('company');
     if (companyControl) {
-      if (this.workExperience.company === 'Fractal') {
+      if (this.isCompanyFractal) {
         this.disableTextInput = true;
       } else {
         this.disableTextInput = false;
@@ -128,7 +135,7 @@ export class EditWorkExperiencesFormComponent implements OnInit {
         this.disableTextInput = true;
       } else {
         this.disableTextInput = false;
-        companyControl.enable();
+        // companyControl.enable();
       }
     }
   }
@@ -149,9 +156,10 @@ export class EditWorkExperiencesFormComponent implements OnInit {
   submitForm() {
     if (this.workExperienceForm.valid) {
       const formValues = this.workExperienceForm.value;
-      let { id, company, position, startDate, endDate } = formValues;
-      this.talentDetailService.updateWorkExperienceForCurrentTalent(this.id, id, company, position, startDate, endDate);
+      let { company, position, startDate, endDate } = formValues;
+      this.talentDetailService.updateWorkExperienceForCurrentTalent(this.id, this.id, company, position, startDate, endDate);
       // this.cancelForm();
+      // this.cdr.markForCheck();
     }
   }
 }

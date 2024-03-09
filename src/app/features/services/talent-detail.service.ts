@@ -4,7 +4,7 @@ import { BehaviorSubject, Subject, catchError } from 'rxjs';
 import { TalentService } from 'src/app/services/talent/talent.service';
 import { EducationalExperience } from 'src/app/shared/models/interfaces/educationalExperience.interface';
 import { FilterTalentResponse, TalentResponse, TalentSalaryRequest, TalentSocialRequest, TalentSoftSkillRequest, TalentTechnicalSkillRequest } from 'src/app/shared/models/interfaces/talent.interface';
-import { WorkExperience } from 'src/app/shared/models/interfaces/workExperience.interface';
+import { WorkExperience, WorkExperienceRequest } from 'src/app/shared/models/interfaces/workExperience.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,8 @@ export class TalentDetailService {
     console.log('changeTalent called with talentId:', talentId);
     if (this.currentTalentValue?.id === talentId) {
       console.log('currentTalentValue.id is equal to talentId');
-      console.log(this.currentTalentValue.workExperiencesList)
+      // console.log(this.currentTalentValue.workExperiencesList)
+      // console.log(this.currentTalentValue.educationalExperiencesList)
       return;
     }
 
@@ -90,10 +91,9 @@ export class TalentDetailService {
     }
   }
 
-  addWorkExperienceToCurrentTalent(id: number, company: string, position: string, startDate: Date, endDate: Date) {
+  addWorkExperienceToCurrentTalent(company: string, position: string, startDate: Date, endDate: Date) {
     if (this.currentTalentValue) {
-      const workExperience: WorkExperience = {
-        id: id,
+      const workExperience: WorkExperienceRequest = {
         company: company,
         position: position,
         startDate: startDate,
@@ -106,7 +106,7 @@ export class TalentDetailService {
         })
       ).subscribe(() => {
         if (this.currentTalentValue) {
-          this.currentTalentValue.workExperiencesList.push(workExperience);
+          this.currentTalentValue.workExperiencesList.push({ id: 0, company: workExperience.company, position: workExperience.position, startDate: workExperience.startDate, endDate: workExperience.endDate });
           this.talentSource.next(this.currentTalentValue);
           this.changeTalent(this.currentTalentValue.id);
           this.toast.success('Se agregó una experiencia laboral');
@@ -161,7 +161,7 @@ export class TalentDetailService {
           if (index !== -1) {
             this.currentTalentValue.workExperiencesList[index] = newWorkExperience;
             this.talentSource.next(this.currentTalentValue);
-            this.updatedTalent.next(this.currentTalentValue);
+            // this.updatedTalent.next(this.currentTalentValue);
             this.changeTalent(this.currentTalentValue.id);
             this.toast.success('Se actualizó la experiencia laboral');
           }
@@ -191,7 +191,7 @@ export class TalentDetailService {
           if (index !== -1) {
             this.currentTalentValue.educationalExperiencesList[index] = newEducationalExperience;
             this.talentSource.next(this.currentTalentValue);
-            this.updatedTalent.next(this.currentTalentValue);
+            // this.updatedTalent.next(this.currentTalentValue);
             this.changeTalent(this.currentTalentValue.id);
             this.toast.success('Se actualizó la experiencia educativa');
           }

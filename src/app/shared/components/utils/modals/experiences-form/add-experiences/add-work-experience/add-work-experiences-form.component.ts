@@ -89,8 +89,8 @@ export class AddWorkExperiencesFormComponent implements OnInit {
   submitForm() {
     if (this.workExperienceForm.valid) {
       const formValues = this.workExperienceForm.value;
-      let { id, company, position, startDate, endDate } = formValues
-      this.talentDetailService.addWorkExperienceToCurrentTalent(id, company, position, startDate, endDate);
+      let { company, position, startDate, endDate } = formValues
+      this.talentDetailService.addWorkExperienceToCurrentTalent(company, position, startDate, endDate);
       this.cancelForm();
     }
   }

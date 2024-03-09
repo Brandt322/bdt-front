@@ -145,6 +145,7 @@
         </div>
 
         <div
+          [id]="experience.id"
           *ngFor="let experience of processedWorkExperiences; let i = index"
           class="flex justify-start items-center p-2 gap-2 rounded-md bg-gray-50 hover:bg-gray-200 shadow-sm-light"
         >
@@ -166,10 +167,10 @@
             </div>
             <button
               [attr.data-modal-target]="
-                'edit-work-experience-modal-' + i + talent?.id
+                'edit-work-experience-modal-' + experience.id + talent?.id
               "
               [attr.data-modal-toggle]="
-                'edit-work-experience-modal-' + i + talent?.id
+                'edit-work-experience-modal-' + experience.id + talent?.id
               "
             >
               <span
@@ -199,6 +200,7 @@
         </div>
 
         <div
+          [id]="experience.id"
           class="flex justify-start items-center p-2 gap-2 rounded-md bg-gray-50 hover:bg-gray-200 shadow-sm-light"
           *ngFor="
             let experience of processeEducationalExperiences;
@@ -210,7 +212,7 @@
             src="../../../assets/fractal (1).png "
             alt=""
           />
-          <div class="flex justify-between items-center w-full" [id]="i">
+          <div class="flex justify-between items-center w-full">
             <div class="flex flex-col justify-center item">
               <h1 class="font-medium text-xl text-black dark:text-gray-400">
                 {{ experience.educationalInstitute }}
@@ -223,10 +225,14 @@
             </div>
             <button
               [attr.data-modal-target]="
-                'edit-educational-experience-modal-' + i + talent?.id
+                'edit-educational-experience-modal-' +
+                experience.id +
+                talent?.id
               "
               [attr.data-modal-toggle]="
-                'edit-educational-experience-modal-' + i + talent?.id
+                'edit-educational-experience-modal-' +
+                experience.id +
+                talent?.id
               "
             >
               <span
@@ -277,7 +283,7 @@
   *ngFor="let experience of processedWorkExperiences; let i = index"
 >
   <app-edit-work-experiences-form
-    [modal_id]="'edit-work-experience-modal-' + i + talent?.id"
+    [modal_id]="'edit-work-experience-modal-' + experience.id + talent?.id"
     [workExperience]="experience"
     [id]="experience.id || 0"
   ></app-edit-work-experiences-form>
@@ -286,7 +292,9 @@
   *ngFor="let experience of processeEducationalExperiences; let i = index"
 >
   <app-edit-educational-experiences-form
-    [modal_id]="'edit-educational-experience-modal-' + i + talent?.id"
+    [modal_id]="
+      'edit-educational-experience-modal-' + experience.id + talent?.id
+    "
     [educationalExperience]="experience"
     [id]="experience.id || 0"
   ></app-edit-educational-experiences-form>

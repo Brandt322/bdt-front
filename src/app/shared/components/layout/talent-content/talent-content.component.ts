@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
-import { TalentService } from 'src/app/services/talent/talent.service';
 import { TalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
 import { SharedDataService } from '../../services/shared-data-service.service';
 import { ProcesseEducationalExperiences, ProcessedWorkExperiences } from 'src/app/shared/models/types';
@@ -11,14 +10,15 @@ import { ProcesseEducationalExperiences, ProcessedWorkExperiences } from 'src/ap
 @Component({
   selector: 'app-talent-content',
   templateUrl: './talent-content.component.html',
-  styleUrls: ['./talent-content.component.css']
+  styleUrls: ['./talent-content.component.css'],
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TalentContentComponent implements OnInit {
 
   talent: TalentResponse | null = null;
   processedWorkExperiences: ProcessedWorkExperiences[] = [];
   processeEducationalExperiences: ProcesseEducationalExperiences[] = [];
-  constructor(private talentDetailService: TalentDetailService, private sanitizer: DomSanitizer, private talentService: TalentService, private data: SharedDataService) { }
+  constructor(private cdr: ChangeDetectorRef, private talentDetailService: TalentDetailService, private sanitizer: DomSanitizer, private data: SharedDataService) { }
 
   ngOnInit() {
     this.talentDetailService.currentTalent.subscribe(talent => {
@@ -26,11 +26,13 @@ export class TalentContentComponent implements OnInit {
       // console.log(this.talent?.filesList);
       this.processedWorkExperiences = this.workExperiences;
       this.processeEducationalExperiences = this.educationalExperiences;
+      // this.cdr.detectChanges();
     });
     this.talentDetailService.updatedTalent.subscribe(updatedTalent => {
       this.talent = updatedTalent;
       this.processedWorkExperiences = this.workExperiences;
       this.processeEducationalExperiences = this.educationalExperiences;
+      // this.cdr.detectChanges();
     });
   }
 
@@ -81,10 +83,6 @@ export class TalentContentComponent implements OnInit {
     }) || [];
   }
 
-  get educationaInstitute() {
-    return this.talent?.educationalExperiencesList?.map(experience => experience.educationalInstitute).join(' ') || '';
-  }
-
   get educationalExperiences() {
     const currentYear = new Date().getFullYear();
     return this.talent?.educationalExperiencesList?.map(experience => {
@@ -108,6 +106,10 @@ export class TalentContentComponent implements OnInit {
         description: description
       };
     }) || [];
+  }
+
+  get educationaInstitute() {
+    return this.talent?.educationalExperiencesList?.map(experience => experience.educationalInstitute).join(' ') || '';
   }
 
   editDescription() {

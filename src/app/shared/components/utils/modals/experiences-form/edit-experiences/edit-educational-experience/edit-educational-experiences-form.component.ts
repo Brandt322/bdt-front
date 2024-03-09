@@ -148,8 +148,8 @@ export class EditEducationalExperiencesFormComponent implements OnInit {
   submitForm() {
     if (this.educationalExperienceForm.valid) {
       const educationalExperience = this.educationalExperienceForm.value;
-      let { id, educationalInstitute, career, degree, startDate, endDate } = educationalExperience;
-      this.talentDetailService.updateEducationalExperienceForCurrentTalent(this.id, id, educationalInstitute, career, degree, startDate, endDate);
+      let { educationalInstitute, career, degree, startDate, endDate } = educationalExperience;
+      this.talentDetailService.updateEducationalExperienceForCurrentTalent(this.id, this.id, educationalInstitute, career, degree, startDate, endDate);
     }
   }
 }
