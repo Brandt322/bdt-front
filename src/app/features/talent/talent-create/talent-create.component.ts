@@ -236,7 +236,7 @@ export class TalentCreateComponent implements OnInit {
       try {
         formValues['filesList'][i].file = await this.convertFileToBase64(fileList[i]);
         formValues['filesList'][i].fileName = fileList[i].name;
-        formValues['filesList'][i].fileType = fileList[i].type;
+        formValues['filesList'][i].fileType = fileList[i].type.split('/').pop();
       } catch (error) {
         console.error(error);
         this.toastr.error(`Ocurrió un error al leer el archivo ${i + 1}`, '¡Error!');
