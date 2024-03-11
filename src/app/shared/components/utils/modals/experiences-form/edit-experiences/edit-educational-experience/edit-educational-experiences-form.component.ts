@@ -3,6 +3,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
 import { EducationalExperienceRequest } from 'src/app/shared/models/interfaces/educationalExperience.interface';
+import { CustomValidators } from '../../../../Validations/CustomValidators';
 
 @Component({
   selector: 'app-edit-educational-experiences-form',
@@ -41,14 +42,14 @@ export class EditEducationalExperiencesFormComponent implements OnInit {
     this.isCurrentlyStudying = this.isToday(this.educationalExperience.endDate);
 
     this.educationalExperienceForm = this.fb.group({
-      educationalInstitute: [this.educationalExperience.educationalInstitute, Validators.required],
-      career: [this.educationalExperience.career, Validators.required],
-      degree: [this.educationalExperience.degree, Validators.required],
-      startDate: [this.educationalExperience.startDate, Validators.required],
-      endDate: [this.educationalExperience.endDate, Validators.required],
+      educationalInstitute: [this.educationalExperience.educationalInstitute, [CustomValidators.required, CustomValidators.minLength(3), CustomValidators.stringType()]],
+      career: [this.educationalExperience.career, [CustomValidators.required, CustomValidators.minLength(3), CustomValidators.stringType()]],
+      degree: [this.educationalExperience.degree, [CustomValidators.required, CustomValidators.minLength(3), CustomValidators.stringType()]],
+      startDate: [this.educationalExperience.startDate, CustomValidators.required],
+      endDate: [this.educationalExperience.endDate, CustomValidators.required],
       isEducationalFractal: [this.isEducationalFractal],
       isCurrentlyStudying: [this.isToday(this.educationalExperience.endDate)]
-    });
+    }, { validators: CustomValidators.dateGreaterThan('startDate', 'endDate') });
 
     // Disable the endDate input if the endDate is today
     const endDateControl = this.educationalExperienceForm.get('endDate');
@@ -149,6 +150,9 @@ export class EditEducationalExperiencesFormComponent implements OnInit {
     if (this.educationalExperienceForm.valid) {
       const educationalExperience = this.educationalExperienceForm.value;
       let { educationalInstitute, career, degree, startDate, endDate } = educationalExperience;
+      educationalInstitute = educationalInstitute.trim();
+      career = career.trim();
+      degree = degree.trim();
       this.talentDetailService.updateEducationalExperienceForCurrentTalent(this.id, this.id, educationalInstitute, career, degree, startDate, endDate);
     }
   }

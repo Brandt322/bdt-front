@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { WorkExperienceRequest } from 'src/app/shared/models/interfaces/workExperience.interface';
 import { TalentDetailService } from '../../../../../../../features/services/talent-detail.service';
 import { initModals } from 'flowbite';
+import { CustomValidators } from '../../../../Validations/CustomValidators';
 
 @Component({
   selector: 'app-edit-work-experiences-form',
@@ -47,13 +48,13 @@ export class EditWorkExperiencesFormComponent implements OnInit, AfterViewInit {
     this.isCurrentlyWorking = this.isToday(this.workExperience.endDate);
 
     this.workExperienceForm = this.fb.group({
-      company: [this.workExperience.company, Validators.required],
-      position: [this.workExperience.position, Validators.required],
-      startDate: [this.workExperience.startDate, Validators.required],
-      endDate: [this.workExperience.endDate, Validators.required],
+      company: [this.workExperience.company, [CustomValidators.required, CustomValidators.minLength(3), CustomValidators.stringType()]],
+      position: [this.workExperience.position, [CustomValidators.required, CustomValidators.minLength(3), CustomValidators.stringType()]],
+      startDate: [this.workExperience.startDate, CustomValidators.required],
+      endDate: [this.workExperience.endDate, CustomValidators.required],
       isCompanyFractal: [this.isCompanyFractal],
       isCurrentlyWorking: [this.isToday(this.workExperience.endDate)]
-    });
+    }, { validators: CustomValidators.dateGreaterThan('startDate', 'endDate') });
 
     // Disable the endDate input if the endDate is today
     const endDateControl = this.workExperienceForm.get('endDate');
@@ -156,6 +157,8 @@ export class EditWorkExperiencesFormComponent implements OnInit, AfterViewInit {
     if (this.workExperienceForm.valid) {
       const formValues = this.workExperienceForm.value;
       let { company, position, startDate, endDate } = formValues;
+      company = company.trim();
+      position = position.trim();
       this.talentDetailService.updateWorkExperienceForCurrentTalent(this.id, this.id, company, position, startDate, endDate);
       // this.cancelForm();
       // this.cdr.markForCheck();

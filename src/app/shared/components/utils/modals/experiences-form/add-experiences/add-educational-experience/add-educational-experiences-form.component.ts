@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
 import { EducationalExperienceRequest } from 'src/app/shared/models/interfaces/educationalExperience.interface';
 import { CheckboxInputComponent } from '../../../../form-inputs/checkbox-input-component';
+import { CustomValidators } from '../../../../Validations/CustomValidators';
 
 @Component({
   selector: 'app-add-educational-experiences-form',
@@ -48,20 +49,20 @@ export class AddEducationalExperiencesFormComponent implements OnInit {
 
   formBuild() {
     this.educationalExperienceForm = this.fb.group({
-      educationalInstitute: ['', Validators.required],
-      career: ['', Validators.required],
-      degree: ['', Validators.required],
-      startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
+      educationalInstitute: ['', [CustomValidators.required, CustomValidators.minLength(3), CustomValidators.stringType()]],
+      career: ['', [CustomValidators.required, CustomValidators.minLength(3), CustomValidators.stringType()]],
+      degree: ['', [CustomValidators.required, CustomValidators.minLength(3), CustomValidators.stringType()]],
+      startDate: ['', CustomValidators.required],
+      endDate: ['', CustomValidators.required],
       isEducationalFractal: [false],
       isCurrentlyStudying: [false]
-    });
+    }, { validators: CustomValidators.dateGreaterThan('startDate', 'endDate') });
 
     this.educationalExperienceForm.get('isEducationalFractal')?.valueChanges.subscribe(isEducationalFractal => {
       if (isEducationalFractal) {
         this.educationalExperienceForm.get('educationalInstitute')?.clearValidators();
       } else {
-        this.educationalExperienceForm.get('educationalInstitute')?.setValidators(Validators.required);
+        this.educationalExperienceForm.get('educationalInstitute')?.setValidators([CustomValidators.required, CustomValidators.minLength(3), CustomValidators.stringType()]);
       }
       this.educationalExperienceForm.get('educationalInstitute')?.updateValueAndValidity();
     });
@@ -70,7 +71,7 @@ export class AddEducationalExperiencesFormComponent implements OnInit {
       if (isCurrentlyStudying) {
         this.educationalExperienceForm.get('endDate')?.clearValidators();
       } else {
-        this.educationalExperienceForm.get('endDate')?.setValidators(Validators.required);
+        this.educationalExperienceForm.get('endDate')?.setValidators(CustomValidators.required);
       }
       this.educationalExperienceForm.get('endDate')?.updateValueAndValidity();
     });
@@ -92,8 +93,14 @@ export class AddEducationalExperiencesFormComponent implements OnInit {
 
   submitForm() {
     if (this.educationalExperienceForm.valid) {
+      this.educationalExperienceForm.markAllAsTouched();
       const formValues = this.educationalExperienceForm.value;
       let { id, educationalInstitute, career, degree, startDate, endDate } = formValues
+
+      educationalInstitute = educationalInstitute.trim();
+      career = career.trim();
+      degree = degree.trim();
+
       this.talentDetailService.addEducationalExperienceToCurrentTalent(
         id,
         educationalInstitute,

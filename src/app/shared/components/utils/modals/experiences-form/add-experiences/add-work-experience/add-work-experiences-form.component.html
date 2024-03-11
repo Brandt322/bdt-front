@@ -23,6 +23,34 @@
           (isCheckedChange)="companyIfChecked($event)"
           formControlName="isCompanyFractal"
         ></app-checkbox-input>
+
+        <div
+          class="grid gap-2 leading-tight"
+          *ngIf="
+            workExperienceForm.get('company')?.touched &&
+            workExperienceForm.get('company')?.errors
+          "
+        >
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="workExperienceForm.get('company')?.errors?.['required']"
+          >
+            El campo de empresa es requerido.
+          </span>
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="workExperienceForm.get('company')?.errors?.['minLength']"
+          >
+            El campo de empresa debe tener al menos 3 caracteres.
+          </span>
+          <span
+            class="font-medium text-orange-500 leading-tight"
+            *ngIf="workExperienceForm.get('company')?.errors?.['stringType']"
+          >
+            Solo puedes ingresar letras.
+          </span>
+        </div>
+
         <app-text-input
           [id]="'puesto'"
           label="Puesto"
@@ -31,6 +59,33 @@
           formControlName="position"
         >
         </app-text-input>
+
+        <div
+          class="grid gap-2 leading-tight"
+          *ngIf="
+            workExperienceForm.get('position')?.touched &&
+            workExperienceForm.get('position')?.errors
+          "
+        >
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="workExperienceForm.get('position')?.errors?.['required']"
+          >
+            El campo de puesto es requerido.
+          </span>
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="workExperienceForm.get('position')?.errors?.['minLength']"
+          >
+            El campo de puesto debe tener al menos 3 caracteres.
+          </span>
+          <span
+            class="font-medium text-orange-500 leading-tight"
+            *ngIf="workExperienceForm.get('position')?.errors?.['stringType']"
+          >
+            Solo puedes ingresar letras.
+          </span>
+        </div>
 
         <div class="grid gap-4 md:grid-cols-2">
           <app-date-input
@@ -59,6 +114,26 @@
           (isCheckedChange)="endDateIfChecked($event)"
           formControlName="isCurrentlyWorking"
         ></app-checkbox-input>
+
+        <div
+          class="grid gap-2 leading-tight"
+          *ngIf="
+            (workExperienceForm.get('startDate')?.touched && workExperienceForm.get('startDate')?.errors?.['required']) ||
+            (workExperienceForm.get('endDate')?.touched && workExperienceForm.get('endDate')?.errors?.['required'])
+          "
+        >
+          <span class="font-medium text-red-500 leading-tight">
+            Ambas fechas son obligatorias.
+          </span>
+        </div>
+        <div class="grid gap-2 leading-tight" *ngIf="workExperienceForm.errors">
+          <span
+            class="font-medium text-orange-500 leading-tight"
+            *ngIf="workExperienceForm.errors['dateGreaterThan']"
+          >
+            La fecha de inicio debe ser anterior a la fecha de finalización.
+          </span>
+        </div>
       </div>
     </div>
     <app-cancel-save-buttons
