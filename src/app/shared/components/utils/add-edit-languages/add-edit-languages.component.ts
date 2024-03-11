@@ -1,14 +1,19 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { initModals } from 'flowbite';
 import { LanguageResponse } from 'src/app/shared/models/interfaces/language.interface';
 
 @Component({
   selector: 'app-add-edit-languages',
   templateUrl: './add-edit-languages.component.html',
-  styleUrls: ['./add-edit-languages.component.css']
+  styleUrls: ['./add-edit-languages.component.css'],
 })
 export class AddEditLanguagesComponent implements OnInit, OnChanges {
-
   @Input() main_title!: string;
   @Input() title!: string;
   @Input() description!: string;
@@ -29,10 +34,8 @@ export class AddEditLanguagesComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     // console.log('languagesList length:', this.languagesList.length); // Añade esta línea
-
     // this.addModalId = this.modal_id + '-add';
     // console.log('addModalId:', this.addModalId);
-
     // for (let i = 0; i < this.languagesList.length; i++) {
     //   this.editModalId[i] = this.modal_id + '-edit-' + i;
     //   console.log('editModalId[' + i + ']:', this.editModalId[i]);
@@ -63,7 +66,6 @@ export class AddEditLanguagesComponent implements OnInit, OnChanges {
   }
 
   editLanguage(i: number) {
-
     if (!this.editModalId[i]) {
       this.editModalId[i] = this.modal_id + '-edit-' + i;
     }
@@ -72,4 +74,24 @@ export class AddEditLanguagesComponent implements OnInit, OnChanges {
     // console.log('Id:', i, 'moda_Id' + this.editModalId[i]);
   }
 
+  data: { languageId: number; levelId: number; numberOfStars: number } = {
+    languageId: 0,
+    levelId: 0,
+    numberOfStars: 0,
+  };
+
+  getLanguageObj(id: number) {
+    let languageObj = this.languagesList.find((l) => l.id === id);
+    if (languageObj) {
+      this.data.languageId = languageObj.languageId;
+      this.data.levelId = languageObj.levelId;
+      this.data.numberOfStars = languageObj.numberOfStars;
+    }
+  }
+
+  cleanLanguageObj() {
+    this.data.languageId = 0;
+    this.data.levelId = 0;
+    this.data.numberOfStars = 0;
+  }
 }

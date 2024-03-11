@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from '../app-routing.module';
 import { HeaderComponent } from './components/layout/header/header.component';
 import { MainComponent } from './components/layout/main/main.component';
@@ -11,14 +13,13 @@ import { AddEditLanguagesComponent } from './components/utils/add-edit-languages
 import { ButtonDropdownComponent } from './components/utils/buttons/button-dropdown.component';
 import { ProfileComponent } from './components/utils/cards/profile/profile.component';
 import { EducationalExperienceFormComponent } from './components/utils/experience-form/educational-experience-form/educational-experience-form.component';
+import { FormErrorComponent } from './components/utils/form-error/form-error.component';
 import { CheckboxInputComponent } from './components/utils/form-inputs/checkbox-input-component';
 import { DateInputComponent } from './components/utils/form-inputs/date-input-component';
 import { FileInputComponent } from './components/utils/form-inputs/file-input-component';
-import {
-  LanguageLevelSelectComponent,
-  LanguageSelectComponent,
-} from './components/utils/form-inputs/language-select-component';
+import { LanguageSelectComponent } from './components/utils/form-inputs/language-select-component';
 import { RadioInputComponent } from './components/utils/form-inputs/radio-input-component';
+import { SelectInputByValueComponent } from './components/utils/form-inputs/select-input-byvalue-component';
 import { SelectInputComponent } from './components/utils/form-inputs/select-input-component';
 import { SubtitleFormComponent } from './components/utils/form-inputs/subtitle-form-component';
 import { TextInputComponent } from './components/utils/form-inputs/text-input-component';
@@ -29,6 +30,7 @@ import { CheckboxDropdownSelectDataModalComponent } from './components/utils/mod
 import { CheckboxModalComponent } from './components/utils/modals/checkbox-modal.component';
 import { BaseModalFormComponent } from './components/utils/modals/forms/base-modal-form-component';
 import { CancelSaveButtonsComponent } from './components/utils/modals/forms/cancel-save-buttons';
+import { DescriptionModalFormComponent } from './components/utils/modals/forms/description-moda-form-component';
 import { EducationModalFormComponent } from './components/utils/modals/forms/education-form-component';
 import { ExperienceModalFormComponent } from './components/utils/modals/forms/experience-form-component';
 import { FeedbackModalFormComponent } from './components/utils/modals/forms/feedback-form-component';
@@ -38,20 +40,16 @@ import { NewFileModalFormComponent } from './components/utils/modals/forms/new-f
 import { NewProfilePicModalFormComponent } from './components/utils/modals/forms/new-profile-pic-form-component';
 import { SalaryBandModalForm } from './components/utils/modals/forms/salary-band-form-component';
 import { SocialsModalFormComponent } from './components/utils/modals/forms/socials-form-component';
+import { SoftSkillsModalFormComponent } from './components/utils/modals/forms/soft-skills-form-component';
 import { TechnicalSkillsModalFormComponent } from './components/utils/modals/forms/technical-skills-form-component';
 import { RadioModalComponent } from './components/utils/modals/radio-modal.component';
 import { RatingComponent } from './components/utils/rating/rating.component';
 import { PillTagComponent } from './components/utils/tags/pill-tag/pill-tag-component';
-import { FormErrorComponent } from './components/utils/form-error/form-error.component';
-import { ToastrModule } from 'ngx-toastr';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SelectInputByValueComponent } from './components/utils/form-inputs/select-input-byvalue-component';
-import { SoftSkillsModalFormComponent } from './components/utils/modals/forms/soft-skills-form-component';
-import { DescriptionModalFormComponent } from './components/utils/modals/forms/description-moda-form-component';
 
 import { WorkExperienceFormComponent } from './components/utils/experience-form/work-experience-form/work-experience-form-component';
-import { AddWorkExperiencesFormComponent } from './components/utils/modals/experiences-form/add-experiences/add-work-experience/add-work-experiences-form.component';
+import { LanguageLevelSelectComponent } from './components/utils/form-inputs/language-level-select';
 import { AddEducationalExperiencesFormComponent } from './components/utils/modals/experiences-form/add-experiences/add-educational-experience/add-educational-experiences-form.component';
+import { AddWorkExperiencesFormComponent } from './components/utils/modals/experiences-form/add-experiences/add-work-experience/add-work-experiences-form.component';
 import { EditEducationalExperiencesFormComponent } from './components/utils/modals/experiences-form/edit-experiences/edit-educational-experience/edit-educational-experiences-form.component';
 import { EditWorkExperiencesFormComponent } from './components/utils/modals/experiences-form/edit-experiences/edit-work-experience/edit-work-experiences-form.component';
 
@@ -106,9 +104,16 @@ import { EditWorkExperiencesFormComponent } from './components/utils/modals/expe
     AddWorkExperiencesFormComponent,
     AddEducationalExperiencesFormComponent,
     EditEducationalExperiencesFormComponent,
-    EditWorkExperiencesFormComponent
+    EditWorkExperiencesFormComponent,
   ],
-  imports: [CommonModule, AppRoutingModule, FormsModule, BrowserAnimationsModule, ToastrModule.forRoot(), ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    AppRoutingModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    ReactiveFormsModule,
+  ],
   exports: [
     HeaderComponent,
     MainComponent,
@@ -155,4 +160,4 @@ import { EditWorkExperiencesFormComponent } from './components/utils/modals/expe
     PillTagComponent,
   ],
 })
-export class SharedModule { }
+export class SharedModule {}

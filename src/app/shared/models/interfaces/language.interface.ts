@@ -8,6 +8,7 @@ export interface LanguageResponse {
   id: number;
   languageId: number;
   language: string;
+  levelId: number;
   level: string;
   numberOfStars: number;
 }
