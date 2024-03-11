@@ -93,4 +93,26 @@ export class CustomValidators {
       return null;
     };
   }
+
+  static linkedinUrl(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+      const linkedinPattern = /^(https?:\/\/)?([www.]+)?linkedin.com\/(in|pub)\/[a-zA-Z0-9_-]+(\/)?$/;
+      if (value != null && !linkedinPattern.test(value)) {
+        return { 'linkedinUrl': true };
+      }
+      return null;
+    };
+  }
+
+  static githubUrl(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+      const githubPattern = /^(https?:\/\/)?(www.)?github.com\/[a-zA-Z0-9_-]+(\/)?$/;
+      if (value != null && !githubPattern.test(value)) {
+        return { 'githubUrl': true };
+      }
+      return null;
+    };
+  }
 }

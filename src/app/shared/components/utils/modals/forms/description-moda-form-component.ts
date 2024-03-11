@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
 import { SharedDataService } from '../../../services/shared-data-service.service';
+import { CustomValidators } from '../../Validations/CustomValidators';
 @Component({
   selector: 'app-description-modal-form',
   template: `<app-base-modal-form
@@ -17,15 +18,28 @@ import { SharedDataService } from '../../../services/shared-data-service.service
           [placeholder]="'Ingrese la descripción del talento'"
           formControlName="description"
         ></app-textarea-select>
-        <span
-          class="font-medium text-red-500 leading-tight"
+
+        <div
+          class="grid gap-2 leading-tight"
           *ngIf="
-            descriptionForm.controls['description'].invalid &&
-            descriptionForm.controls['description'].touched
+            descriptionForm.get('description')?.touched &&
+            descriptionForm.get('description')?.errors
           "
         >
-          Este campo es obligatorio.
-        </span>
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="descriptionForm.get('description')?.errors?.['required']"
+          >
+            El campo de descripción es requerido.
+          </span>
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="descriptionForm.get('description')?.errors?.['minLength']"
+          >
+            El campo de descripción debe tener al menos 2 caracteres.
+          </span>
+        </div>
+
       </div>
       <app-cancel-save-buttons
         [form]="descriptionForm"
@@ -62,14 +76,18 @@ export class DescriptionModalFormComponent implements OnInit {
 
   buildForm() {
     this.descriptionForm = this.formBuilder.group({
-      description: ['', Validators.required],
+      description: ['', [CustomValidators.required, CustomValidators.minLength(10)]],
     });
   }
 
   update() {
+    if (this.descriptionForm.invalid) {
+      this.descriptionForm.markAllAsTouched();
+    }
+
     if (this.descriptionForm.valid) {
       let { description } = this.descriptionForm.value;
-
+      description = description.trim();
       this.talentDetailService.updateDescriptionForCurrentTalent(description);
       this.descriptionForm.reset();
     }

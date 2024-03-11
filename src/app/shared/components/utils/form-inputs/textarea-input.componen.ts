@@ -18,6 +18,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       [(ngModel)]="currentValue"
       (ngModelChange)="onChange($event)"
       [disabled]="isDisabled"
+      (blur)="onTouch()"
       [ngClass]="{ ' border-red-500': hasError }"
     ></textarea> `,
   providers: [

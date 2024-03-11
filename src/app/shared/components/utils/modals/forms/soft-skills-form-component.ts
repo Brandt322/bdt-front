@@ -1,6 +1,7 @@
 import { Component, Input, } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
+import { CustomValidators } from '../../Validations/CustomValidators';
 @Component({
   selector: 'app-soft-skills-modal-form',
   template: `<app-base-modal-form
@@ -16,14 +17,32 @@ import { TalentDetailService } from 'src/app/features/services/talent-detail.ser
           placeholder="Nombre de la habilidad"
         >
         </app-text-input>
-        <span
-          class="font-medium text-red-500 leading-tight"
+        <div
+          class="grid gap-2 leading-tight"
           *ngIf="
-            form.controls['skill'].invalid && form.controls['skill'].touched
+            form.get('skill')?.touched &&
+            form.get('skill')?.errors
           "
         >
-          Este campo es obligatorio.
-        </span>
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="form.get('skill')?.errors?.['required']"
+          >
+            El campo de skill es requerido.
+          </span>
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="form.get('skill')?.errors?.['minLength']"
+          >
+            El campo de skill debe tener al menos 2 caracteres.
+          </span>
+          <span
+            class="font-medium text-orange-500 leading-tight"
+            *ngIf="form.get('skill')?.errors?.['stringType']"
+          >
+            Solo puedes ingresar letras.
+          </span>
+        </div>
       </div>
       <app-cancel-save-buttons
         [form]="form"
@@ -43,13 +62,14 @@ export class SoftSkillsModalFormComponent {
 
 
   form = new FormGroup({
-    skill: new FormControl('', Validators.required),
+    skill: new FormControl('', [CustomValidators.required, CustomValidators.minLength(2), CustomValidators.stringType()]),
   });
 
 
   addTechnicalSkillToCurrentTalent() {
     if (this.form.valid) {
       const { id, skill } = this.form.value;
+      skill.trim();
       this.talentDetailService.addSoftSkillToCurrentTalent(
         id,
         skill
