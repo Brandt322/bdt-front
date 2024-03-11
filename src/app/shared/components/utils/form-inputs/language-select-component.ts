@@ -23,10 +23,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     </select>`,
 })
 export class LanguageSelectComponent {
-  @Input() id!: string;
-  @Input() defaultValue!: number;
-  @Output() EmtSelectedValue = new EventEmitter<number>();
-
   options: { value: number; label: string }[] = [
     {
       value: 1,
@@ -42,8 +38,13 @@ export class LanguageSelectComponent {
     },
   ];
 
-  onSelectChange(event: any) {
-    const selectedValue = event.target.value;
-    this.EmtSelectedValue.emit(selectedValue);
+  @Input() id!: string;
+  @Input() defaultValue!: number;
+  @Output() EmtSelectedValue = new EventEmitter<number>();
+
+  onSelectChange(event: Event): void {
+    this.EmtSelectedValue.emit(
+      Number((event.target as HTMLSelectElement).value)
+    );
   }
 }

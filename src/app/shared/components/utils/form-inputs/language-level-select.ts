@@ -46,8 +46,9 @@ export class LanguageLevelSelectComponent {
     },
   ];
 
-  onSelectChange(event: any) {
-    const selectedValue = event.target.value;
-    this.EmtSelectedValue.emit(selectedValue);
+  onSelectChange(event: Event): void {
+    this.EmtSelectedValue.emit(
+      Number((event.target as HTMLSelectElement).value)
+    );
   }
 }

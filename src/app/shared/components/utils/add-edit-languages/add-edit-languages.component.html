@@ -4,8 +4,8 @@
       {{ main_title }}
     </h4>
     <button
-      [attr.data-modal-target]="'languageModal'"
-      [attr.data-modal-toggle]="'languageModal'"
+      [attr.data-modal-target]="'languageModalAdd'"
+      [attr.data-modal-toggle]="'languageModalAdd'"
       (click)="setAddModalTitle()"
       (click)="cleanLanguageObj()"
     >
@@ -48,8 +48,8 @@
         (click)="editLanguage(i)"
       > -->
       <button
-        [attr.data-modal-target]="'languageModal'"
-        [attr.data-modal-toggle]="'languageModal'"
+        [attr.data-modal-target]="'languageModalEdit'"
+        [attr.data-modal-toggle]="'languageModalEdit'"
         (click)="editLanguage(i)"
         (click)="getLanguageObj(language.id)"
       >
@@ -70,14 +70,20 @@
   [data]="data"
 >
 </app-language-modal-form> -->
-<app-language-modal-form
+<!-- <app-language-modal-form
   *ngIf="type == 'lang'"
   [modal_id]="'languageModal'"
   title="{{ modalTitle }}"
   description="{{ modalDescription }}"
   [data]="data"
+  [modalIsOpen]="true"
 >
-</app-language-modal-form>
+</app-language-modal-form> -->
+<app-add-language [modal_id]="'languageModalAdd'"></app-add-language>
+<app-edit-language
+  [modal_id]="'languageModalEdit'"
+  [data]="data"
+></app-edit-language>
 <!-- <ng-container *ngFor="let language of languagesList; let i = index">
   <app-language-modal-form
     *ngIf="type == 'lang'"

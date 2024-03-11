@@ -12,17 +12,20 @@ import { Component, Input } from '@angular/core';
         <app-language-select
           [id]="'languageId'"
           [defaultValue]="data.languageId"
+          (EmtSelectedValue)="getSelectedLanguageId($event)"
         ></app-language-select>
         <app-language-level-select
           [id]="'levelId'"
           [defaultValue]="data.levelId"
+          (EmtSelectedValue)="getSelectedLevelId($event)"
         ></app-language-level-select>
         <div class="flex items-center justify-start mt-1">
           <app-rating
             [maxRating]="5"
-            [currentRating]="rating"
+            [currentRating]="data.numberOfStars"
             [ngClass]="'flex items-center'"
           ></app-rating>
+          <p>{{ 'Stars: ' + data.numberOfStars }}</p>
         </div>
       </div>
       <app-cancel-save-buttons
@@ -44,6 +47,21 @@ export class LanguageModalFormComponent {
   } = {
     languageId: 0,
     levelId: 0,
-    numberOfStars: 0,
+    numberOfStars: 4,
   };
+  @Input() modalIsOpen: boolean = false;
+
+  selectedLanguageId!: number;
+  selectedLevelId!: number;
+  selectedNumberOfStars!: number;
+
+  getSelectedLanguageId(value: number) {
+    this.selectedLanguageId = value;
+    console.log(this.selectedLanguageId);
+  }
+
+  getSelectedLevelId(value: number) {
+    this.selectedLevelId = value;
+    console.log(this.selectedLevelId);
+  }
 }

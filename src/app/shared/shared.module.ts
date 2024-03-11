@@ -46,6 +46,8 @@ import { RadioModalComponent } from './components/utils/modals/radio-modal.compo
 import { RatingComponent } from './components/utils/rating/rating.component';
 import { PillTagComponent } from './components/utils/tags/pill-tag/pill-tag-component';
 
+import { AddLanguageComponent } from './components/utils/add-edit-languages/add-language-component/add-language.component';
+import { EditLanguageComponent } from './components/utils/add-edit-languages/edit-language-component/edit-language.component';
 import { WorkExperienceFormComponent } from './components/utils/experience-form/work-experience-form/work-experience-form-component';
 import { LanguageLevelSelectComponent } from './components/utils/form-inputs/language-level-select';
 import { AddEducationalExperiencesFormComponent } from './components/utils/modals/experiences-form/add-experiences/add-educational-experience/add-educational-experiences-form.component';
@@ -105,6 +107,8 @@ import { EditWorkExperiencesFormComponent } from './components/utils/modals/expe
     AddEducationalExperiencesFormComponent,
     EditEducationalExperiencesFormComponent,
     EditWorkExperiencesFormComponent,
+    AddLanguageComponent,
+    EditLanguageComponent,
   ],
   imports: [
     CommonModule,

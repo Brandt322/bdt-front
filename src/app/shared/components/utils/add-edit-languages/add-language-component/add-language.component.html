@@ -1,0 +1,65 @@
+<app-base-modal-form
+  [id]="modal_id"
+  title="Agrega un nuevo idioma"
+  description="Agrega un nuevo idioma aprendido."
+>
+  <form>
+    <div class="grid gap-4 mb-8">
+      <div>
+        <label
+          for="languageIdSelect"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Idioma</label
+        >
+        <select
+          id="languageIdSelect"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        >
+          <option [value]="0" selected>-- Idiomas --</option>
+          <option *ngFor="let option of languages" [value]="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+      </div>
+      <div>
+        <label
+          for="languageIdSelect"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Nivel</label
+        >
+        <select
+          id="languageIdSelect"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        >
+          <option [value]="0" selected>-- Niveles --</option>
+          <option *ngFor="let option of levels" [value]="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+      </div>
+      <div class="flex items-center justify-start mt-1">
+        <app-rating
+          [maxRating]="5"
+          [ngClass]="'flex items-center'"
+        ></app-rating>
+      </div>
+    </div>
+    <div class="grid gap-4 md:grid-cols-2">
+      <button
+        [attr.data-modal-hide]="modal_id"
+        (click)="$event.stopPropagation()"
+        type="button"
+        class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+      >
+        Cancelar
+      </button>
+      <button
+        [attr.data-modal-hide]="modal_id"
+        type="submit"
+        class="text-white font-medium rounded-lg text-sm px-5 py-2.5 mb-2 bg-[#009788] hover:bg-[#0a655e]"
+      >
+        Guardar
+      </button>
+    </div>
+  </form>
+</app-base-modal-form>
