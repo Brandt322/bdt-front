@@ -41,6 +41,17 @@ export class CustomValidators {
     };
   }
 
+  static amountGreaterThan(initialAmountField: string, finalAmountField: string): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const initialAmount = control.get(initialAmountField)?.value;
+      const finalAmount = control.get(finalAmountField)?.value;
+      if (initialAmount != null && finalAmount != null && Number(initialAmount) >= Number(finalAmount)) {
+        return { 'amountGreaterThan': true };
+      }
+      return null;
+    };
+  }
+
   static stringType(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const value = control.value;
