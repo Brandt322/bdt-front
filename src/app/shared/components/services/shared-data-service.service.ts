@@ -12,13 +12,19 @@ export class SharedDataService {
   private finalMontSource = new BehaviorSubject<number>(0);
   private currencySource = new BehaviorSubject<number>(0);
   private descriptionSource = new BehaviorSubject<string>('');
+  private imageSource = new BehaviorSubject<string>('');
 
+  currentImage = this.imageSource.asObservable();
   currentInitialMont = this.initialMontSource.asObservable();
   currentFinalMont = this.finalMontSource.asObservable();
   currentCurrency = this.currencySource.asObservable();
   currentGithubLink = this.githubLinkSource.asObservable();
   currentLinkedinLink = this.linkedinLinkSource.asObservable();
   currentDescription = this.descriptionSource.asObservable();
+
+  changeImage(image: string) {
+    this.imageSource.next(image);
+  }
 
   changeDescription(description: string) {
     this.descriptionSource.next(description);

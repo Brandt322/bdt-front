@@ -200,6 +200,24 @@ export class TalentDetailService {
     }
   }
 
+  updateImageForCurrentTalent(image: string) {
+    if (this.currentTalentValue) {
+      this.talentService.updateImage(this.currentTalentValue.id, image).pipe(
+        catchError(error => {
+          this.toast.error('Hubo un error al actualizar la imagen');
+          throw error;
+        })
+      ).subscribe(() => {
+        if (this.currentTalentValue) {
+          this.currentTalentValue.image = image;
+          this.talentSource.next(this.currentTalentValue);
+          this.changeTalent(this.currentTalentValue.id);
+          this.toast.success('Se actualizó la imagen');
+        }
+      });
+    }
+  }
+
   updateSalaryBandForCurrentTalent(salaryRequest: TalentSalaryRequest) {
     // console.log('updateSalaryBandForCurrentTalent called');
     if (this.currentTalentValue) {

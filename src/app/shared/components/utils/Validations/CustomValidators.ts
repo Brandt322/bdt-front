@@ -20,6 +20,16 @@ export class CustomValidators {
     };
   }
 
+  static fileSizeValidator(maxSize: number): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const file = control.value;
+      if (file instanceof File && file.size > maxSize) {
+        return { 'fileSize': { maxSize } };
+      }
+      return null;
+    };
+  }
+
   static maxLength(max: number): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const value = control.value;
