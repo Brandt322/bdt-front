@@ -235,6 +235,8 @@ export class TalentCreateComponent implements OnInit {
     for (let i = 0; i < fileList.length; i++) {
       try {
         formValues['filesList'][i].file = await this.convertFileToBase64(fileList[i]);
+        formValues['filesList'][i].fileName = fileList[i].name;
+        formValues['filesList'][i].fileType = fileList[i].type;
       } catch (error) {
         console.error(error);
         this.toastr.error(`Ocurrió un error al leer el archivo ${i + 1}`, '¡Error!');
@@ -327,8 +329,6 @@ export class TalentCreateComponent implements OnInit {
     this.fileListNumber.push(this.fileListNumber.length);
     const files = this.createTalentForm.get('filesList') as FormArray;
     files.push(this.formBuilder.group({
-      fileName: ['', [Validators.required]],
-      fileType: ['', [Validators.required]],
       file: ['', [Validators.required, this.fileSizeValidator(5 * 1024 * 1024)]],
     }));
   }

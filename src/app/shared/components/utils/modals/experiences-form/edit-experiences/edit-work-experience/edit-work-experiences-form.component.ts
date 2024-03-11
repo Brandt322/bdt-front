@@ -32,13 +32,12 @@ export class EditWorkExperiencesFormComponent implements OnInit, AfterViewInit {
   constructor(private fb: FormBuilder, private talentDetailService: TalentDetailService, private cdr: ChangeDetectorRef) { }
 
   ngAfterViewInit(): void {
-
+    setTimeout(() => initModals())
   }
 
   ngOnInit(): void {
     console.log(this.modal_id);
     this.formBuild();
-    setTimeout(() => initModals())
     // this.cdr.detectChanges();
     // console.log(this.workExperience.endDate)
   }
