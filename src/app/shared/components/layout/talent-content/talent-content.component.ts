@@ -10,6 +10,7 @@ import { MasterService } from 'src/app/services/master/master.service';
 import { catchError, finalize, forkJoin, throwError } from 'rxjs';
 import { Language } from 'src/app/shared/models/interfaces/language.interface';
 import { Level } from 'src/app/shared/models/interfaces/level-interface';
+import { ICarouselItem } from '../../utils/carousel/ICarousel-metadata';
 
 
 
@@ -27,7 +28,7 @@ export class TalentContentComponent implements OnInit {
   processeLanguages: ProcesseLanguages[] = [];
   languageOptions: Language[] = [];
   levelOptions: Level[] = [];
-
+  talentFileList: ICarouselItem[] = [];
   constructor(
     private cdr: ChangeDetectorRef,
     private talentDetailService: TalentDetailService,
@@ -41,6 +42,16 @@ export class TalentContentComponent implements OnInit {
     this.talentDetailService.currentTalent.subscribe(talent => {
       this.talent = talent;
       // console.log(this.talent?.filesList);
+
+      this.talentFileList = this.talent?.filesList?.map((file, index) => {
+        return {
+          id: index,
+          fileName: file.fileName,
+          fileType: file.fileType,
+          file: file.file
+        };
+      }) || [];
+
       this.processedWorkExperiences = this.workExperiences;
       this.processeEducationalExperiences = this.educationalExperiences;
       this.processeLanguages = this.languagesList;
@@ -49,6 +60,16 @@ export class TalentContentComponent implements OnInit {
     });
     this.talentDetailService.updatedTalent.subscribe(updatedTalent => {
       this.talent = updatedTalent;
+
+      this.talentFileList = this.talent?.filesList?.map((file, index) => {
+        return {
+          id: index,
+          fileName: file.fileName,
+          fileType: file.fileType,
+          file: file.file
+        };
+      }) || [];
+
       this.processedWorkExperiences = this.workExperiences;
       this.processeEducationalExperiences = this.educationalExperiences;
       this.processeLanguages = this.languagesList;

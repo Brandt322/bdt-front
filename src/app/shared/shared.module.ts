@@ -54,6 +54,7 @@ import { AddEducationalExperiencesFormComponent } from './components/utils/modal
 import { AddWorkExperiencesFormComponent } from './components/utils/modals/experiences-form/add-experiences/add-work-experience/add-work-experiences-form.component';
 import { EditEducationalExperiencesFormComponent } from './components/utils/modals/experiences-form/edit-experiences/edit-educational-experience/edit-educational-experiences-form.component';
 import { EditWorkExperiencesFormComponent } from './components/utils/modals/experiences-form/edit-experiences/edit-work-experience/edit-work-experiences-form.component';
+import { CarouselComponent } from './components/utils/carousel/carousel.component';
 
 @NgModule({
   declarations: [
@@ -109,6 +110,7 @@ import { EditWorkExperiencesFormComponent } from './components/utils/modals/expe
     EditWorkExperiencesFormComponent,
     AddLanguageComponent,
     EditLanguageComponent,
+    CarouselComponent,
   ],
   imports: [
     CommonModule,
@@ -164,6 +166,7 @@ import { EditWorkExperiencesFormComponent } from './components/utils/modals/expe
     CheckboxDropdownSelectDataModalComponent,
     /* Tags */
     PillTagComponent,
+    CarouselComponent
   ],
 })
 export class SharedModule { }
