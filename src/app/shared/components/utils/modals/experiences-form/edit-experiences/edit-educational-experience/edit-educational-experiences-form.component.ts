@@ -1,23 +1,27 @@
 import { formatDate } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
 import { EducationalExperienceRequest } from 'src/app/shared/models/interfaces/educationalExperience.interface';
+import { CustomValidators } from '../../../../Validations/CustomValidators';
 
 @Component({
   selector: 'app-edit-educational-experiences-form',
   templateUrl: './edit-educational-experiences-form.component.html'
 })
 export class EditEducationalExperiencesFormComponent implements OnInit {
-  @Input() index!: number;
+  @Input() id!: number;
   @Input() title!: string;
   @Input() description!: string;
   @Input() educationalExperience!: EducationalExperienceRequest;
-  modal_id!: string;
-  institutionValue: string = '';
+  @Input() modal_id!: string;
+  educationalExperienceForm!: FormGroup;
 
-  startDateValue: string | Date = '';
-  endDateValue!: string | Date;
+  institutionValue: string = '';
   careerValue: string = '';
   degreeValue: string = '';
+  startDateValue: string | Date = '';
+  endDateValue!: string | Date;
 
   currentDate = new Date();
 
@@ -25,36 +29,131 @@ export class EditEducationalExperiencesFormComponent implements OnInit {
   isCurrentlyStudying: boolean = false;
   disableTextInput: boolean = false;
   disableEndDateInput: boolean = false;
-  constructor() { }
+
+  constructor(private fb: FormBuilder, private talentDetailService: TalentDetailService) { }
 
   ngOnInit(): void {
-    this.modal_id = 'edit-educational-experience-modal-' + this.index;
-    this.institutionValue = this.educationalExperience.educationalInstitute;
-    this.isEducationalFractal = this.institutionValue === 'Fractal';
-    this.careerValue = this.educationalExperience.career;
-    this.degreeValue = this.educationalExperience.degree;
-    this.startDateValue = this.educationalExperience.startDate;
-    this.endDateValue = this.educationalExperience.endDate;
-    this.isCurrentlyStudying = this.educationalExperience.endDate instanceof Date && this.isToday(this.educationalExperience.endDate);
+    this.formBuild();
   }
 
-  isToday(date: Date): boolean {
+  formBuild() {
+
+    this.isEducationalFractal = this.educationalExperience.educationalInstitute === 'Fractal';
+    this.isCurrentlyStudying = this.isToday(this.educationalExperience.endDate);
+
+    this.educationalExperienceForm = this.fb.group({
+      educationalInstitute: [this.educationalExperience.educationalInstitute, [CustomValidators.required, CustomValidators.minLength(3), CustomValidators.stringType()]],
+      career: [this.educationalExperience.career, [CustomValidators.required, CustomValidators.minLength(3), CustomValidators.stringType()]],
+      degree: [this.educationalExperience.degree, [CustomValidators.required, CustomValidators.minLength(3), CustomValidators.stringType()]],
+      startDate: [this.educationalExperience.startDate, CustomValidators.required],
+      endDate: [this.educationalExperience.endDate, CustomValidators.required],
+      isEducationalFractal: [this.isEducationalFractal],
+      isCurrentlyStudying: [this.isToday(this.educationalExperience.endDate)]
+    }, { validators: CustomValidators.dateGreaterThan('startDate', 'endDate') });
+
+    // Disable the endDate input if the endDate is today
+    const endDateControl = this.educationalExperienceForm.get('endDate');
+    if (endDateControl && this.isToday(this.educationalExperience.endDate)) {
+      this.disableEndDateInput = true;
+    }
+
+    // Disable the company input if the company is 'Fractal'
+    const companyControl = this.educationalExperienceForm.get('educationalInstitute');
+    if (companyControl && this.isEducationalFractal) {
+      this.disableTextInput = true;
+    }
+  }
+
+  cancelForm() {
+    this.educationalExperienceForm.reset({
+      educationalInstitute: this.educationalExperience.educationalInstitute,
+      career: this.educationalExperience.career,
+      degree: this.educationalExperience.degree,
+      startDate: this.educationalExperience.startDate,
+      endDate: this.educationalExperience.endDate,
+      isEducationalFractal: this.isEducationalFractal,
+      isCurrentlyStudying: this.isToday(this.educationalExperience.endDate)
+    });
+
+    // Reset the state of the checkboxes
+    const isEducationalFractalControl = this.educationalExperienceForm.get('isEducationalFractal');
+    if (isEducationalFractalControl) {
+      isEducationalFractalControl.reset(this.isEducationalFractal);
+    }
+
+    const isCurrentlyStudyingControl = this.educationalExperienceForm.get('isCurrentlyStudying');
+    if (isCurrentlyStudyingControl) {
+      isCurrentlyStudyingControl.reset(this.isToday(this.educationalExperience.endDate));
+    }
+
+    // Disable the endDate input if the endDate is today
+    const endDateControl = this.educationalExperienceForm.get('endDate');
+    if (endDateControl) {
+      if (this.isToday(this.educationalExperience.endDate)) {
+        this.disableEndDateInput = true;
+      } else {
+        this.disableEndDateInput = false;
+      }
+    }
+
+    // Disable the company input if the company is 'Fractal'
+    const companyControl = this.educationalExperienceForm.get('educationalInstitute');
+    if (companyControl) {
+      if (this.isEducationalFractal) {
+        this.disableTextInput = true;
+      } else {
+        this.disableTextInput = false;
+      }
+    }
+  }
+
+  isToday(date: any): boolean {
+    if (!(date instanceof Date)) {
+      const [year, month, day] = date.split('-');
+      date = new Date(year, month - 1, day); // Create a local date
+    }
+    date.setHours(0, 0, 0, 0); // Set the time to midnight
+
     const today = new Date();
-    return date.getDate() === today.getDate() &&
-      date.getMonth() === today.getMonth() &&
-      date.getFullYear() === today.getFullYear();
+    today.setHours(0, 0, 0, 0); // Set the time to midnight
+
+    // console.log(date.getTime(), today.getTime())
+    return date.getTime() === today.getTime();
   }
 
   institutionIfChecked(isChecked: boolean) {
-    this.institutionValue = isChecked ? 'Fractal' : '';
-    this.disableTextInput = isChecked;
-
+    const institutionControl = this.educationalExperienceForm.get('educationalInstitute');
+    if (institutionControl) {
+      institutionControl.setValue(isChecked ? 'Fractal' : '');
+      if (isChecked) {
+        this.disableTextInput = true;
+      } else {
+        this.disableTextInput = false;
+      }
+    }
   }
 
   endDateIfChecked(isChecked: boolean) {
-    this.disableEndDateInput = isChecked;
-    this.endDateValue = isChecked
-      ? formatDate(this.currentDate, 'yyyy-MM-dd', 'en-US')
-      : '';
+    const endDateControl = this.educationalExperienceForm.get('endDate');
+    if (endDateControl) {
+      if (isChecked) {
+        this.disableEndDateInput = true;
+        endDateControl.setValue(formatDate(this.currentDate, 'yyyy-MM-dd', 'en-US'));
+      } else {
+        this.disableEndDateInput = false;
+        endDateControl.setValue('');
+      }
+    }
+  }
+
+  submitForm() {
+    if (this.educationalExperienceForm.valid) {
+      const educationalExperience = this.educationalExperienceForm.value;
+      let { educationalInstitute, career, degree, startDate, endDate } = educationalExperience;
+      educationalInstitute = educationalInstitute.trim();
+      career = career.trim();
+      degree = degree.trim();
+      this.talentDetailService.updateEducationalExperienceForCurrentTalent(this.id, this.id, educationalInstitute, career, degree, startDate, endDate);
+    }
   }
 }

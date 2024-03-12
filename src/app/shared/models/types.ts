@@ -1,4 +1,5 @@
 export interface ProcessedWorkExperiences {
+  id?: number;
   company: string;
   position: string;
   startDate: Date;
@@ -7,6 +8,7 @@ export interface ProcessedWorkExperiences {
 }
 
 export interface ProcesseEducationalExperiences {
+  id?: number;
   educationalInstitute: string;
   career: string;
   degree: string;

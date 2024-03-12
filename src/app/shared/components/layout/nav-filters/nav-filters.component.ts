@@ -46,6 +46,11 @@ export class NavFiltersComponent implements OnInit {
       formValue.technicalSkills = null;
     }
 
+    // Si 'data' está vacío, establecerlo en null
+    if (this.myForm && this.myForm.get('data') && this.myForm.get('data')?.value?.trim() === '') {
+      formValue.data = null;
+    }
+
     console.log(formValue);
     this.talentService.getTalentsByTechnicalSkillsLanguageAndLevel(formValue)
       .pipe(
@@ -70,7 +75,8 @@ export class NavFiltersComponent implements OnInit {
     this.myForm = this.formBuilder.group({
       languageId: [null],
       levelId: [null],
-      technicalSkills: [this.formBuilder.array([])]
+      technicalSkills: [this.formBuilder.array([])],
+      data: ['']
     })
   }
 

@@ -3,67 +3,181 @@
   title="Edita tu experiencia educativa"
   description="La vida esta llena de cambios. Edita tu experiencia educativa."
 >
-  <form>
+  <form [formGroup]="educationalExperienceForm" (ngSubmit)="submitForm()">
     <div class="mb-8">
       <div class="grid gap-4">
         <app-text-input
-          [id]="'institucion'"
+          [id]="'institucion-' + id"
           label="Institución"
           placeholder="Nombre de la institución"
           [value]="institutionValue"
           [isDisabled]="disableTextInput"
+          formControlName="educationalInstitute"
         >
         </app-text-input>
         <app-checkbox-input
-          [id]="'edu-edit-fractal'"
+          [id]="'edu-edit-fractal' + id"
           label="Aquí en Fractal"
           [isChecked]="isEducationalFractal"
           (isCheckedChange)="institutionIfChecked($event)"
+          formControlName="isEducationalFractal"
         ></app-checkbox-input>
+
+        <div
+          class="grid gap-2 leading-tight"
+          *ngIf="
+            educationalExperienceForm.get('educationalInstitute')?.touched &&
+            educationalExperienceForm.get('educationalInstitute')?.errors
+          "
+        >
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="educationalExperienceForm.get('educationalInstitute')?.errors?.['required']"
+          >
+            El campo de institución es requerido.
+          </span>
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="educationalExperienceForm.get('educationalInstitute')?.errors?.['minLength']"
+          >
+            El campo de institución debe tener al menos 3 caracteres.
+          </span>
+          <span
+            class="font-medium text-orange-500 leading-tight"
+            *ngIf="educationalExperienceForm.get('educationalInstitute')?.errors?.['stringType']"
+          >
+            Solo puedes ingresar letras.
+          </span>
+        </div>
+
         <app-text-input
-          [id]="'carrera'"
+          [id]="'carrera' + id"
           label="Carrera"
           placeholder="Nombre de la carrera"
           [value]="careerValue"
-        >
-        </app-text-input>
-        <app-text-input
-          [id]="'grado'"
-          label="Grado"
-          placeholder="Grado de la carrera"
-          [value]="degreeValue"
+          formControlName="career"
         >
         </app-text-input>
 
+        <div
+          class="grid gap-2 leading-tight"
+          *ngIf="
+            educationalExperienceForm.get('career')?.touched &&
+            educationalExperienceForm.get('career')?.errors
+          "
+        >
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="educationalExperienceForm.get('career')?.errors?.['required']"
+          >
+            El campo de carrera es requerido.
+          </span>
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="educationalExperienceForm.get('career')?.errors?.['minLength']"
+          >
+            El campo de carrera debe tener al menos 3 caracteres.
+          </span>
+          <span
+            class="font-medium text-orange-500 leading-tight"
+            *ngIf="educationalExperienceForm.get('career')?.errors?.['stringType']"
+          >
+            Solo puedes ingresar letras.
+          </span>
+        </div>
+
+        <app-text-input
+          [id]="'grado' + id"
+          label="Grado"
+          placeholder="Grado de la carrera"
+          [value]="degreeValue"
+          formControlName="degree"
+        >
+        </app-text-input>
+
+        <div
+          class="grid gap-2 leading-tight"
+          *ngIf="
+            educationalExperienceForm.get('degree')?.touched &&
+            educationalExperienceForm.get('degree')?.errors
+          "
+        >
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="educationalExperienceForm.get('degree')?.errors?.['required']"
+          >
+            El campo de grado es requerido.
+          </span>
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="educationalExperienceForm.get('degree')?.errors?.['minLength']"
+          >
+            El campo de grado debe tener al menos 3 caracteres.
+          </span>
+          <span
+            class="font-medium text-orange-500 leading-tight"
+            *ngIf="educationalExperienceForm.get('degree')?.errors?.['stringType']"
+          >
+            Solo puedes ingresar letras.
+          </span>
+        </div>
+
         <div class="grid gap-4 md:grid-cols-2">
           <app-date-input
-            [id]="'edu-anio-mes-inicio'"
+            [id]="'edu-anio-mes-inicio' + id"
             label="Año y mes de inicio"
             placeholder="Fecha de inicio"
             [value]="startDateValue"
+            formControlName="startDate"
           >
           </app-date-input>
           <app-date-input
-            [id]="'edu-anio-mes-fin'"
+            [id]="'edu-anio-mes-fin' + id"
             label="Año y mes final"
             placeholder="Fecha de fin"
             [value]="endDateValue"
             [isDisabled]="disableEndDateInput"
+            formControlName="endDate"
           >
           </app-date-input>
         </div>
 
         <app-checkbox-input
-          [id]="'exp-actual-edit'"
+          [id]="'exp-actual-edit' + id"
           label="Hasta la actualidad"
           [isChecked]="isCurrentlyStudying"
           (isCheckedChange)="endDateIfChecked($event)"
+          formControlName="isCurrentlyStudying"
         ></app-checkbox-input>
+        <div
+          class="grid gap-2 leading-tight"
+          *ngIf="
+            (educationalExperienceForm.get('startDate')?.touched && educationalExperienceForm.get('startDate')?.errors?.['required']) ||
+            (educationalExperienceForm.get('endDate')?.touched && educationalExperienceForm.get('endDate')?.errors?.['required'])
+          "
+        >
+          <span class="font-medium text-red-500 leading-tight">
+            Ambas fechas son obligatorias.
+          </span>
+        </div>
+        <div
+          class="grid gap-2 leading-tight"
+          *ngIf="educationalExperienceForm.errors"
+        >
+          <span
+            class="font-medium text-orange-500 leading-tight"
+            *ngIf="educationalExperienceForm.errors['dateGreaterThan']"
+          >
+            La fecha de inicio debe ser anterior a la fecha de finalización.
+          </span>
+        </div>
       </div>
     </div>
     <app-cancel-save-buttons
       [modal_id]="modal_id"
       [save_button_id]="'save-experience'"
+      [form]="educationalExperienceForm"
+      (cancelClicked)="cancelForm()"
     ></app-cancel-save-buttons>
   </form>
 </app-base-modal-form>

@@ -137,18 +137,15 @@
             Experiencia
           </h4>
           <button
-            [attr.data-modal-target]="
-              talent?.name + '-add-work-experience-modal'
-            "
-            [attr.data-modal-toggle]="
-              talent?.name + '-add-work-experience-modal'
-            "
+            [attr.data-modal-target]="talent?.id + '-add-work-experience-modal'"
+            [attr.data-modal-toggle]="talent?.id + '-add-work-experience-modal'"
           >
             <i class="fa-solid fa-plus text-gray-500"></i>
           </button>
         </div>
 
         <div
+          [id]="experience.id"
           *ngFor="let experience of processedWorkExperiences; let i = index"
           class="flex justify-start items-center p-2 gap-2 rounded-md bg-gray-50 hover:bg-gray-200 shadow-sm-light"
         >
@@ -170,10 +167,10 @@
             </div>
             <button
               [attr.data-modal-target]="
-                'edit-work-experience-modal-' + i + talent?.name
+                'edit-work-experience-modal-' + experience.id + talent?.id
               "
               [attr.data-modal-toggle]="
-                'edit-work-experience-modal-' + i + talent?.name
+                'edit-work-experience-modal-' + experience.id + talent?.id
               "
             >
               <span
@@ -192,10 +189,10 @@
           </h4>
           <button
             [attr.data-modal-target]="
-              talent?.name + '-add-educational-experience-modal'
+              talent?.id + '-add-educational-experience-modal'
             "
             [attr.data-modal-toggle]="
-              talent?.name + '-add-educational-experience-modal'
+              talent?.id + '-add-educational-experience-modal'
             "
           >
             <i class="fa-solid fa-plus text-gray-500"></i>
@@ -203,6 +200,7 @@
         </div>
 
         <div
+          [id]="experience.id"
           class="flex justify-start items-center p-2 gap-2 rounded-md bg-gray-50 hover:bg-gray-200 shadow-sm-light"
           *ngFor="
             let experience of processeEducationalExperiences;
@@ -227,10 +225,14 @@
             </div>
             <button
               [attr.data-modal-target]="
-                'edit-educational-experience-modal-' + i
+                'edit-educational-experience-modal-' +
+                experience.id +
+                talent?.id
               "
               [attr.data-modal-toggle]="
-                'edit-educational-experience-modal-' + i
+                'edit-educational-experience-modal-' +
+                experience.id +
+                talent?.id
               "
             >
               <span
@@ -270,10 +272,10 @@
 </div>
 
 <app-add-work-experiences-form
-  [modal_id]="talent?.name + '-add-work-experience-modal'"
+  [modal_id]="talent?.id + '-add-work-experience-modal'"
 ></app-add-work-experiences-form>
 <app-add-educational-experiences-form
-  [modal_id]="talent?.name + '-add-educational-experience-modal'"
+  [modal_id]="talent?.id + '-add-educational-experience-modal'"
 >
 </app-add-educational-experiences-form>
 
@@ -281,15 +283,19 @@
   *ngFor="let experience of processedWorkExperiences; let i = index"
 >
   <app-edit-work-experiences-form
-    [modal_id]="'edit-work-experience-modal-' + i + talent?.name"
+    [modal_id]="'edit-work-experience-modal-' + experience.id + talent?.id"
     [workExperience]="experience"
+    [id]="experience.id || 0"
   ></app-edit-work-experiences-form>
 </ng-container>
 <ng-container
   *ngFor="let experience of processeEducationalExperiences; let i = index"
 >
   <app-edit-educational-experiences-form
-    [index]="i"
+    [modal_id]="
+      'edit-educational-experience-modal-' + experience.id + talent?.id
+    "
     [educationalExperience]="experience"
+    [id]="experience.id || 0"
   ></app-edit-educational-experiences-form>
 </ng-container>

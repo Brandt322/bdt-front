@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { SharedDataService } from '../../../services/shared-data-service.service';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CustomValidators } from '../../Validations/CustomValidators';
 
 @Component({
   selector: 'app-salary-band-modal-form',
@@ -82,7 +83,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
               salaryBandForm.controls['initialAmount'].touched
             "
           >
-            Este campo es obligatorio.
+            El monto inicial es obligatorio.
           </span>
           <span
             class="font-medium text-red-500 leading-tight"
@@ -91,7 +92,43 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
               salaryBandForm.controls['finalAmount'].touched
             "
           >
-            Este campo es obligatorio.
+            El monto final es obligatorio.
+          </span>
+        </div>
+        <div
+          class="grid gap-2 leading-tight"
+          *ngIf="
+            (salaryBandForm.get('initialAmount')?.touched &&
+              salaryBandForm.get('initialAmount')?.errors) ||
+            (salaryBandForm.get('finalAmount')?.touched &&
+              salaryBandForm.get('finalAmount')?.errors)
+          "
+        >
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="salaryBandForm.get('initialAmount')?.errors?.['minValue'] || salaryBandForm.get('finalAmount')?.errors?.['minValue']"
+          >
+            El minimo valor es de 500.
+          </span>
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="salaryBandForm.get('initialAmount')?.errors?.['maxValue'] || salaryBandForm.get('finalAmount')?.errors?.['maxValue']"
+          >
+            El campo de grado debe tener al menos 3 caracteres.
+          </span>
+          <span
+            class="font-medium text-orange-500 leading-tight"
+            *ngIf="salaryBandForm.get('initialAmount')?.errors?.['numericType'] || salaryBandForm.get('finalAmount')?.errors?.['numericType']"
+          >
+            Solo puedes ingresar numeros
+          </span>
+        </div>
+        <div class="grid gap-2 leading-tight" *ngIf="salaryBandForm.errors">
+          <span
+            class="font-medium text-orange-500 leading-tight"
+            *ngIf="salaryBandForm.errors['amountGreaterThan']"
+          >
+            El monto inicial no debe ser mayor que el monto final.
           </span>
         </div>
       </div>
@@ -111,7 +148,7 @@ export class SalaryBandModalForm {
   initialAmount!: number;
   finalAmount!: number;
   currency!: string;
-  currencyId!: number
+  currencyId!: number;
   salaryBandForm!: FormGroup;
 
   constructor(
@@ -135,21 +172,48 @@ export class SalaryBandModalForm {
     });
     this.data.currentCurrency.subscribe((currency) => {
       this.currencyId = currency;
-      this.salaryBandForm.get('currencyId')?.setValue(this.currencyId.toString());
+      this.salaryBandForm
+        .get('currencyId')
+        ?.setValue(this.currencyId.toString());
     });
   }
 
   buildForm() {
-    this.salaryBandForm = this.formBuilder.group({
-      initialAmount: ['', Validators.required],
-      finalAmount: ['', Validators.required],
-      currencyId: [0, Validators.required],
-    });
+    this.salaryBandForm = this.formBuilder.group(
+      {
+        initialAmount: [
+          0,
+          [
+            Validators.required,
+            CustomValidators.minValue(500),
+            CustomValidators.maxValue(100000),
+            CustomValidators.numericType()
+          ],
+        ],
+        finalAmount: [
+          0,
+          [
+            Validators.required,
+            CustomValidators.minValue(500),
+            CustomValidators.maxValue(100000),
+            CustomValidators.numericType()
+          ],
+        ],
+        currencyId: [0, Validators.required],
+      },
+      {
+        validator: CustomValidators.amountGreaterThan(
+          'initialAmount',
+          'finalAmount'
+        ),
+      }
+    );
   }
 
   update() {
     if (this.salaryBandForm.valid) {
-      let { initialAmount, finalAmount, currencyId } = this.salaryBandForm.value;
+      let { initialAmount, finalAmount, currencyId } =
+        this.salaryBandForm.value;
 
       this.talentDetailService.updateSalaryBandForCurrentTalent({
         initialAmount,

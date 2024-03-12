@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { SharedDataService } from '../../../services/shared-data-service.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TalentDetailService } from '../../../../../features/services/talent-detail.service';
+import { CustomValidators } from '../../Validations/CustomValidators';
 
 @Component({
   selector: 'app-socials-modal-form',
@@ -29,26 +30,48 @@ import { TalentDetailService } from '../../../../../features/services/talent-det
         >
         </app-text-input>
       </div>
-      <div class="grid gap-4 md:grid-cols-2">
-          <span
-            class="font-medium text-red-500 leading-tight"
-            *ngIf="
-              socialForm.controls['linkedinLink'].invalid &&
-              socialForm.controls['linkedinLink'].touched
-            "
-          >
-            Este campo es obligatorio.
-          </span>
-          <span
-            class="font-medium text-red-500 leading-tight"
-            *ngIf="
-              socialForm.controls['githubLink'].invalid &&
-              socialForm.controls['githubLink'].touched
-            "
-          >
-            Este campo es obligatorio.
-          </span>
-        </div>
+      <div class="grid gap-4 md:grid-cols-2 mb-1">
+        <span
+          class="font-medium text-red-500 leading-tight"
+          *ngIf="
+            socialForm.controls['linkedinLink'].invalid &&
+            socialForm.controls['linkedinLink'].touched
+          "
+        >
+          El campo de linkedin campo es obligatorio.
+        </span>
+        <span
+          class="font-medium text-red-500 leading-tight"
+          *ngIf="
+            socialForm.controls['githubLink'].invalid &&
+            socialForm.controls['githubLink'].touched
+          "
+        >
+          El campo de github es obligatorio.
+        </span>
+      </div>
+      <div
+        class="grid gap-4 md:grid-cols-2 mb-1"
+        *ngIf="
+          (socialForm.get('githubLink')?.touched &&
+            socialForm.get('githubLink')?.errors) ||
+          (socialForm.get('linkedinLink')?.touched &&
+            socialForm.get('linkedinLink')?.errors)
+        "
+      >
+        <span
+          class="font-medium text-orange-500 leading-tight"
+          *ngIf="socialForm.get('linkedinLink')?.errors?.['linkedinUrl']"
+        >
+          El enlace que ingresaste no cumple con el formato de linkeind
+        </span>
+        <span
+          class="font-medium text-orange-500 leading-tight"
+          *ngIf="socialForm.get('githubLink')?.errors?.['githubUrl']"
+        >
+          El enlace que ingresaste no cumple con el formato de github
+        </span>
+      </div>
       <app-cancel-save-buttons
         [form]="socialForm"
         [modal_id]="modal_id"
@@ -88,8 +111,8 @@ export class SocialsModalFormComponent {
 
   buildForm() {
     this.socialForm = this.formBuilder.group({
-      githubLink: ['', Validators.required],
-      linkedinLink: ['', Validators.required],
+      githubLink: ['', [Validators.required, CustomValidators.githubUrl()]],
+      linkedinLink: ['', [Validators.required, CustomValidators.linkedinUrl()]],
     });
   }
 

@@ -33,35 +33,6 @@
             *ngFor="let fileControl of fileList.controls; let i = index"
             [formGroupName]="i"
           >
-            <app-text-input
-              [id]="'nombre_archivo' + i"
-              label="Nombre del archivo"
-              placeholder="Ingrese el nombre del archivo"
-              formControlName="fileName"
-              [hasError]="isValidField('filesList.' + i + '.fileName')"
-            >
-            </app-text-input>
-            <span
-              *ngIf="isValidField('filesList.' + i + '.fileName')"
-              class="font-medium text-red-500 leading-tight"
-            >
-              {{ getFieldError("filesList." + i + ".fileName") }}
-            </span>
-            <app-text-input
-              [id]="'tipo_archivo' + i"
-              label="Tipo de archivo"
-              placeholder="Ingrese el tipo del archivo"
-              formControlName="fileType"
-              [hasError]="isValidField('filesList.' + i + '.fileType')"
-            >
-            </app-text-input>
-            <span
-              *ngIf="isValidField('filesList.' + i + '.fileType')"
-              class="font-medium text-red-500 leading-tight"
-            >
-              {{ getFieldError("filesList." + i + ".fileType") }}
-            </span>
-
             <app-file-input
               [id]="'cv' + i"
               title="Curriculum Vitae"
@@ -216,7 +187,7 @@
             </span>
             <app-select-input
               [id]="'profile'"
-              label="Perfil"
+              label="Puesto actual"
               optionName="Escoge tu perfil"
               [data]="profilesOptions"
               [optionKey]="'profile'"
@@ -233,7 +204,7 @@
         </div>
 
         <div class="mb-8">
-          <app-subtitle-form text="Paises"></app-subtitle-form>
+          <app-subtitle-form text="Locación"></app-subtitle-form>
           <div class="grid gap-4">
             <app-select-input
               [id]="'country'"

@@ -1,7 +1,8 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
-import { Modal } from 'flowbite';
+import { CustomValidators } from '../../Validations/CustomValidators';
+
 @Component({
   selector: 'app-technical-skills-modal-form',
   template: `<app-base-modal-form
@@ -17,14 +18,32 @@ import { Modal } from 'flowbite';
           placeholder="Nombre de la habilidad"
         >
         </app-text-input>
-        <span
-          class="font-medium text-red-500 leading-tight"
+        <div
+          class="grid gap-2 leading-tight"
           *ngIf="
-            form.controls['skill'].invalid && form.controls['skill'].touched
+            form.get('skill')?.touched &&
+            form.get('skill')?.errors
           "
         >
-          Este campo es obligatorio.
-        </span>
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="form.get('skill')?.errors?.['required']"
+          >
+            El campo de skill es requerido.
+          </span>
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="form.get('skill')?.errors?.['minLength']"
+          >
+            El campo de skill debe tener al menos 2 caracteres.
+          </span>
+          <span
+            class="font-medium text-orange-500 leading-tight"
+            *ngIf="form.get('skill')?.errors?.['stringType']"
+          >
+            Solo puedes ingresar letras.
+          </span>
+        </div>
         <app-text-input
           formControlName="years"
           [id]="'link-github'"
@@ -32,14 +51,32 @@ import { Modal } from 'flowbite';
           placeholder="Nro. de años"
         >
         </app-text-input>
-        <span
-          class="font-medium text-red-500 leading-tight"
+        <div
+          class="grid gap-2 leading-tight"
           *ngIf="
-            form.controls['years'].invalid && form.controls['years'].touched
+            form.get('years')?.touched &&
+            form.get('years')?.errors
           "
         >
-          Este campo es obligatorio.
-        </span>
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="form.get('years')?.errors?.['required']"
+          >
+            El campo de years es requerido.
+          </span>
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="form.get('years')?.errors?.['minValue']"
+          >
+            El campo de years debe ser al menos 1.
+          </span>
+          <span
+            class="font-medium text-orange-500 leading-tight"
+            *ngIf="form.get('years')?.errors?.['numericType']"
+          >
+            Solo puedes ingresar letras.
+          </span>
+        </div>
       </div>
       <app-cancel-save-buttons
         [form]="form"
@@ -58,14 +95,15 @@ export class TechnicalSkillsModalFormComponent {
   constructor(private talentDetailService: TalentDetailService) { }
 
   form = new FormGroup({
-    skill: new FormControl('', Validators.required),
-    years: new FormControl('', Validators.required),
+    skill: new FormControl('', [CustomValidators.required, CustomValidators.minLength(2), CustomValidators.stringType()]),
+    years: new FormControl('', [CustomValidators.required, CustomValidators.minValue(1), CustomValidators.numericType()]),
   });
 
 
   addTechnicalSkillToCurrentTalent() {
     if (this.form.valid) {
       const { id, skill, years } = this.form.value;
+      skill.trim();
       this.talentDetailService.addTechnicalSkillToCurrentTalent(
         id,
         skill,
