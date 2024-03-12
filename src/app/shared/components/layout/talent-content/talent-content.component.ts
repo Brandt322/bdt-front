@@ -3,7 +3,13 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
 import { TalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
 import { SharedDataService } from '../../services/shared-data-service.service';
-import { ProcesseEducationalExperiences, ProcessedWorkExperiences } from 'src/app/shared/models/types';
+import { ProcesseEducationalExperiences, ProcesseLanguages, ProcessedWorkExperiences } from 'src/app/shared/models/types';
+import { MASTER_API_ENDPOINTS } from 'src/app/core/global/constants/api-endpoints';
+import { LoaderService } from 'src/app/core/global/loader/loader.service';
+import { MasterService } from 'src/app/services/master/master.service';
+import { catchError, finalize, forkJoin, throwError } from 'rxjs';
+import { Language } from 'src/app/shared/models/interfaces/language.interface';
+import { Level } from 'src/app/shared/models/interfaces/level-interface';
 
 
 
@@ -18,7 +24,18 @@ export class TalentContentComponent implements OnInit {
   talent: TalentResponse | null = null;
   processedWorkExperiences: ProcessedWorkExperiences[] = [];
   processeEducationalExperiences: ProcesseEducationalExperiences[] = [];
-  constructor(private cdr: ChangeDetectorRef, private talentDetailService: TalentDetailService, private sanitizer: DomSanitizer, private data: SharedDataService) { }
+  processeLanguages: ProcesseLanguages[] = [];
+  languageOptions: Language[] = [];
+  levelOptions: Level[] = [];
+
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private talentDetailService: TalentDetailService,
+    private sanitizer: DomSanitizer,
+    private data: SharedDataService,
+    private loader: LoaderService,
+    private masterService: MasterService
+  ) { }
 
   ngOnInit() {
     this.talentDetailService.currentTalent.subscribe(talent => {
@@ -26,14 +43,44 @@ export class TalentContentComponent implements OnInit {
       // console.log(this.talent?.filesList);
       this.processedWorkExperiences = this.workExperiences;
       this.processeEducationalExperiences = this.educationalExperiences;
+      this.processeLanguages = this.languagesList;
+
       // this.cdr.detectChanges();
     });
     this.talentDetailService.updatedTalent.subscribe(updatedTalent => {
       this.talent = updatedTalent;
       this.processedWorkExperiences = this.workExperiences;
       this.processeEducationalExperiences = this.educationalExperiences;
+      this.processeLanguages = this.languagesList;
       // this.cdr.detectChanges();
     });
+    this.requestOptions();
+  }
+
+  requestOptions() {
+    this.loader.showLoader();
+
+    const languageRequest = this.masterService.getLanguage(
+      MASTER_API_ENDPOINTS.LANGUAGES
+    );
+    const levelRequest = this.masterService.getLevel(
+      MASTER_API_ENDPOINTS.LEVELS
+    );
+
+    forkJoin([
+      languageRequest,
+      levelRequest,
+    ])
+      .pipe(
+        catchError((error) => {
+          return throwError(() => error);
+        }),
+        finalize(() => this.loader.hideLoader())
+      )
+      .subscribe(([languages, levels]) => {
+        this.languageOptions = languages;
+        this.levelOptions = levels;
+      });
   }
 
   sanitizeUrl(url: string) {
@@ -104,6 +151,19 @@ export class TalentContentComponent implements OnInit {
         startDate: experience.startDate,
         endDate: experience.endDate,
         description: description
+      };
+    }) || [];
+  }
+
+  get languagesList() {
+    return this.talent?.languagesList?.map(language => {
+      return {
+        id: language.id,
+        language: language.language,
+        languageId: language.languageId,
+        level: language.level,
+        levelId: language.levelId,
+        numberOfStars: language.numberOfStars
       };
     }) || [];
   }

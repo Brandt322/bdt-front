@@ -152,6 +152,8 @@ import { EditWorkExperiencesFormComponent } from './components/utils/modals/expe
     AddWorkExperiencesFormComponent,
     EditEducationalExperiencesFormComponent,
     EditWorkExperiencesFormComponent,
+    AddLanguageComponent,
+    EditLanguageComponent,
     /* Forms */
     EducationalExperienceFormComponent,
     WorkExperienceFormComponent,
@@ -164,4 +166,4 @@ import { EditWorkExperiencesFormComponent } from './components/utils/modals/expe
     PillTagComponent,
   ],
 })
-export class SharedModule {}
+export class SharedModule { }

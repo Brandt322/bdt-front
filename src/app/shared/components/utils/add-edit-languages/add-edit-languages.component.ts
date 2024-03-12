@@ -13,7 +13,7 @@ import { LanguageResponse } from 'src/app/shared/models/interfaces/language.inte
   templateUrl: './add-edit-languages.component.html',
   styleUrls: ['./add-edit-languages.component.css'],
 })
-export class AddEditLanguagesComponent implements OnInit, OnChanges {
+export class AddEditLanguagesComponent {
   @Input() main_title!: string;
   @Input() title!: string;
   @Input() description!: string;
@@ -42,18 +42,18 @@ export class AddEditLanguagesComponent implements OnInit, OnChanges {
     // }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['languagesList'] && changes['languagesList'].currentValue) {
-      this.addModalId = this.modal_id + '-add';
-      // console.log('addModalId:', this.addModalId);
+  // ngOnChanges(changes: SimpleChanges): void {
+  //   if (changes['languagesList'] && changes['languagesList'].currentValue) {
+  //     this.addModalId = this.modal_id + '-add';
+  //     // console.log('addModalId:', this.addModalId);
 
-      for (let i = 0; i < this.languagesList.length; i++) {
-        this.editModalId[i] = this.modal_id + '-edit-' + i;
-        // console.log('editModalId[' + i + ']:', this.editModalId[i]);
-      }
-      setTimeout(() => initModals(), 0);
-    }
-  }
+  //     for (let i = 0; i < this.languagesList.length; i++) {
+  //       this.editModalId[i] = this.modal_id + '-edit-' + i;
+  //       // console.log('editModalId[' + i + ']:', this.editModalId[i]);
+  //     }
+  //     setTimeout(() => initModals(), 0);
+  //   }
+  // }
 
   setAddModalTitle() {
     this.modalTitle = this.modal_add_title;

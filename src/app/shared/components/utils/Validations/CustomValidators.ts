@@ -10,6 +10,11 @@ export class CustomValidators {
     return null;
   }
 
+  static notNullValidator(control: AbstractControl) {
+    const isNull = (control.value === null || control.value === 'null');
+    return isNull ? { 'null': true } : null;
+  }
+
   static minLength(min: number): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const value = control.value;

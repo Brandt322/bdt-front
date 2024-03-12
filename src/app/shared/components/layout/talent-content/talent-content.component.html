@@ -244,8 +244,73 @@
           </div>
         </div>
       </div>
+      <div class="flex flex-col justify-center w-full gap-2">
+        <div class="flex justify-between items-center">
+          <h4 class="font-semibold text-md text-gray-500 dark:text-gray-400">
+            Idiomas
+          </h4>
+          <button
+            [attr.data-modal-target]="
+              talent?.id + '-add-language-experience-modal'
+            "
+            [attr.data-modal-toggle]="
+              talent?.id + '-add-language-experience-modal'
+            "
+          >
+            <i class="fa-solid fa-plus text-gray-500"></i>
+          </button>
+        </div>
 
-      <app-add-edit-languages
+        <div
+          *ngFor="let language of processeLanguages; let i = index"
+          [id]="language.id"
+          class="flex justify-start items-center p-2 gap-4 rounded-md bg-gray-50 hover:bg-gray-200 shadow-sm-light"
+        >
+          <div class="flex flex-col justify-center item">
+            <h1 class="font-medium text-xl text-black dark:text-gray-400">
+              {{
+                language.language.charAt(0).toUpperCase() +
+                  language.language.slice(1).toLowerCase()
+              }}
+            </h1>
+            <div class="flex justify-between gap-2 w-full">
+              <p class="text-md font-normal text-gray-500 dark:text-gray-400">
+                {{
+                  language.level.charAt(0).toUpperCase() +
+                    language.level.slice(1).toLowerCase()
+                }}
+              </p>
+            </div>
+          </div>
+          <div class="flex justify-between items-center w-full">
+            <div class="flex items-center justify-start">
+              <app-rating
+                [maxRating]="5"
+                [currentRating]="language.numberOfStars"
+                [readonly]="true"
+                [ngClass]="'flex items-center'"
+                [uniqueId]="language?.id?.toString()"
+              ></app-rating>
+            </div>
+            <button
+              [attr.data-modal-target]="
+                'edit-language-experience-modal-' + language.id + talent?.id
+              "
+              [attr.data-modal-toggle]="
+                'edit-language-experience-modal-' + language.id + talent?.id
+              "
+            >
+              <span
+                class="material-symbols-outlined text-gray-600 dark:text-slate-100"
+              >
+                edit
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- <app-add-edit-languages
         main_title="Idiomas"
         [languagesList]="talent?.languagesList || []"
         [modal_id]="'language-modal-form'"
@@ -255,7 +320,7 @@
         modal_edit_description="Edita la habilidad en el idioma"
         [has_image]="false"
         type="lang"
-      ></app-add-edit-languages>
+      ></app-add-edit-languages> -->
       <app-add-edit-feedback
         main_title="Feedback"
         title="Cesar Ortiz"
@@ -279,6 +344,12 @@
 >
 </app-add-educational-experiences-form>
 
+<app-add-language
+  [modal_id]="talent?.id + '-add-language-experience-modal'"
+  [languages]="languageOptions"
+  [levels]="levelOptions"
+></app-add-language>
+
 <ng-container
   *ngFor="let experience of processedWorkExperiences; let i = index"
 >
@@ -298,4 +369,14 @@
     [educationalExperience]="experience"
     [id]="experience.id || 0"
   ></app-edit-educational-experiences-form>
+</ng-container>
+
+<ng-container *ngFor="let language of processeLanguages; let i = index">
+  <app-edit-language
+    [modal_id]="'edit-language-experience-modal-' + language.id + talent?.id"
+    [languageList]="language"
+    [languageOptions]="languageOptions"
+    [levelOptions]="levelOptions"
+    [id]="language.id || 0"
+  ></app-edit-language>
 </ng-container>
