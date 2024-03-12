@@ -22,7 +22,11 @@
 
     <div class="flex w-full p-1 gap-2">
       <div class="flex items-center w-full p-1">
-        <app-carousel [items]="talentFileList"></app-carousel>
+        <app-carousel
+          [items]="talentFileList"
+          [id]="talent?.id || 0"
+          class="w-full"
+        ></app-carousel>
       </div>
       <div class="flex items-center w-full p-1">
         <button

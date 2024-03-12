@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
 import { TalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
@@ -11,6 +11,7 @@ import { catchError, finalize, forkJoin, throwError } from 'rxjs';
 import { Language } from 'src/app/shared/models/interfaces/language.interface';
 import { Level } from 'src/app/shared/models/interfaces/level-interface';
 import { ICarouselItem } from '../../utils/carousel/ICarousel-metadata';
+import { CarouselComponent } from '../../utils/carousel/carousel.component';
 
 
 
@@ -20,7 +21,7 @@ import { ICarouselItem } from '../../utils/carousel/ICarousel-metadata';
   styleUrls: ['./talent-content.component.css'],
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TalentContentComponent implements OnInit {
+export class TalentContentComponent implements OnInit, AfterViewInit {
 
   talent: TalentResponse | null = null;
   processedWorkExperiences: ProcessedWorkExperiences[] = [];
@@ -29,6 +30,9 @@ export class TalentContentComponent implements OnInit {
   languageOptions: Language[] = [];
   levelOptions: Level[] = [];
   talentFileList: ICarouselItem[] = [];
+
+  @ViewChild(CarouselComponent) carouselComponent!: CarouselComponent;
+
   constructor(
     private cdr: ChangeDetectorRef,
     private talentDetailService: TalentDetailService,
@@ -37,8 +41,7 @@ export class TalentContentComponent implements OnInit {
     private loader: LoaderService,
     private masterService: MasterService
   ) { }
-
-  ngOnInit() {
+  ngAfterViewInit(): void {
     this.talentDetailService.currentTalent.subscribe(talent => {
       this.talent = talent;
       // console.log(this.talent?.filesList);
@@ -55,6 +58,9 @@ export class TalentContentComponent implements OnInit {
       this.processedWorkExperiences = this.workExperiences;
       this.processeEducationalExperiences = this.educationalExperiences;
       this.processeLanguages = this.languagesList;
+
+      // Reset Carousel state
+      this.carouselComponent.resetCarousel();
 
       // this.cdr.detectChanges();
     });
@@ -73,9 +79,17 @@ export class TalentContentComponent implements OnInit {
       this.processedWorkExperiences = this.workExperiences;
       this.processeEducationalExperiences = this.educationalExperiences;
       this.processeLanguages = this.languagesList;
+
+      // Reset Carousel state
+      this.carouselComponent.resetCarousel();
+
       // this.cdr.detectChanges();
     });
     this.requestOptions();
+  }
+
+  ngOnInit() {
+
   }
 
   requestOptions() {

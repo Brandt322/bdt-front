@@ -1,4 +1,7 @@
-<div class="flex items-center justify-center w-full h-full py-24 sm:py-8 px-4">
+<div
+  class="flex items-center justify-center w-full h-full py-24 sm:py-8 px-4"
+  [id]="id"
+>
   <div class="w-full relative flex items-center justify-center">
     <button
       aria-label="slide backward"
@@ -27,7 +30,7 @@
         class="w-full h-full flex items-center justify-start transition ease-out duration-700"
       >
         <ng-container *ngFor="let item of items">
-          <div class="flex flex-shrink-0 relative w-full max-w-xl">
+          <div class="flex flex-shrink-0 relative w-full">
             <img
               src="../../../../../assets/app-pdf-editar-convertir-visualizar.webp"
               [alt]="item.fileName"

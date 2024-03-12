@@ -9,6 +9,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class CarouselComponent implements OnInit {
   @Input() items: ICarouselItem[] = [];
+  @Input() id!: number;
 
   slider!: HTMLElement;
   defaultTransform!: number;
@@ -31,6 +32,11 @@ export class CarouselComponent implements OnInit {
     if (Math.abs(this.defaultTransform) === 0) this.defaultTransform = 0;
     else this.defaultTransform = this.defaultTransform + containerWidth;
     this.slider.style.transform = "translateX(" + this.defaultTransform + "px)";
+  }
+
+  resetCarousel() {
+    this.defaultTransform = 0;
+    this.slider.style.transform = "translateX(0px)";
   }
 
 
