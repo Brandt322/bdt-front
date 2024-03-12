@@ -16,3 +16,12 @@ export interface ProcesseEducationalExperiences {
   endDate: Date;
   description?: string;
 }
+
+export interface ProcesseLanguages {
+  id?: number;
+  language: string;
+  languageId: number;
+  level: string;
+  levelId: number;
+  numberOfStars: number;
+}

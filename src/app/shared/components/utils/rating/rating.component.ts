@@ -14,6 +14,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class RatingComponent implements OnInit, ControlValueAccessor {
+  @Input() uniqueId?: string;
   @Input() maxRating: number = 5;
   @Input() currentRating: number = 0;
   @Input() readonly: boolean = false;
@@ -28,6 +29,10 @@ export class RatingComponent implements OnInit, ControlValueAccessor {
     this.selectedStar = this.currentRating; // Inicializamos selectedStar con currentRating
   }
 
+  getStarId(index: number): string {
+    return `star-${this.uniqueId}-${index}`; // Genera un ID único para cada estrella
+  }
+
   handleMouseEnter(index: number) {
     if (this.readonly) {
       return; // Si readonly es true, no hagas nada
@@ -37,13 +42,15 @@ export class RatingComponent implements OnInit, ControlValueAccessor {
 
   handleMouseLeave() {
     if (this.readonly) {
-      return; // Si readonly es true, no hagas nada
+      return; // Si readonly es true no hagas nada
     }
     if (this.previousSelection !== 0) {
       this.selectedStar = this.previousSelection;
+      return;
     } else {
       this.selectedStar = 0;
     }
+    this.selectedStar = this.currentRating
   }
 
   handleClickRating(index: number) {

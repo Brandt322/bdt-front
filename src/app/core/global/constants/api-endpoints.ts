@@ -16,10 +16,12 @@ export const TALENT_API_ENDPOINTS = {
   ADD_SOFT_SKILL: 'add_soft_skill',
   ADD_WORK_EXPERIENCE: 'add_work_exp',
   ADD_EDUCATIONAL_EXPERIENCE: 'add_edu_exp',
+  ADD_LANGUAGE: 'add_language',
   UPDATE_IMAGE: 'update_image',
   UPDATE_SALARY_TALENT: 'update_salary_band',
   UPDATE_SOCIALS: 'update_socials',
   UPDATE_DESCRIPTION: 'update_description',
   UPDATE_WORK_EXPERIENCE: 'update_work_exp',
   UPDATE_EDUCATIONAL_EXPERIENCE: 'update_edu_exp',
+  UPDATE_LANGUAGE: 'update_language',
 };

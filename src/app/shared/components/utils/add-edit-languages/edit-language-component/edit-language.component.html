@@ -1,0 +1,138 @@
+<app-base-modal-form
+  [id]="modal_id"
+  title="Edita la habilidad en el idioma"
+  description="Edita la habilidad en el idioma."
+>
+  <form [formGroup]="languageForm" (ngSubmit)="onSubmit()">
+    <div class="grid gap-4 mb-8">
+      <div>
+        <label
+          [for]="'languageIdSelect' + id"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Idioma</label
+        >
+        <select
+          [id]="'languageIdSelect' + id"
+          formControlName="languageId"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        >
+          <option [value]="null">Nombre del idioma</option>
+          <option
+            *ngFor="let language of languageOptions"
+            [value]="language.id"
+            [selected]="language.id === languageList.languageId"
+          >
+            {{ language.language }}
+          </option>
+        </select>
+        <div
+          class="grid gap-2 leading-tight"
+          *ngIf="
+            languageForm.get('languageId')?.touched &&
+            languageForm.get('languageId')?.errors
+          "
+        >
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="languageForm.get('languageId')?.errors?.['required']"
+          >
+            El campo de idioma es requerido.
+          </span>
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="languageForm.get('languageId')?.errors?.['null']"
+          >
+            Debes seleccionar un idioma.
+          </span>
+        </div>
+      </div>
+      <div>
+        <label
+          [for]="'levelIdSelect' + id"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Nivel</label
+        >
+        <select
+          [id]="'levelIdSelect' + id"
+          formControlName="levelId"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        >
+          <option [value]="null">Nivel del idioma</option>
+          <option
+            *ngFor="let level of levelOptions"
+            [value]="level.id"
+            [selected]="level.id === languageList.levelId"
+          >
+            {{ level.level }}
+          </option>
+        </select>
+        <div
+          class="grid gap-2 leading-tight"
+          *ngIf="
+            languageForm.get('levelId')?.touched &&
+            languageForm.get('levelId')?.errors
+          "
+        >
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="languageForm.get('levelId')?.errors?.['required']"
+          >
+            El campo de nivel de idioma es requerido.
+          </span>
+          <span
+            class="font-medium text-red-500 leading-tight"
+            *ngIf="languageForm.get('levelId')?.errors?.['null']"
+          >
+            Debes seleccionar un nivel de idioma.
+          </span>
+        </div>
+      </div>
+      <div class="flex items-center justify-start mt-1">
+        <app-rating
+          [maxRating]="5"
+          [currentRating]="languageList.numberOfStars"
+          formControlName="numberOfStars"
+          [ngClass]="'flex items-center'"
+        ></app-rating>
+      </div>
+    </div>
+    <div
+      class="grid gap-2 leading-tight"
+      *ngIf="
+        languageForm.get('numberOfStars')?.touched &&
+        languageForm.get('numberOfStars')?.errors
+      "
+    >
+      <span
+        class="font-medium text-orange-500 leading-tight"
+        *ngIf="languageForm.get('numberOfStars')?.errors?.['required']"
+      >
+        Es requerido que seleccione el rating.
+      </span>
+    </div>
+    <div class="grid gap-4 md:grid-cols-2">
+      <button
+        [attr.data-modal-hide]="modal_id"
+        (click)="$event.stopPropagation()"
+        (click)="cancelForm()"
+        type="button"
+        class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+      >
+        Cancelar
+      </button>
+      <button
+        [attr.data-modal-hide]="modal_id"
+        [disabled]="languageForm.invalid"
+        type="submit"
+        class="text-white font-medium rounded-lg text-sm px-5 py-2.5 mb-2 bg-[#009788] hover:bg-[#0a655e]"
+        [ngClass]="{
+          'focus:outline-none  focus:ring-4 focus:ring-[#51f7db] dark:bg-[#04c8b0] dark:hover:bg-[#0a655e] dark:focus:ring-[#0a655e]':
+            languageForm.valid,
+          'cursor-not-allowed ': languageForm.invalid
+        }"
+      >
+        Guardar
+      </button>
+    </div>
+  </form>
+</app-base-modal-form>

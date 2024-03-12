@@ -141,6 +141,45 @@ export class TalentDetailService {
     }
   }
 
+  addLanguageToCurrentTalent(languageId: number, levelId: number, numberOfStars: number, language: string, level: string) {
+    if (this.currentTalentValue) {
+      this.talentService.addLanguage(this.currentTalentValue.id, { languageId, levelId, numberOfStars }).pipe(
+        catchError(error => {
+          this.toast.error('Hubo un error al agregar el idioma');
+          throw error;
+        })
+      ).subscribe(() => {
+        if (this.currentTalentValue) {
+          this.currentTalentValue.languagesList.push({ id: 0, languageId: languageId, levelId: levelId, numberOfStars: numberOfStars, language: language, level: level });
+          this.talentSource.next(this.currentTalentValue);
+          this.changeTalent(this.currentTalentValue.id);
+          this.toast.success('Se agregó un idioma');
+        }
+      });
+    }
+  }
+
+  updateLanguageForCurrentTalent(id: number, languageId: number, levelId: number, numberOfStars: number, language: string, level: string) {
+    if (this.currentTalentValue) {
+      this.talentService.updateLanguage(this.currentTalentValue.id, id, { languageId, levelId, numberOfStars }).pipe(
+        catchError(error => {
+          this.toast.error('Hubo un error al actualizar el idioma');
+          throw error;
+        })
+      ).subscribe(() => {
+        if (this.currentTalentValue) {
+          const index = this.currentTalentValue.languagesList.findIndex(l => l.id === id);
+          if (index !== -1) {
+            this.currentTalentValue.languagesList[index] = { id: id, languageId: languageId, levelId: levelId, numberOfStars: numberOfStars, language: language, level: level };
+            this.talentSource.next(this.currentTalentValue);
+            this.changeTalent(this.currentTalentValue.id);
+            this.toast.success('Se actualizó el idioma');
+          }
+        }
+      });
+    }
+  }
+
   updateWorkExperienceForCurrentTalent(workExpId: number, id: number, company: string, position: string, startDate: Date, endDate: Date) {
     if (this.currentTalentValue) {
       const newWorkExperience: WorkExperience = {

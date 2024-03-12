@@ -1,12 +1,13 @@
-<div class="flex flex-col justify-center w-full gap-2" *ngIf="languagesList">
+<!-- <div class="flex flex-col justify-center w-full gap-2" *ngIf="languagesList">
   <div class="flex justify-between items-center">
     <h4 class="font-semibold text-md text-gray-500 dark:text-gray-400">
       {{ main_title }}
     </h4>
     <button
-      [attr.data-modal-target]="addModalId"
-      [attr.data-modal-toggle]="addModalId"
+      [attr.data-modal-target]="'languageModalAdd'"
+      [attr.data-modal-toggle]="'languageModalAdd'"
       (click)="setAddModalTitle()"
+      (click)="cleanLanguageObj()"
     >
       <i class="fa-solid fa-plus text-gray-500"></i>
     </button>
@@ -46,6 +47,12 @@
         [attr.data-modal-toggle]="editModalId[i]"
         (click)="editLanguage(i)"
       >
+      <button
+        [attr.data-modal-target]="'languageModalEdit'"
+        [attr.data-modal-toggle]="'languageModalEdit'"
+        (click)="editLanguage(i)"
+        (click)="getLanguageObj(language.id)"
+      >
         <span
           class="material-symbols-outlined text-gray-600 dark:text-slate-100"
         >
@@ -54,19 +61,4 @@
       </button>
     </div>
   </div>
-</div>
-<app-language-modal-form
-  *ngIf="type == 'lang'"
-  [modal_id]="addModalId"
-  title="{{ modalTitle }}"
-  description="{{ modalDescription }}"
-></app-language-modal-form>
-<ng-container *ngFor="let language of languagesList; let i = index">
-  <app-language-modal-form
-    *ngIf="type == 'lang'"
-    [modal_id]="editModalId[i]"
-    title="{{ modalTitle }}"
-    description="{{ modalDescription }}"
-    [rating]="language.numberOfStars"
-  ></app-language-modal-form>
-</ng-container>
+</div> -->

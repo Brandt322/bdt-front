@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { EducationalExperienceRequest } from 'src/app/shared/models/interfaces/educationalExperience.interface';
 import { File } from 'src/app/shared/models/interfaces/file.interface';
+import { LanguageRequest } from 'src/app/shared/models/interfaces/language.interface';
 import { FilterTalentResponse, TalentFilterParams, TalentRequest, TalentResponse, BasicTalentResponse, TalentTechnicalSkillRequest, TalentSoftSkillRequest, TalentSalaryRequest, TalentSocialRequest } from 'src/app/shared/models/interfaces/talent.interface';
 import { WorkExperienceRequest } from 'src/app/shared/models/interfaces/workExperience.interface';
 import { environment } from 'src/environments/environment';
@@ -90,21 +91,6 @@ export class TalentService {
     );
   }
 
-  updateSalaryBand(talentId: number, talentRequest: TalentSalaryRequest): Observable<object> {
-    const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.UPDATE_SALARY_TALENT}/${talentId}`;
-    return this.http.put(url, talentRequest);
-  }
-
-  updateSocials(talentId: number, socialRequest: TalentSocialRequest): Observable<object> {
-    const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.UPDATE_SOCIALS}/${talentId}`;
-    return this.http.put(url, socialRequest);
-  }
-
-  updateDescription(talentId: number, description: string) {
-    const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.UPDATE_DESCRIPTION}/${talentId}`;
-    return this.http.put(url, { description });
-  }
-
   addTechnicalSkill(talentId: number, technicalSkillRequest: TalentTechnicalSkillRequest): Observable<object> {
     const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.ADD_TECHNICAL_SKILL}/${talentId}`;
     return this.http.post(url, technicalSkillRequest);
@@ -120,14 +106,34 @@ export class TalentService {
     return this.http.post(url, workExperienceRequest);
   }
 
-  updateImage(talentId: number, image: string): Observable<object> {
-    const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.UPDATE_IMAGE}/${talentId}`;
-    return this.http.put(url, { image });
-  }
-
   addEducationalExperience(talentId: number, educationalExperienceRequest: EducationalExperienceRequest): Observable<object> {
     const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.ADD_EDUCATIONAL_EXPERIENCE}/${talentId}`;
     return this.http.post(url, educationalExperienceRequest);
+  }
+
+  addLanguage(talentId: number, languageRequest: LanguageRequest): Observable<object> {
+    const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.ADD_LANGUAGE}/${talentId}`;
+    return this.http.post(url, languageRequest);
+  }
+
+  updateSalaryBand(talentId: number, talentRequest: TalentSalaryRequest): Observable<object> {
+    const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.UPDATE_SALARY_TALENT}/${talentId}`;
+    return this.http.put(url, talentRequest);
+  }
+
+  updateSocials(talentId: number, socialRequest: TalentSocialRequest): Observable<object> {
+    const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.UPDATE_SOCIALS}/${talentId}`;
+    return this.http.put(url, socialRequest);
+  }
+
+  updateDescription(talentId: number, description: string) {
+    const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.UPDATE_DESCRIPTION}/${talentId}`;
+    return this.http.put(url, { description });
+  }
+
+  updateImage(talentId: number, image: string): Observable<object> {
+    const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.UPDATE_IMAGE}/${talentId}`;
+    return this.http.put(url, { image });
   }
 
   updateWorkExperience(talentId: number, workExpId: number, workExperienceRequest: WorkExperienceRequest): Observable<object> {
@@ -138,5 +144,10 @@ export class TalentService {
   updateEducationalExperience(talentId: number, eduExpId: number, educationalExperienceRequest: EducationalExperienceRequest): Observable<object> {
     const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${talentId}/${TALENT_API_ENDPOINTS.UPDATE_EDUCATIONAL_EXPERIENCE}/${eduExpId}`;
     return this.http.put(url, educationalExperienceRequest);
+  }
+
+  updateLanguage(talentId: number, languageId: number, languageRequest: LanguageRequest): Observable<object> {
+    const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.UPDATE_LANGUAGE}/${talentId}/${languageId}`;
+    return this.http.put(url, languageRequest);
   }
 }
