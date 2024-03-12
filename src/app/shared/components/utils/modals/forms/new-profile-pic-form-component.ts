@@ -21,7 +21,7 @@ import { CustomValidators } from '../../Validations/CustomValidators';
       ></app-file-input>
 
       <div
-        class="grid gap-4 md:grid-cols-2 mb-1"
+        class="grid gap-2 mb-2"
         *ngIf="
           imageForm.get('image')?.touched ||
             imageForm.get('image')?.errors
@@ -31,7 +31,7 @@ import { CustomValidators } from '../../Validations/CustomValidators';
           class="font-medium text-orange-500 leading-tight"
           *ngIf="imageForm.get('image')?.errors?.['required']"
         >
-          La imagen es requerida
+          No olvides que la imagen es requerida
         </span>
         <span
           class="font-medium text-orange-500 leading-tight"

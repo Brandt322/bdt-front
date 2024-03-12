@@ -38,6 +38,14 @@ export class ServerErrorsInterceptor implements HttpInterceptor {
         this.toast.error('Error de conexión con el servidor Backend', 'Error servidor', { timeOut: 2000 });
       }
 
+      if (error.code == 400) {
+        if (error.error.message === 'Los datos ingresados ya se encuentran registrados') {
+          this.toast.warning('Los datos ingresados ya se encuentran registrados', 'Advertencia', { timeOut: 3000 });
+        } else {
+          this.toast.error(`${error.error.message}`, 'Error 400', { timeOut: 3000 });
+        }
+      }
+
       // if (error.status === 401) {
       //   this.route.navigate(['/login']);
       // }

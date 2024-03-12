@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
 import { TalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
@@ -85,6 +85,19 @@ export class TalentContentComponent implements OnInit {
 
   sanitizeUrl(url: string) {
     return this.sanitizer.bypassSecurityTrustUrl(url);
+  }
+
+  sanitizePdfUrl(base64Data: string) {
+    const base64Url = base64Data.split(",")[1];
+    const byteCharacters = atob(base64Url);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
   get technicalSkills() {
