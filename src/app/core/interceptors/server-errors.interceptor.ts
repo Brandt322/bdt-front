@@ -47,6 +47,14 @@ export class ServerErrorsInterceptor implements HttpInterceptor {
       }
 
       // if (error.status === 401) {
+      //   if (error.error.message === 'Credenciales incorrectas') {
+      //     this.toast.error('Las credenciales de inicio de sesión son incorrectas', 'Error de inicio de sesión', { timeOut: 3000 });
+      //   } else {
+      //     this.toast.error(`${error.error.message}`, 'Error 401', { timeOut: 3000 });
+      //   }
+      // }
+
+      // if (error.status === 401) {
       //   this.route.navigate(['/login']);
       // }
 

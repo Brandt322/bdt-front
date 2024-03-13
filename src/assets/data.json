@@ -1,0 +1,10 @@
+{
+  "message": "Authentication ok",
+  "id": 0,
+    "name": "John",
+    "paternalSurname": "Doe",
+    "maternalSurname": "Smith",
+    "image": "https://www.patriotledger.com/gcdn/authoring/2009/05/01/NPAL/ghows-WL-0a3a8372-6ef2-4a88-8496-f2b829ece2df-677b0e69.jpeg?width=660&height=502&fit=crop&format=pjpg&auto=webp",
+    "username": "leslie.linvingston@fractal.com",
+    "password": 123
+}

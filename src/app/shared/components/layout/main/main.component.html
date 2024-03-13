@@ -1,8 +1,21 @@
-<div class="flex flex-col">
+<div class="flex flex-col" *ngIf="userLoginOn && userData; else errorContent">
   <div class="h-18">
-    <app-header></app-header>
+    <app-header [userData]="userData"></app-header>
   </div>
   <div>
     <router-outlet></router-outlet>
   </div>
 </div>
+<ng-template #errorContent>
+  <div class="flex items-center justify-center h-screen">
+    <div
+      class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+      role="alert"
+    >
+      <strong class="font-bold">Error al ingresar!</strong>
+      <span class="block sm:inline"
+        >Por favor, verifica tus credenciales e intenta de nuevo.</span
+      >
+    </div>
+  </div>
+</ng-template>

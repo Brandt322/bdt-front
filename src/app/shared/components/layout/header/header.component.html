@@ -25,7 +25,7 @@
           <span class="sr-only">Open user menu</span>
           <img
             class="w-14 h-14 rounded-full"
-            src="../../../../../assets/8ee6c5268d3404f8441329ce18972f60.jpeg"
+            [src]="userData.image"
             alt="user photo"
           />
         </button>
@@ -36,12 +36,12 @@
           id="user-dropdown"
         >
           <div class="px-4 py-3">
-            <span class="block text-sm text-gray-900 dark:text-white"
-              >Bonnie Green</span
-            >
+            <span class="block text-sm text-gray-900 dark:text-white">{{
+              userData.name
+            }}</span>
             <span
               class="block text-sm text-gray-500 truncate dark:text-gray-400"
-              >name@flowbite.com</span
+              >{{ userData.username }}</span
             >
           </div>
           <ul class="py-2" aria-labelledby="user-menu-button">
@@ -56,20 +56,6 @@
               <a
                 href="#"
                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                >Settings</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                >Earnings</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                 >Sign out</a
               >
             </li>
@@ -78,7 +64,7 @@
       </div>
       <div class="hidden sm:flex sm:flex-col sm:justify-center">
         <span class="text-md text-black font-semibold leading-tight"
-          >Pepito Vazques</span
+          >{{ userData.name }} {{ userData.paternalSurname }}</span
         >
         <span class="mb-1 text-gray-700 leading-tight">Reclutador</span>
       </div>
