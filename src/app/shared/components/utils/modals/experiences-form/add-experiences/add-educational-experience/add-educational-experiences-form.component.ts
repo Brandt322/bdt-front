@@ -1,6 +1,6 @@
 import { formatDate } from '@angular/common';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
 import { EducationalExperienceRequest } from 'src/app/shared/models/interfaces/educationalExperience.interface';
 import { CheckboxInputComponent } from '../../../../form-inputs/checkbox-input-component';
@@ -11,7 +11,7 @@ import { CustomValidators } from '../../../../Validations/CustomValidators';
   templateUrl: './add-educational-experiences-form.component.html'
 })
 export class AddEducationalExperiencesFormComponent implements OnInit {
-  @Input() modal_id!: string;
+  modal_id: string = 'add-educational-experiences-modal';
   @Input() title!: string;
   @Input() description!: string;
   @Input() educationalExperience!: EducationalExperienceRequest;

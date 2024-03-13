@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
 import { CustomValidators } from '../../Validations/CustomValidators';
 
@@ -62,13 +62,13 @@ import { CustomValidators } from '../../Validations/CustomValidators';
             class="font-medium text-red-500 leading-tight"
             *ngIf="form.get('years')?.errors?.['required']"
           >
-            El campo de years es requerido.
+            El campo de años es requerido.
           </span>
           <span
             class="font-medium text-red-500 leading-tight"
             *ngIf="form.get('years')?.errors?.['minValue']"
           >
-            El campo de years debe ser al menos 1.
+            El campo de años debe ser al menos 1.
           </span>
           <span
             class="font-medium text-orange-500 leading-tight"
@@ -95,7 +95,7 @@ export class TechnicalSkillsModalFormComponent {
   constructor(private talentDetailService: TalentDetailService) { }
 
   form = new FormGroup({
-    skill: new FormControl('', [CustomValidators.required, CustomValidators.minLength(2), CustomValidators.stringType()]),
+    skill: new FormControl('', [CustomValidators.required, CustomValidators.minLength(1), CustomValidators.stringType()]),
     years: new FormControl('', [CustomValidators.required, CustomValidators.minValue(1), CustomValidators.numericType()]),
   });
 

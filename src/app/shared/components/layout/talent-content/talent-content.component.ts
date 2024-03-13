@@ -62,7 +62,7 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
 
       // console.log(this.talentFileList)
       // Reset Carousel state
-      this.carouselComponent.resetCarousel();
+      // this.carouselComponent.resetCarousel();
 
       // this.cdr.detectChanges();
     });
@@ -82,6 +82,7 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
       this.processeEducationalExperiences = this.educationalExperiences;
       this.processeLanguages = this.languagesList;
 
+      // console.log(this.processeLanguages)
       // console.log(this.talentFileList)
       // Reset Carousel state
       this.carouselComponent.resetCarousel();

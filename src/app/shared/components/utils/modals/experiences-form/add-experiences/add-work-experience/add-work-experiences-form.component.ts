@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
 import { WorkExperienceRequest } from 'src/app/shared/models/interfaces/workExperience.interface';
@@ -11,7 +11,7 @@ import { CustomValidators } from '../../../../Validations/CustomValidators';
   templateUrl: './add-work-experiences-form.component.html'
 })
 export class AddWorkExperiencesFormComponent implements OnInit {
-  @Input() modal_id!: string;
+  modal_id: string = 'add-work-experience-modal';
   @Input() title!: string;
   @Input() description!: string;
   @Input() workExperience!: WorkExperienceRequest;

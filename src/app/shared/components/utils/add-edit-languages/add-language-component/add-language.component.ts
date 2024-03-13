@@ -10,7 +10,7 @@ import { CustomValidators } from '../../Validations/CustomValidators';
   templateUrl: './add-language.component.html',
 })
 export class AddLanguageComponent implements OnInit {
-  @Input() modal_id!: string;
+  modal_id: string = 'add-language-modal';
   languageForm!: FormGroup;
   @Input() languages: Language[] = [];
   @Input() levels: Level[] = [];

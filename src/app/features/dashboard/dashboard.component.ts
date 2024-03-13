@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { initDropdowns, initModals } from 'flowbite';
-import { BehaviorSubject, Subject, catchError, filter, takeUntil, throwError } from 'rxjs';
-import { TalentService } from 'src/app/services/talent/talent.service';
-import { BasicTalentResponse, FilterTalentResponse, TalentResponse } from '../../shared/models/interfaces/talent.interface';
+import { BehaviorSubject, Subject, catchError, takeUntil, throwError } from 'rxjs';
+import { BasicTalentResponse, TalentResponse } from '../../shared/models/interfaces/talent.interface';
 import { ToastrService } from 'ngx-toastr';
+import { TalentService } from 'src/app/services/talent/talent.service';
 import { TalentDetailService } from '../services/talent-detail.service';
 import { LoaderService } from 'src/app/core/global/loader/loader.service';
 

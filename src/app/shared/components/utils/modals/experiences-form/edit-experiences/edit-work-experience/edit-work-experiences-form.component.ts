@@ -1,6 +1,6 @@
 import { formatDate } from '@angular/common';
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { WorkExperienceRequest } from 'src/app/shared/models/interfaces/workExperience.interface';
 import { TalentDetailService } from '../../../../../../../features/services/talent-detail.service';
 import { initModals } from 'flowbite';

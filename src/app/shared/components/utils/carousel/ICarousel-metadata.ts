@@ -3,6 +3,4 @@ export interface ICarouselItem {
   fileName: string,
   fileType: string,
   file: string
-  order?: number;
-  marginLeft?: number;
 }

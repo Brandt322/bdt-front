@@ -11,7 +11,7 @@ import { Component, Input } from '@angular/core';
   >
     <div class="relative px-4 pt-4 w-full max-w-2xl max-h-full">
       <!-- Modal content -->
-      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div class="relative bg-white rounded-lg shadow">
         <div class="px-4 pb-6">
           <!-- Modal header -->
           <div
@@ -31,7 +31,6 @@ import { Component, Input } from '@angular/core';
             <ng-content></ng-content>
           </div>
         </div>
-        <!-- [attr.data-modal-hide]="id" -->
       </div>
     </div>
   </div>`,

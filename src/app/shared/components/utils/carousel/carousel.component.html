@@ -6,7 +6,7 @@
     <button
       aria-label="slide backward"
       (click)="goPrev()"
-      class="absolute z-30 left-0 ml-8 text-green-600 focus:outline-none focus:bg-green-500 focus:ring-2 focus:ring-offset-2 focus:ring-green-500 cursor-pointer"
+      class="absolute z-20 left-0 ml-8 text-green-600 focus:outline-none focus:bg-green-500 focus:ring-2 focus:ring-offset-2 focus:ring-green-500 cursor-pointer"
     >
       <svg
         width="18"
@@ -24,7 +24,7 @@
         />
       </svg>
     </button>
-    <div class="w-full h-full overflow-x-hidden overflow-y-hidden">
+    <div class="w-full h-full overflow-x-hidden">
       <div
         id="slider"
         class="w-full h-full flex items-center justify-start transition ease-out duration-700"
@@ -37,18 +37,18 @@
               class="object-cover object-center w-full h-48"
             />
             <a
-              class="bg-gray-800 bg-opacity-30 absolute w-full h-full p-6"
+              class="absolute w-full h-full p-6"
               [href]="sanitizePdfUrl(item.file)"
               target="_blank"
             >
               <h2
-                class="lg:text-xl leading-4 text-base lg:leading-5 text-white"
+                class="lg:text-xl leading-4 text-base lg:leading-5 text-slate-800"
               >
                 {{ item.fileName }}
               </h2>
               <div class="flex h-full items-end pb-6">
                 <h3
-                  class="text-xl lg:text-2xl font-semibold leading-5 lg:leading-6 text-white"
+                  class="text-xl lg:text-2xl font-semibold leading-5 lg:leading-6 text-slate-800"
                 >
                   {{ item.fileType.toUpperCase() }}
                 </h3>
@@ -61,7 +61,7 @@
     <button
       aria-label="slide forward"
       (click)="goNext()"
-      class="absolute z-30 right-0 mr-8 focus:outline-none focus:bg-green-500 focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+      class="absolute z-20 right-0 mr-8 focus:outline-none focus:bg-green-500 focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
     >
       <svg
         width="18"

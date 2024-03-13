@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, finalize, forkJoin, tap, throwError } from 'rxjs';
@@ -9,7 +9,7 @@ import { MasterService } from 'src/app/services/master/master.service';
 import { Level } from 'src/app/shared/models/interfaces/level-interface';
 import { TalentService } from 'src/app/services/talent/talent.service';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
-import { FilterTalentResponse, TalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
+import { FilterTalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
 
 @Component({
   selector: 'app-nav-filters',

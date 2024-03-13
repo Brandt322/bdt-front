@@ -9,7 +9,6 @@ import { MainComponent } from './components/layout/main/main.component';
 import { NavFiltersComponent } from './components/layout/nav-filters/nav-filters.component';
 import { TalentContentComponent } from './components/layout/talent-content/talent-content.component';
 import { AddEditFeedbackComponent } from './components/utils/add-edit-feedback/add-edit-feedback.component';
-import { AddEditLanguagesComponent } from './components/utils/add-edit-languages/add-edit-languages.component';
 import { ButtonDropdownComponent } from './components/utils/buttons/button-dropdown.component';
 import { ProfileComponent } from './components/utils/cards/profile/profile.component';
 import { EducationalExperienceFormComponent } from './components/utils/experience-form/educational-experience-form/educational-experience-form.component';
@@ -64,7 +63,6 @@ import { CarouselComponent } from './components/utils/carousel/carousel.componen
     CheckboxModalComponent,
     ButtonDropdownComponent,
     ProfileComponent,
-    AddEditLanguagesComponent,
     AddEditFeedbackComponent,
     /* Input */
     CheckboxInputComponent,
@@ -129,7 +127,6 @@ import { CarouselComponent } from './components/utils/carousel/carousel.componen
     ProfileComponent,
     NavFiltersComponent,
     TalentContentComponent,
-    AddEditLanguagesComponent,
     AddEditFeedbackComponent,
     RatingComponent,
     /* Form Inputs */

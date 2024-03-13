@@ -1,6 +1,6 @@
 import { formatDate } from '@angular/common';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
 import { EducationalExperienceRequest } from 'src/app/shared/models/interfaces/educationalExperience.interface';
 import { CustomValidators } from '../../../../Validations/CustomValidators';

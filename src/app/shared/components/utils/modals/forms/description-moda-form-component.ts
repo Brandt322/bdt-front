@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
 import { SharedDataService } from '../../../services/shared-data-service.service';
 import { CustomValidators } from '../../Validations/CustomValidators';
@@ -36,7 +36,7 @@ import { CustomValidators } from '../../Validations/CustomValidators';
             class="font-medium text-red-500 leading-tight"
             *ngIf="descriptionForm.get('description')?.errors?.['minLength']"
           >
-            El campo de descripción debe tener al menos 2 caracteres.
+            El campo de descripción debe tener al menos 10 caracteres.
           </span>
         </div>
 

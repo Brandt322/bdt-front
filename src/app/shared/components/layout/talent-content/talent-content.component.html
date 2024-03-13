@@ -90,9 +90,6 @@
         </app-pill-tag-component>
       </div>
     </div>
-    <!-- <div
-            class="flex flex-col items-start justify-between w-5/6 gap-2 p-4"
-          > -->
     <div class="grid grid-cols-1 gap-6 ms-4 me-4 md:me-32">
       <div class="w-full flex gap-1">
         <p class="text-md text-gray-600 dark:text-gray-400">
@@ -118,8 +115,8 @@
             Experiencia
           </h4>
           <button
-            [attr.data-modal-target]="talent?.id + '-add-work-experience-modal'"
-            [attr.data-modal-toggle]="talent?.id + '-add-work-experience-modal'"
+            data-modal-target="add-work-experience-modal"
+            data-modal-toggle="add-work-experience-modal"
           >
             <i class="fa-solid fa-plus text-gray-500"></i>
           </button>
@@ -169,12 +166,8 @@
             Educación
           </h4>
           <button
-            [attr.data-modal-target]="
-              talent?.id + '-add-educational-experience-modal'
-            "
-            [attr.data-modal-toggle]="
-              talent?.id + '-add-educational-experience-modal'
-            "
+            data-modal-target="add-educational-experiences-modal"
+            data-modal-toggle="add-educational-experiences-modal"
           >
             <i class="fa-solid fa-plus text-gray-500"></i>
           </button>
@@ -231,12 +224,9 @@
             Idiomas
           </h4>
           <button
-            [attr.data-modal-target]="
-              talent?.id + '-add-language-experience-modal'
-            "
-            [attr.data-modal-toggle]="
-              talent?.id + '-add-language-experience-modal'
-            "
+            data-modal-target="add-language-modal"
+            data-modal-toggle="add-language-modal"
+            type="button"
           >
             <i class="fa-solid fa-plus text-gray-500"></i>
           </button>
@@ -305,16 +295,11 @@
   </div>
 </div>
 
-<app-add-work-experiences-form
-  [modal_id]="talent?.id + '-add-work-experience-modal'"
-></app-add-work-experiences-form>
-<app-add-educational-experiences-form
-  [modal_id]="talent?.id + '-add-educational-experience-modal'"
->
-</app-add-educational-experiences-form>
+<app-add-work-experiences-form></app-add-work-experiences-form>
+
+<app-add-educational-experiences-form> </app-add-educational-experiences-form>
 
 <app-add-language
-  [modal_id]="talent?.id + '-add-language-experience-modal'"
   [languages]="languageOptions"
   [levels]="levelOptions"
 ></app-add-language>
