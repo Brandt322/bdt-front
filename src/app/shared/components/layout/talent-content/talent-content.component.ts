@@ -41,6 +41,7 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
     private loader: LoaderService,
     private masterService: MasterService
   ) { }
+
   ngAfterViewInit(): void {
     this.talentDetailService.currentTalent.subscribe(talent => {
       this.talent = talent;
@@ -59,6 +60,7 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
       this.processeEducationalExperiences = this.educationalExperiences;
       this.processeLanguages = this.languagesList;
 
+      // console.log(this.talentFileList)
       // Reset Carousel state
       this.carouselComponent.resetCarousel();
 
@@ -80,6 +82,7 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
       this.processeEducationalExperiences = this.educationalExperiences;
       this.processeLanguages = this.languagesList;
 
+      // console.log(this.talentFileList)
       // Reset Carousel state
       this.carouselComponent.resetCarousel();
 

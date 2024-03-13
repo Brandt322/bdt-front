@@ -3,6 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Subject, catchError } from 'rxjs';
 import { TalentService } from 'src/app/services/talent/talent.service';
 import { EducationalExperience } from 'src/app/shared/models/interfaces/educationalExperience.interface';
+import { File } from 'src/app/shared/models/interfaces/file.interface';
 import { FilterTalentResponse, TalentResponse, TalentSalaryRequest, TalentSocialRequest, TalentSoftSkillRequest, TalentTechnicalSkillRequest } from 'src/app/shared/models/interfaces/talent.interface';
 import { WorkExperience, WorkExperienceRequest } from 'src/app/shared/models/interfaces/workExperience.interface';
 
@@ -154,6 +155,24 @@ export class TalentDetailService {
           this.talentSource.next(this.currentTalentValue);
           this.changeTalent(this.currentTalentValue.id);
           this.toast.success('Se agregó un idioma');
+        }
+      });
+    }
+  }
+
+  addFileToCurrentTalent(fileData: File) {
+    if (this.currentTalentValue) {
+      this.talentService.addFile(this.currentTalentValue.id, fileData).pipe(
+        catchError(error => {
+          this.toast.error('Hubo un error al agregar el archivo');
+          throw error;
+        })
+      ).subscribe(() => {
+        if (this.currentTalentValue) {
+          this.currentTalentValue.filesList.push(fileData);
+          this.talentSource.next(this.currentTalentValue);
+          this.changeTalent(this.currentTalentValue.id);
+          this.toast.success('Se agregó un archivo');
         }
       });
     }

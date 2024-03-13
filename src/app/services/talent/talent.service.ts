@@ -116,6 +116,11 @@ export class TalentService {
     return this.http.post(url, languageRequest);
   }
 
+  addFile(talentId: number, file: File): Observable<object> {
+    const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${talentId}/${TALENT_API_ENDPOINTS.ADD_FILE}`;
+    return this.http.post(url, file);
+  }
+
   updateSalaryBand(talentId: number, talentRequest: TalentSalaryRequest): Observable<object> {
     const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.UPDATE_SALARY_TALENT}/${talentId}`;
     return this.http.put(url, talentRequest);

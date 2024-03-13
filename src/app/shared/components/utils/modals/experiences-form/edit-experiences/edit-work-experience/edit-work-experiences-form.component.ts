@@ -37,7 +37,7 @@ export class EditWorkExperiencesFormComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log(this.modal_id);
+    // console.log(this.modal_id);
     this.formBuild();
     // this.cdr.detectChanges();
     // console.log(this.workExperience.endDate)

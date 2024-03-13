@@ -20,7 +20,11 @@ export class CarouselComponent implements OnInit {
     const containerWidth = this.slider.offsetWidth; // Ancho del contenedor
 
     this.defaultTransform = this.defaultTransform - containerWidth;
-    if (Math.abs(this.defaultTransform) >= this.slider.scrollWidth / 1.7) this.defaultTransform = 0;
+
+    // Calculate the total width of all carousel items
+    const totalWidth = containerWidth * this.items.length;
+
+    if (Math.abs(this.defaultTransform) >= totalWidth) this.defaultTransform = 0;
     this.slider.style.transform = "translateX(" + this.defaultTransform + "px)";
   }
 
