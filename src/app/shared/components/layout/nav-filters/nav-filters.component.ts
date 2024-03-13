@@ -137,7 +137,7 @@ export class NavFiltersComponent implements OnInit {
       .subscribe(([skills, levels]) => {
         this.skills = skills;
         this.levels = levels;
-        this.toastr.success('Niveles obtenidos correctamente', 'Éxito');
+        // this.toastr.success('Niveles obtenidos correctamente', 'Éxito');
       });
   }
 }

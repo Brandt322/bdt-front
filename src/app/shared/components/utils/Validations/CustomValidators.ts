@@ -67,12 +67,34 @@ export class CustomValidators {
     };
   }
 
+  static emailValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (value != null && !emailPattern.test(value)) {
+        return { 'email': true };
+      }
+      return null;
+    };
+  }
+
   static stringType(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const value = control.value;
       const stringPattern = /^[a-zA-Z áéíóúÁÉÍÓÚ]*$/;
       if (value != null && !stringPattern.test(value)) {
         return { 'stringType': true };
+      }
+      return null;
+    };
+  }
+
+  static stringWithPunctuationValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+      const stringPattern = /^[a-zA-Z áéíóúÁÉÍÓÚ.,;:!?\\+]*$/;
+      if (value != null && !stringPattern.test(value)) {
+        return { 'stringWithPunctuation': true };
       }
       return null;
     };

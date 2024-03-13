@@ -39,9 +39,9 @@ import { CustomValidators } from '../../Validations/CustomValidators';
           </span>
           <span
             class="font-medium text-orange-500 leading-tight"
-            *ngIf="form.get('skill')?.errors?.['stringType']"
+            *ngIf="form.get('skill')?.errors?.['stringWithPunctuationValidator']"
           >
-            Solo puedes ingresar letras.
+            No se aceptan numeros.
           </span>
         </div>
         <app-text-input
@@ -95,7 +95,7 @@ export class TechnicalSkillsModalFormComponent {
   constructor(private talentDetailService: TalentDetailService) { }
 
   form = new FormGroup({
-    skill: new FormControl('', [CustomValidators.required, CustomValidators.minLength(1), CustomValidators.stringType()]),
+    skill: new FormControl('', [CustomValidators.required, CustomValidators.minLength(1), CustomValidators.stringWithPunctuationValidator()]),
     years: new FormControl('', [CustomValidators.required, CustomValidators.minValue(1), CustomValidators.numericType()]),
   });
 
