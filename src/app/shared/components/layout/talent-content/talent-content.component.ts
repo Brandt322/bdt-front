@@ -90,6 +90,7 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
       // this.cdr.detectChanges();
     });
     this.requestOptions();
+    this.cdr.detectChanges();
   }
 
   ngOnInit() {
