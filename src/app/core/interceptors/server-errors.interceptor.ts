@@ -40,17 +40,18 @@ export class ServerErrorsInterceptor implements HttpInterceptor {
 
       if (error.status == 400) {
         if (error.error.message === 'Los datos ingresados ya se encuentran registrados') {
-          this.toast.warning('Los datos ingresados ya se encuentran registrados', 'Advertencia', { timeOut: 3000 });
+          this.toast.warning(error.error.message, 'Advertencia', { timeOut: 2000 });
         } else {
-          this.toast.error(`${error.error.message}`, 'Error 400', { timeOut: 3000 });
+          this.toast.error(`${error.error.message}`, 'Error 400', { timeOut: 2000 });
         }
       }
 
       // if (error.status === 401) {
       //   if (error.error.message === 'Credenciales incorrectas') {
-      //     this.toast.error('Las credenciales de inicio de sesión son incorrectas', 'Error de inicio de sesión', { timeOut: 3000 });
+      //     this.toast.error(error.error.message, 'Error de inicio de sesión', { timeOut: 2000 });
       //   } else {
-      //     this.toast.error(`${error.error.message}`, 'Error 401', { timeOut: 3000 });
+      //     this.toast.error(`${error.error.message}`, 'Error 401', { timeOut: 2000 });
+      //     this.route.navigate(['/login']);
       //   }
       // }
 
@@ -60,14 +61,14 @@ export class ServerErrorsInterceptor implements HttpInterceptor {
 
       if (error.status === 404) {
         if (error.error.message === 'No se encontraron registros') {
-          this.toast.info('No hay registros de ese tipo', 'Información', { timeOut: 3000 });
+          this.toast.info(error.error.message, 'Información', { timeOut: 2000 });
         } else {
-          this.toast.error(`${error.error.message}`, 'Error 404', { timeOut: 3000 });
+          this.toast.error(`${error.error.message}`, 'Error 404', { timeOut: 2000 });
         }
       }
 
       if (error.status === 500) {
-        this.toast.error('Error, intentalo más tarde', 'Error 500', { timeOut: 3000 });
+        this.toast.error('Error, intentalo más tarde', 'Error 500', { timeOut: 2000 });
       }
       return EMPTY;
     }));

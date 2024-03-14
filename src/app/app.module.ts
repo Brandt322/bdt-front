@@ -11,6 +11,7 @@ import { FeaturesModule } from './features/features.module';
 import { SharedModule } from './shared/shared.module';
 import { LoaderInterceptor } from './core/interceptors/loader.interceptor';
 import { ServerErrorsInterceptor } from './core/interceptors/server-errors.interceptor';
+import { TokenInterceptor } from './core/interceptors/token.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,6 +33,10 @@ import { ServerErrorsInterceptor } from './core/interceptors/server-errors.inter
     }, {
       provide: HTTP_INTERCEPTORS,
       useClass: ServerErrorsInterceptor,
+      multi: true
+    }, {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
       multi: true
     }
   ],

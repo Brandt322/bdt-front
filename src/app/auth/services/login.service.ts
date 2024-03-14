@@ -21,13 +21,14 @@ export class LoginService {
     image: 'https://www.patriotledger.com/gcdn/authoring/2009/05/01/NPAL/ghows-WL-0a3a8372-6ef2-4a88-8496-f2b829ece2df-677b0e69.jpeg?width=660&height=502&fit=crop&format=pjpg&auto=webp',
     username: 'leslie.linvingston@fractal.com',
     password: '123',
+    token: '123',
   });
 
   constructor(private http: HttpClient) { }
 
-  login(credentials: LoginRequest): Observable<User> {
+  login(username: string, password: string): Observable<User> {
     // console.log('credenciales: ', credentials);
-    return this.http.get<User>('../../../assets/data.json').pipe(
+    return this.http.post<User>('../../../assets/data.json', { responseType: 'text' }).pipe(
       tap((userData: User) => {
         this.currentUserData.next(userData);
         this.currentUserLogin.next(true);
