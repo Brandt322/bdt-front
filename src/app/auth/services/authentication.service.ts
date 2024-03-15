@@ -23,6 +23,7 @@ export class AuthenticationService {
 
   logout(): void {
     sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user_data');
     this.toast.info('Hasta luego');
     this.router.navigate(['/login']);
   }
