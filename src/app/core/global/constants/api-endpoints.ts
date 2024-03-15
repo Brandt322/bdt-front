@@ -26,3 +26,7 @@ export const TALENT_API_ENDPOINTS = {
   UPDATE_EDUCATIONAL_EXPERIENCE: 'update_edu_exp',
   UPDATE_LANGUAGE: 'update_language',
 };
+
+export const LOGIN_API_ENDPOINTS = {
+  LOGIN: 'login',
+}

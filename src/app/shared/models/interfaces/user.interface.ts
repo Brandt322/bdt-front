@@ -6,7 +6,6 @@ export interface User {
   image: string;
   username: string;
   password: string;
-  token: string;
 }
 
 // export interface UserFake {
@@ -18,3 +17,8 @@ export interface User {
 //   username: string;
 //   password: string;
 // }
+
+export interface UserResponse {
+  userDto: User;
+  token: string;
+}

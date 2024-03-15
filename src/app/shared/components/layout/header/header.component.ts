@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { User } from 'src/app/shared/models/interfaces/user.interface';
+import { User, UserResponse } from 'src/app/shared/models/interfaces/user.interface';
 
 @Component({
   selector: 'app-header',
@@ -8,7 +8,7 @@ import { User } from 'src/app/shared/models/interfaces/user.interface';
 })
 export class HeaderComponent implements OnInit {
 
-  @Input() userData!: User;
+  @Input() userData!: UserResponse;
 
   constructor() { }
 

@@ -34,7 +34,8 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     if (this.loginForm.valid) {
       const { username, password } = this.loginForm.value;
-      this.authenticationService.login(username, password);
+      this.authenticationService.login({ username, password });
+      // this.router.navigate(['/main']);
     } else {
       this.loginForm.markAllAsTouched();
     }

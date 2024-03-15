@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { AuthenticationService } from 'src/app/auth/services/authentication.service';
 import { LoginService } from 'src/app/auth/services/login.service';
-import { User } from 'src/app/shared/models/interfaces/user.interface';
+import { User, UserResponse } from 'src/app/shared/models/interfaces/user.interface';
 
 @Component({
   selector: 'app-main',
@@ -11,29 +12,23 @@ import { User } from 'src/app/shared/models/interfaces/user.interface';
 export class MainComponent implements OnInit, OnDestroy {
 
   userLoginOn: boolean = false;
-  userData?: User;
+  userData?: UserResponse;
+  private userKey = 'user_data';
+
   private loginSubscription?: Subscription;
   private userSubscription?: Subscription;
-  constructor(private loginService: LoginService) { }
+  constructor(private authService: AuthenticationService) { }
 
   ngOnInit(): void {
-    this.loginService.currentUserLogin.subscribe({
-      next: (isLogged) => {
-        this.userLoginOn = isLogged;
-      }
-    })
-
-    this.loginService.currentUserData.subscribe({
-      next: (userData) => {
-        this.userData = userData;
-        console.log(userData.username)
-      }
-    })
+    this.userLoginOn = this.authService.isLoggedIn();
+    this.userData = JSON.parse(sessionStorage.getItem(this.userKey) || '{}');
+    console.log(this.userLoginOn);
+    console.log(this.userData);
   }
 
   ngOnDestroy(): void {
-    this.loginSubscription?.unsubscribe();
-    this.userSubscription?.unsubscribe();
+    // this.loginSubscription?.unsubscribe();
+    // this.userSubscription?.unsubscribe();
   }
 
 }

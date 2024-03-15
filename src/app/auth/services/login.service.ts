@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, tap } from 'rxjs';
+import { LOGIN_API_ENDPOINTS } from 'src/app/core/global/constants/api-endpoints';
 import { LoginRequest } from 'src/app/shared/models/interfaces/login.interface';
-import { User } from 'src/app/shared/models/interfaces/user.interface';
+import { User, UserResponse } from 'src/app/shared/models/interfaces/user.interface';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -10,28 +11,15 @@ import { environment } from 'src/environments/environment';
 })
 export class LoginService {
   private uri = environment.url;
-  currentUserLogin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
-  currentUserData: BehaviorSubject<any> = new BehaviorSubject<User>({
-    id: 0,
-    name: 'John',
-    paternalSurname: 'Doe',
-    maternalSurname: 'Smith',
-    image: 'https://www.patriotledger.com/gcdn/authoring/2009/05/01/NPAL/ghows-WL-0a3a8372-6ef2-4a88-8496-f2b829ece2df-677b0e69.jpeg?width=660&height=502&fit=crop&format=pjpg&auto=webp',
-    username: 'leslie.linvingston@fractal.com',
-    password: '123',
-    token: '123',
-  });
+  private readonly userKey = 'user_data';
 
   constructor(private http: HttpClient) { }
 
-  login(username: string, password: string): Observable<User> {
+  login(loginRequest: LoginRequest): Observable<UserResponse> {
     // console.log('credenciales: ', credentials);
-    return this.http.post<User>('../../../assets/data.json', { responseType: 'text' }).pipe(
-      tap((userData: User) => {
-        this.currentUserData.next(userData);
-        this.currentUserLogin.next(true);
+    return this.http.post<UserResponse>(`${this.uri}/${LOGIN_API_ENDPOINTS.LOGIN}`, loginRequest).pipe(
+      tap((userData: UserResponse) => {
+        sessionStorage.setItem(this.userKey, JSON.stringify(userData));
       }),
       catchError((error) => {
         throw error;
@@ -39,11 +27,4 @@ export class LoginService {
     );
   }
 
-  get userData(): Observable<User> {
-    return this.currentUserData.asObservable();
-  }
-
-  get isLogged(): Observable<boolean> {
-    return this.currentUserLogin.asObservable();
-  }
 }

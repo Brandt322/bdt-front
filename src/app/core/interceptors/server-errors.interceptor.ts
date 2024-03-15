@@ -41,6 +41,8 @@ export class ServerErrorsInterceptor implements HttpInterceptor {
       if (error.status == 400) {
         if (error.error.message === 'Los datos ingresados ya se encuentran registrados') {
           this.toast.warning(error.error.message, 'Advertencia', { timeOut: 2000 });
+        } else if (error.error.message === 'El nombre de usuario y/o la contraseña no son válidos') {
+          this.toast.error(`${error.error.message}`, 'Error', { timeOut: 2000 });
         } else {
           this.toast.error(`${error.error.message}`, 'Error 400', { timeOut: 2000 });
         }

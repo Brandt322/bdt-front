@@ -25,7 +25,7 @@
           <span class="sr-only">Open user menu</span>
           <img
             class="w-14 h-14 rounded-full"
-            [src]="userData.image"
+            [src]="userData.userDto.image"
             alt="user photo"
           />
         </button>
@@ -37,11 +37,11 @@
         >
           <div class="px-4 py-3">
             <span class="block text-sm text-gray-900 dark:text-white">{{
-              userData.name
+              userData.userDto.name
             }}</span>
             <span
               class="block text-sm text-gray-500 truncate dark:text-gray-400"
-              >{{ userData.username }}</span
+              >{{ userData.userDto.username }}</span
             >
           </div>
           <ul class="py-2" aria-labelledby="user-menu-button">
@@ -64,7 +64,8 @@
       </div>
       <div class="hidden sm:flex sm:flex-col sm:justify-center">
         <span class="text-md text-black font-semibold leading-tight"
-          >{{ userData.name }} {{ userData.paternalSurname }}</span
+          >{{ userData.userDto.name }}
+          {{ userData.userDto.paternalSurname }}</span
         >
         <span class="mb-1 text-gray-700 leading-tight">Reclutador</span>
       </div>
