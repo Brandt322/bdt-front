@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginFormBuild();
+    sessionStorage.clear()
   }
 
   loginFormBuild() {
