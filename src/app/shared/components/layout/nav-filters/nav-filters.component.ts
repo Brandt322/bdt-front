@@ -10,6 +10,7 @@ import { Level } from 'src/app/shared/models/interfaces/level-interface';
 import { TalentService } from 'src/app/services/talent/talent.service';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
 import { FilterTalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
+import { UserPrincipal } from 'src/app/shared/models/interfaces/user.interface';
 
 @Component({
   selector: 'app-nav-filters',
@@ -22,6 +23,7 @@ export class NavFiltersComponent implements OnInit {
   skills: string[] = [];
   myForm!: FormGroup;
   @Output() isFiltered = new EventEmitter<boolean>();
+  userDetails!: UserPrincipal;
 
   constructor(
     private router: Router,
@@ -34,6 +36,12 @@ export class NavFiltersComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    if (sessionStorage.getItem('user_data')) {
+      const userData = sessionStorage.getItem('user_data') ? JSON.parse(sessionStorage.getItem('user_data') || '{}') : {};
+      this.userDetails = userData.userPrincipal;
+    }
+
     this.requestOptions();
     this.buildForm()
   }

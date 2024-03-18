@@ -19,6 +19,27 @@ export interface User {
 // }
 
 export interface UserResponse {
-  userDto: User;
+  userPrincipal: UserPrincipal;
+  bearer: string;
   token: string;
 }
+
+export interface UserPrincipal {
+  name: string;
+  paternalSurname: string;
+  maternalSurname: string;
+  image: string;
+  roles: string[];
+  username: string;
+  password: string;
+  authorities: string[];
+  isAccountNonExpired: boolean;
+  isAccountNonLocked: boolean;
+  isCredentialsNonExpired: boolean;
+  isEnabled: boolean;
+}
+
+// export interface UserResponseTwo {
+//   userDetails: UserDetails;
+//   token: string;
+// }

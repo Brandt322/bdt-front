@@ -17,14 +17,28 @@ export class LoginService {
 
   login(loginRequest: LoginRequest): Observable<UserResponse> {
     // console.log('credenciales: ', credentials);
-    return this.http.post<UserResponse>(`${this.uri}/${LOGIN_API_ENDPOINTS.LOGIN}`, loginRequest).pipe(
-      tap((userData: UserResponse) => {
-        sessionStorage.setItem(this.userKey, JSON.stringify(userData));
+    return this.http.post<UserResponse>(`${this.uri}/${LOGIN_API_ENDPOINTS.REQUEST_MAPPING}/${LOGIN_API_ENDPOINTS.LOGIN}`, loginRequest).pipe(
+      tap((userPrincipal: UserResponse) => {
+        userPrincipal.userPrincipal.image = this.handleImage(userPrincipal.userPrincipal.image);
+        sessionStorage.setItem(this.userKey, JSON.stringify(userPrincipal));
       }),
       catchError((error) => {
         throw error;
       })
     );
+  }
+
+  private handleImage(image: string): string {
+    if (image) {
+      let imagePrefix = 'data:image/jpeg;base64,';
+      if (image.startsWith('iVBOR')) {
+        imagePrefix = 'data:image/png;base64,';
+      } else if (image.startsWith('UklGR')) {
+        imagePrefix = 'data:image/webp;base64,';
+      }
+      return imagePrefix + image;
+    }
+    return '';
   }
 
 }

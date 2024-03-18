@@ -28,5 +28,6 @@ export const TALENT_API_ENDPOINTS = {
 };
 
 export const LOGIN_API_ENDPOINTS = {
+  REQUEST_MAPPING: 'auth',
   LOGIN: 'login',
 }

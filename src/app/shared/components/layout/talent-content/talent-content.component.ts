@@ -12,6 +12,7 @@ import { Language } from 'src/app/shared/models/interfaces/language.interface';
 import { Level } from 'src/app/shared/models/interfaces/level-interface';
 import { ICarouselItem } from '../../utils/carousel/ICarousel-metadata';
 import { CarouselComponent } from '../../utils/carousel/carousel.component';
+import { UserPrincipal } from 'src/app/shared/models/interfaces/user.interface';
 
 
 
@@ -30,6 +31,7 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
   languageOptions: Language[] = [];
   levelOptions: Level[] = [];
   talentFileList: ICarouselItem[] = [];
+  userDetails!: UserPrincipal;
 
   @ViewChild(CarouselComponent) carouselComponent!: CarouselComponent;
 
@@ -94,7 +96,11 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-
+    if (sessionStorage.getItem('user_data')) {
+      const userData = sessionStorage.getItem('user_data') ? JSON.parse(sessionStorage.getItem('user_data') || '{}') : {};
+      console.log(userData)
+      this.userDetails = userData.userPrincipal;
+    }
   }
 
   requestOptions() {

@@ -2,7 +2,7 @@
   class="bg-white border-gray-200 dark:bg-gray-900 mx-auto w-full max-w-full sm:flex sm:items-center sm:px-4 md:py-3 lg:py-2 md:justify-between xl:py-3 xl:max-w-screen-2xl"
 >
   <div class="flex items-center justify-between gap-2 px-4 py-3 sm:p-0">
-    <div>
+    <div *ngIf="userDetails.roles.includes('RECLUTADOR')">
       <a
         (click)="onButtonClick()"
         class="inline-block text-md font-medium text-center text-[#0B85C3] bg-white border border-[#84c2e0] focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-[#c7e2f0] rounded-lg py-2.5 px-5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 cursor-pointer"

@@ -48,14 +48,14 @@ export class ServerErrorsInterceptor implements HttpInterceptor {
         }
       }
 
-      // if (error.status === 401) {
-      //   if (error.error.message === 'Credenciales incorrectas') {
-      //     this.toast.error(error.error.message, 'Error de inicio de sesión', { timeOut: 2000 });
-      //   } else {
-      //     this.toast.error(`${error.error.message}`, 'Error 401', { timeOut: 2000 });
-      //     this.route.navigate(['/login']);
-      //   }
-      // }
+      if (error.status === 401) {
+        if (error.error.message === 'No autorizado') {
+          this.toast.warning(error.error.message, 'Error de inicio de sesión', { timeOut: 2000 });
+        } else {
+          this.toast.error(`${error.error.message}`, 'Error 401', { timeOut: 2000 });
+          this.route.navigate(['/login']);
+        }
+      }
 
       // if (error.status === 401) {
       //   this.route.navigate(['/login']);
@@ -70,6 +70,12 @@ export class ServerErrorsInterceptor implements HttpInterceptor {
       }
 
       if (error.status === 500) {
+        // if (error.error.message === 'No autorizado') {
+        //   this.toast.error(error.error.message, 'Error de inicio de sesión', { timeOut: 2000 });
+        // } else {
+        //   this.toast.error(`${error.error.message}`, 'Error 500', { timeOut: 2000 });
+        //   this.route.navigate(['/login']);
+        // }
         this.toast.error('Error, intentalo más tarde', 'Error 500', { timeOut: 2000 });
       }
       return EMPTY;

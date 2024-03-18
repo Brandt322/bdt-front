@@ -30,6 +30,7 @@
       </div>
       <div class="flex items-center w-full p-1">
         <button
+          *ngIf="userDetails.roles.includes('RECLUTADOR')"
           for="dropzone-file3"
           data-modal-target="new-file-modal-form"
           data-modal-toggle="new-file-modal-form"
@@ -67,6 +68,7 @@
           <button
             data-modal-target="technical-skills-modal"
             data-modal-toggle="technical-skills-modal"
+            *ngIf="userDetails.roles.includes('RECLUTADOR')"
           >
             <i class="fa-solid fa-plus text-gray-500"></i>
           </button>
@@ -80,6 +82,7 @@
             Habilidades Blandas
           </h4>
           <button
+            *ngIf="userDetails.roles.includes('RECLUTADOR')"
             data-modal-target="soft-skills-modal"
             data-modal-toggle="soft-skills-modal"
           >
@@ -96,6 +99,7 @@
           {{ description }}
         </p>
         <button
+          *ngIf="userDetails.roles.includes('RECLUTADOR')"
           class="flex items-center"
           data-modal-target="description-modal"
           data-modal-toggle="description-modal"
@@ -117,6 +121,7 @@
           <button
             data-modal-target="add-work-experience-modal"
             data-modal-toggle="add-work-experience-modal"
+            *ngIf="userDetails.roles.includes('RECLUTADOR')"
           >
             <i class="fa-solid fa-plus text-gray-500"></i>
           </button>
@@ -144,6 +149,7 @@
               </div>
             </div>
             <button
+              *ngIf="userDetails.roles.includes('RECLUTADOR')"
               [attr.data-modal-target]="
                 'edit-work-experience-modal-' + experience.id + talent?.id
               "
@@ -166,6 +172,7 @@
             Educación
           </h4>
           <button
+            *ngIf="userDetails.roles.includes('RECLUTADOR')"
             data-modal-target="add-educational-experiences-modal"
             data-modal-toggle="add-educational-experiences-modal"
           >
@@ -198,6 +205,7 @@
               </div>
             </div>
             <button
+              *ngIf="userDetails.roles.includes('RECLUTADOR')"
               [attr.data-modal-target]="
                 'edit-educational-experience-modal-' +
                 experience.id +
@@ -224,6 +232,7 @@
             Idiomas
           </h4>
           <button
+            *ngIf="userDetails.roles.includes('RECLUTADOR')"
             data-modal-target="add-language-modal"
             data-modal-toggle="add-language-modal"
             type="button"
@@ -264,6 +273,7 @@
               ></app-rating>
             </div>
             <button
+              *ngIf="userDetails.roles.includes('RECLUTADOR')"
               [attr.data-modal-target]="
                 'edit-language-experience-modal-' + language.id + talent?.id
               "
@@ -295,11 +305,17 @@
   </div>
 </div>
 
-<app-add-work-experiences-form></app-add-work-experiences-form>
+<app-add-work-experiences-form
+  *ngIf="userDetails.roles.includes('RECLUTADOR')"
+></app-add-work-experiences-form>
 
-<app-add-educational-experiences-form> </app-add-educational-experiences-form>
+<app-add-educational-experiences-form
+  *ngIf="userDetails.roles.includes('RECLUTADOR')"
+>
+</app-add-educational-experiences-form>
 
 <app-add-language
+  *ngIf="userDetails.roles.includes('RECLUTADOR')"
   [languages]="languageOptions"
   [levels]="levelOptions"
 ></app-add-language>
@@ -308,6 +324,7 @@
   *ngFor="let experience of processedWorkExperiences; let i = index"
 >
   <app-edit-work-experiences-form
+    *ngIf="userDetails.roles.includes('RECLUTADOR')"
     [modal_id]="'edit-work-experience-modal-' + experience.id + talent?.id"
     [workExperience]="experience"
     [id]="experience.id || 0"
@@ -317,6 +334,7 @@
   *ngFor="let experience of processeEducationalExperiences; let i = index"
 >
   <app-edit-educational-experiences-form
+    *ngIf="userDetails.roles.includes('RECLUTADOR')"
     [modal_id]="
       'edit-educational-experience-modal-' + experience.id + talent?.id
     "
@@ -327,6 +345,7 @@
 
 <ng-container *ngFor="let language of processeLanguages; let i = index">
   <app-edit-language
+    *ngIf="userDetails.roles.includes('RECLUTADOR')"
     [modal_id]="'edit-language-experience-modal-' + language.id + talent?.id"
     [languageList]="language"
     [languageOptions]="languageOptions"

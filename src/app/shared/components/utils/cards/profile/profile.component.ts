@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
 import { SharedDataService } from "../../../services/shared-data-service.service";
 import { TalentResponse } from "src/app/shared/models/interfaces/talent.interface";
+import { UserPrincipal, UserResponse } from "src/app/shared/models/interfaces/user.interface";
 
 @Component({
   selector: 'app-profile',
@@ -27,19 +28,28 @@ export class ProfileComponent implements OnInit, OnChanges {
   @Input() currencyId?: number;
   @Input() talent!: TalentResponse;
 
+  userDetails!: UserPrincipal;
+
   constructor(private data: SharedDataService, private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
+    if (sessionStorage.getItem('user_data')) {
+      const userData = sessionStorage.getItem('user_data') ? JSON.parse(sessionStorage.getItem('user_data') || '{}') : {};
+      this.userDetails = userData.userPrincipal;
+    }
 
+    // console.log('Roles: ', this.userDetails)
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['talent']) {
       // Aquí, actualiza la vista con el talento actualizado.
-      console.log('Talent updated: ', this.talent.currency);
+      // console.log('Talent updated: ', this.talent.currency);
       this.cd.markForCheck();
     }
   }
+
+
 
   openModalSocial() {
     this.data.changeGithubLink(this.githubLink);
