@@ -18,12 +18,13 @@ import { UserPrincipal } from 'src/app/shared/models/interfaces/user.interface';
   styleUrls: ['./nav-filters.component.css'],
 })
 export class NavFiltersComponent implements OnInit {
+  @Output() isFiltered = new EventEmitter<boolean>();
   isOpen: boolean = false;
   levels: Level[] = [];
   skills: string[] = [];
   myForm!: FormGroup;
-  @Output() isFiltered = new EventEmitter<boolean>();
   userDetails!: UserPrincipal;
+  searchResult: string = '';
 
   constructor(
     private router: Router,
@@ -65,9 +66,16 @@ export class NavFiltersComponent implements OnInit {
         tap((response: FilterTalentResponse[]) => {
           if (response.length === 0) {
             this.toastr.info('No hay registros de ese tipo', 'Información');
+            this.talentListService.updateTalentList([]);
+            this.searchResult = '';
           } else {
             this.isFiltered.emit(true);
             this.talentListService.updateTalentList(response);
+
+            const resultText = response.length === 1 ? 'resultado disponible' : 'resultados disponibles';
+            // Verificar si el valor del campo de búsqueda es una cadena vacía
+            const searchText = this.myForm.get('data')?.value ? ` para "${this.myForm.get('data')?.value}"` : '';
+            this.searchResult = `${response.length} ${resultText}${searchText}`;
           }
         }),
         catchError((error) => {

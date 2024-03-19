@@ -47,6 +47,10 @@ export class TalentDetailService {
 
   updateTalentList(talents: FilterTalentResponse[]): void {
     this.talentListSubject.next(talents);
+    if (talents.length === 0) {
+      this.currentTalentValue = null; // Actualizamos el talento seleccionado a null
+      this.talentSource.next(null);
+    }
   }
 
   addTechnicalSkillToCurrentTalent(id: number | null, skillName: string, yearsOfExperience: number) {

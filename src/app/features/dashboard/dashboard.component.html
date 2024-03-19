@@ -1,9 +1,19 @@
-<div class="h-full">
+<div
+  class="h-full"
+  [ngClass]="{
+    'flex flex-col justify-center gap-12': !hasRecords
+  }"
+>
   <app-nav-filters (isFiltered)="onSearchPerformed()"></app-nav-filters>
   <div
-    class="grid grid-rows-auto lg:grid-cols-6 gap-4 max-w-screen-2xl max-h-screen mx-auto"
+    class="max-w-screen-2xl max-h-screen mx-auto"
+    [ngClass]="{
+      'grid grid-rows-auto lg:grid-cols-6 gap-4': hasRecords,
+      'mt-10': !hasRecords
+    }"
   >
     <div
+      *ngIf="hasRecords; else noRecords"
       class="flex max-w-auto h-auto lg:h-5/6 lg:max-h-screen lg:flex-col lg:col-span-2 px-4 py-2 gap-6 overflow-y-auto scroll-smooth scrollbar-thin scrollbar-thumb-orange"
     >
       <app-profile
@@ -20,9 +30,24 @@
         (click)="onTalentClick(talent)"
       ></app-profile>
     </div>
-    <div class="h-auto lg:h-5/6 max-w-full max-h-screen lg:col-span-4 p-1">
+    <div
+      *ngIf="hasRecords"
+      class="h-auto lg:h-5/6 max-w-full max-h-screen lg:col-span-4 p-1"
+    >
       <app-talent-content></app-talent-content>
     </div>
+    <ng-template #noRecords>
+      <div
+        class="flex justify-center items-center w-full h-full flex-col gap-2"
+      >
+        <img
+          class="object-cover h-14"
+          src="../../../assets/fractal-typo.png"
+          alt="No records"
+        />
+        <p>No se encontraron registros de este tipo.</p>
+      </div>
+    </ng-template>
   </div>
   <!-- Modal forms -->
   <app-modal-forms-collection></app-modal-forms-collection>

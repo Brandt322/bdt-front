@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedTalent$: BehaviorSubject<BasicTalentResponse | null> = new BehaviorSubject<BasicTalentResponse | null>(null);
 
   isFiltered: boolean = false;
+  hasRecords = true;
 
   private destroy$ = new Subject<void>();
 
@@ -55,14 +56,19 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         return throwError(() => error);
       })
     ).subscribe((talents) => {
-      if (this.talents$.getValue() !== talents) {
-        this.talents$.next(talents.reverse());
-        if (!this.isFiltered) {
-          this.talents$.next(this.talents$.getValue().slice(0, 5));
-        }
-        if (this.talents$.getValue().length > 0) {
-          this.selectedTalent$.next(this.talents$.getValue()[0]);
-          this.onTalentClick(this.talents$.getValue()[0]);
+      this.hasRecords = talents.length > 0;
+      if (this.hasRecords) {
+        if (this.talents$.getValue() !== talents) {
+          this.talents$.next(talents.reverse());
+
+          if (!this.isFiltered) {
+            this.talents$.next(this.talents$.getValue().slice(0, 5));
+          }
+
+          if (this.talents$.getValue().length > 0) {
+            this.selectedTalent$.next(this.talents$.getValue()[0]);
+            this.onTalentClick(this.talents$.getValue()[0]);
+          }
         }
       }
     });

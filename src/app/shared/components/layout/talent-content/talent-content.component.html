@@ -20,7 +20,10 @@
       [options]="true"
     ></app-profile>
 
-    <div class="flex w-full p-1 gap-2">
+    <div
+      class="flex w-full p-1"
+      [ngClass]="{ 'gap-2': userDetails.roles.includes('RECLUTADOR') }"
+    >
       <div class="flex items-center w-full p-1">
         <app-carousel
           [items]="talentFileList"
@@ -28,9 +31,11 @@
           class="w-full"
         ></app-carousel>
       </div>
-      <div class="flex items-center w-full p-1">
+      <div
+        class="flex items-center w-full p-1"
+        *ngIf="userDetails.roles.includes('RECLUTADOR')"
+      >
         <button
-          *ngIf="userDetails.roles.includes('RECLUTADOR')"
           for="dropzone-file3"
           data-modal-target="new-file-modal-form"
           data-modal-toggle="new-file-modal-form"
@@ -62,7 +67,7 @@
     <div class="flex items-center justify-start w-full h-full p-1 gap-2">
       <div class="flex flex-col justify-start min-h-[120px] w-7/12 gap-1 p-2">
         <div class="flex items-center justify-between gap-2">
-          <h4 class="font-semibold text-md text-gray-500 dark:text-gray-400">
+          <h4 class="font-semibold text-gray-500 dark:text-gray-400">
             Habilidades Técnicas
           </h4>
           <button
@@ -78,7 +83,7 @@
       </div>
       <div class="flex flex-col justify-start min-h-[120px] w-5/12 gap-1 p-2">
         <div class="flex items-center justify-between gap-2">
-          <h4 class="font-semibold text-md text-gray-500 dark:text-gray-400">
+          <h4 class="font-semibold text-gray-500 dark:text-gray-400">
             Habilidades Blandas
           </h4>
           <button
@@ -95,7 +100,7 @@
     </div>
     <div class="grid grid-cols-1 gap-6 ms-4 me-4 md:me-32">
       <div class="w-full flex gap-1">
-        <p class="text-md text-gray-600 dark:text-gray-400">
+        <p class="text-gray-600 dark:text-gray-400">
           {{ description }}
         </p>
         <button
@@ -115,7 +120,7 @@
 
       <div class="flex flex-col justify-center w-full gap-2">
         <div class="flex justify-between items-center">
-          <h4 class="font-semibold text-md text-gray-500 dark:text-gray-400">
+          <h4 class="font-semibold text-gray-500 dark:text-gray-400">
             Experiencia
           </h4>
           <button
@@ -143,7 +148,7 @@
                 {{ experience.company }}
               </h1>
               <div class="flex justify-between gap-2 w-full">
-                <p class="text-md font-normal text-gray-500 dark:text-gray-400">
+                <p class="font-normal text-gray-500 dark:text-gray-400">
                   {{ experience.description }}
                 </p>
               </div>
@@ -168,7 +173,7 @@
       </div>
       <div class="flex flex-col justify-center w-full gap-2">
         <div class="flex justify-between items-center">
-          <h4 class="font-semibold text-md text-gray-500 dark:text-gray-400">
+          <h4 class="font-semibold text-gray-500 dark:text-gray-400">
             Educación
           </h4>
           <button
@@ -199,7 +204,7 @@
                 {{ experience.educationalInstitute }}
               </h1>
               <div class="flex justify-between gap-2 w-full">
-                <p class="text-md font-normal text-gray-500 dark:text-gray-400">
+                <p class="font-normal text-gray-500 dark:text-gray-400">
                   {{ experience.description }}
                 </p>
               </div>
@@ -228,7 +233,7 @@
       </div>
       <div class="flex flex-col justify-center w-full gap-2">
         <div class="flex justify-between items-center">
-          <h4 class="font-semibold text-md text-gray-500 dark:text-gray-400">
+          <h4 class="font-semibold text-gray-500 dark:text-gray-400">
             Idiomas
           </h4>
           <button
@@ -254,7 +259,7 @@
               }}
             </h1>
             <div class="flex justify-between gap-2 w-full">
-              <p class="text-md font-normal text-gray-500 dark:text-gray-400">
+              <p class="font-normal text-gray-500 dark:text-gray-400">
                 {{
                   language.level.charAt(0).toUpperCase() +
                     language.level.slice(1).toLowerCase()
