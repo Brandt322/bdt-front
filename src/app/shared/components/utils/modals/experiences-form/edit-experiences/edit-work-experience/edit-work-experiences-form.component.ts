@@ -33,7 +33,7 @@ export class EditWorkExperiencesFormComponent implements OnInit, AfterViewInit {
   constructor(private fb: FormBuilder, private talentDetailService: TalentDetailService, private cdr: ChangeDetectorRef) { }
 
   ngAfterViewInit(): void {
-    setTimeout(() => initModals())
+    setTimeout(() => initModals(), 0)
   }
 
   ngOnInit(): void {

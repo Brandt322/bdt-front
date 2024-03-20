@@ -13,6 +13,7 @@ import { Level } from 'src/app/shared/models/interfaces/level-interface';
 import { ICarouselItem } from '../../utils/carousel/ICarousel-metadata';
 import { CarouselComponent } from '../../utils/carousel/carousel.component';
 import { UserPrincipal } from 'src/app/shared/models/interfaces/user.interface';
+import { initModals } from 'flowbite';
 
 
 
@@ -28,6 +29,7 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
   processedWorkExperiences: ProcessedWorkExperiences[] = [];
   processeEducationalExperiences: ProcesseEducationalExperiences[] = [];
   processeLanguages: ProcesseLanguages[] = [];
+  processeFeedback: any[] = [];
   languageOptions: Language[] = [];
   levelOptions: Level[] = [];
   talentFileList: ICarouselItem[] = [];
@@ -61,6 +63,7 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
       this.processedWorkExperiences = this.workExperiences;
       this.processeEducationalExperiences = this.educationalExperiences;
       this.processeLanguages = this.languagesList;
+      // this.processeFeedback = this.
 
       // console.log(this.talentFileList)
       // Reset Carousel state
@@ -226,6 +229,10 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
       };
     }) || [];
   }
+
+  // get feedback() {
+  //   return this.talent?.feedbackList || [];
+  // }
 
   get educationaInstitute() {
     return this.talent?.educationalExperiencesList?.map(experience => experience.educationalInstitute).join(' ') || '';

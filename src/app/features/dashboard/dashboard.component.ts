@@ -36,6 +36,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     initDropdowns();
+    // setTimeout(() => {
+    //   initModals();
+    // }, 0);
     initModals();
   }
 

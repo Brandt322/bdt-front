@@ -1,15 +1,16 @@
 import { formatDate } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
 import { EducationalExperienceRequest } from 'src/app/shared/models/interfaces/educationalExperience.interface';
 import { CustomValidators } from '../../../../Validations/CustomValidators';
+import { initModals } from 'flowbite';
 
 @Component({
   selector: 'app-edit-educational-experiences-form',
   templateUrl: './edit-educational-experiences-form.component.html'
 })
-export class EditEducationalExperiencesFormComponent implements OnInit {
+export class EditEducationalExperiencesFormComponent implements OnInit, AfterViewInit {
   @Input() id!: number;
   @Input() title!: string;
   @Input() description!: string;
@@ -31,6 +32,10 @@ export class EditEducationalExperiencesFormComponent implements OnInit {
   disableEndDateInput: boolean = false;
 
   constructor(private fb: FormBuilder, private talentDetailService: TalentDetailService) { }
+
+  ngAfterViewInit(): void {
+    // setTimeout(() => initModals(), 0)
+  }
 
   ngOnInit(): void {
     this.formBuild();

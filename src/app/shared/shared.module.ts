@@ -8,7 +8,6 @@ import { HeaderComponent } from './components/layout/header/header.component';
 import { MainComponent } from './components/layout/main/main.component';
 import { NavFiltersComponent } from './components/layout/nav-filters/nav-filters.component';
 import { TalentContentComponent } from './components/layout/talent-content/talent-content.component';
-import { AddEditFeedbackComponent } from './components/utils/add-edit-feedback/add-edit-feedback.component';
 import { ButtonDropdownComponent } from './components/utils/buttons/button-dropdown.component';
 import { ProfileComponent } from './components/utils/cards/profile/profile.component';
 import { EducationalExperienceFormComponent } from './components/utils/experience-form/educational-experience-form/educational-experience-form.component';
@@ -33,7 +32,6 @@ import { DescriptionModalFormComponent } from './components/utils/modals/forms/d
 import { EducationModalFormComponent } from './components/utils/modals/forms/education-form-component';
 import { ExperienceModalFormComponent } from './components/utils/modals/forms/experience-form-component';
 import { FeedbackModalFormComponent } from './components/utils/modals/forms/feedback-form-component';
-import { LanguageModalFormComponent } from './components/utils/modals/forms/language-form-component';
 import { ModalFormsCollection } from './components/utils/modals/forms/modal-forms-collection';
 import { NewFileModalFormComponent } from './components/utils/modals/forms/new-file-form-component';
 import { NewProfilePicModalFormComponent } from './components/utils/modals/forms/new-profile-pic-form-component';
@@ -63,7 +61,6 @@ import { CarouselComponent } from './components/utils/carousel/carousel.componen
     CheckboxModalComponent,
     ButtonDropdownComponent,
     ProfileComponent,
-    AddEditFeedbackComponent,
     /* Input */
     CheckboxInputComponent,
     TextInputComponent,
@@ -91,7 +88,6 @@ import { CarouselComponent } from './components/utils/carousel/carousel.componen
     NewFileModalFormComponent,
     ExperienceModalFormComponent,
     EducationModalFormComponent,
-    LanguageModalFormComponent,
     CheckboxDropdownMultipleSelectModalComponent,
     CheckboxDropdownSelectDataModalComponent,
     PillTagComponent,
@@ -127,7 +123,6 @@ import { CarouselComponent } from './components/utils/carousel/carousel.componen
     ProfileComponent,
     NavFiltersComponent,
     TalentContentComponent,
-    AddEditFeedbackComponent,
     RatingComponent,
     /* Form Inputs */
     CheckboxInputComponent,
@@ -143,7 +138,6 @@ import { CarouselComponent } from './components/utils/carousel/carousel.componen
     ModalFormsCollection,
     ExperienceModalFormComponent,
     EducationModalFormComponent,
-    LanguageModalFormComponent,
     FeedbackModalFormComponent,
     SoftSkillsModalFormComponent,
     DescriptionModalFormComponent,

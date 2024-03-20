@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { initModals } from 'flowbite';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
@@ -11,7 +11,7 @@ import { CustomValidators } from '../../Validations/CustomValidators';
   selector: 'app-edit-language',
   templateUrl: './edit-language.component.html',
 })
-export class EditLanguageComponent implements OnInit {
+export class EditLanguageComponent implements OnInit, AfterViewInit {
   @Input() modal_id!: string;
   @Input() languageList!: LanguageRequest;
   @Input() id!: number;
@@ -20,6 +20,10 @@ export class EditLanguageComponent implements OnInit {
   languageForm!: FormGroup;
 
   constructor(private fb: FormBuilder, private talentDetailService: TalentDetailService) { }
+
+  ngAfterViewInit(): void {
+    //  setTimeout(() => initModals(), 0);
+  }
 
   ngOnInit(): void {
     this.formBuild();
