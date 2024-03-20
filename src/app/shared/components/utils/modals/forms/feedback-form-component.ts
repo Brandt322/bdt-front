@@ -103,11 +103,14 @@ export class FeedbackModalFormComponent implements OnInit {
   onSubmit() {
     if (this.feedbackForm.valid) {
       const { description, starsRating } = this.feedbackForm.value;
+      let { id, name, paternalSurname, maternalSurname, image } = this.userDetails;
       this.talentDetailService.addFeedbackToCurrentTalent(
         starsRating,
         description,
-        this.userDetails.id
+        this.userDetails.id,
+        { id, name, paternalSurname, maternalSurname, image }
       );
+      // console.log(this.userDetails.id, this.userDetails.name, this.userDetails.image);
       this.feedbackForm.reset();
     }
   }

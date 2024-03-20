@@ -15,7 +15,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       id="feedback"
       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full min-h-20 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       [placeholder]="placeholder"
-      [(ngModel)]="currentValue"
+      [(ngModel)]="value"
       (ngModelChange)="onChange($event)"
       [disabled]="isDisabled"
       (blur)="onTouch()"
@@ -37,15 +37,21 @@ export class TextAreaInputComponent implements ControlValueAccessor {
   @Input() currentValue: string = '';
   @Input() isDisabled: boolean = false;
   @Input() hasError!: boolean;
-
+  private _value: string = '';
+  get value(): string {
+    return this._value;
+  }
+  set value(v: string) {
+    if (v !== this._value) {
+      this._value = v;
+      this.onChange(v);
+    }
+  }
   onChange: any = () => { };
   onTouch: any = () => { };
 
   writeValue(value: string): void {
-    if (value) {
-      this.currentValue = value;
-      this.onChange(value);
-    }
+    this.value = value;
   }
 
   registerOnChange(fn: any): void {

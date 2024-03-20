@@ -12,11 +12,12 @@
       [initialMont]="talent?.initialAmount || 0"
       [finalMont]="talent?.finalAmount || 0"
       [iconEditMont]="true"
-      [feedbackNumber]="2"
+      [feedbackNumber]="processeFeedback.length || 0"
       [githubLink]="talent?.githubLink || ''"
       [linkedinLink]="talent?.linkedinLink || ''"
       [currency]="talent?.currency || ''"
       [currencyId]="talent?.currencyId || 0"
+      [averageRating]="talent?.averageRating || 0"
       [options]="true"
     ></app-profile>
 
@@ -304,30 +305,36 @@
 
         <!-- TODO: ADD NGFOR TO FEEDBACKS -->
         <div
+          *ngFor="let feedback of processeFeedback; let i = index"
           class="flex justify-start items-center p-2 gap-4 rounded-md bg-gray-50 hover:bg-gray-200 shadow-sm-light"
         >
           <div class="flex w-full gap-4">
-            <img
-              class="h-12 rounded-full"
-              src="../../../assets/fractal (1).png "
-              alt=""
-            />
+            <img class="h-12 rounded-full" [src]="feedback.user.image" alt="" />
             <div class="flex flex-col justify-center">
               <div class="flex items-center gap-4">
                 <h1 class="font-medium text-xl text-black dark:text-gray-400">
-                  Cesar Ortiz
+                  {{
+                    feedback.user.name.charAt(0).toUpperCase() +
+                      feedback.user.name.slice(1).toLowerCase()
+                  }}
+                  {{
+                    feedback.user.paternalSurname.charAt(0).toUpperCase() +
+                      feedback.user.paternalSurname.slice(1).toLowerCase()
+                  }}
                 </h1>
                 <div class="flex items-center justify-start">
                   <app-rating
                     [maxRating]="5"
+                    [currentRating]="feedback.starsNumber"
                     [ngClass]="'flex items-center'"
                     [readonly]="true"
+                    [uniqueId]="feedback?.id?.toString()"
                   ></app-rating>
                 </div>
               </div>
               <div class="flex justify-between gap-2 w-full">
                 <p class="text-md font-normal text-gray-500 dark:text-gray-400">
-                  Ayudo siempre al equipo, es muy talentoso.
+                  {{ feedback.description }}
                 </p>
               </div>
             </div>

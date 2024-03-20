@@ -128,12 +128,14 @@
             <app-rating
               [maxRating]="5"
               [ngClass]="'flex items-center'"
+              [currentRating]="averageRating"
+              [readonly]="true"
             ></app-rating>
             <p
               *ngIf="feedbackNumber"
               class="text-gray-600 dark:font-medium dark:text-gray-400"
             >
-              {{ feedbackNumber }} feebbacks
+              {{ feedbackMessage() }}
             </p>
           </div>
         </div>

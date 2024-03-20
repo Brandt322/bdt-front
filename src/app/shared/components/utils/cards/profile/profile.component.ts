@@ -27,6 +27,7 @@ export class ProfileComponent implements OnInit, OnChanges {
   @Input() linkedinLink!: string;
   @Input() currency?: string;
   @Input() currencyId?: number;
+  @Input() averageRating!: number;
   @Input() talent!: TalentResponse;
 
   userDetails!: UserPrincipal;
@@ -51,7 +52,14 @@ export class ProfileComponent implements OnInit, OnChanges {
     }
   }
 
-
+  feedbackMessage(): string {
+    let feedbackNumber = this.feedbackNumber ?? 0;
+    if (feedbackNumber > 1) {
+      return `${feedbackNumber} Feedbacks`;
+    } else {
+      return `${feedbackNumber} Feedback`;
+    }
+  }
 
   openModalSocial() {
     this.data.changeGithubLink(this.githubLink);

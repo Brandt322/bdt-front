@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, forwardRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -13,7 +13,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ]
 })
-export class RatingComponent implements OnInit, ControlValueAccessor {
+export class RatingComponent implements OnInit, OnChanges, ControlValueAccessor {
   @Input() uniqueId?: string;
   @Input() maxRating: number = 5;
   @Input() currentRating: number = 0;
@@ -23,6 +23,12 @@ export class RatingComponent implements OnInit, ControlValueAccessor {
   ratingArray: any[] = [];
   selectedStar: number = 0;
   previousSelection: number = 0;
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['currentRating'] && !changes['currentRating'].firstChange) {
+      this.selectedStar = changes['currentRating'].currentValue;
+    }
+  }
 
   ngOnInit(): void {
     this.ratingArray = Array(this.maxRating).fill(0);

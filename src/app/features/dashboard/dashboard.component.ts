@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TalentService } from 'src/app/services/talent/talent.service';
 import { TalentDetailService } from '../services/talent-detail.service';
 import { LoaderService } from 'src/app/core/global/loader/loader.service';
+import { SharedDataService } from 'src/app/shared/components/services/shared-data-service.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,6 +27,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     private toastr: ToastrService,
     private talentDetailService: TalentDetailService,
     private loader: LoaderService,
+    private sharedDataService: SharedDataService
   ) {
   }
 
@@ -74,9 +76,25 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             this.talents$.next(this.talents$.getValue().slice(0, 5));
           }
 
+          // if (this.talents$.getValue().length > 0) {
+          //   this.selectedTalent$.next(this.talents$.getValue()[0]);
+          //   this.onTalentClick(this.talents$.getValue()[0]);
+          // }
+
           if (this.talents$.getValue().length > 0) {
-            this.selectedTalent$.next(this.talents$.getValue()[0]);
-            this.onTalentClick(this.talents$.getValue()[0]);
+            let selectedTalentId = localStorage.getItem('selectedTalentId');
+            if (selectedTalentId) {
+              // Si hay un talento seleccionado en localStorage, selecciona ese talento
+              let selectedTalent = this.talents$.getValue().find(talent => talent.id.toString() === selectedTalentId);
+              if (selectedTalent) {
+                this.selectedTalent$.next(selectedTalent);
+                this.onTalentClick(selectedTalent);
+              }
+            } else {
+              // Si no hay un talento seleccionado en localStorage, selecciona el primer talento
+              this.selectedTalent$.next(this.talents$.getValue()[0]);
+              this.onTalentClick(this.talents$.getValue()[0]);
+            }
           }
           // setTimeout(() => {
           //   initModals();
@@ -123,6 +141,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loader.showLoader();
     this.selectedTalent$.next(talent);// Actualiza el talento seleccionado cuando se hace clic en un talento
     this.talentDetailService.changeTalent(talent.id);
+    localStorage.setItem('selectedTalentId', talent.id.toString());
     this.loader.hideLoader();
   }
 }

@@ -8,15 +8,13 @@ export interface User {
   password: string;
 }
 
-// export interface UserFake {
-//   id: number;
-//   name: string;
-//   paternalSurname: string;
-//   maternalSurname: string;
-//   image: string;
-//   username: string;
-//   password: string;
-// }
+export interface UserBasic {
+  id: number;
+  name: string;
+  paternalSurname: string;
+  maternalSurname: string;
+  image: string;
+}
 
 export interface UserResponse {
   userPrincipal: UserPrincipal;

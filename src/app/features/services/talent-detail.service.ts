@@ -6,6 +6,7 @@ import { EducationalExperience } from 'src/app/shared/models/interfaces/educatio
 import { FeedbackRequest } from 'src/app/shared/models/interfaces/feedback.interface';
 import { File } from 'src/app/shared/models/interfaces/file.interface';
 import { FilterTalentResponse, TalentResponse, TalentSalaryRequest, TalentSocialRequest, TalentSoftSkillRequest, TalentTechnicalSkillRequest } from 'src/app/shared/models/interfaces/talent.interface';
+import { UserBasic } from 'src/app/shared/models/interfaces/user.interface';
 import { WorkExperience, WorkExperienceRequest } from 'src/app/shared/models/interfaces/workExperience.interface';
 
 @Injectable({
@@ -30,6 +31,7 @@ export class TalentDetailService {
       console.log('currentTalentValue.id is equal to talentId');
       // console.log(this.currentTalentValue.workExperiencesList)
       // console.log(this.currentTalentValue.educationalExperiencesList)
+      console.log(this.currentTalentValue.averageRating)
       return;
     }
 
@@ -183,8 +185,7 @@ export class TalentDetailService {
     }
   }
 
-  addFeedbackToCurrentTalent(starsRating: number, description: string, userId: number) {
-
+  addFeedbackToCurrentTalent(starsRating: number, description: string, userId: number, userImage: UserBasic) {
     if (this.currentTalentValue) {
       const newWorkExperience: FeedbackRequest = {
         talentId: this.currentTalentValue.id,
@@ -198,13 +199,25 @@ export class TalentDetailService {
           throw error;
         })
       ).subscribe(() => {
-        // if (this.currentTalentValue) {
-        //   this.currentTalentValue.filesList.push(fileData);
-        //   this.talentSource.next(this.currentTalentValue);
-        //   this.changeTalent(this.currentTalentValue.id);
-        //   this.toast.success('Se agregó un archivo');
-        // }
-        this.toast.success('Se agregó el feedback');
+        if (this.currentTalentValue) {
+          this.currentTalentValue.feedbacksList.push({
+            id: 0,
+            starsNumber: starsRating,
+            description: description,
+            user: userImage
+          });
+          this.talentService.getBasicTalent().subscribe((talents: FilterTalentResponse[]) => {
+            this.updateTalentList(talents);
+          });
+          // this.toast.success('Se agregó el feedback');
+          this.talentService.getTalentById(this.currentTalentValue.id).subscribe(updatedTalent => {
+            // Actualiza el talento actual con los datos actualizados
+            this.currentTalentValue = updatedTalent;
+            this.talentSource.next(this.currentTalentValue);
+            // this.changeTalent(this.currentTalentValue.id);
+          });
+          this.toast.success('Se agregó el feedback');
+        }
       });
     }
   }

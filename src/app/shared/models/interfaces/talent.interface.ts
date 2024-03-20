@@ -3,6 +3,7 @@ import { File } from "./file.interface";
 import { LanguageRequest, LanguageResponse } from "./language.interface";
 import { SoftSkill, SoftSkillRequest, SoftSkillResponse } from "./softSkill.interface";
 import { TechnicalSkillRequest, TechnicalSkillResponse } from "./technicalSkill.interface";
+import { UserBasic } from "./user.interface";
 import { WorkExperience, WorkExperienceRequest, WorkExperienceResponse } from "./workExperience.interface";
 
 export interface BasicTalentResponse {
@@ -16,6 +17,8 @@ export interface BasicTalentResponse {
   profile: string;
   initialAmount: number;
   finalAmount: number;
+  averageRating: number;
+  feedbacksList: FeedbackResponse[];
   image: string;
 }
 
@@ -33,6 +36,7 @@ export interface TalentResponse {
   currency: string;
   profile: string;
   filesList: File[];
+  averageRating: number;
   image: string;
   description: string;
   initialAmount: number;
@@ -40,6 +44,7 @@ export interface TalentResponse {
   cellPhoneNumber: string;
   linkedinLink: string;
   githubLink: string;
+  feedbacksList: FeedbackResponse[];
   softSkillsList: SoftSkillResponse[];
   technicalSkillsList: TechnicalSkillResponse[];
   educationalExperiencesList: EducationalExperience[];
@@ -87,6 +92,8 @@ export interface FilterTalentResponse {
   profile: string;
   initialAmount: number;
   finalAmount: number;
+  averageRating: number;
+  feedbacksList: FeedbackResponse[];
   image: string;
 }
 
@@ -108,4 +115,11 @@ export interface TalentSalaryRequest {
   initialAmount: number;
   finalAmount: number;
   currencyId: number;
+}
+
+export interface FeedbackResponse {
+  id: number;
+  starsNumber: number;
+  description: string;
+  user: UserBasic;
 }

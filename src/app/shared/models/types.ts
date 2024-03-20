@@ -25,3 +25,9 @@ export interface ProcesseLanguages {
   levelId: number;
   numberOfStars: number;
 }
+
+export interface ProcesseFeedbackList {
+  id?: number;
+  starsNumber: number;
+  description: string;
+}

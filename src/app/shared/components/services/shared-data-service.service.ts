@@ -13,7 +13,10 @@ export class SharedDataService {
   private currencySource = new BehaviorSubject<number>(0);
   private descriptionSource = new BehaviorSubject<string>('');
   private imageSource = new BehaviorSubject<string>('');
+  private averageRatingSource = new BehaviorSubject<number>(0);
 
+
+  currentAverageRating = this.averageRatingSource.asObservable();
   currentImage = this.imageSource.asObservable();
   currentInitialMont = this.initialMontSource.asObservable();
   currentFinalMont = this.finalMontSource.asObservable();
@@ -24,6 +27,10 @@ export class SharedDataService {
 
   changeImage(image: string) {
     this.imageSource.next(image);
+  }
+
+  changeAverageRating(averageRating: number) {
+    this.averageRatingSource.next(averageRating);
   }
 
   changeDescription(description: string) {

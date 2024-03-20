@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
-import { TalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
+import { FeedbackResponse, TalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
 import { SharedDataService } from '../../services/shared-data-service.service';
 import { ProcesseEducationalExperiences, ProcesseLanguages, ProcessedWorkExperiences } from 'src/app/shared/models/types';
 import { MASTER_API_ENDPOINTS } from 'src/app/core/global/constants/api-endpoints';
@@ -14,6 +14,7 @@ import { ICarouselItem } from '../../utils/carousel/ICarousel-metadata';
 import { CarouselComponent } from '../../utils/carousel/carousel.component';
 import { UserPrincipal } from 'src/app/shared/models/interfaces/user.interface';
 import { initModals } from 'flowbite';
+import { TalentService } from 'src/app/services/talent/talent.service';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
   processedWorkExperiences: ProcessedWorkExperiences[] = [];
   processeEducationalExperiences: ProcesseEducationalExperiences[] = [];
   processeLanguages: ProcesseLanguages[] = [];
-  processeFeedback: any[] = [];
+  processeFeedback: FeedbackResponse[] = [];
   languageOptions: Language[] = [];
   levelOptions: Level[] = [];
   talentFileList: ICarouselItem[] = [];
@@ -42,7 +43,8 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
     private sanitizer: DomSanitizer,
     private data: SharedDataService,
     private loader: LoaderService,
-    private masterService: MasterService
+    private masterService: MasterService,
+    private talentService: TalentService
   ) { }
 
   ngAfterViewInit(): void {
@@ -62,7 +64,7 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
       this.processedWorkExperiences = this.workExperiences;
       this.processeEducationalExperiences = this.educationalExperiences;
       this.processeLanguages = this.languagesList;
-      // this.processeFeedback = this.
+      this.processeFeedback = this.feedbackList;
 
       // console.log(this.talentFileList)
       // Reset Carousel state
@@ -85,7 +87,7 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
       this.processedWorkExperiences = this.workExperiences;
       this.processeEducationalExperiences = this.educationalExperiences;
       this.processeLanguages = this.languagesList;
-
+      this.processeFeedback = this.feedbackList;
       // console.log(this.processeLanguages)
       // console.log(this.talentFileList)
       // Reset Carousel state
@@ -229,18 +231,27 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
     }) || [];
   }
 
-  // get feedback() {
-  //   return this.talent?.languagesList?.map(language => {
-  //   return {
-  //     talentId: language.id,
-  //     language: language.language,
-  //     languageId: language.languageId,
-  //     level: language.level,
-  //     levelId: language.levelId,
-  //     numberOfStars: language.numberOfStars
-  //   };
-  // }) || [];
-  // }
+  private handleImage(image: string): string {
+    let imagePrefix = 'data:image/jpeg;base64,';
+    if (image.startsWith('iVBOR')) {
+      imagePrefix = 'data:image/png;base64,';
+    } else if (image.startsWith('UklGR')) {
+      imagePrefix = 'data:image/webp;base64,';
+    }
+    return imagePrefix + image;
+  }
+
+  get feedbackList() {
+    return this.talent?.feedbacksList?.map(feed => {
+      feed.user.image = this.handleImage(feed.user.image);
+      return {
+        id: feed.id,
+        starsNumber: feed.starsNumber,
+        description: feed.description,
+        user: feed.user
+      };
+    }) || [];
+  }
 
   get educationaInstitute() {
     return this.talent?.educationalExperiencesList?.map(experience => experience.educationalInstitute).join(' ') || '';
@@ -248,5 +259,9 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
 
   editDescription() {
     this.data.changeDescription(this.description);
+  }
+
+  get currentRating() {
+    return this.talent?.averageRating || 0;
   }
 }
