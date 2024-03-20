@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
 import { CustomValidators } from '../../Validations/CustomValidators';
+import { UserPrincipal } from 'src/app/shared/models/interfaces/user.interface';
 
 @Component({
   selector: 'app-feedback-modal-form',
@@ -10,25 +11,25 @@ import { CustomValidators } from '../../Validations/CustomValidators';
     title="Agrega un nuevo feedback"
     description="Añade un puntaje y escribe un comentario."
   >
-    <form [formGroup]="feedbackForm">
+    <form [formGroup]="feedbackForm" (ngSubmit)="onSubmit()">
       <div class="grid gap-4 mb-8">
         <div class="flex items-center justify-start">
           <app-rating
             [maxRating]="5"
             [ngClass]="'flex items-center'"
-            formControlName="numberOfStars"
+            formControlName="starsRating"
           ></app-rating>
         </div>
         <div
           class="grid gap-2 leading-tight"
           *ngIf="
-            feedbackForm.get('numberOfStars')?.touched &&
-            feedbackForm.get('numberOfStars')?.errors
+            feedbackForm.get('starsRating')?.touched &&
+            feedbackForm.get('starsRating')?.errors
           "
         >
           <span
             class="font-medium text-orange-500 leading-tight"
-            *ngIf="feedbackForm.get('numberOfStars')?.errors?.['required']"
+            *ngIf="feedbackForm.get('starsRating')?.errors?.['required']"
           >
             Es requerido que seleccione el rating.
           </span>
@@ -71,6 +72,7 @@ import { CustomValidators } from '../../Validations/CustomValidators';
 })
 export class FeedbackModalFormComponent implements OnInit {
   modal_id: string = 'feedback-modal-form';
+  @Input() userDetails!: UserPrincipal;
   title!: string;
   description!: string;
   feedbackForm!: FormGroup;
@@ -90,10 +92,23 @@ export class FeedbackModalFormComponent implements OnInit {
 
   formBuild() {
     this.feedbackForm = this.formBuilder.group({
-      description: ['', [CustomValidators.required, CustomValidators.minLength(10)]],
-      numberOfStars: [null, [CustomValidators.required]],
+      description: [
+        '',
+        [CustomValidators.required, CustomValidators.minLength(10)],
+      ],
+      starsRating: [null, [CustomValidators.required]],
     });
   }
 
-  onSubmit() { }
+  onSubmit() {
+    if (this.feedbackForm.valid) {
+      const { description, starsRating } = this.feedbackForm.value;
+      this.talentDetailService.addFeedbackToCurrentTalent(
+        starsRating,
+        description,
+        this.userDetails.id
+      );
+      this.feedbackForm.reset();
+    }
+  }
 }

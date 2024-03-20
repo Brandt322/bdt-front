@@ -41,6 +41,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     // }, 0);
     // initDropdowns();
     // initModals();
+
   }
 
   ngOnInit(): void {
@@ -51,7 +52,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.talentService.getBasicTalent().pipe(takeUntil(this.destroy$)).subscribe((talents: BasicTalentResponse[]) => {
       this.talentDetailService.updateTalentList(talents);
       this.isFiltered = false;
-      setTimeout(() => { initModals(); initDropdowns(); }, 0);
+      setTimeout(() => {
+        initModals();
+        initDropdowns();
+      }, 0);
     });
 
     this.talentDetailService.talentList$.pipe(
@@ -74,6 +78,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             this.selectedTalent$.next(this.talents$.getValue()[0]);
             this.onTalentClick(this.talents$.getValue()[0]);
           }
+          // setTimeout(() => {
+          //   initModals();
+          //   initDropdowns();
+          // }, 0);
         }
       }
     });
@@ -91,6 +99,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log('Talento seleccionado o actualizado: ' + updatedTalent.id)
         this.selectedTalent$.next(updatedTalent);
       }
+      // setTimeout(() => {
+      //   initModals();
+      //   initDropdowns();
+      // }, 0);
     });
   }
 

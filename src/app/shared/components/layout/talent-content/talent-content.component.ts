@@ -230,7 +230,16 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
   }
 
   // get feedback() {
-  //   return this.talent?.feedbackList || [];
+  //   return this.talent?.languagesList?.map(language => {
+  //   return {
+  //     talentId: language.id,
+  //     language: language.language,
+  //     languageId: language.languageId,
+  //     level: language.level,
+  //     levelId: language.levelId,
+  //     numberOfStars: language.numberOfStars
+  //   };
+  // }) || [];
   // }
 
   get educationaInstitute() {

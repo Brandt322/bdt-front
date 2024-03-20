@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { EducationalExperienceRequest } from 'src/app/shared/models/interfaces/educationalExperience.interface';
+import { FeedbackRequest } from 'src/app/shared/models/interfaces/feedback.interface';
 import { File } from 'src/app/shared/models/interfaces/file.interface';
 import { LanguageRequest } from 'src/app/shared/models/interfaces/language.interface';
 import { FilterTalentResponse, TalentFilterParams, TalentRequest, TalentResponse, BasicTalentResponse, TalentTechnicalSkillRequest, TalentSoftSkillRequest, TalentSalaryRequest, TalentSocialRequest } from 'src/app/shared/models/interfaces/talent.interface';
@@ -119,6 +120,11 @@ export class TalentService {
   addFile(talentId: number, file: File): Observable<object> {
     const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${talentId}/${TALENT_API_ENDPOINTS.ADD_FILE}`;
     return this.http.post(url, file);
+  }
+
+  addFeedback(feedbackRequest: FeedbackRequest): Observable<any> {
+    const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.ADD_FEEDBACK}`;
+    return this.http.post(url, feedbackRequest);
   }
 
   updateSalaryBand(talentId: number, talentRequest: TalentSalaryRequest): Observable<object> {

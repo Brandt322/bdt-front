@@ -368,9 +368,6 @@
   [levels]="levelOptions"
 ></app-add-language>
 
-<app-feedback-modal-form *ngIf="userDetails.roles.includes('RECLUTADOR')">
-</app-feedback-modal-form>
-
 <ng-container
   *ngFor="let experience of processedWorkExperiences; let i = index"
 >

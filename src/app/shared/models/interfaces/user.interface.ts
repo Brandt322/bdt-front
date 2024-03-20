@@ -25,6 +25,7 @@ export interface UserResponse {
 }
 
 export interface UserPrincipal {
+  id: number;
   name: string;
   paternalSurname: string;
   maternalSurname: string;

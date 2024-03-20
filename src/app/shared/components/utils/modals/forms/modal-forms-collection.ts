@@ -12,6 +12,7 @@ import { UserPrincipal } from 'src/app/shared/models/interfaces/user.interface';
       <app-soft-skills-modal-form></app-soft-skills-modal-form>
       <app-new-file-modal-form></app-new-file-modal-form>
       <app-description-modal-form></app-description-modal-form>
+      <app-feedback-modal-form [userDetails]="userDetails"></app-feedback-modal-form>
     </div>
   `,
 })

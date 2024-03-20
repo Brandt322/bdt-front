@@ -3,6 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Subject, catchError } from 'rxjs';
 import { TalentService } from 'src/app/services/talent/talent.service';
 import { EducationalExperience } from 'src/app/shared/models/interfaces/educationalExperience.interface';
+import { FeedbackRequest } from 'src/app/shared/models/interfaces/feedback.interface';
 import { File } from 'src/app/shared/models/interfaces/file.interface';
 import { FilterTalentResponse, TalentResponse, TalentSalaryRequest, TalentSocialRequest, TalentSoftSkillRequest, TalentTechnicalSkillRequest } from 'src/app/shared/models/interfaces/talent.interface';
 import { WorkExperience, WorkExperienceRequest } from 'src/app/shared/models/interfaces/workExperience.interface';
@@ -178,6 +179,32 @@ export class TalentDetailService {
           this.changeTalent(this.currentTalentValue.id);
           this.toast.success('Se agregó un archivo');
         }
+      });
+    }
+  }
+
+  addFeedbackToCurrentTalent(starsRating: number, description: string, userId: number) {
+
+    if (this.currentTalentValue) {
+      const newWorkExperience: FeedbackRequest = {
+        talentId: this.currentTalentValue.id,
+        starsRating: starsRating,
+        description: description,
+        userId: userId,
+      };
+      this.talentService.addFeedback(newWorkExperience).pipe(
+        catchError(error => {
+          this.toast.error('Hubo un error al agregar el feedback');
+          throw error;
+        })
+      ).subscribe(() => {
+        // if (this.currentTalentValue) {
+        //   this.currentTalentValue.filesList.push(fileData);
+        //   this.talentSource.next(this.currentTalentValue);
+        //   this.changeTalent(this.currentTalentValue.id);
+        //   this.toast.success('Se agregó un archivo');
+        // }
+        this.toast.success('Se agregó el feedback');
       });
     }
   }
