@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
 import { initDropdowns, initFlowbite, initModals } from 'flowbite';
 import { LoaderService } from './core/global/loader/loader.service';
 

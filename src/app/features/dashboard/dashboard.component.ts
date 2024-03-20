@@ -35,11 +35,12 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    initDropdowns();
     // setTimeout(() => {
     //   initModals();
+    //   initDropdowns();
     // }, 0);
-    initModals();
+    // initDropdowns();
+    // initModals();
   }
 
   ngOnInit(): void {
@@ -50,6 +51,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.talentService.getBasicTalent().pipe(takeUntil(this.destroy$)).subscribe((talents: BasicTalentResponse[]) => {
       this.talentDetailService.updateTalentList(talents);
       this.isFiltered = false;
+      setTimeout(() => { initModals(); initDropdowns(); }, 0);
     });
 
     this.talentDetailService.talentList$.pipe(

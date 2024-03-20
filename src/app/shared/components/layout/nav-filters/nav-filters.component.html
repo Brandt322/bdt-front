@@ -10,9 +10,11 @@
       >
         + Nuevo Talento
       </a>
-      <span class="text-base text-gray-600 dark:text-gray-400">{{
-        searchResult
-      }}</span>
+      <span
+        *ngIf="!userDetails.roles.includes('RECLUTADOR')"
+        class="text-base text-gray-600 dark:text-gray-400"
+        >{{ searchResult }}</span
+      >
     </div>
     <div class="sm:hidden">
       <button

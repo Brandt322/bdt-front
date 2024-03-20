@@ -16,7 +16,6 @@ import { UserPrincipal } from 'src/app/shared/models/interfaces/user.interface';
 import { initModals } from 'flowbite';
 
 
-
 @Component({
   selector: 'app-talent-content',
   templateUrl: './talent-content.component.html',

@@ -1,7 +1,8 @@
-import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
 import { SharedDataService } from "../../../services/shared-data-service.service";
 import { TalentResponse } from "src/app/shared/models/interfaces/talent.interface";
 import { UserPrincipal, UserResponse } from "src/app/shared/models/interfaces/user.interface";
+import { initModals } from "flowbite";
 
 @Component({
   selector: 'app-profile',
@@ -31,6 +32,7 @@ export class ProfileComponent implements OnInit, OnChanges {
   userDetails!: UserPrincipal;
 
   constructor(private data: SharedDataService, private cd: ChangeDetectorRef) { }
+
 
   ngOnInit(): void {
     if (sessionStorage.getItem('user_data')) {
