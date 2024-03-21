@@ -83,18 +83,15 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
           if (this.talents$.getValue().length > 0) {
             let selectedTalentId = localStorage.getItem('selectedTalentId');
-            if (selectedTalentId) {
-              // Si hay un talento seleccionado en localStorage, selecciona ese talento
-              let selectedTalent = this.talents$.getValue().find(talent => talent.id.toString() === selectedTalentId);
-              if (selectedTalent) {
-                this.selectedTalent$.next(selectedTalent);
-                this.onTalentClick(selectedTalent);
-              }
-            } else {
-              // Si no hay un talento seleccionado en localStorage, selecciona el primer talento
-              this.selectedTalent$.next(this.talents$.getValue()[0]);
-              this.onTalentClick(this.talents$.getValue()[0]);
+            let selectedTalent = this.talents$.getValue().find(talent => talent.id.toString() === selectedTalentId);
+            // Si no hay un talento seleccionado en localStorage o el talento seleccionado no está en los resultados de la búsqueda, selecciona el primer talento
+            if (!selectedTalentId || !selectedTalent) {
+              selectedTalent = this.talents$.getValue()[0];
+              localStorage.setItem('selectedTalentId', selectedTalent.id.toString());
             }
+
+            this.selectedTalent$.next(selectedTalent);
+            this.onTalentClick(selectedTalent);
           }
           // setTimeout(() => {
           //   initModals();

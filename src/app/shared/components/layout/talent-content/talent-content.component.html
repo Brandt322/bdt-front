@@ -309,7 +309,11 @@
           class="flex justify-start items-center p-2 gap-4 rounded-md bg-gray-50 hover:bg-gray-200 shadow-sm-light"
         >
           <div class="flex w-full gap-4">
-            <img class="h-12 rounded-full" [src]="feedback.user.image" alt="" />
+            <img
+              class="w-12 h-12 rounded-full"
+              [src]="handleImage(feedback.user.image)"
+              alt=""
+            />
             <div class="flex flex-col justify-center">
               <div class="flex items-center gap-4">
                 <h1 class="font-medium text-xl text-black dark:text-gray-400">

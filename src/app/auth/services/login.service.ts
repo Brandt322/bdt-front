@@ -19,6 +19,7 @@ export class LoginService {
     // console.log('credenciales: ', credentials);
     return this.http.post<UserResponse>(`${this.uri}/${LOGIN_API_ENDPOINTS.REQUEST_MAPPING}/${LOGIN_API_ENDPOINTS.LOGIN}`, loginRequest).pipe(
       tap((userPrincipal: UserResponse) => {
+        // console.log('userPrincipal: ', userPrincipal.userPrincipal.image);
         userPrincipal.userPrincipal.image = this.handleImage(userPrincipal.userPrincipal.image);
         sessionStorage.setItem(this.userKey, JSON.stringify(userPrincipal));
       }),

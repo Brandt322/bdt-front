@@ -38,7 +38,7 @@ export interface UserPrincipal {
   isEnabled: boolean;
 }
 
-// export interface UserResponseTwo {
-//   userDetails: UserDetails;
-//   token: string;
-// }
+export interface UserListRequest {
+  userID: number;
+  listName: string;
+}

@@ -1,15 +1,24 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
-  selector: 'app-checkbox-dropdown-select-data-modal',
+  selector: 'app-checkbox-dropdown-favorite',
   template: `
     <div
       [id]="modalId"
-      class="z-10 hidden w-64 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+      class="z-10 hidden w-80 bg-white divide-y divide-gray-100 rounded-lg shadow"
     >
+      <form [formGroup]="favoriteForm">
       <ul
         class="text-sm text-gray-700 dark:text-gray-200"
         [attr.aria-labelledby]="labelledby"
       >
+        <input
+          type="text"
+          id="search-navbar"
+          class="block w-full text-center lg:max-w-full p-2 text-lg text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Selecciona o crea un nuevo talento"
+          formControlName="favorito"
+        />
         <li
           class="hover:bg-gray-50 cursor-pointer"
           (click)="handleChecked(i)"
@@ -33,19 +42,46 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
             ></i>
           </div>
         </li>
+        <button
+          type="submit"
+          class="text-md w-full mt-2 font-medium text-white bg-[#009688] hover:bg-[#203634] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg px-4 py-2 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+        >
+          Agregar nuevo favorito
+        </button>
       </ul>
+      </form>
     </div>
   `,
 })
-export class CheckboxDropdownSelectDataModalComponent {
+export class CheckboxDropdownFavoriteComponent implements OnInit {
   @Input() modalId!: string;
   @Input() labelledby!: string;
   @Input() data?: { id: number;[key: string]: any }[];
   @Input() labelKey!: string;
-  @Input() favorite?: string;
   @Output() optionSelected = new EventEmitter<number | null>();
 
   selectedIndex: number | null = null;
+  favoriteForm!: FormGroup;
+
+  constructor(private fb: FormBuilder) { }
+
+  ngOnInit(): void {
+
+
+    this.formBuild()
+  }
+
+  formBuild() {
+    this.favoriteForm = this.fb.group({
+      favorito: ['', [Validators.required]]
+    })
+  }
+
+  onSubmit() {
+    if (this.favoriteForm.valid) {
+      console.log(this.favoriteForm.value)
+    }
+  }
 
   handleChecked(index: number) {
     if (this.selectedIndex === index) {
@@ -58,4 +94,7 @@ export class CheckboxDropdownSelectDataModalComponent {
       this.optionSelected.emit(index);
     }
   }
+
+
 }
+

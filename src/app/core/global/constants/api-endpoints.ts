@@ -32,3 +32,8 @@ export const LOGIN_API_ENDPOINTS = {
   REQUEST_MAPPING: 'auth',
   LOGIN: 'login',
 }
+
+export const USER_API_ENDPOINTS = {
+  REQUEST_MAPPING: 'api/v1/users',
+  ADD_LIST: 'add_list'
+}

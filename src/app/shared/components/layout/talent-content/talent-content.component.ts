@@ -44,7 +44,7 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
     private data: SharedDataService,
     private loader: LoaderService,
     private masterService: MasterService,
-    private talentService: TalentService
+    private talentService: TalentService,
   ) { }
 
   ngAfterViewInit(): void {
@@ -131,10 +131,6 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
         this.languageOptions = languages;
         this.levelOptions = levels;
       });
-  }
-
-  sanitizeUrl(url: string) {
-    return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
   sanitizePdfUrl(base64Data: string) {
@@ -231,19 +227,70 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
     }) || [];
   }
 
-  private handleImage(image: string): string {
-    let imagePrefix = 'data:image/jpeg;base64,';
-    if (image.startsWith('iVBOR')) {
-      imagePrefix = 'data:image/png;base64,';
-    } else if (image.startsWith('UklGR')) {
-      imagePrefix = 'data:image/webp;base64,';
-    }
-    return imagePrefix + image;
+  // private handleImage(image: string): string {
+  //   if (typeof image !== 'string') {
+  //     return '';
+  //   }
+
+  //   if (image.startsWith('data:image')) {
+  //     return image;
+  //   }
+
+  //   let imagePrefix = 'data:image/jpeg;base64,';
+  //   if (image.startsWith('iVBOR')) {
+  //     imagePrefix = 'data:image/png;base64,';
+  //   } else if (image.startsWith('UklGR')) {
+  //     imagePrefix = 'data:image/webp;base64,';
+  //   }
+  //   return this.sanitizer.bypassSecurityTrustResourceUrl(imagePrefix + image) as string;
+  // }
+
+
+  sanitizeUrl(url: string) {
+    return this.sanitizer.bypassSecurityTrustUrl(url);
   }
+
+  // private handleImage(image: string): string {
+  //   if (image) {
+  //     let imagePrefix = 'data:image/jpeg;base64,';
+  //     if (image.startsWith('iVBOR')) {
+  //       imagePrefix = 'data:image/png;base64,';
+  //     } else if (image.startsWith('UklGR')) {
+  //       imagePrefix = 'data:image/webp;base64,';
+  //     }
+  //     return this.sanitizeUrl(imagePrefix + image) as string;
+  //   }
+  //   return '';
+  // }
+  public handleImage(image: any): string {
+    image = String(image);
+    if (typeof image === 'string') {
+      let imagePrefix = 'data:image/jpeg;base64,'; // Prefijo predeterminado
+      if (image.startsWith('iVBOR')) {
+        imagePrefix = 'data:image/png;base64,';
+      } else if (image.startsWith('UklGR')) {
+        imagePrefix = 'data:image/webp;base64,';
+      }
+      return this.sanitizeUrl(imagePrefix + image) as string;
+    }
+    return '';
+  }
+
+  // private handleImage(image: string): string {
+  //   let imagePrefix = 'data:image/jpeg;base64,';
+  //   if (image.startsWith('iVBOR')) {
+  //     imagePrefix = 'data:image/png;base64,';
+  //   } else if (image.startsWith('UklGR')) {
+  //     imagePrefix = 'data:image/webp;base64,';
+  //   }
+  //   return imagePrefix + image;
+  // }
 
   get feedbackList() {
     return this.talent?.feedbacksList?.map(feed => {
-      feed.user.image = this.handleImage(feed.user.image);
+      // console.log(feed.user.image)
+      // feed.user.image = this.handleImage(feed.user.image);
+      // console.log(feed.user.image)
       return {
         id: feed.id,
         starsNumber: feed.starsNumber,

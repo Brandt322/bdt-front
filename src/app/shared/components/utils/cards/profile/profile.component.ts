@@ -28,7 +28,9 @@ export class ProfileComponent implements OnInit, OnChanges {
   @Input() currency?: string;
   @Input() currencyId?: number;
   @Input() averageRating!: number;
+  @Input() readonly: boolean = false;
   @Input() talent!: TalentResponse;
+
 
   userDetails!: UserPrincipal;
 

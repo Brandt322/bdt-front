@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from 'src/app/shared/models/interfaces/user.interface';
+import { USER_API_ENDPOINTS } from 'src/app/core/global/constants/api-endpoints';
+import { User, UserListRequest } from 'src/app/shared/models/interfaces/user.interface';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -17,4 +18,7 @@ export class UserService {
     return this.http.get<User>(`${this.baseUrl}/${username}`);
   }
 
+  addList(userListRequest: UserListRequest): Observable<object> {
+    return this.http.post(`${this.baseUrl}/${USER_API_ENDPOINTS.ADD_LIST}`, userListRequest);
+  }
 }

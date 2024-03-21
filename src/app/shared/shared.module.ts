@@ -52,6 +52,7 @@ import { AddWorkExperiencesFormComponent } from './components/utils/modals/exper
 import { EditEducationalExperiencesFormComponent } from './components/utils/modals/experiences-form/edit-experiences/edit-educational-experience/edit-educational-experiences-form.component';
 import { EditWorkExperiencesFormComponent } from './components/utils/modals/experiences-form/edit-experiences/edit-work-experience/edit-work-experiences-form.component';
 import { CarouselComponent } from './components/utils/carousel/carousel.component';
+import { CheckboxDropdownFavoriteComponent } from './components/utils/modals/checkbox-dropdown-favorite.component';
 
 @NgModule({
   declarations: [
@@ -105,6 +106,7 @@ import { CarouselComponent } from './components/utils/carousel/carousel.componen
     AddLanguageComponent,
     EditLanguageComponent,
     CarouselComponent,
+    CheckboxDropdownFavoriteComponent
   ],
   imports: [
     CommonModule,
@@ -155,6 +157,7 @@ import { CarouselComponent } from './components/utils/carousel/carousel.componen
     CheckboxDropdownSelectPrevModalComponent,
     CheckboxDropdownMultipleSelectModalComponent,
     CheckboxDropdownSelectDataModalComponent,
+    CheckboxDropdownFavoriteComponent,
     /* Tags */
     PillTagComponent,
     CarouselComponent
