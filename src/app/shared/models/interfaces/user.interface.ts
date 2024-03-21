@@ -39,6 +39,22 @@ export interface UserPrincipal {
 }
 
 export interface UserListRequest {
-  userID: number;
+  userId: number;
   listName: string;
+}
+
+export interface ListUser {
+  userId: number;
+  lists: ListUserTalent[];
+}
+
+export interface ListUserTalent {
+  id: number;
+  name: string;
+  talentIds: number[];
+}
+
+export interface UserTalentListRequest {
+  userId: number;
+  talentId: number;
 }

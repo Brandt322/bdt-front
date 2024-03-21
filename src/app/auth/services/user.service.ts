@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { USER_API_ENDPOINTS } from 'src/app/core/global/constants/api-endpoints';
-import { User, UserListRequest } from 'src/app/shared/models/interfaces/user.interface';
+import { ListUser, User, UserListRequest, UserTalentListRequest } from 'src/app/shared/models/interfaces/user.interface';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -19,6 +19,14 @@ export class UserService {
   }
 
   addList(userListRequest: UserListRequest): Observable<object> {
-    return this.http.post(`${this.baseUrl}/${USER_API_ENDPOINTS.ADD_LIST}`, userListRequest);
+    return this.http.post(`${this.baseUrl}/${USER_API_ENDPOINTS.REQUEST_MAPPING}/${USER_API_ENDPOINTS.ADD_LIST}`, userListRequest);
+  }
+
+  addListTalent(userListRequest: UserTalentListRequest): Observable<object> {
+    return this.http.post(`${this.baseUrl}/${USER_API_ENDPOINTS.REQUEST_MAPPING}/${USER_API_ENDPOINTS.ADD_LIST_TALENT}`, userListRequest);
+  }
+
+  getListsByUserId(userId: number): Observable<ListUser[]> {
+    return this.http.get<ListUser[]>(`${this.baseUrl}/${USER_API_ENDPOINTS.REQUEST_MAPPING}/${USER_API_ENDPOINTS.GET_LISTS_BY_USER_ID}/${userId}`);
   }
 }

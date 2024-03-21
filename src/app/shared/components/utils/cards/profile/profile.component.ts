@@ -12,6 +12,7 @@ import { initModals } from "flowbite";
 export class ProfileComponent implements OnInit, OnChanges {
   @Input() variant!: string;
   @Input() name!: string;
+  @Input() paternalSurname!: string;
   @Input() image!: string;
   @Input() stack!: string;
   @Input() iconEditImg?: boolean;

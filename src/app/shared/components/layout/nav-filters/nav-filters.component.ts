@@ -10,7 +10,8 @@ import { Level } from 'src/app/shared/models/interfaces/level-interface';
 import { TalentService } from 'src/app/services/talent/talent.service';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
 import { FilterTalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
-import { UserPrincipal } from 'src/app/shared/models/interfaces/user.interface';
+import { ListUser, UserPrincipal } from 'src/app/shared/models/interfaces/user.interface';
+import { UserService } from 'src/app/auth/services/user.service';
 
 @Component({
   selector: 'app-nav-filters',
@@ -22,6 +23,7 @@ export class NavFiltersComponent implements OnInit {
   isOpen: boolean = false;
   levels: Level[] = [];
   skills: string[] = [];
+  listByUSer: ListUser[] = [];
   myForm!: FormGroup;
   userDetails!: UserPrincipal;
   searchResult: string = '';
@@ -30,6 +32,7 @@ export class NavFiltersComponent implements OnInit {
     private router: Router,
     private masterService: MasterService,
     private talentService: TalentService,
+    private userService: UserService,
     private toastr: ToastrService,
     private loader: LoaderService,
     private formBuilder: FormBuilder,
@@ -138,10 +141,13 @@ export class NavFiltersComponent implements OnInit {
       MASTER_API_ENDPOINTS.LEVELS
     );
 
+    const listRequest = this.userService.getListsByUserId(this.userDetails.id);
+
 
     forkJoin([
       skillRequest,
       levelRequest,
+      listRequest
     ])
       .pipe(
         catchError((error) => {
@@ -150,9 +156,10 @@ export class NavFiltersComponent implements OnInit {
         }),
         finalize(() => this.loader.hideLoader())
       )
-      .subscribe(([skills, levels]) => {
+      .subscribe(([skills, levels, favoriteList]) => {
         this.skills = skills;
         this.levels = levels;
+        this.listByUSer = favoriteList;
         // this.toastr.success('Niveles obtenidos correctamente', 'Éxito');
       });
   }

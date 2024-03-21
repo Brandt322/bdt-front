@@ -35,5 +35,7 @@ export const LOGIN_API_ENDPOINTS = {
 
 export const USER_API_ENDPOINTS = {
   REQUEST_MAPPING: 'api/v1/users',
-  ADD_LIST: 'add_list'
+  ADD_LIST: 'add_list',
+  ADD_LIST_TALENT: 'add_list_talent',
+  GET_LISTS_BY_USER_ID: 'lists',
 }

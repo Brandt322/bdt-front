@@ -11,6 +11,9 @@ module.exports = {
       },
       fontFamily: {
         'inter': ['Inter', 'sans-serif']
+      },
+      maxHeight: {
+        '6Items': 'calc(2.8rem * 6)'
       }
     },
   },
