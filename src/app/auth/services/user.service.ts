@@ -26,7 +26,7 @@ export class UserService {
     return this.http.post(`${this.baseUrl}/${USER_API_ENDPOINTS.REQUEST_MAPPING}/${USER_API_ENDPOINTS.ADD_LIST_TALENT}`, userListRequest);
   }
 
-  getListsByUserId(userId: number): Observable<ListUser[]> {
-    return this.http.get<ListUser[]>(`${this.baseUrl}/${USER_API_ENDPOINTS.REQUEST_MAPPING}/${USER_API_ENDPOINTS.GET_LISTS_BY_USER_ID}/${userId}`);
+  getListsByUserId(userId: number): Observable<ListUser> {
+    return this.http.get<ListUser>(`${this.baseUrl}/${USER_API_ENDPOINTS.REQUEST_MAPPING}/${USER_API_ENDPOINTS.GET_LISTS_BY_USER_ID}/${userId}`);
   }
 }

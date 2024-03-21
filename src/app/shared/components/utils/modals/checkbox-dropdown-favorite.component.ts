@@ -1,9 +1,18 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/auth/services/user.service';
-import { UserListRequest, UserPrincipal } from 'src/app/shared/models/interfaces/user.interface';
+import { ListUser, ListUserTalent, UserListRequest, UserPrincipal } from 'src/app/shared/models/interfaces/user.interface';
 @Component({
+  animations: [
+    trigger('fadeInOut', [
+      state('void', style({
+        opacity: 0
+      })),
+      transition('void <=> *', animate(100))
+    ])
+  ],
   selector: 'app-checkbox-dropdown-favorite',
   template: `
     <div
@@ -18,7 +27,7 @@ import { UserListRequest, UserPrincipal } from 'src/app/shared/models/interfaces
         <input
           type="text"
           id="search-navbar"
-          class="block w-full text-center lg:max-w-full p-2 text-lg text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          class="block w-full text-start lg:max-w-full p-2 text-lg text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Selecciona o crea un nuevo talento"
           formControlName="listName"
         />
@@ -35,8 +44,8 @@ import { UserListRequest, UserPrincipal } from 'src/app/shared/models/interfaces
             <span
               class="text-sm font-medium text-gray-900 dark:text-gray-300"
               >{{
-                item[labelKey].charAt(0).toUpperCase() +
-                  item[labelKey].slice(1).toLowerCase()
+                item.name.charAt(0).toUpperCase() +
+                  item.name.slice(1).toLowerCase()
               }}</span
             >
             <i
@@ -46,6 +55,8 @@ import { UserListRequest, UserPrincipal } from 'src/app/shared/models/interfaces
           </div>
         </li>
         <button
+        *ngIf="favoriteForm.controls['listName'].value"
+        [@fadeInOut]
           type="submit"
           class="text-md w-full mt-2 font-medium text-white bg-[#009688] hover:bg-[#203634] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg px-4 py-2 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
         >
@@ -59,7 +70,7 @@ import { UserListRequest, UserPrincipal } from 'src/app/shared/models/interfaces
 export class CheckboxDropdownFavoriteComponent implements OnInit {
   @Input() modalId!: string;
   @Input() labelledby!: string;
-  @Input() data?: { id: number;[key: string]: any }[];
+  @Input() data?: ListUserTalent[];
   @Input() labelKey!: string;
   @Input() userDetails!: UserPrincipal;
   @Output() optionSelected = new EventEmitter<number | null>();
@@ -71,6 +82,7 @@ export class CheckboxDropdownFavoriteComponent implements OnInit {
 
   ngOnInit(): void {
     this.formBuild()
+    this.getListFavorite();
     // console.log(localStorage.getItem('selectedTalentId'))
   }
 
@@ -101,6 +113,14 @@ export class CheckboxDropdownFavoriteComponent implements OnInit {
     }
   }
 
+  getListFavorite() {
+    this.userService.getListsByUserId(this.userDetails.id).subscribe(response => {
+      this.data = response.lists;
+    }, error => {
+      console.log(error);
+    });
+  }
+
   addFavorite(favoriteName: string) {
     const userListRequest: UserListRequest = {
       userId: this.userDetails.id,
@@ -108,6 +128,7 @@ export class CheckboxDropdownFavoriteComponent implements OnInit {
     };
 
     this.userService.addList(userListRequest).subscribe(response => {
+      this.getListFavorite();
       console.log(response);
       // Handle response here
     }, error => {

@@ -23,7 +23,7 @@ export class NavFiltersComponent implements OnInit {
   isOpen: boolean = false;
   levels: Level[] = [];
   skills: string[] = [];
-  listByUSer: ListUser[] = [];
+  listByUSer!: ListUser;
   myForm!: FormGroup;
   userDetails!: UserPrincipal;
   searchResult: string = '';

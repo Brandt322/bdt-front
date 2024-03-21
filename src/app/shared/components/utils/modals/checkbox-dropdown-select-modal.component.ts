@@ -42,7 +42,6 @@ export class CheckboxDropdownSelectDataModalComponent {
   @Input() labelledby!: string;
   @Input() data?: { id: number;[key: string]: any }[];
   @Input() labelKey!: string;
-  @Input() favorite?: string;
   @Output() optionSelected = new EventEmitter<number | null>();
 
   selectedIndex: number | null = null;
