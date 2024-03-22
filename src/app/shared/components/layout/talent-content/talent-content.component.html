@@ -5,6 +5,7 @@
     <app-profile
       [name]="talent?.name || ''"
       [paternalSurname]="talent?.paternalSurname || ''"
+      [cellphoneNumber]="talent?.cellPhoneNumber || ''"
       [image]="talent?.image || ''"
       [iconEditImg]="true"
       [country]="talent?.country || ''"
@@ -364,6 +365,10 @@
     </div>
   </div>
 </div>
+
+<app-update-cv-modal-form
+  [talentFileList]="talentFileList"
+></app-update-cv-modal-form>
 
 <app-add-work-experiences-form
   *ngIf="userDetails.roles.includes('RECLUTADOR')"

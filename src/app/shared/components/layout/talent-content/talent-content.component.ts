@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
 import { FeedbackResponse, TalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
@@ -34,7 +34,7 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
   levelOptions: Level[] = [];
   talentFileList: ICarouselItem[] = [];
   userDetails!: UserPrincipal;
-
+  // @Output() talentFileListChange = new EventEmitter<ICarouselItem[]>();
   @ViewChild(CarouselComponent) carouselComponent!: CarouselComponent;
 
   constructor(
@@ -50,54 +50,42 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.talentDetailService.currentTalent.subscribe(talent => {
       this.talent = talent;
-      // console.log(this.talent?.filesList);
-
-      this.talentFileList = this.talent?.filesList?.map((file, index) => {
-        return {
-          id: index,
-          fileName: file.fileName,
-          fileType: file.fileType,
-          file: file.file
-        };
-      }) || [];
-
-      this.processedWorkExperiences = this.workExperiences;
-      this.processeEducationalExperiences = this.educationalExperiences;
-      this.processeLanguages = this.languagesList;
-      this.processeFeedback = this.feedbackList;
-
-      // console.log(this.talentFileList)
-      // Reset Carousel state
-      // this.carouselComponent.resetCarousel();
-
-      // this.cdr.detectChanges();
+      this.updateTalentFileList(talent);
+      this.updateProcessedData();
     });
     this.talentDetailService.updatedTalent.subscribe(updatedTalent => {
       this.talent = updatedTalent;
-
-      this.talentFileList = this.talent?.filesList?.map((file, index) => {
-        return {
-          id: index,
-          fileName: file.fileName,
-          fileType: file.fileType,
-          file: file.file
-        };
-      }) || [];
-
-      this.processedWorkExperiences = this.workExperiences;
-      this.processeEducationalExperiences = this.educationalExperiences;
-      this.processeLanguages = this.languagesList;
-      this.processeFeedback = this.feedbackList;
-      // console.log(this.processeLanguages)
-      // console.log(this.talentFileList)
-      // Reset Carousel state
+      this.updateTalentFileList(updatedTalent);
+      this.updateProcessedData();
       this.carouselComponent.resetCarousel();
-
-      // this.cdr.detectChanges();
     });
     this.requestOptions();
     this.cdr.detectChanges();
   }
+
+  updateTalentFileList(talent: TalentResponse | null): void {
+    this.talentFileList = talent?.filesList?.map((file, index) => {
+      return {
+        id: index,
+        fileName: file.fileName,
+        fileType: file.fileType,
+        file: file.file
+      };
+    }) || [];
+    // console.log(this.talentFileList)
+    // this.emitTalentFileListChange();
+  }
+
+  updateProcessedData(): void {
+    this.processedWorkExperiences = this.workExperiences;
+    this.processeEducationalExperiences = this.educationalExperiences;
+    this.processeLanguages = this.languagesList;
+    this.processeFeedback = this.feedbackList;
+  }
+
+  // emitTalentFileListChange(): void {
+  //   this.talentFileListChange.emit(this.talentFileList);
+  // }
 
   ngOnInit() {
     if (sessionStorage.getItem('user_data')) {
@@ -227,41 +215,10 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
     }) || [];
   }
 
-  // private handleImage(image: string): string {
-  //   if (typeof image !== 'string') {
-  //     return '';
-  //   }
-
-  //   if (image.startsWith('data:image')) {
-  //     return image;
-  //   }
-
-  //   let imagePrefix = 'data:image/jpeg;base64,';
-  //   if (image.startsWith('iVBOR')) {
-  //     imagePrefix = 'data:image/png;base64,';
-  //   } else if (image.startsWith('UklGR')) {
-  //     imagePrefix = 'data:image/webp;base64,';
-  //   }
-  //   return this.sanitizer.bypassSecurityTrustResourceUrl(imagePrefix + image) as string;
-  // }
-
-
   sanitizeUrl(url: string) {
     return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
-  // private handleImage(image: string): string {
-  //   if (image) {
-  //     let imagePrefix = 'data:image/jpeg;base64,';
-  //     if (image.startsWith('iVBOR')) {
-  //       imagePrefix = 'data:image/png;base64,';
-  //     } else if (image.startsWith('UklGR')) {
-  //       imagePrefix = 'data:image/webp;base64,';
-  //     }
-  //     return this.sanitizeUrl(imagePrefix + image) as string;
-  //   }
-  //   return '';
-  // }
   public handleImage(image: any): string {
     image = String(image);
     if (typeof image === 'string') {
@@ -275,16 +232,6 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
     }
     return '';
   }
-
-  // private handleImage(image: string): string {
-  //   let imagePrefix = 'data:image/jpeg;base64,';
-  //   if (image.startsWith('iVBOR')) {
-  //     imagePrefix = 'data:image/png;base64,';
-  //   } else if (image.startsWith('UklGR')) {
-  //     imagePrefix = 'data:image/webp;base64,';
-  //   }
-  //   return imagePrefix + image;
-  // }
 
   get feedbackList() {
     return this.talent?.feedbacksList?.map(feed => {

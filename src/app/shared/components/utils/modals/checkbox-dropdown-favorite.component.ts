@@ -17,7 +17,7 @@ import { ListUser, ListUserTalent, UserListRequest, UserPrincipal } from 'src/ap
   template: `
     <div
       [id]="modalId"
-      class="z-10 hidden w-80 bg-white divide-y divide-gray-100 rounded-lg shadow"
+      class="z-20 hidden w-80 bg-white divide-y divide-gray-100 rounded-lg shadow"
     >
       <form [formGroup]="favoriteForm" (ngSubmit)="onSubmit()">
       <ul

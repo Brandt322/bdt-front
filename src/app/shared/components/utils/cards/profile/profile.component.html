@@ -191,10 +191,12 @@
             >
               <li>
                 <a
-                  href="#"
-                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >CV</a
+                  data-modal-target="update-cv-modal-form"
+                  data-modal-toggle="update-cv-modal-form"
+                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
                 >
+                  CV
+                </a>
               </li>
               <li>
                 <a
@@ -206,13 +208,14 @@
             </ul>
           </div>
         </div>
-        <button
-          type="button"
+        <a
+          href="https://wa.me/{{ cellphoneNumber.replace(' ', '') }}"
+          target="_blank"
           class="flex items-center justify-between text-white bg-[#009688] hover:bg-[#203634] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
         >
           <span class="material-symbols-outlined mr-2"> call </span>
           Contactar
-        </button>
+        </a>
       </div>
       <div class="flex justify-end gap-2">
         <div

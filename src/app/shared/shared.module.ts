@@ -53,6 +53,7 @@ import { EditEducationalExperiencesFormComponent } from './components/utils/moda
 import { EditWorkExperiencesFormComponent } from './components/utils/modals/experiences-form/edit-experiences/edit-work-experience/edit-work-experiences-form.component';
 import { CarouselComponent } from './components/utils/carousel/carousel.component';
 import { CheckboxDropdownFavoriteComponent } from './components/utils/modals/checkbox-dropdown-favorite.component';
+import { UpdateCvModalFormComponent } from './components/utils/modals/forms/update-cv-modal-form-component';
 
 @NgModule({
   declarations: [
@@ -106,7 +107,8 @@ import { CheckboxDropdownFavoriteComponent } from './components/utils/modals/che
     AddLanguageComponent,
     EditLanguageComponent,
     CarouselComponent,
-    CheckboxDropdownFavoriteComponent
+    CheckboxDropdownFavoriteComponent,
+    UpdateCvModalFormComponent
   ],
   imports: [
     CommonModule,
@@ -149,6 +151,7 @@ import { CheckboxDropdownFavoriteComponent } from './components/utils/modals/che
     EditWorkExperiencesFormComponent,
     AddLanguageComponent,
     EditLanguageComponent,
+    UpdateCvModalFormComponent,
     /* Forms */
     EducationalExperienceFormComponent,
     WorkExperienceFormComponent,

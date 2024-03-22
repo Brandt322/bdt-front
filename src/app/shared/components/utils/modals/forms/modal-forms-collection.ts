@@ -21,6 +21,7 @@ import { UserPrincipal } from 'src/app/shared/models/interfaces/user.interface';
         modalId="favoritesDropdown"
         labelledby="favoritesCheckbox"
       ></app-checkbox-dropdown-favorite>
+
     </div>
   `,
 })

@@ -3,6 +3,7 @@ import { SharedDataService } from "../../../services/shared-data-service.service
 import { TalentResponse } from "src/app/shared/models/interfaces/talent.interface";
 import { UserPrincipal, UserResponse } from "src/app/shared/models/interfaces/user.interface";
 import { initModals } from "flowbite";
+import { ICarouselItem } from "../../carousel/ICarousel-metadata";
 
 @Component({
   selector: 'app-profile',
@@ -13,6 +14,8 @@ export class ProfileComponent implements OnInit, OnChanges {
   @Input() variant!: string;
   @Input() name!: string;
   @Input() paternalSurname!: string;
+  @Input() cellphoneNumber!: string;
+  // @Input() talentFileList!: ICarouselItem[];
   @Input() image!: string;
   @Input() stack!: string;
   @Input() iconEditImg?: boolean;
@@ -45,6 +48,7 @@ export class ProfileComponent implements OnInit, OnChanges {
     }
 
     // console.log('Roles: ', this.userDetails)
+    // console.log('Roles: ', this.talentFileList)
   }
 
   ngOnChanges(changes: SimpleChanges) {
