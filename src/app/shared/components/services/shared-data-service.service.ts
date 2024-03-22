@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { ListUserTalent } from '../../models/interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,10 @@ export class SharedDataService {
   private currencySource = new BehaviorSubject<number>(0);
   private descriptionSource = new BehaviorSubject<string>('');
   private imageSource = new BehaviorSubject<string>('');
-  private averageRatingSource = new BehaviorSubject<number>(0);
+  private favoriteListSource = new BehaviorSubject<ListUserTalent[]>([]);
 
 
-  currentAverageRating = this.averageRatingSource.asObservable();
+  favoriteList$ = this.favoriteListSource.asObservable();
   currentImage = this.imageSource.asObservable();
   currentInitialMont = this.initialMontSource.asObservable();
   currentFinalMont = this.finalMontSource.asObservable();
@@ -29,8 +30,8 @@ export class SharedDataService {
     this.imageSource.next(image);
   }
 
-  changeAverageRating(averageRating: number) {
-    this.averageRatingSource.next(averageRating);
+  updateFavoriteList(list: ListUserTalent[]) {
+    this.favoriteListSource.next(list);
   }
 
   changeDescription(description: string) {

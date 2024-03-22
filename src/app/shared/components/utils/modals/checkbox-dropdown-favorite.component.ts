@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/auth/services/user.service';
 import { ListUser, ListUserTalent, UserListRequest, UserPrincipal } from 'src/app/shared/models/interfaces/user.interface';
+import { SharedDataService } from '../../services/shared-data-service.service';
 @Component({
   animations: [
     trigger('fadeInOut', [
@@ -78,7 +79,7 @@ export class CheckboxDropdownFavoriteComponent implements OnInit {
   selectedIndex: number | null = null;
   favoriteForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private userService: UserService, private eRef: ElementRef, private toast: ToastrService) { }
+  constructor(private fb: FormBuilder, private userService: UserService, private eRef: ElementRef, private toast: ToastrService, private sharedService: SharedDataService) { }
 
   ngOnInit(): void {
     this.formBuild()
@@ -116,6 +117,7 @@ export class CheckboxDropdownFavoriteComponent implements OnInit {
   getListFavorite() {
     this.userService.getListsByUserId(this.userDetails.id).subscribe(response => {
       this.data = response.lists;
+      this.sharedService.updateFavoriteList(this.data ?? []);
     }, error => {
       console.log(error);
     });
@@ -130,21 +132,12 @@ export class CheckboxDropdownFavoriteComponent implements OnInit {
     this.userService.addList(userListRequest).subscribe(response => {
       this.getListFavorite();
       console.log(response);
-      // Handle response here
+
     }, error => {
       console.log(error);
       // Handle error here
     });
 
-    // let talentId = localStorage.getItem('selectedTalentId')
-
-    // this.userService.addListTalent({ userId: this.userDetails.id, talentId: parseInt(talentId || '') }).subscribe(response => {
-    //   console.log(response);
-    //   // Handle response here
-    // }, error => {
-    //   console.log(error);
-    //   // Handle error here
-    // });
   }
 
   handleChecked(index: number) {

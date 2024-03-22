@@ -12,6 +12,7 @@ import { TalentDetailService } from 'src/app/features/services/talent-detail.ser
 import { FilterTalentResponse } from 'src/app/shared/models/interfaces/talent.interface';
 import { ListUser, UserPrincipal } from 'src/app/shared/models/interfaces/user.interface';
 import { UserService } from 'src/app/auth/services/user.service';
+import { SharedDataService } from '../../services/shared-data-service.service';
 
 @Component({
   selector: 'app-nav-filters',
@@ -36,7 +37,8 @@ export class NavFiltersComponent implements OnInit {
     private toastr: ToastrService,
     private loader: LoaderService,
     private formBuilder: FormBuilder,
-    private talentListService: TalentDetailService
+    private talentListService: TalentDetailService,
+    private sharedService: SharedDataService
   ) { }
 
   ngOnInit(): void {
@@ -45,6 +47,13 @@ export class NavFiltersComponent implements OnInit {
       const userData = sessionStorage.getItem('user_data') ? JSON.parse(sessionStorage.getItem('user_data') || '{}') : {};
       this.userDetails = userData.userPrincipal;
     }
+
+    this.sharedService.favoriteList$.subscribe((list) => {
+      this.listByUSer = {
+        userId: this.userDetails.id,
+        lists: list
+      };
+    });
 
     this.requestOptions();
     this.buildForm()
