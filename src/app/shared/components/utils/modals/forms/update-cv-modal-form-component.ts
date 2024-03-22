@@ -1,9 +1,18 @@
-import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
 import { CustomValidators } from '../../Validations/CustomValidators';
 import { ICarouselItem } from '../../carousel/ICarousel-metadata';
 import { DomSanitizer } from '@angular/platform-browser';
+import { CancelSaveButtonsComponent } from './cancel-save-buttons';
 
 @Component({
   selector: 'app-update-cv-modal-form',
@@ -12,8 +21,24 @@ import { DomSanitizer } from '@angular/platform-browser';
     title="Modifica el CV actual"
     description="Aqui puedes ver el CV del talento o tambien actualizarlo."
   >
-    <form [formGroup]="fileForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-2">
-      <div *ngIf="cvFile" class="flex flex-shrink-0 relative w-full border-2 border-gray-100 rounded-md">
+    <form
+      [formGroup]="fileForm"
+      (ngSubmit)="onSubmit()"
+      class="flex flex-col gap-2"
+    >
+      <div class="flex justify-end items-center w-full mb-2">
+        <button
+          class="flex items-center  hover:rounded-full hover:shadow-lg hover:bg-indigo-300 dark:text-slate-100 dark:bg-gray-600 dark:hover:bg-gray-700 p-2"
+          type="button"
+          (click)="handleAddFile()"
+        >
+          <span class="material-symbols-outlined"> edit </span>
+        </button>
+      </div>
+      <div
+        *ngIf="cvFile"
+        class="flex flex-shrink-0 relative w-full border-2 border-gray-100 rounded-md"
+      >
         <img
           src="../../../../../assets/app-pdf-editar-convertir-visualizar.webp"
           [alt]="cvFile.fileName"
@@ -24,21 +49,13 @@ import { DomSanitizer } from '@angular/platform-browser';
           [href]="sanitizePdfUrl(cvFile.file)"
           target="_blank"
         >
-          <h2
-            class="lg:text-xl leading-4 text-base lg:leading-5 text-slate-800"
-          >
-            {{cvFile.fileName}}
-          </h2>
-          <div class="flex h-full items-end pb-6">
-            <h3
-              class="text-xl lg:text-2xl font-semibold leading-5 lg:leading-6 text-slate-800"
-            >
-              {{cvFile.fileType.toUpperCase()}}
-            </h3>
-          </div>
         </a>
       </div>
+      <h2 class="lg:text-xl text-center leading-4 text-base lg:leading-5 text-slate-800">
+        {{ cvFile?.fileName }}
+      </h2>
       <app-file-input
+        *ngIf="addFile"
         [id]="'update-cv-pic'"
         title="Agrega un archivo"
         description="PDF (Max. 5MB)"
@@ -62,13 +79,38 @@ import { DomSanitizer } from '@angular/platform-browser';
           El tamaño del archivo es demasiado grande
         </span>
       </div>
-
-      <app-cancel-save-buttons
-        [form]="fileForm"
-        [modal_id]="modal_id"
-        [save_button_id]="'save_file'"
-        (cancelClicked)="(fileForm.reset)"
-      ></app-cancel-save-buttons>
+      <div class="grid gap-4 md:grid-cols-2" *ngIf="addFile">
+        <button
+          (click)="$event.stopPropagation()"
+          (click)="cancelForm()"
+          (click)="fileForm.reset()"
+          type="button"
+          class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+        >
+          Cancelar
+        </button>
+        <button
+          [disabled]="fileForm.invalid"
+          (click)="cancelForm()"
+          type="submit"
+          class="text-white font-medium rounded-lg text-sm px-5 py-2.5 mb-2 bg-[#009788] hover:bg-[#0a655e]"
+          [ngClass]="{
+            'focus:outline-none  focus:ring-4 focus:ring-[#51f7db] dark:bg-[#04c8b0] dark:hover:bg-[#0a655e] dark:focus:ring-[#0a655e]':
+              fileForm.valid,
+            'cursor-not-allowed ': fileForm.invalid
+          }"
+        >
+          Guardar
+        </button>
+      </div>
+      <button
+        [attr.data-modal-hide]="modal_id"
+        (click)="addFile = false"
+        type="button"
+        class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+      >
+        Cerrar
+      </button>
     </form>
   </app-base-modal-form>`,
 })
@@ -79,6 +121,8 @@ export class UpdateCvModalFormComponent implements OnInit, OnChanges {
   @Input() talentFileList: ICarouselItem[] = [];
   cvFile!: ICarouselItem | undefined;
 
+  addFile: boolean = false;
+
   fileForm!: FormGroup;
   constructor(
     private fb: FormBuilder,
@@ -86,10 +130,14 @@ export class UpdateCvModalFormComponent implements OnInit, OnChanges {
     private sanitizer: DomSanitizer
   ) { }
 
+  // @ViewChild(CancelSaveButtonsComponent) cancelSaveButtonsComponent!: CancelSaveButtonsComponent;
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['talentFileList'] && changes['talentFileList'].currentValue) {
       this.talentFileList = changes['talentFileList'].currentValue;
-      this.cvFile = this.talentFileList.find(item => item.fileName.toLowerCase().includes('cv'));
+      this.cvFile = this.talentFileList.find((item) =>
+        item.fileName.toLowerCase().includes('cv')
+      );
     }
   }
 
@@ -112,36 +160,42 @@ export class UpdateCvModalFormComponent implements OnInit, OnChanges {
     });
   }
 
+  cancelForm() {
+    this.fileForm.reset();
+    this.handleAddFile();
+  }
+
   onSubmit() {
     if (this.fileForm.valid) {
-      const file = this.fileForm.get('file')?.value;
-      if (file) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const base64File = reader.result as string;
+      // const file = this.fileForm.get('file')?.value;
+      // if (file) {
+      //   const reader = new FileReader();
+      //   reader.onloadend = () => {
+      //     const base64File = reader.result as string;
 
-          // Get the file name and type
-          const fileName = file.name;
-          const fileType = file.type.split('/')[1]; // This will get 'pdf' from 'application/pdf'
+      //     // Get the file name and type
+      //     const fileName = file.name;
+      //     const fileType = file.type.split('/')[1]; // This will get 'pdf' from 'application/pdf'
 
-          // Create an object with the file data
-          const fileData = {
-            file: base64File,
-            fileName: fileName,
-            fileType: fileType,
-          };
-          // Now you can send the fileData object
-          console.log(fileData);
-          this.talentDetailService.addFileToCurrentTalent(fileData);
-        };
-        reader.readAsDataURL(file);
-      }
+      //     // Create an object with the file data
+      //     const fileData = {
+      //       file: base64File,
+      //       fileName: fileName,
+      //       fileType: fileType,
+      //     };
+      //     // Now you can send the fileData object
+      //     console.log(fileData);
+      //     this.talentDetailService.addFileToCurrentTalent(fileData);
+      //   };
+      //   reader.readAsDataURL(file);
+      // }
+      console.log(this.fileForm.value);
       this.fileForm.reset();
     }
   }
 
   sanitizePdfUrl(base64Data: string) {
-    const base64Url = base64Data.split(",")[1];
+    const base64Url = base64Data.split(',')[1];
     const byteCharacters = atob(base64Url);
     const byteNumbers = new Array(byteCharacters.length);
     for (let i = 0; i < byteCharacters.length; i++) {
@@ -153,8 +207,8 @@ export class UpdateCvModalFormComponent implements OnInit, OnChanges {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
-
-  updateTalentFileLista(talentFileList: ICarouselItem[]) {
-    this.talentFileList = talentFileList;
+  handleAddFile() {
+    this.addFile = !this.addFile;
+    console.log(this.addFile);
   }
 }
