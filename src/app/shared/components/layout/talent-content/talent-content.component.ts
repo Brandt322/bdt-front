@@ -15,6 +15,7 @@ import { CarouselComponent } from '../../utils/carousel/carousel.component';
 import { UserPrincipal } from 'src/app/shared/models/interfaces/user.interface';
 import { initModals } from 'flowbite';
 import { TalentService } from 'src/app/services/talent/talent.service';
+import { UserService } from 'src/app/auth/services/user.service';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
   levelOptions: Level[] = [];
   talentFileList: ICarouselItem[] = [];
   userDetails!: UserPrincipal;
+
   // @Output() talentFileListChange = new EventEmitter<ICarouselItem[]>();
   @ViewChild(CarouselComponent) carouselComponent!: CarouselComponent;
 
@@ -44,7 +46,7 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
     private data: SharedDataService,
     private loader: LoaderService,
     private masterService: MasterService,
-    private talentService: TalentService,
+    private userService: UserService
   ) { }
 
   ngAfterViewInit(): void {
@@ -66,7 +68,7 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
   updateTalentFileList(talent: TalentResponse | null): void {
     this.talentFileList = talent?.filesList?.map((file, index) => {
       return {
-        id: index,
+        id: file.id,
         fileName: file.fileName,
         fileType: file.fileType,
         file: file.file

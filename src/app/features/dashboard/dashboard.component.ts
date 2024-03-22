@@ -7,6 +7,8 @@ import { TalentService } from 'src/app/services/talent/talent.service';
 import { TalentDetailService } from '../services/talent-detail.service';
 import { LoaderService } from 'src/app/core/global/loader/loader.service';
 import { SharedDataService } from 'src/app/shared/components/services/shared-data-service.service';
+import { UserPrincipal } from '../../shared/models/interfaces/user.interface';
+import { UserService } from 'src/app/auth/services/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,7 +29,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     private toastr: ToastrService,
     private talentDetailService: TalentDetailService,
     private loader: LoaderService,
-    private sharedDataService: SharedDataService
+    private sharedDataService: SharedDataService,
+    private userService: UserService
   ) {
   }
 
@@ -45,12 +48,24 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     // initModals();
 
   }
-
+  currentTalentId!: number;
   ngOnInit(): void {
     this.initializeState();
   }
 
+  userDetails!: UserPrincipal;
   initializeState(): void {
+    if (sessionStorage.getItem('user_data')) {
+      const userData = sessionStorage.getItem('user_data')
+        ? JSON.parse(sessionStorage.getItem('user_data') || '{}')
+        : {};
+      this.userDetails = userData.userPrincipal;
+    }
+
+    this.userService.getListsByUserId(this.userDetails.id).subscribe((response) => {
+      this.sharedDataService.updateFavoriteList(response.lists);
+    });
+
     this.talentService.getBasicTalent().pipe(takeUntil(this.destroy$)).subscribe((talents: BasicTalentResponse[]) => {
       this.talentDetailService.updateTalentList(talents);
       this.isFiltered = false;
@@ -93,10 +108,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             this.selectedTalent$.next(selectedTalent);
             this.onTalentClick(selectedTalent);
           }
-          // setTimeout(() => {
-          //   initModals();
-          //   initDropdowns();
-          // }, 0);
         }
       }
     });
@@ -114,10 +125,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log('Talento seleccionado o actualizado: ' + updatedTalent.id)
         this.selectedTalent$.next(updatedTalent);
       }
-      // setTimeout(() => {
-      //   initModals();
-      //   initDropdowns();
-      // }, 0);
     });
   }
 

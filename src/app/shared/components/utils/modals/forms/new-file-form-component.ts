@@ -80,6 +80,7 @@ export class NewFileModalFormComponent implements OnInit {
 
           // Create an object with the file data
           const fileData = {
+            id: 0,
             file: base64File,
             fileName: fileName,
             fileType: fileType

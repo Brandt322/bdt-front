@@ -48,7 +48,7 @@ export class CarouselComponent implements OnInit {
 
   ngOnInit(): void {
     this.items.map((i, index) => {
-      i.id = index;
+      i.id = i.id;
     })
     // console.log(this.items)
 

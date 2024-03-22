@@ -55,6 +55,6 @@ export interface ListUserTalent {
 }
 
 export interface UserTalentListRequest {
-  userId: number;
+  listId: number;
   talentId: number;
 }

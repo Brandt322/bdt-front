@@ -4,6 +4,7 @@ import { TalentResponse } from "src/app/shared/models/interfaces/talent.interfac
 import { UserPrincipal, UserResponse } from "src/app/shared/models/interfaces/user.interface";
 import { initModals } from "flowbite";
 import { ICarouselItem } from "../../carousel/ICarousel-metadata";
+import { UserService } from "src/app/auth/services/user.service";
 
 @Component({
   selector: 'app-profile',
@@ -34,11 +35,12 @@ export class ProfileComponent implements OnInit, OnChanges {
   @Input() averageRating!: number;
   @Input() readonly: boolean = false;
   @Input() talent!: TalentResponse;
+  @Input() talentId!: number;
 
-
+  isFavorite: boolean = false;
   userDetails!: UserPrincipal;
 
-  constructor(private data: SharedDataService, private cd: ChangeDetectorRef) { }
+  constructor(private data: SharedDataService, private cd: ChangeDetectorRef, private userService: UserService) { }
 
 
   ngOnInit(): void {
@@ -46,16 +48,38 @@ export class ProfileComponent implements OnInit, OnChanges {
       const userData = sessionStorage.getItem('user_data') ? JSON.parse(sessionStorage.getItem('user_data') || '{}') : {};
       this.userDetails = userData.userPrincipal;
     }
-
+    this.checkIfFavorite();
     // console.log('Roles: ', this.userDetails)
     // console.log('Roles: ', this.talentFileList)
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['talent']) {
-      // Aquí, actualiza la vista con el talento actualizado.
-      // console.log('Talent updated: ', this.talent.currency);
-      this.cd.markForCheck();
+    if (changes['talentId'] && !changes['talentId'].firstChange) {
+      this.checkIfFavorite();
+    }
+    if (changes['talent'] && !changes['talent'].firstChange) {
+      this.checkIfFavorite();
+    }
+  }
+
+  // checkIfFavorite(): void {
+  //   console.log(this.talentId)
+  //   this.userService.getListsByUserId(this.userDetails.id).subscribe(response => {
+  //     const favoriteLists = response.lists;
+  //     this.isFavorite = favoriteLists.some(list => list.talentIds.includes(this.talentId));
+  //   }, error => {
+  //     console.log(error);
+  //   });
+  // }
+
+  checkIfFavorite(): void {
+    if (this.userDetails && this.talentId !== undefined) {
+      this.userService.getListsByUserId(this.userDetails.id).subscribe(response => {
+        const favoriteLists = response.lists;
+        this.isFavorite = favoriteLists.some(list => list.talentIds.includes(this.talentId));
+      }, error => {
+        console.log(error);
+      });
     }
   }
 
