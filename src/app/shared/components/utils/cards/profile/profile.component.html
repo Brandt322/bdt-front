@@ -60,21 +60,14 @@
           <button
             [ngClass]="{
               'flex items-center justify-center rounded-lg ml-2':
-                variant !== 'main-profile'
+                variant !== 'main-profile',
+              'text-red-500': isFavorite
             }"
             id="favoritesCheckbox"
             data-dropdown-toggle="favoritesDropdown"
             [disabled]="variant === 'main-profile'"
           >
-            <span
-              class="material-symbols-outlined text-red-500 dark:text-red-500"
-              [ngClass]="{
-                'text-red-500 dark:text-red-500': isFavorite,
-                'text-slate-400 dark:text-gray-500': !isFavorite
-              }"
-            >
-              favorite
-            </span>
+            <span class="fa-solid fa-heart fa-lg"></span>
           </button>
         </div>
         <div

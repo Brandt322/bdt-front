@@ -21,7 +21,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   isFiltered: boolean = false;
   hasRecords = true;
-
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -62,9 +61,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.userDetails = userData.userPrincipal;
     }
 
-    this.userService.getListsByUserId(this.userDetails.id).subscribe((response) => {
-      this.sharedDataService.updateFavoriteList(response.lists);
-    });
+    // this.userService.getListsByUserId(this.userDetails.id).subscribe((response) => {
+    //   this.sharedDataService.updateFavoriteList(response.lists);
+    // });
 
     this.talentService.getBasicTalent().pipe(takeUntil(this.destroy$)).subscribe((talents: BasicTalentResponse[]) => {
       this.talentDetailService.updateTalentList(talents);

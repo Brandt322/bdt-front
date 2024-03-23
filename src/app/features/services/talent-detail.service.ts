@@ -19,7 +19,6 @@ export class TalentDetailService {
 
   private talentListSubject = new BehaviorSubject<FilterTalentResponse[]>([]);
   talentList$ = this.talentListSubject.asObservable();
-
   // En TalentDetailService
   updatedTalent = new Subject<TalentResponse>();
 

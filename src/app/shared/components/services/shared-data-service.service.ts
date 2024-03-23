@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ListUserTalent } from '../../models/interfaces/user.interface';
+import { BasicTalentResponse } from '../../models/interfaces/talent.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -26,12 +27,13 @@ export class SharedDataService {
   currentLinkedinLink = this.linkedinLinkSource.asObservable();
   currentDescription = this.descriptionSource.asObservable();
 
-  changeImage(image: string) {
-    this.imageSource.next(image);
-  }
 
   updateFavoriteList(list: ListUserTalent[]) {
     this.favoriteListSource.next(list);
+  }
+
+  changeImage(image: string) {
+    this.imageSource.next(image);
   }
 
   changeDescription(description: string) {

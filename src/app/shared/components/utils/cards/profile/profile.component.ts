@@ -1,10 +1,10 @@
-import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
 import { SharedDataService } from "../../../services/shared-data-service.service";
 import { TalentResponse } from "src/app/shared/models/interfaces/talent.interface";
-import { UserPrincipal, UserResponse } from "src/app/shared/models/interfaces/user.interface";
-import { initModals } from "flowbite";
-import { ICarouselItem } from "../../carousel/ICarousel-metadata";
+import { UserPrincipal } from "src/app/shared/models/interfaces/user.interface";
+
 import { UserService } from "src/app/auth/services/user.service";
+import { TalentDetailService } from "src/app/features/services/talent-detail.service";
 
 @Component({
   selector: 'app-profile',
@@ -36,11 +36,10 @@ export class ProfileComponent implements OnInit, OnChanges {
   @Input() readonly: boolean = false;
   @Input() talent!: TalentResponse;
   @Input() talentId!: number;
-
   isFavorite: boolean = false;
   userDetails!: UserPrincipal;
-
-  constructor(private data: SharedDataService, private cd: ChangeDetectorRef, private userService: UserService) { }
+  favoriteTalents: number[] = [];
+  constructor(private sharedService: SharedDataService, private cd: ChangeDetectorRef, private userService: UserService, private talentDetailService: TalentDetailService) { }
 
 
   ngOnInit(): void {
@@ -48,9 +47,10 @@ export class ProfileComponent implements OnInit, OnChanges {
       const userData = sessionStorage.getItem('user_data') ? JSON.parse(sessionStorage.getItem('user_data') || '{}') : {};
       this.userDetails = userData.userPrincipal;
     }
-    this.checkIfFavorite();
-    // console.log('Roles: ', this.userDetails)
-    // console.log('Roles: ', this.talentFileList)
+    this.sharedService.favoriteList$.subscribe(favoriteList => {
+      this.favoriteTalents = favoriteList.map(list => list.talentIds).flat();
+      this.checkIfFavorite();
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -62,26 +62,23 @@ export class ProfileComponent implements OnInit, OnChanges {
     }
   }
 
-  // checkIfFavorite(): void {
-  //   console.log(this.talentId)
-  //   this.userService.getListsByUserId(this.userDetails.id).subscribe(response => {
-  //     const favoriteLists = response.lists;
-  //     this.isFavorite = favoriteLists.some(list => list.talentIds.includes(this.talentId));
-  //   }, error => {
-  //     console.log(error);
-  //   });
-  // }
-
   checkIfFavorite(): void {
     if (this.userDetails && this.talentId !== undefined) {
-      this.userService.getListsByUserId(this.userDetails.id).subscribe(response => {
-        const favoriteLists = response.lists;
-        this.isFavorite = favoriteLists.some(list => list.talentIds.includes(this.talentId));
-      }, error => {
-        console.log(error);
-      });
+      this.isFavorite = this.favoriteTalents.includes(this.talentId);
     }
   }
+
+  // checkIfFavorite(): void {
+  //   if (this.userDetails && this.talentId !== undefined) {
+  //     this.userService.getListsByUserId(this.userDetails.id).subscribe(response => {
+  //       const favoriteLists = response.lists;
+  //       this.isFavorite = favoriteLists.some(list => list.talentIds.includes(this.talentId));
+  //       this.cd.detectChanges();
+  //     }, error => {
+  //       console.log(error);
+  //     });
+  //   }
+  // }
 
   feedbackMessage(): string {
     let feedbackNumber = this.feedbackNumber ?? 0;
@@ -93,13 +90,13 @@ export class ProfileComponent implements OnInit, OnChanges {
   }
 
   openModalSocial() {
-    this.data.changeGithubLink(this.githubLink);
-    this.data.changeLinkedinLink(this.linkedinLink);
+    this.sharedService.changeGithubLink(this.githubLink);
+    this.sharedService.changeLinkedinLink(this.linkedinLink);
   }
 
   openModalMont() {
-    this.data.changeInitialMont(this.initialMont);
-    this.data.changeFinalMont(this.finalMont);
-    this.data.changeCurrency(this.currencyId || 0)
+    this.sharedService.changeInitialMont(this.initialMont);
+    this.sharedService.changeFinalMont(this.finalMont);
+    this.sharedService.changeCurrency(this.currencyId || 0)
   }
 }

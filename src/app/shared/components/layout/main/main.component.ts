@@ -22,8 +22,8 @@ export class MainComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.userLoginOn = this.authService.isLoggedIn();
     this.userData = JSON.parse(sessionStorage.getItem(this.userKey) || '{}');
-    console.log(this.userLoginOn);
-    console.log(this.userData);
+    // console.log(this.userLoginOn);
+    // console.log(this.userData);
   }
 
   ngOnDestroy(): void {

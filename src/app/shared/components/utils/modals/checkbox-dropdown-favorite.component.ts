@@ -1,9 +1,9 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/auth/services/user.service';
-import { ListUser, ListUserTalent, UserListRequest, UserPrincipal, UserTalentListRequest } from 'src/app/shared/models/interfaces/user.interface';
+import { ListUserTalent, UserListRequest, UserPrincipal, UserTalentListRequest } from 'src/app/shared/models/interfaces/user.interface';
 import { SharedDataService } from '../../services/shared-data-service.service';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
 @Component({
@@ -81,24 +81,24 @@ export class CheckboxDropdownFavoriteComponent implements OnInit {
   favoriteForm!: FormGroup;
   currentTalentId!: number;
 
-  constructor(private fb: FormBuilder, private talentDetailService: TalentDetailService, private userService: UserService, private eRef: ElementRef, private toast: ToastrService, private sharedService: SharedDataService) { }
-
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (changes['data']) {
-  //     this.currentTalentId = Number(localStorage.getItem('selectedTalentId'));
-  //     this.checkCurrentTalentInFavorites();
-  //   }
-  // }
+  constructor(
+    private fb: FormBuilder,
+    private talentDetailService: TalentDetailService,
+    private userService: UserService,
+    private eRef: ElementRef,
+    private toast: ToastrService,
+    private sharedService: SharedDataService,
+    private cd: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
     this.formBuild()
     this.getListFavorite();
     this.currentTalentId = Number(localStorage.getItem('selectedTalentId'));
-    // this.checkCurrentTalentInFavorites();
+
     this.talentDetailService.currentTalent.subscribe(talent => {
       if (talent) {
         this.currentTalentId = talent.id;
-        // this.checkCurrentTalentInFavorites();
         this.getListFavorite();
       }
     });
@@ -151,25 +151,26 @@ export class CheckboxDropdownFavoriteComponent implements OnInit {
 
   handleChecked(index: number) {
     if (this.selectedIndex !== index && this.data && this.data[index]) {
-
-
       // Crea un nuevo objeto UserTalentListRequest con la información del elemento seleccionado
       const userListRequest: UserTalentListRequest = {
         listId: this.data[index].id,
         talentId: this.currentTalentId,
       };
-
-      console.log(userListRequest.talentId)
-
+      // console.log(userListRequest.talentId)
       // Llama al método addListTalent() de UserService
       this.userService.addListTalent(userListRequest).subscribe(response => {
         // console.log(response);
         // Si el índice seleccionado no es el mismo que el índice actual, selecciona el elemento
         this.selectedIndex = index; // Actualiza el índice del elemento seleccionado
         this.optionSelected.emit(index);
+        // Maneja el estado de los corazones
+        this.getListFavorite()
+        // this.cd.detectChanges();
+        this.toast.success('Se agrego el talento a un favorito correctamente');
       }, error => {
         console.log(error);
         // Maneja el error aquí
+        this.toast.error('Error al seleccionar un favorito para este talento, intente nuevamente');
       });
     }
   }
@@ -182,12 +183,14 @@ export class CheckboxDropdownFavoriteComponent implements OnInit {
     };
 
     this.userService.addList(userListRequest).subscribe(response => {
+      this.toast.success('Se agrego una sección de favorito correctamente');
       this.getListFavorite();
       console.log(response);
 
     }, error => {
       console.log(error);
       // Handle error here
+      this.toast.error('Error al agregar favorito, intente nuevamente');
     });
 
   }
