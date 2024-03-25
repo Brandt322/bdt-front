@@ -14,6 +14,9 @@ module.exports = {
       },
       maxHeight: {
         '6Items': 'calc(2.8rem * 6)'
+      },
+      colors: {
+        'modal-bg': '#858991'
       }
     },
   },

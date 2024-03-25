@@ -152,10 +152,27 @@ export class CheckboxDropdownFavoriteComponent implements OnInit {
   handleChecked(index: number) {
     if (this.selectedIndex !== index && this.data && this.data[index]) {
       // Crea un nuevo objeto UserTalentListRequest con la información del elemento seleccionado
-      const userListRequest: UserTalentListRequest = {
-        listId: this.data[index].id,
-        talentId: this.currentTalentId,
-      };
+      // const userListRequest: UserTalentListRequest = {
+      //   listId: this.data[index].id,
+      //   talentId: this.currentTalentId,
+      // };
+      let userListRequest: UserTalentListRequest;
+
+      if (this.selectedIndex === null) {
+        // Primera vez seleccionando un elemento
+        userListRequest = {
+          id: null,
+          listId: this.data[index].id,
+          talentId: this.currentTalentId,
+        };
+      } else {
+        // No es la primera vez seleccionando un elemento
+        userListRequest = {
+          id: this.data[this.selectedIndex].id,
+          listId: this.data[index].id,
+          talentId: this.currentTalentId,
+        };
+      }
       // console.log(userListRequest.talentId)
       // Llama al método addListTalent() de UserService
       this.userService.addListTalent(userListRequest).subscribe(response => {

@@ -29,6 +29,7 @@ export interface UserPrincipal {
   maternalSurname: string;
   image: string;
   roles: string[];
+  lists: UserListDto[];
   username: string;
   password: string;
   authorities: string[];
@@ -55,6 +56,17 @@ export interface ListUserTalent {
 }
 
 export interface UserTalentListRequest {
+  id: number | null;
   listId: number;
   talentId: number;
+}
+
+
+export interface UserListDto {
+  id: number;
+  talent: TalentIdDto;
+}
+
+export interface TalentIdDto {
+  id: number;
 }

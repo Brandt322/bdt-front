@@ -42,8 +42,8 @@ import { CustomValidators } from '../../Validations/CustomValidators';
       <app-cancel-save-buttons
         [form]="fileForm"
         [modal_id]="modal_id"
-        [save_button_id]="'save_file'"
-        (cancelClicked)="fileForm.reset"
+        [save_button_id]="'save_new_file'"
+        (cancelClicked)="fileForm.reset()"
       ></app-cancel-save-buttons>
     </form>
   </app-base-modal-form>`,
@@ -68,29 +68,28 @@ export class NewFileModalFormComponent implements OnInit {
 
   onSubmit() {
     if (this.fileForm.valid) {
-      const file = this.fileForm.get('file')?.value;
-      if (file) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const base64File = reader.result as string;
+      const { file } = this.fileForm.value;
 
-          // Get the file name and type
-          const fileName = file.name;
-          const fileType = file.type.split('/')[1]; // This will get 'pdf' from 'application/pdf'
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64File = reader.result as string;
 
-          // Create an object with the file data
-          const fileData = {
-            id: 0,
-            file: base64File,
-            fileName: fileName,
-            fileType: fileType
-          };
-          // Now you can send the fileData object
-          console.log(fileData);
-          this.talentDetailService.addFileToCurrentTalent(fileData);
+        // Get the file name and type
+        const fileName = file.name;
+        const fileType = file.type.split('/')[1]; // This will get 'pdf' from 'application/pdf'
+
+        // Create an object with the file data
+        const fileData = {
+          id: 0,
+          file: base64File,
+          fileName: fileName,
+          fileType: fileType
         };
-        reader.readAsDataURL(file);
-      }
+        // Now you can send the fileData object
+        console.log(fileData);
+        this.talentDetailService.addFileToCurrentTalent(fileData);
+      };
+      reader.readAsDataURL(file);
       this.fileForm.reset();
     }
   }
