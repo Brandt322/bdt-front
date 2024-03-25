@@ -124,6 +124,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log('Talento seleccionado o actualizado: ' + updatedTalent.id)
         this.selectedTalent$.next(updatedTalent);
       }
+      setTimeout(() => {
+        initModals();
+        initDropdowns();
+      }, 0);
     });
   }
 

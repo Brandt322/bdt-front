@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ICarouselItem } from './ICarousel-metadata';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -7,7 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.css']
 })
-export class CarouselComponent implements OnInit {
+export class CarouselComponent implements OnInit, OnChanges {
   @Input() items: ICarouselItem[] = [];
   @Input() id!: number;
 
@@ -45,6 +45,17 @@ export class CarouselComponent implements OnInit {
 
 
   constructor(private sanitizer: DomSanitizer) { }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['items']) {
+      this.items = this.items.filter(item => {
+        // Crear una expresión regular para buscar "cv" de manera insensible a mayúsculas y minúsculas
+        const regex = new RegExp('cv', 'i');
+
+        // Devuelve true si "cv" no se encuentra en el nombre del archivo
+        return !regex.test(item.fileName);
+      });
+    }
+  }
 
   ngOnInit(): void {
     this.items.map((i, index) => {

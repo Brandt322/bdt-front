@@ -84,6 +84,7 @@
               modalId="favoriteDropdown"
               labelledby="favoriteCheckbox"
               [data]="listByUSer"
+              (optionSelected)="handleFavoriteSelected($event)"
             ></app-checkbox-dropdown-select-prev-modal>
           </li>
         </ul>

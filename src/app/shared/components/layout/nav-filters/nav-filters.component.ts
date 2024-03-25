@@ -72,6 +72,11 @@ export class NavFiltersComponent implements OnInit {
       formValue.data = null;
     }
 
+    // Si 'favorites' está vacío, establecerlo en array vacio
+    if (this.myForm && this.myForm.get('talentsId') && this.myForm.get('talentsId')?.value?.length === 0) {
+      formValue.talentsId = [];
+    }
+
     console.log(formValue);
     this.talentService.getTalentsByTechnicalSkillsLanguageAndLevel(formValue)
       .pipe(
@@ -104,8 +109,19 @@ export class NavFiltersComponent implements OnInit {
       languageId: [null],
       levelId: [null],
       technicalSkills: [this.formBuilder.array([])],
-      data: ['']
+      data: [''],
+      talentsId: [[]]
     })
+  }
+
+  handleFavoriteSelected(index: number | null) {
+    if (index !== null) {
+      const selectedFavoriteId = this.listByUSer.lists[index].talentIds;
+      // Do something with selectedFavoriteId
+      this.myForm.get('talentsId')?.setValue(selectedFavoriteId);
+    } else {
+      this.myForm.get('talentsId')?.setValue([]);
+    }
   }
 
   handleOptionSelected(index: number | null) {

@@ -4,7 +4,7 @@ import { BehaviorSubject, Subject, catchError } from 'rxjs';
 import { TalentService } from 'src/app/services/talent/talent.service';
 import { EducationalExperience } from 'src/app/shared/models/interfaces/educationalExperience.interface';
 import { FeedbackRequest } from 'src/app/shared/models/interfaces/feedback.interface';
-import { File } from 'src/app/shared/models/interfaces/file.interface';
+import { File, FileResquest } from 'src/app/shared/models/interfaces/file.interface';
 import { FilterTalentResponse, TalentResponse, TalentSalaryRequest, TalentSocialRequest, TalentSoftSkillRequest, TalentTechnicalSkillRequest } from 'src/app/shared/models/interfaces/talent.interface';
 import { UserBasic } from 'src/app/shared/models/interfaces/user.interface';
 import { WorkExperience, WorkExperienceRequest } from 'src/app/shared/models/interfaces/workExperience.interface';
@@ -314,6 +314,33 @@ export class TalentDetailService {
           this.talentSource.next(this.currentTalentValue);
           this.changeTalent(this.currentTalentValue.id);
           this.toast.success('Se actualizó la imagen');
+        }
+      });
+    }
+  }
+
+  updateCvFileForCurrentTalent(fileId: number, fileData: FileResquest) {
+    if (this.currentTalentValue) {
+      const newCv: File = {
+        id: fileId,
+        file: fileData.file,
+        fileName: fileData.fileName,
+        fileType: fileData.fileType
+      }
+      this.talentService.updateCvFile(this.currentTalentValue.id, fileId, fileData).pipe(
+        catchError(error => {
+          this.toast.error('Hubo un error al actualizar el archivo');
+          throw error;
+        })
+      ).subscribe(() => {
+        if (this.currentTalentValue) {
+          const index = this.currentTalentValue.filesList.findIndex(f => f.id === fileId);
+          if (index !== -1) {
+            this.currentTalentValue.filesList[index] = newCv;
+            this.talentSource.next(this.currentTalentValue);
+            this.changeTalent(this.currentTalentValue.id);
+            this.toast.success('Se actualizó el archivo');
+          }
         }
       });
     }

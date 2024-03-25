@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { EducationalExperienceRequest } from 'src/app/shared/models/interfaces/educationalExperience.interface';
 import { FeedbackRequest } from 'src/app/shared/models/interfaces/feedback.interface';
-import { File } from 'src/app/shared/models/interfaces/file.interface';
+import { File, FileResquest } from 'src/app/shared/models/interfaces/file.interface';
 import { LanguageRequest } from 'src/app/shared/models/interfaces/language.interface';
 import { FilterTalentResponse, TalentFilterParams, TalentRequest, TalentResponse, BasicTalentResponse, TalentTechnicalSkillRequest, TalentSoftSkillRequest, TalentSalaryRequest, TalentSocialRequest } from 'src/app/shared/models/interfaces/talent.interface';
 import { WorkExperienceRequest } from 'src/app/shared/models/interfaces/workExperience.interface';
@@ -160,5 +160,10 @@ export class TalentService {
   updateLanguage(talentId: number, languageId: number, languageRequest: LanguageRequest): Observable<object> {
     const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.UPDATE_LANGUAGE}/${talentId}/${languageId}`;
     return this.http.put(url, languageRequest);
+  }
+
+  updateCvFile(talentId: number, fileId: number, file: FileResquest): Observable<object> {
+    const url = `${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.UPDATE_CV_FILE}/${talentId}/${fileId}`;
+    return this.http.put(url, file);
   }
 }

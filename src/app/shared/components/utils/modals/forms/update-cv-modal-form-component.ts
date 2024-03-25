@@ -21,39 +21,42 @@ import { CancelSaveButtonsComponent } from './cancel-save-buttons';
     title="Modifica el CV actual"
     description="Aqui puedes ver el CV del talento o tambien actualizarlo."
   >
+    <div class="flex justify-end items-center w-full mb-2">
+      <button
+        class="flex items-center  hover:rounded-full hover:shadow-lg hover:bg-indigo-300 dark:text-slate-100 dark:bg-gray-600 dark:hover:bg-gray-700 p-2"
+        type="button"
+        (click)="handleAddFile()"
+      >
+        <span class="material-symbols-outlined"> edit </span>
+      </button>
+    </div>
+    <div
+      *ngIf="cvFile"
+      class="flex flex-shrink-0 relative w-full border-2 border-gray-100 rounded-md"
+    >
+      <img
+        src="../../../../../assets/app-pdf-editar-convertir-visualizar.webp"
+        [alt]="cvFile.fileName"
+        class="object-cover object-center w-full h-48"
+      />
+      <a
+        class="absolute w-full h-full p-6"
+        [href]="sanitizePdfUrl(cvFile.file)"
+        target="_blank"
+      >
+      </a>
+    </div>
+    <h2
+      class="lg:text-xl text-center my-2 leading-4 text-base lg:leading-5 text-slate-800"
+    >
+      {{ cvFile?.fileName }}
+    </h2>
     <form
       [formGroup]="fileForm"
       (ngSubmit)="onSubmit()"
       class="flex flex-col gap-2"
+      *ngIf="addFile"
     >
-      <div class="flex justify-end items-center w-full mb-2">
-        <button
-          class="flex items-center  hover:rounded-full hover:shadow-lg hover:bg-indigo-300 dark:text-slate-100 dark:bg-gray-600 dark:hover:bg-gray-700 p-2"
-          type="button"
-          (click)="handleAddFile()"
-        >
-          <span class="material-symbols-outlined"> edit </span>
-        </button>
-      </div>
-      <div
-        *ngIf="cvFile"
-        class="flex flex-shrink-0 relative w-full border-2 border-gray-100 rounded-md"
-      >
-        <img
-          src="../../../../../assets/app-pdf-editar-convertir-visualizar.webp"
-          [alt]="cvFile.fileName"
-          class="object-cover object-center w-full h-48"
-        />
-        <a
-          class="absolute w-full h-full p-6"
-          [href]="sanitizePdfUrl(cvFile.file)"
-          target="_blank"
-        >
-        </a>
-      </div>
-      <h2 class="lg:text-xl text-center leading-4 text-base lg:leading-5 text-slate-800">
-        {{ cvFile?.fileName }}
-      </h2>
       <app-file-input
         *ngIf="addFile"
         [id]="'update-cv-pic'"
@@ -79,7 +82,7 @@ import { CancelSaveButtonsComponent } from './cancel-save-buttons';
           El tamaño del archivo es demasiado grande
         </span>
       </div>
-      <div class="grid gap-4 md:grid-cols-2" *ngIf="addFile">
+      <div class="grid gap-4 md:grid-cols-2">
         <button
           (click)="$event.stopPropagation()"
           (click)="cancelForm()"
@@ -91,7 +94,6 @@ import { CancelSaveButtonsComponent } from './cancel-save-buttons';
         </button>
         <button
           [disabled]="fileForm.invalid"
-          (click)="cancelForm()"
           type="submit"
           class="text-white font-medium rounded-lg text-sm px-5 py-2.5 mb-2 bg-[#009788] hover:bg-[#0a655e]"
           [ngClass]="{
@@ -103,15 +105,15 @@ import { CancelSaveButtonsComponent } from './cancel-save-buttons';
           Guardar
         </button>
       </div>
-      <button
-        [attr.data-modal-hide]="modal_id"
-        (click)="addFile = false"
-        type="button"
-        class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-      >
-        Cerrar
-      </button>
     </form>
+    <button
+      [attr.data-modal-hide]="modal_id"
+      (click)="addFile = false"
+      type="button"
+      class="text-gray-900 w-full bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+    >
+      Cerrar
+    </button>
   </app-base-modal-form>`,
 })
 export class UpdateCvModalFormComponent implements OnInit, OnChanges {
@@ -143,9 +145,6 @@ export class UpdateCvModalFormComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.formBuild();
-    // console.log(this.talentFileList)
-    // this.cvFile = this.talentFileList.find(item => item.fileName.toLowerCase().includes('cv'));
-    // console.log(this.cvFile);
   }
 
   formBuild() {
@@ -167,30 +166,38 @@ export class UpdateCvModalFormComponent implements OnInit, OnChanges {
 
   onSubmit() {
     if (this.fileForm.valid) {
-      // const file = this.fileForm.get('file')?.value;
-      // if (file) {
-      //   const reader = new FileReader();
-      //   reader.onloadend = () => {
-      //     const base64File = reader.result as string;
+      const { file } = this.fileForm.value;
 
-      //     // Get the file name and type
-      //     const fileName = file.name;
-      //     const fileType = file.type.split('/')[1]; // This will get 'pdf' from 'application/pdf'
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64File = reader.result as string;
 
-      //     // Create an object with the file data
-      //     const fileData = {
-      //       file: base64File,
-      //       fileName: fileName,
-      //       fileType: fileType,
-      //     };
-      //     // Now you can send the fileData object
-      //     console.log(fileData);
-      //     this.talentDetailService.addFileToCurrentTalent(fileData);
-      //   };
-      //   reader.readAsDataURL(file);
-      // }
-      console.log(this.fileForm.value);
-      this.fileForm.reset();
+        // Get the file name and type
+        const fileName = file.name;
+        const fileType = file.type.split('/')[1]; // This will get 'pdf' from 'application/pdf'
+
+        // Create an object with the file data
+        const fileData = {
+          file: base64File,
+          fileName: fileName,
+          fileType: fileType,
+        };
+        // Now you can send the fileData object
+        console.log(fileData);
+        if (this.cvFile) {
+          // Add this check
+          this.talentDetailService.updateCvFileForCurrentTalent(
+            this.cvFile.id,
+            fileData
+          );
+        }
+        this.fileForm.reset();
+        this.addFile = false;
+      };
+      reader.readAsDataURL(file);
+      // console.log(this.fileForm.value);
+    } else {
+      console.log('form is not valid');
     }
   }
 
@@ -209,6 +216,6 @@ export class UpdateCvModalFormComponent implements OnInit, OnChanges {
 
   handleAddFile() {
     this.addFile = !this.addFile;
-    console.log(this.addFile);
+    // console.log(this.addFile);
   }
 }

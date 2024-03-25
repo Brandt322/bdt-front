@@ -4,3 +4,9 @@ export interface File {
   fileType: string,
   file: string
 }
+
+export interface FileResquest {
+  fileName: string,
+  fileType: string,
+  file: string
+}
