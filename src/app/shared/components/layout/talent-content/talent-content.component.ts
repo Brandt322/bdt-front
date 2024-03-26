@@ -156,18 +156,20 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
 
 
   get workExperiences() {
+    const currentYear = new Date().getFullYear();
     return this.talent?.workExperiencesList?.map(experience => {
       const startDate = new Date(experience.startDate);
-      const endDate = new Date(experience.endDate);
-      const years = endDate.getFullYear() - startDate.getFullYear();
+      const endDate = experience.endDate ? new Date(experience.endDate) : null;
+      // console.log(endDate)
+      const years = endDate ? endDate.getFullYear() - startDate.getFullYear() : 0;
       let description;
 
-      if (years === 0) {
-        description = `${experience.position} ${startDate.getFullYear()} - Hasta la actualidad`;
+      if (experience.isCurrent || endDate === null) {
+        description = `${experience.position} ${startDate.getFullYear()}  Hasta la actualidad`;
       } else if (years === 1) {
         description = `${experience.position} ${startDate.getFullYear()}-${endDate.getFullYear()} 1 año`;
       } else {
-        description = `${experience.position} ${startDate.getFullYear()}-${endDate.getFullYear()} ${years} años`;
+        description = `${experience.position} ${startDate.getFullYear()}-${endDate.getFullYear()} ${-years} años`;
       }
 
       return {
@@ -176,6 +178,7 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
         position: experience.position,
         startDate: experience.startDate,
         endDate: experience.endDate,
+        isCurrent: experience.isCurrent,
         description: description
       };
     }) || [];
@@ -185,10 +188,10 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
     const currentYear = new Date().getFullYear();
     return this.talent?.educationalExperiencesList?.map(experience => {
       const startDate = new Date(experience.startDate);
-      const endDate = new Date(experience.endDate);
+      const endDate = experience.endDate ? new Date(experience.endDate) : null;
       let description;
 
-      if (endDate.getFullYear() === currentYear) {
+      if (experience.isCurrent || endDate === null) {
         description = `${experience.degree} ${startDate.getFullYear()} - En curso`;
       } else {
         description = `${experience.degree} ${startDate.getFullYear()}-${endDate.getFullYear()}`;
@@ -201,6 +204,7 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
         degree: experience.degree,
         startDate: experience.startDate,
         endDate: experience.endDate,
+        isCurrent: experience.isCurrent,
         description: description
       };
     }) || [];

@@ -4,6 +4,7 @@ export interface ProcessedWorkExperiences {
   position: string;
   startDate: Date;
   endDate: Date;
+  isCurrent: boolean;
   description?: string;
 }
 
@@ -14,6 +15,7 @@ export interface ProcesseEducationalExperiences {
   degree: string;
   startDate: Date;
   endDate: Date;
+  isCurrent: boolean;
   description?: string;
 }
 

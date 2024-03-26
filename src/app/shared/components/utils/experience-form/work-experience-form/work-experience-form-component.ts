@@ -32,6 +32,7 @@ export class WorkExperienceFormComponent implements OnChanges {
       this.startDateValue = this.workExperience.startDate || '';
       this.endDateValue = this.workExperience.endDate || '';
       this.isCurrentlyWorking = this.workExperience.endDate instanceof Date && this.isToday(this.workExperience.endDate);
+      this.disableEndDateInput = this.workExperience.isCurrent;
       // Asigna los demás valores de la experiencia de trabajo a las variables correspondientes
     }
   }
@@ -61,5 +62,6 @@ export class WorkExperienceFormComponent implements OnChanges {
       ? formatDate(this.currentDate, 'yyyy-MM-dd', 'en-US')
       : '';
     this.inputChange.emit({ id: 'endDate', value: this.endDateValue, arrayName: 'workExperiencesList' });
+    this.inputChange.emit({ id: 'isCurrent', value: isChecked.toString(), arrayName: 'workExperiencesList' });
   }
 }

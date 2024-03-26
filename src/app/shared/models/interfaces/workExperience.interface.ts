@@ -4,6 +4,7 @@ export interface WorkExperience {
   position: string;
   startDate: Date;
   endDate: Date;
+  isCurrent: boolean;
 }
 
 export interface WorkExperienceResponse {
@@ -11,6 +12,7 @@ export interface WorkExperienceResponse {
   position: string;
   startDate: Date;
   endDate: Date;
+  isCurrent: boolean;
 }
 
 export interface WorkExperienceRequest {
@@ -18,4 +20,5 @@ export interface WorkExperienceRequest {
   position: string;
   startDate: Date;
   endDate: Date;
+  isCurrent: boolean;
 }

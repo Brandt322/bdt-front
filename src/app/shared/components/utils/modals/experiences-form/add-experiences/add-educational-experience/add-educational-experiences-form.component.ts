@@ -95,7 +95,7 @@ export class AddEducationalExperiencesFormComponent implements OnInit {
     if (this.educationalExperienceForm.valid) {
       this.educationalExperienceForm.markAllAsTouched();
       const formValues = this.educationalExperienceForm.value;
-      let { id, educationalInstitute, career, degree, startDate, endDate } = formValues
+      let { id, educationalInstitute, career, degree, startDate, endDate, isCurrentlyStudying } = formValues
 
       educationalInstitute = educationalInstitute.trim();
       career = career.trim();
@@ -107,7 +107,8 @@ export class AddEducationalExperiencesFormComponent implements OnInit {
         career,
         degree,
         startDate,
-        endDate
+        endDate,
+        isCurrentlyStudying
       );
       this.cancelForm();
     }

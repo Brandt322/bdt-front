@@ -45,20 +45,27 @@ export class EditWorkExperiencesFormComponent implements OnInit, AfterViewInit {
 
   formBuild() {
     this.isCompanyFractal = this.workExperience.company === 'Fractal';
-    this.isCurrentlyWorking = this.isToday(this.workExperience.endDate);
+    this.isCurrentlyWorking = this.workExperience.isCurrent;
+    let endDateValue = this.workExperience.endDate;
+    if (this.workExperience.isCurrent && this.workExperience.endDate === null) {
+      endDateValue = new Date(); // Assign the current date
+    }
 
+
+
+    console.log(this.workExperience.isCurrent)
     this.workExperienceForm = this.fb.group({
       company: [this.workExperience.company, [CustomValidators.required, CustomValidators.minLength(3), CustomValidators.stringType()]],
       position: [this.workExperience.position, [CustomValidators.required, CustomValidators.minLength(3), CustomValidators.stringType()]],
       startDate: [this.workExperience.startDate, CustomValidators.required],
-      endDate: [this.workExperience.endDate, CustomValidators.required],
+      endDate: [endDateValue, CustomValidators.required],
       isCompanyFractal: [this.isCompanyFractal],
-      isCurrentlyWorking: [this.isToday(this.workExperience.endDate)]
+      isCurrentlyWorking: [this.workExperience.isCurrent]
     }, { validators: CustomValidators.dateGreaterThan('startDate', 'endDate') });
 
     // Disable the endDate input if the endDate is today
     const endDateControl = this.workExperienceForm.get('endDate');
-    if (endDateControl && this.isToday(this.workExperience.endDate)) {
+    if (endDateControl && this.isToday(endDateValue)) {
       this.disableEndDateInput = true;
     }
 
@@ -78,7 +85,7 @@ export class EditWorkExperiencesFormComponent implements OnInit, AfterViewInit {
       startDate: this.workExperience.startDate,
       endDate: this.workExperience.endDate,
       isCompanyFractal: this.isCompanyFractal,
-      isCurrentlyWorking: this.isToday(this.workExperience.endDate)
+      isCurrentlyWorking: this.workExperience.isCurrent
     });
 
     // Reset the state of the checkboxes
@@ -89,13 +96,13 @@ export class EditWorkExperiencesFormComponent implements OnInit, AfterViewInit {
 
     const isCurrentlyWorkingControl = this.workExperienceForm.get('isCurrentlyWorking');
     if (isCurrentlyWorkingControl) {
-      isCurrentlyWorkingControl.reset(this.isCurrentlyWorking);
+      isCurrentlyWorkingControl.reset(this.workExperience.isCurrent);
     }
 
     // Disable the endDate input if the endDate is today
     const endDateControl = this.workExperienceForm.get('endDate');
     if (endDateControl) {
-      if (this.isToday(this.workExperience.endDate)) {
+      if (this.workExperience.isCurrent) {
         this.disableEndDateInput = true;
       } else {
         this.disableEndDateInput = false;
@@ -143,12 +150,13 @@ export class EditWorkExperiencesFormComponent implements OnInit, AfterViewInit {
   endDateIfChecked(isChecked: boolean) {
     const endDateControl = this.workExperienceForm.get('endDate');
     if (endDateControl) {
-      endDateControl.setValue(isChecked ? formatDate(this.currentDate, 'yyyy-MM-dd', 'en-US') : '');
       if (isChecked) {
+        endDateControl.setValue(isChecked ? formatDate(this.currentDate, 'yyyy-MM-dd', 'en-US') : '');
         this.disableEndDateInput = true;
       } else {
+        endDateControl.setValue(null);
         this.disableEndDateInput = false;
-        endDateControl.enable();
+        // endDateControl.enable();
       }
     }
   }
@@ -156,10 +164,10 @@ export class EditWorkExperiencesFormComponent implements OnInit, AfterViewInit {
   submitForm() {
     if (this.workExperienceForm.valid) {
       const formValues = this.workExperienceForm.value;
-      let { company, position, startDate, endDate } = formValues;
+      let { company, position, startDate, endDate, isCurrentlyWorking } = formValues;
       company = company.trim();
       position = position.trim();
-      this.talentDetailService.updateWorkExperienceForCurrentTalent(this.id, this.id, company, position, startDate, endDate);
+      this.talentDetailService.updateWorkExperienceForCurrentTalent(this.id, this.id, company, position, startDate, endDate, isCurrentlyWorking);
       // this.cancelForm();
       // this.cdr.markForCheck();
     }

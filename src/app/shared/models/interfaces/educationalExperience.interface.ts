@@ -5,6 +5,7 @@ export interface EducationalExperience {
   degree: string;
   startDate: Date;
   endDate: Date;
+  isCurrent: boolean;
 }
 
 export interface EducationalExperienceResponse {
@@ -13,6 +14,7 @@ export interface EducationalExperienceResponse {
   degree: string;
   startDate: Date;
   endDate: Date;
+  isCurrent: boolean;
 }
 
 export interface EducationalExperienceRequest {
@@ -21,4 +23,5 @@ export interface EducationalExperienceRequest {
   degree: string;
   startDate: Date;
   endDate: Date;
+  isCurrent: boolean;
 }

@@ -109,13 +109,14 @@ export class TalentDetailService {
     }
   }
 
-  addWorkExperienceToCurrentTalent(company: string, position: string, startDate: Date, endDate: Date) {
+  addWorkExperienceToCurrentTalent(company: string, position: string, startDate: Date, endDate: Date, isCurrent: boolean) {
     if (this.currentTalentValue) {
       const workExperience: WorkExperienceRequest = {
         company: company,
         position: position,
         startDate: startDate,
-        endDate: endDate
+        endDate: endDate,
+        isCurrent: isCurrent
       };
       this.talentService.addWorkExperience(this.currentTalentValue.id, workExperience).pipe(
         catchError(error => {
@@ -124,7 +125,7 @@ export class TalentDetailService {
         })
       ).subscribe(() => {
         if (this.currentTalentValue) {
-          this.currentTalentValue.workExperiencesList.push({ id: 0, company: workExperience.company, position: workExperience.position, startDate: workExperience.startDate, endDate: workExperience.endDate });
+          this.currentTalentValue.workExperiencesList.push({ id: 0, company: workExperience.company, position: workExperience.position, startDate: workExperience.startDate, endDate: workExperience.endDate, isCurrent: workExperience.isCurrent });
           this.talentSource.next(this.currentTalentValue);
           this.changeTalent(this.currentTalentValue.id);
           this.toast.success('Se agregó una experiencia laboral');
@@ -133,7 +134,7 @@ export class TalentDetailService {
     }
   }
 
-  addEducationalExperienceToCurrentTalent(id: number, educationalInstitute: string, career: string, degree: string, startDate: Date, endDate: Date) {
+  addEducationalExperienceToCurrentTalent(id: number, educationalInstitute: string, career: string, degree: string, startDate: Date, endDate: Date, isCurrent: boolean) {
     if (this.currentTalentValue) {
       const educationalExperience: EducationalExperience = {
         id: id,
@@ -141,7 +142,8 @@ export class TalentDetailService {
         career: career,
         degree: degree,
         startDate: startDate,
-        endDate: endDate
+        endDate: endDate,
+        isCurrent: isCurrent
       };
       this.talentService.addEducationalExperience(this.currentTalentValue.id, educationalExperience).pipe(
         catchError(error => {
@@ -253,14 +255,15 @@ export class TalentDetailService {
     }
   }
 
-  updateWorkExperienceForCurrentTalent(workExpId: number, id: number, company: string, position: string, startDate: Date, endDate: Date) {
+  updateWorkExperienceForCurrentTalent(workExpId: number, id: number, company: string, position: string, startDate: Date, endDate: Date, isCurrent: boolean) {
     if (this.currentTalentValue) {
       const newWorkExperience: WorkExperience = {
         id: id,
         company: company,
         position: position,
         startDate: startDate,
-        endDate: endDate
+        endDate: endDate,
+        isCurrent: isCurrent
       };
       this.talentService.updateWorkExperience(this.currentTalentValue.id, workExpId, newWorkExperience).pipe(
         catchError(error => {
@@ -282,7 +285,7 @@ export class TalentDetailService {
     }
   }
 
-  updateEducationalExperienceForCurrentTalent(eduExpId: number, id: number, educationalInstitute: string, career: string, degree: string, startDate: Date, endDate: Date) {
+  updateEducationalExperienceForCurrentTalent(eduExpId: number, id: number, educationalInstitute: string, career: string, degree: string, startDate: Date, endDate: Date, isCurrent: boolean) {
     if (this.currentTalentValue) {
       const newEducationalExperience: EducationalExperience = {
         id: id,
@@ -290,7 +293,8 @@ export class TalentDetailService {
         career: career,
         degree: degree,
         startDate: startDate,
-        endDate: endDate
+        endDate: endDate,
+        isCurrent: isCurrent
       };
       this.talentService.updateEducationalExperience(this.currentTalentValue.id, eduExpId, newEducationalExperience).pipe(
         catchError(error => {

@@ -34,6 +34,7 @@ export class EducationalExperienceFormComponent implements OnChanges {
       this.startDateValue = this.educationalExperience.startDate || '';
       this.endDateValue = this.educationalExperience.endDate || '';
       this.isCurrentlyStudying = this.educationalExperience.endDate instanceof Date && this.isToday(this.educationalExperience.endDate);
+      this.disableEndDateInput = this.educationalExperience.isCurrent;
       // Asigna los demás valores de la experiencia de trabajo a las variables correspondientes
     }
   }
@@ -63,5 +64,6 @@ export class EducationalExperienceFormComponent implements OnChanges {
       ? formatDate(this.currentDate, 'yyyy-MM-dd', 'en-US')
       : '';
     this.inputChange.emit({ id: 'endDate', value: this.endDateValue, arrayName: 'educationalExperiencesList' });
+    this.inputChange.emit({ id: 'isCurrent', value: isChecked.toString(), arrayName: 'educationalExperiencesList' });
   }
 }

@@ -285,6 +285,7 @@ export class TalentCreateComponent implements OnInit {
       position: ['', [Validators.required, Validators.minLength(2)]],
       startDate: ['', [Validators.required]],
       endDate: ['', [Validators.required]],
+      isCurrent: [false],
     });
   }
 
@@ -295,6 +296,7 @@ export class TalentCreateComponent implements OnInit {
       degree: ['', [Validators.required, Validators.minLength(3)]],
       startDate: ['', [Validators.required]],
       endDate: ['', [Validators.required]],
+      isCurrent: [false],
     });
   }
 

@@ -44,7 +44,11 @@ export class EditEducationalExperiencesFormComponent implements OnInit, AfterVie
   formBuild() {
 
     this.isEducationalFractal = this.educationalExperience.educationalInstitute === 'Fractal';
-    this.isCurrentlyStudying = this.isToday(this.educationalExperience.endDate);
+    this.isCurrentlyStudying = this.educationalExperience.isCurrent;
+    let endDateValue = this.educationalExperience.endDate;
+    if (this.educationalExperience.isCurrent && this.educationalExperience.endDate === null) {
+      endDateValue = new Date(); // Assign the current date
+    }
 
     this.educationalExperienceForm = this.fb.group({
       educationalInstitute: [this.educationalExperience.educationalInstitute, [CustomValidators.required, CustomValidators.minLength(3), CustomValidators.stringType()]],
@@ -53,12 +57,12 @@ export class EditEducationalExperiencesFormComponent implements OnInit, AfterVie
       startDate: [this.educationalExperience.startDate, CustomValidators.required],
       endDate: [this.educationalExperience.endDate, CustomValidators.required],
       isEducationalFractal: [this.isEducationalFractal],
-      isCurrentlyStudying: [this.isToday(this.educationalExperience.endDate)]
+      isCurrentlyStudying: [this.educationalExperience.isCurrent]
     }, { validators: CustomValidators.dateGreaterThan('startDate', 'endDate') });
 
     // Disable the endDate input if the endDate is today
     const endDateControl = this.educationalExperienceForm.get('endDate');
-    if (endDateControl && this.isToday(this.educationalExperience.endDate)) {
+    if (endDateControl && this.isToday(endDateValue)) {
       this.disableEndDateInput = true;
     }
 
@@ -77,7 +81,7 @@ export class EditEducationalExperiencesFormComponent implements OnInit, AfterVie
       startDate: this.educationalExperience.startDate,
       endDate: this.educationalExperience.endDate,
       isEducationalFractal: this.isEducationalFractal,
-      isCurrentlyStudying: this.isToday(this.educationalExperience.endDate)
+      isCurrentlyStudying: this.educationalExperience.isCurrent
     });
 
     // Reset the state of the checkboxes
@@ -88,13 +92,13 @@ export class EditEducationalExperiencesFormComponent implements OnInit, AfterVie
 
     const isCurrentlyStudyingControl = this.educationalExperienceForm.get('isCurrentlyStudying');
     if (isCurrentlyStudyingControl) {
-      isCurrentlyStudyingControl.reset(this.isToday(this.educationalExperience.endDate));
+      isCurrentlyStudyingControl.reset(this.educationalExperience.isCurrent);
     }
 
     // Disable the endDate input if the endDate is today
     const endDateControl = this.educationalExperienceForm.get('endDate');
     if (endDateControl) {
-      if (this.isToday(this.educationalExperience.endDate)) {
+      if (this.educationalExperience.isCurrent) {
         this.disableEndDateInput = true;
       } else {
         this.disableEndDateInput = false;
@@ -146,7 +150,7 @@ export class EditEducationalExperiencesFormComponent implements OnInit, AfterVie
         endDateControl.setValue(formatDate(this.currentDate, 'yyyy-MM-dd', 'en-US'));
       } else {
         this.disableEndDateInput = false;
-        endDateControl.setValue('');
+        endDateControl.setValue(null);
       }
     }
   }
@@ -154,11 +158,11 @@ export class EditEducationalExperiencesFormComponent implements OnInit, AfterVie
   submitForm() {
     if (this.educationalExperienceForm.valid) {
       const educationalExperience = this.educationalExperienceForm.value;
-      let { educationalInstitute, career, degree, startDate, endDate } = educationalExperience;
+      let { educationalInstitute, career, degree, startDate, endDate, isCurrentlyStudying } = educationalExperience;
       educationalInstitute = educationalInstitute.trim();
       career = career.trim();
       degree = degree.trim();
-      this.talentDetailService.updateEducationalExperienceForCurrentTalent(this.id, this.id, educationalInstitute, career, degree, startDate, endDate);
+      this.talentDetailService.updateEducationalExperienceForCurrentTalent(this.id, this.id, educationalInstitute, career, degree, startDate, endDate, isCurrentlyStudying);
     }
   }
 }
