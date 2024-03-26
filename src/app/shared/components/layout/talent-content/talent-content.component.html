@@ -30,6 +30,7 @@
     >
       <div class="flex items-center w-full p-1">
         <app-carousel
+          *ngIf="talentFileList.length > 0"
           [items]="talentFileList"
           [id]="talent?.id || 0"
           class="w-full"

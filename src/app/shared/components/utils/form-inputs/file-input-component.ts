@@ -1,5 +1,6 @@
-import { Component, Input, forwardRef } from '@angular/core';
+import { Component, Input, forwardRef, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-file-input',
@@ -12,7 +13,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
         [ngClass]="{' border-red-500': hasError}"
         class="flex flex-col items-center justify-center w-full h-52 border-2 border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
       >
-        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+        <div class="flex flex-col items-center justify-center pt-5 pb-6" *ngIf="!fileSelected">
           <svg
             class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
             aria-hidden="true"
@@ -36,7 +37,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
         <input
           [id]="id"
           type="file"
-          class="hidden"
+          [ngClass]="{' hidden': !fileSelected, 'block': fileSelected}"
           [accept]="accept"
           ngDefaultControl
           (change)="onFileChange($event)"
@@ -53,13 +54,15 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     },
   ],
 })
-export class FileInputComponent implements ControlValueAccessor {
+export class FileInputComponent implements OnInit, ControlValueAccessor {
   @Input() id!: string;
   @Input() title!: string;
   @Input() description!: string;
   @Input() accept!: string;
   @Input() hasError!: boolean;
+  @Input() modalClosed!: Observable<void>;
   value!: File;
+  fileSelected: boolean = false;
 
   onTouched: any = () => { };
   onChange: any = () => { };
@@ -82,6 +85,13 @@ export class FileInputComponent implements ControlValueAccessor {
     if (files && files.length > 0) {
       this.value = files[0];
       this.onChange(this.value);
+      this.fileSelected = true;
     }
+  }
+
+  ngOnInit(): void {
+    this.modalClosed.subscribe(() => {
+      this.fileSelected = false; // Reiniciar fileSelected cuando se emite modalClosed
+    });
   }
 }

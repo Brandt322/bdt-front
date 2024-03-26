@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SharedDataService } from '../../../services/shared-data-service.service';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
@@ -18,6 +18,7 @@ import { CustomValidators } from '../../Validations/CustomValidators';
         description="PNG o JPG (Max. 1400x800 px)"
         [accept]="'image/png, image/jpeg, image/jpg'"
         formControlName="image"
+        [modalClosed]="modalClosed"
       ></app-file-input>
 
       <div
@@ -44,7 +45,7 @@ import { CustomValidators } from '../../Validations/CustomValidators';
         [form]="imageForm"
         [modal_id]="modal_id"
         [save_button_id]="'save_'"
-        (cancelClicked)="imageForm.reset()"
+        (cancelClicked)="cancelForm()"
       ></app-cancel-save-buttons>
     </form>
   </app-base-modal-form>`,
@@ -53,6 +54,7 @@ export class NewProfilePicModalFormComponent {
   modal_id: string = 'new-profile-pic-modal';
   @Input() id!: string;
   @Input() title!: string;
+  @Output() modalClosed = new EventEmitter<void>(); // Nuevo EventEmitter
   image!: string;
 
   imageForm!: FormGroup;
@@ -63,6 +65,10 @@ export class NewProfilePicModalFormComponent {
     this.imageForm = this.formBuilder.group({
       image: ['', [CustomValidators.required, CustomValidators.fileSizeValidator(5 * 1024 * 1024)]]
     });
+  }
+  cancelForm() {
+    this.imageForm.reset();
+    this.modalClosed.emit();
   }
 
   update() {

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
 import { CustomValidators } from '../../Validations/CustomValidators';
@@ -7,16 +7,17 @@ import { CustomValidators } from '../../Validations/CustomValidators';
   selector: 'app-new-file-modal-form',
   template: `<app-base-modal-form
     [id]="modal_id"
-    title="Modifica la foto de perfil"
+    title="Agregar un archivo"
     description="Sube un nuevo certificado, diploma o algún archivo que respalde tus aptitudes"
   >
     <form [formGroup]="fileForm" (ngSubmit)="onSubmit()">
       <app-file-input
         [id]="'new-file-pic'"
-        title="Agrega un archivo"
+        title="Sube un archivo"
         description="PDF (Max. 5MB)"
         accept="application/pdf"
         formControlName="file"
+        [modalClosed]="modalClosed"
       ></app-file-input>
       <div
         class="grid gap-2 mb-2"
@@ -43,7 +44,7 @@ import { CustomValidators } from '../../Validations/CustomValidators';
         [form]="fileForm"
         [modal_id]="modal_id"
         [save_button_id]="'save_new_file'"
-        (cancelClicked)="fileForm.reset()"
+        (cancelClicked)="cancelForm()"
       ></app-cancel-save-buttons>
     </form>
   </app-base-modal-form>`,
@@ -52,12 +53,17 @@ export class NewFileModalFormComponent implements OnInit {
   modal_id: string = 'new-file-modal-form';
   @Input() id!: string;
   @Input() title!: string;
-
+  @Output() modalClosed = new EventEmitter<void>(); // Nuevo EventEmitter
   fileForm!: FormGroup;
   constructor(private fb: FormBuilder, private talentDetailService: TalentDetailService) { }
 
   ngOnInit(): void {
     this.formBuild();
+  }
+
+  cancelForm() {
+    this.fileForm.reset();
+    this.modalClosed.emit();
   }
 
   formBuild() {

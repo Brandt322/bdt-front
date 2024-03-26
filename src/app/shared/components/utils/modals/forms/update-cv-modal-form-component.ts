@@ -1,9 +1,11 @@
 import {
   AfterViewInit,
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
@@ -60,6 +62,7 @@ import { CancelSaveButtonsComponent } from './cancel-save-buttons';
       <app-file-input
         *ngIf="addFile"
         [id]="'update-cv-pic'"
+        [modalClosed]="modalClosed"
         title="Agrega un archivo"
         description="PDF (Max. 5MB)"
         accept="application/pdf"
@@ -121,6 +124,7 @@ export class UpdateCvModalFormComponent implements OnInit, OnChanges {
   @Input() id!: string;
   @Input() title!: string;
   @Input() talentFileList: ICarouselItem[] = [];
+  @Output() modalClosed = new EventEmitter<void>(); // Nuevo EventEmitter
   cvFile!: ICarouselItem | undefined;
 
   addFile: boolean = false;
@@ -162,6 +166,7 @@ export class UpdateCvModalFormComponent implements OnInit, OnChanges {
   cancelForm() {
     this.fileForm.reset();
     this.handleAddFile();
+    this.modalClosed.emit();
   }
 
   onSubmit() {
