@@ -6,6 +6,7 @@ import { UserService } from 'src/app/auth/services/user.service';
 import { ListUserTalent, UserListRequest, UserPrincipal, UserTalentListRequest } from 'src/app/shared/models/interfaces/user.interface';
 import { SharedDataService } from '../../services/shared-data-service.service';
 import { TalentDetailService } from 'src/app/features/services/talent-detail.service';
+import { TalentService } from 'src/app/services/talent/talent.service';
 @Component({
   animations: [
     trigger('fadeInOut', [
@@ -80,6 +81,8 @@ export class CheckboxDropdownFavoriteComponent implements OnInit {
   selectedIndex: number | null = null;
   favoriteForm!: FormGroup;
   currentTalentId!: number;
+  talentIdInList!: number | null;
+
 
   constructor(
     private fb: FormBuilder,
@@ -88,7 +91,8 @@ export class CheckboxDropdownFavoriteComponent implements OnInit {
     private eRef: ElementRef,
     private toast: ToastrService,
     private sharedService: SharedDataService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private talentService: TalentService
   ) { }
 
   ngOnInit(): void {
@@ -97,8 +101,15 @@ export class CheckboxDropdownFavoriteComponent implements OnInit {
     this.currentTalentId = Number(localStorage.getItem('selectedTalentId'));
 
     this.talentDetailService.currentTalent.subscribe(talent => {
+      this.talentIdInList = null;
       if (talent) {
         this.currentTalentId = talent.id;
+        talent.lists.find(list => {
+          if (talent.id === this.currentTalentId) {
+            this.talentIdInList = list.idInList;
+          }
+        });
+        console.log(this.talentIdInList)
         this.getListFavorite();
       }
     });
@@ -168,7 +179,7 @@ export class CheckboxDropdownFavoriteComponent implements OnInit {
       } else {
         // No es la primera vez seleccionando un elemento
         userListRequest = {
-          id: this.data[this.selectedIndex].id,
+          id: this.talentIdInList,
           listId: this.data[index].id,
           talentId: this.currentTalentId,
         };
@@ -177,6 +188,7 @@ export class CheckboxDropdownFavoriteComponent implements OnInit {
       // Llama al método addListTalent() de UserService
       this.userService.addListTalent(userListRequest).subscribe(response => {
         // console.log(response);
+        this.talentDetailService.updateCurrentTalent(this.currentTalentId);
         // Si el índice seleccionado no es el mismo que el índice actual, selecciona el elemento
         this.selectedIndex = index; // Actualiza el índice del elemento seleccionado
         this.optionSelected.emit(index);

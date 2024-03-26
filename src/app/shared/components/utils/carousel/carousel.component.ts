@@ -67,7 +67,7 @@ export class CarouselComponent implements OnInit, OnChanges {
     if (sliderElement) {
       this.slider = sliderElement;
     } else {
-      console.error('No se encontró el elemento con id "slider"');
+      // console.error('No se encontró el elemento con id "slider"');
     }
 
     this.defaultTransform = 0

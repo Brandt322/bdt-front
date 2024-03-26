@@ -61,12 +61,12 @@ export interface UserTalentListRequest {
   talentId: number;
 }
 
-
 export interface UserListDto {
-  id: number;
-  talent: TalentIdDto;
+  listId: number;
+  listName: string;
+  user: UserIdDto;
 }
 
-export interface TalentIdDto {
+export interface UserIdDto {
   id: number;
 }

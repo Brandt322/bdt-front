@@ -59,7 +59,9 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
       this.talent = updatedTalent;
       this.updateTalentFileList(updatedTalent);
       this.updateProcessedData();
-      this.carouselComponent.resetCarousel();
+      if (this.carouselComponent && this.carouselComponent.items) {
+        this.carouselComponent.resetCarousel();
+      }
     });
     this.requestOptions();
     this.cdr.detectChanges();

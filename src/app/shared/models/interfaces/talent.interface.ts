@@ -36,6 +36,7 @@ export interface TalentResponse {
   currency: string;
   profile: string;
   filesList: File[];
+  lists: UserTalentListDto[];
   averageRating: number;
   image: string;
   description: string;
@@ -50,6 +51,15 @@ export interface TalentResponse {
   educationalExperiencesList: EducationalExperience[];
   workExperiencesList: WorkExperience[];
   languagesList: LanguageResponse[];
+}
+
+export interface UserTalentListDto {
+  idInList: number;
+  userList: UserListDto;
+}
+
+export interface UserListDto {
+  id: number;
 }
 
 export interface TalentRequest {

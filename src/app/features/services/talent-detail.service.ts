@@ -55,6 +55,17 @@ export class TalentDetailService {
     }
   }
 
+  updateCurrentTalent(talentId: number) {
+    this.talentService.getTalentById(talentId).subscribe(talent => {
+      this.currentTalentValue = talent;
+      this.talentSource.next(talent);
+    });
+  }
+
+  findCurrentTalentInList(): number {
+    return this.talentListSubject.getValue().findIndex(talent => talent.id === this.currentTalentValue?.id);
+  }
+
   addTechnicalSkillToCurrentTalent(id: number | null, skillName: string, yearsOfExperience: number) {
     if (this.currentTalentValue) {
       const technicalSkillRequest: TalentTechnicalSkillRequest = {
