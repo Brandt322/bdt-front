@@ -15,6 +15,7 @@ import { TalentRequest } from 'src/app/shared/models/interfaces/talent.interface
 import { TalentService } from 'src/app/services/talent/talent.service';
 import { ToastrService } from 'ngx-toastr';
 import { Profile } from 'src/app/shared/models/interfaces/profile.interface';
+import { fieldNamesInSpanish } from '../../../core/global/constants/handle-input-errors';
 
 @Component({
   selector: 'app-talent-create',
@@ -162,10 +163,13 @@ export class TalentCreateComponent implements OnInit {
 
     const errors = control.errors || {};
 
+    //Mapeo de nombres en español para cada campo
+    const fieldInSpanish = fieldNamesInSpanish[fieldName] || fieldName;
+
     for (const key of Object.keys(errors)) {
       switch (key) {
         case 'required':
-          return `El campo ${fieldName} es requerido`;
+          return `El campo ${fieldInSpanish} es requerido`;
         case 'minlength':
           if (field === 'cellPhoneNumber') {
             return `Debe tener mínimo ${errors['minlength'].requiredLength} dígitos`;
@@ -179,7 +183,7 @@ export class TalentCreateComponent implements OnInit {
         case 'fileSize':
           return 'El tamaño del archivo es demasiado grande';
         case 'pattern':
-          return `El campo ${fieldName} debe ser una URL válida`;
+          return `El campo ${fieldInSpanish} debe ser una URL válida`;
         default:
           return null;
       }
@@ -200,20 +204,23 @@ export class TalentCreateComponent implements OnInit {
   async onSubmit(): Promise<void> {
     if (this.createTalentForm.invalid) {
       this.createTalentForm.markAllAsTouched();
-      Object.keys(this.createTalentForm.controls).forEach(field => {
-        const control = this.createTalentForm.get(field);
-        if (control && control.invalid) {
-          const errors = control.errors;
-          if (errors) {
-            Object.keys(errors).forEach(key => {
-              const error = this.getFieldError(field);
-              if (error) {
-                this.toastr.error(error, '¡Error de validación!');
-              }
-            });
-          }
-        }
-      });
+      this.toastr.error('Hubo un error con uno o varios campos', '¡Error de validación!');
+
+      // Validación de campos y mensajes individuales de error
+      // Object.keys(this.createTalentForm.controls).forEach(field => {
+      //   const control = this.createTalentForm.get(field);
+      //   if (control && control.invalid) {
+      //     const errors = control.errors;
+      //     if (errors) {
+      //       Object.keys(errors).forEach(key => {
+      //         const error = this.getFieldError(field);
+      //         if (error) {
+      //           this.toastr.error(error, '¡Error de validación!');
+      //         }
+      //       });
+      //     }
+      //   }
+      // });
       return;
     }
 

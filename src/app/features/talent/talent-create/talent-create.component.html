@@ -130,13 +130,19 @@
               [hasError]="isValidField('maternalSurname')"
             >
             </app-text-input>
-            <app-form-error
-              *ngIf="
+            <!-- <app-form-error
+              ngif="
                 createTalentForm.controls['maternalSurname'].invalid &&
                 createTalentForm.controls['maternalSurname'].touched
               "
               [control]="createTalentForm.controls['maternalSurname']"
-            ></app-form-error>
+            ></app-form-error> -->
+            <span
+              *ngIf="isValidField('maternalSurname')"
+              class="font-medium text-red-500 leading-tight"
+            >
+              {{ getFieldError("maternalSurname") }}
+            </span>
             <div class="grid gap-4">
               <div class="flex justify-center gap-4">
                 <app-value-select-input
