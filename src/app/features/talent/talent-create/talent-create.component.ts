@@ -456,19 +456,19 @@ export class TalentCreateComponent implements OnInit {
         const control = formArray.at(i).get(id);
         if (control) {
           control.setValue(value);
-          console.log(`El valor del control '${id}' en el array '${arrayName}' es ahora '${control.value}'`);
+          // console.log(`El valor del control '${id}' en el array '${arrayName}' es ahora '${control.value}'`);
           return;
         }
       }
     }
-    console.log(`No se encontró el control con el id '${id}' en el array '${arrayName}'`);
+    // console.log(`No se encontró el control con el id '${id}' en el array '${arrayName}'`);
   }
 
   onPrefixSelected(prefix: string) {
     const prefixControl = this.createTalentForm.get('callPrefix');
     if (prefixControl) {
       prefixControl.setValue(prefix);
-      console.log(prefixControl.value)
+      // console.log(prefixControl.value)
     }
   }
 
@@ -502,7 +502,7 @@ export class TalentCreateComponent implements OnInit {
     const languageControl = (this.createTalentForm.get('languagesList') as FormArray).at(index).get('languageId');
     if (languageControl) {
       languageControl.setValue(languageId);
-      console.log('Language selected:', languageId);
+      // console.log('Language selected:', languageId);
     }
   }
 
@@ -510,7 +510,7 @@ export class TalentCreateComponent implements OnInit {
     const levelControl = (this.createTalentForm.get('languagesList') as FormArray).at(index).get('levelId');
     if (levelControl) {
       levelControl.setValue(levelId);
-      console.log('Level selected:', levelId);
+      // console.log('Level selected:', levelId);
     }
   }
 
@@ -534,6 +534,6 @@ export class TalentCreateComponent implements OnInit {
 
   onItemSelected(event: any): void {
     this.selectedItemId = event.target.value;
-    console.log('ID seleccionado:', this.selectedItemId);
+    // console.log('ID seleccionado:', this.selectedItemId);
   }
 }

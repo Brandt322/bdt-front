@@ -49,7 +49,7 @@ export class CheckboxInputComponent implements OnInit, ControlValueAccessor {
       this.isChecked = target.checked;
       this.isCheckedChange.emit(this.isChecked);
       this.onChange(this.isChecked);
-      console.log(this.isChecked);
+      // console.log(this.isChecked);
     }
   }
 
