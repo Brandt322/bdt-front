@@ -26,11 +26,16 @@
 
     <div
       class="flex w-full p-1"
-      [ngClass]="{ 'gap-2': userDetails.roles.includes('RECLUTADOR') }"
+      [ngClass]="{
+        'gap-2':
+          userDetails.roles.includes('RECLUTADOR') || talentFileList.length > 1
+      }"
     >
-      <div class="flex items-center w-full p-1">
+      <div
+        class="flex items-center w-full p-1"
+        *ngIf="talentFileList.length > 1"
+      >
         <app-carousel
-          *ngIf="talentFileList.length > 0"
           [items]="talentFileList"
           [id]="talent?.id || 0"
           class="w-full"

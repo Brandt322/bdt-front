@@ -99,4 +99,25 @@ export class ProfileComponent implements OnInit, OnChanges {
     this.sharedService.changeFinalMont(this.finalMont);
     this.sharedService.changeCurrency(this.currencyId || 0)
   }
+
+  // get currencyCode() {
+  //   switch (this.currency) {
+  //     case 'DOLAR':
+  //       return 'USD';
+  //     case 'SOL':
+  //       return 'PEN'; // Asegúrate de que este es el código correcto para SOL
+  //     default:
+  //       return '';
+  //   }
+  // }
+  getCurrencySymbol(currency: string | undefined) {
+    switch (currency) {
+      case 'DOLAR':
+        return '$';
+      case 'SOL':
+        return 'S/'; // Reemplaza esto con el símbolo correcto para SOL
+      default:
+        return '';
+    }
+  }
 }

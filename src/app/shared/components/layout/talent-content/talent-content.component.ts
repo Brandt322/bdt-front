@@ -94,7 +94,7 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     if (sessionStorage.getItem('user_data')) {
       const userData = sessionStorage.getItem('user_data') ? JSON.parse(sessionStorage.getItem('user_data') || '{}') : {};
-      console.log(userData)
+      // console.log(userData)
       this.userDetails = userData.userPrincipal;
     }
   }
@@ -165,11 +165,11 @@ export class TalentContentComponent implements OnInit, AfterViewInit {
       let description;
 
       if (experience.isCurrent || endDate === null) {
-        description = `${experience.position} ${startDate.getFullYear()}  Hasta la actualidad`;
+        description = `${experience.position} ${startDate.getFullYear()} - Hasta la actualidad`;
       } else if (years === 1) {
         description = `${experience.position} ${startDate.getFullYear()}-${endDate.getFullYear()} 1 año`;
       } else {
-        description = `${experience.position} ${startDate.getFullYear()}-${endDate.getFullYear()} ${-years} años`;
+        description = `${experience.position} ${startDate.getFullYear()}-${endDate.getFullYear()} ${years} años`;
       }
 
       return {

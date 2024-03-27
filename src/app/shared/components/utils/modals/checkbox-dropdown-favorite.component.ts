@@ -109,11 +109,11 @@ export class CheckboxDropdownFavoriteComponent implements OnInit {
             this.talentIdInList = list.idInList;
           }
         });
-        console.log(this.talentIdInList)
+        // console.log(this.talentIdInList)
         this.getListFavorite();
       }
     });
-    console.log(localStorage.getItem('selectedTalentId'))
+    // console.log(localStorage.getItem('selectedTalentId'))
   }
 
   @HostListener('document:click', ['$event'])
@@ -137,7 +137,7 @@ export class CheckboxDropdownFavoriteComponent implements OnInit {
   onSubmit() {
     if (this.favoriteForm.valid) {
       this.addFavorite(this.favoriteForm.value.listName);
-      console.log(this.favoriteForm.value)
+      // console.log(this.favoriteForm.value)
       this.toast.success('Favorito agregado correctamente');
       this.clearForm();
     }

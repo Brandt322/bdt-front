@@ -60,7 +60,7 @@ export class FileInputComponent implements OnInit, ControlValueAccessor {
   @Input() description!: string;
   @Input() accept!: string;
   @Input() hasError!: boolean;
-  @Input() modalClosed!: Observable<void>;
+  @Input() modalClosed?: Observable<void>;
   value!: File;
   fileSelected: boolean = false;
 
@@ -90,7 +90,7 @@ export class FileInputComponent implements OnInit, ControlValueAccessor {
   }
 
   ngOnInit(): void {
-    this.modalClosed.subscribe(() => {
+    this.modalClosed?.subscribe(() => {
       this.fileSelected = false; // Reiniciar fileSelected cuando se emite modalClosed
     });
   }

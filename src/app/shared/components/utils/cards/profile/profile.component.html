@@ -113,7 +113,8 @@
               <p
                 class="mb-1 text-sm text-gray-600 dark:font-medium dark:text-gray-400"
               >
-                $ {{ initialMont }} - {{ finalMont }}
+                {{ getCurrencySymbol(currency) }} {{ initialMont }} -
+                {{ finalMont }}
               </p>
               <button
                 data-modal-target="salary-band-modal"

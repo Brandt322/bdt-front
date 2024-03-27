@@ -25,12 +25,12 @@ export class TalentDetailService {
   constructor(private talentService: TalentService, private toast: ToastrService) { }
 
   changeTalent(talentId: number) {
-    console.log('changeTalent called with talentId:', talentId);
+    // console.log('changeTalent called with talentId:', talentId);
     if (this.currentTalentValue?.id === talentId) {
       console.log('currentTalentValue.id is equal to talentId');
       // console.log(this.currentTalentValue.workExperiencesList)
       // console.log(this.currentTalentValue.educationalExperiencesList)
-      console.log(this.currentTalentValue.averageRating)
+      // console.log(this.currentTalentValue.averageRating)
       return;
     }
 

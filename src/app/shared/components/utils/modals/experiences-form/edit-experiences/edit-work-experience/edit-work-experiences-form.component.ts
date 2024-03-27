@@ -53,7 +53,7 @@ export class EditWorkExperiencesFormComponent implements OnInit, AfterViewInit {
 
 
 
-    console.log(this.workExperience.isCurrent)
+    // console.log(this.workExperience.isCurrent)
     this.workExperienceForm = this.fb.group({
       company: [this.workExperience.company, [CustomValidators.required, CustomValidators.minLength(3), CustomValidators.stringType()]],
       position: [this.workExperience.position, [CustomValidators.required, CustomValidators.minLength(3), CustomValidators.stringType()]],
