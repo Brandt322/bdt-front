@@ -15,6 +15,7 @@ import { CustomValidators } from '../../Validations/CustomValidators';
 import { ICarouselItem } from '../../carousel/ICarousel-metadata';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CancelSaveButtonsComponent } from './cancel-save-buttons';
+import { UserPrincipal } from 'src/app/shared/models/interfaces/user.interface';
 
 @Component({
   selector: 'app-update-cv-modal-form',
@@ -23,7 +24,7 @@ import { CancelSaveButtonsComponent } from './cancel-save-buttons';
     title="Modifica el CV actual"
     description="Aqui puedes ver el CV del talento o tambien actualizarlo."
   >
-    <div class="flex justify-end items-center w-full mb-2">
+    <div class="flex justify-end items-center w-full mb-2" *ngIf="userDetails.roles.includes('RECLUTADOR')">
       <button
         class="flex items-center  hover:rounded-full hover:shadow-lg hover:bg-indigo-300 dark:text-slate-100 dark:bg-gray-600 dark:hover:bg-gray-700 p-2"
         type="button"
@@ -124,6 +125,7 @@ export class UpdateCvModalFormComponent implements OnInit, OnChanges {
   @Input() id!: string;
   @Input() title!: string;
   @Input() talentFileList: ICarouselItem[] = [];
+  @Input() userDetails!: UserPrincipal;
   @Output() modalClosed = new EventEmitter<void>(); // Nuevo EventEmitter
   cvFile!: ICarouselItem | undefined;
 
