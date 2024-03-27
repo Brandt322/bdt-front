@@ -16,13 +16,13 @@ import { UserPrincipal } from 'src/app/shared/models/interfaces/user.interface';
         [userDetails]="userDetails"
       ></app-feedback-modal-form>
 
-      <app-checkbox-dropdown-favorite
-        [userDetails]="userDetails"
-        modalId="favoritesDropdown"
-        labelledby="favoritesCheckbox"
-      ></app-checkbox-dropdown-favorite>
 
     </div>
+    <app-checkbox-dropdown-favorite
+      [userDetails]="userDetails"
+      modalId="favoritesDropdown"
+      labelledby="favoritesCheckbox"
+    ></app-checkbox-dropdown-favorite>
   `,
 })
 export class ModalFormsCollection implements OnInit {

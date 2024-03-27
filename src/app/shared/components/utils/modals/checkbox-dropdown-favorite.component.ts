@@ -138,7 +138,7 @@ export class CheckboxDropdownFavoriteComponent implements OnInit {
     if (this.favoriteForm.valid) {
       this.addFavorite(this.favoriteForm.value.listName);
       // console.log(this.favoriteForm.value)
-      this.toast.success('Favorito agregado correctamente');
+      // this.toast.success('Favorito agregado correctamente');
       this.clearForm();
     }
   }
