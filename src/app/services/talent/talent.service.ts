@@ -64,25 +64,25 @@ export class TalentService {
   }
 
   getBasicTalent(): Observable<BasicTalentResponse[]> {
-    return this.http.get<BasicTalentResponse[]>(`${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.BASIC_TALENTS}`).pipe(
+    return this.http.post<BasicTalentResponse[]>(`${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.BASIC_TALENTS}`, {}).pipe(
       map(talents => talents.map(talent => this.handleBasicTalentData(talent)))
     );
   }
 
   getTalent(): Observable<TalentResponse[]> {
-    return this.http.get<TalentResponse[]>(`${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}`).pipe(
+    return this.http.post<TalentResponse[]>(`${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}`, {}).pipe(
       map(talents => talents.map(talent => this.handleTalentData(talent)))
     );
   }
 
   getTalentById(id: number): Observable<TalentResponse> {
-    return this.http.get<TalentResponse>(`${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${id}`).pipe(
+    return this.http.post<TalentResponse>(`${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${id}`, {}).pipe(
       map(talent => this.handleTalentData(talent))
     );
   }
 
   createtalent(talent: TalentRequest): Observable<Object> {
-    return this.http.post(`${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}`, talent);
+    return this.http.post(`${this.uri}/${TALENT_API_ENDPOINTS.REQUEST_MAPPING}/${TALENT_API_ENDPOINTS.ADD_TALENT}`, talent);
   }
 
   //Post request to filter talents by technical skills, language and level

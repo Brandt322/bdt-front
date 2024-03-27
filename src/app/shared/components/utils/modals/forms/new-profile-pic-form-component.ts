@@ -82,6 +82,7 @@ export class NewProfilePicModalFormComponent {
         console.log('base64data', base64data)
         this.talentDetailService.updateImageForCurrentTalent(base64data);
         this.imageForm.reset();
+        this.modalClosed.emit();
       };
     }
   }

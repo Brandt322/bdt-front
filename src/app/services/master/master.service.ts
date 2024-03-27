@@ -17,27 +17,27 @@ export class MasterService {
   constructor(private http: HttpClient) { }
 
   getLevel(description: string): Observable<Level[]> {
-    return this.http.get<Level[]>(`${this.uri}/${description}`);
+    return this.http.post<Level[]>(`${this.uri}/${description}`, {});
   }
 
   getCountry(description: string): Observable<Country[]> {
-    return this.http.get<Country[]>(`${this.uri}/${description}`);
+    return this.http.post<Country[]>(`${this.uri}/${description}`, {});
   }
 
   getCurrency(description: string): Observable<Currency[]> {
-    return this.http.get<Currency[]>(`${this.uri}/${description}`);
+    return this.http.post<Currency[]>(`${this.uri}/${description}`, {});
   }
 
   getLanguage(description: string): Observable<Language[]> {
-    return this.http.get<Language[]>(`${this.uri}/${description}`);
+    return this.http.post<Language[]>(`${this.uri}/${description}`, {});
   }
 
   getCity(description: string): Observable<City[]> {
-    return this.http.get<City[]>(`${this.uri}/${description}`);
+    return this.http.post<City[]>(`${this.uri}/${description}`, {});
   }
 
   getProfile(description: string): Observable<Profile[]> {
-    return this.http.get<Profile[]>(`${this.uri}/${description}`);
+    return this.http.post<Profile[]>(`${this.uri}/${description}`, {});
   }
 
   getCitiesByCountry(
@@ -45,12 +45,12 @@ export class MasterService {
     countryId: string,
     descriptionTwo: string
   ): Observable<City[]> {
-    return this.http.get<City[]>(
-      `${this.uri}/${descriptionOne}/${countryId}/${descriptionTwo}`
+    return this.http.post<City[]>(
+      `${this.uri}/${descriptionOne}/${countryId}/${descriptionTwo}`, {}
     );
   }
 
   getSkills(description: string): Observable<string[]> {
-    return this.http.get<string[]>(`${this.uri}/${description}`);
+    return this.http.post<string[]>(`${this.uri}/${description}`, {});
   }
 }

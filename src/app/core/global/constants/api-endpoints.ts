@@ -9,9 +9,10 @@ export const MASTER_API_ENDPOINTS = {
 };
 
 export const TALENT_API_ENDPOINTS = {
-  REQUEST_MAPPING: 'talent',
+  REQUEST_MAPPING: 'api/v1/talent',
   BASIC_TALENTS: 'cards_data',
   FILTER: 'filter_talents',
+  ADD_TALENT: 'create',
   ADD_TECHNICAL_SKILL: 'add_technical_skill',
   ADD_SOFT_SKILL: 'add_soft_skill',
   ADD_WORK_EXPERIENCE: 'add_work_exp',

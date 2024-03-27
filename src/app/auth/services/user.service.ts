@@ -15,7 +15,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   getUser(username: string): Observable<User> {
-    return this.http.get<User>(`${this.baseUrl}/${username}`);
+    return this.http.post<User>(`${this.baseUrl}/${username}`, {});
   }
 
   addList(userListRequest: UserListRequest): Observable<object> {
@@ -27,6 +27,6 @@ export class UserService {
   }
 
   getListsByUserId(userId: number): Observable<ListUser> {
-    return this.http.get<ListUser>(`${this.baseUrl}/${USER_API_ENDPOINTS.REQUEST_MAPPING}/${USER_API_ENDPOINTS.GET_LISTS_BY_USER_ID}/${userId}`);
+    return this.http.post<ListUser>(`${this.baseUrl}/${USER_API_ENDPOINTS.REQUEST_MAPPING}/${USER_API_ENDPOINTS.GET_LISTS_BY_USER_ID}/${userId}`, {});
   }
 }
